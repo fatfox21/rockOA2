@@ -51,6 +51,8 @@ class flowClassAction extends Action{
 		$zt			= (int)$this->post('zt');
 		$sm			= $this->post('sm');
 		$flow = f($flownum);
+		$flow->adminid 		= $cid;
+		$flow->adminname 	= m('admin')->getmou('name',"`id`='$cid'");
 		$flow->initrecord($id);
 		echo $flow->check($zt, $sm, $cid);
 	}

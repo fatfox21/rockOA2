@@ -4,13 +4,13 @@ class deptClassModel extends Model
 	
 	public function getdept($pid, $type)
 	{
-		$sql	= $this->rock->strformat('select `id`,`name` from `?0` where `pid`=?1', '[Q]dept', $pid);
+		$sql	= $this->rock->strformat('select `id`,`name` from `?0` where `pid`=?1 order by `sort`', '[Q]dept', $pid);
 		$arr	= $this->db->getall($sql);
 		$rows	= array();
 		foreach($arr as $k=>$rs){
 			$children		= $this->getdept($rs['id'], $type);
 			$uchek			= $this->rock->contain($type, 'check');
-			if($this->rock->contain($type, 'user')){
+			if($this->contain($type, 'user')){
 				$sql	= $this->rock->strformat('select `id`,`name`,`gender`,`ranking`,`deptname`,`face`,`imonline` from `?0` where `deptid`=?1 and `status`=1 and `state`<>5 order by `sort`', '[Q]admin', $rs['id']);			
 				$usarr	= $this->db->getall($sql);
 				foreach($usarr as $k1=>$urs){

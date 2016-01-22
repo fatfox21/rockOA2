@@ -23,7 +23,7 @@ class userinforClassAction extends Action
 			$where.=" and a.`enddt`<'$this->date'";
 		}
 		$tabs = "[Q]userjl a left join [Q]admin b on a.uid=b.id ";
-		$fields = 'a.startdt,a.id,a.enddt,a.explain,b.deptname,b.name,a.optdt,a.uid,a.httype,a.tqenddt,a.state';
+		$fields = 'a.startdt,a.id,a.enddt,a.explain,b.deptname,b.name,a.optdt,a.uid,a.httype,a.tqenddt,a.state,a.company';
 		return array(
 			'table'  =>$tabs,
 			'fields'	=>$fields,

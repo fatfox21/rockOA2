@@ -37,7 +37,7 @@ var panel= {
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'标题',dataIndex:'title',search:true,autowidth:true
+		text:'标题',dataIndex:'title',search:true,autowidth:true,align:'left'
 	},{
 		text:'创建者',dataIndex:'optname',search:true,width:80
 	},{

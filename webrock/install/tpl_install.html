@@ -1,12 +1,27 @@
-{include file="../public/header.htm"}
-{literal}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?=TITLE?>_安装</title>
+<link rel="stylesheet" type="text/css" href="css/css.css"/>
+<link rel="stylesheet" type="text/css" href="webrock/css/rockcss.css"/>
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="webrock/webrock.js"></script>
+<script type="text/javascript" src="webrock/install/installscript.js"></script>
+<script type="text/javascript">
+js.path			= '<?=$da['path']?>';
+js.servernow	= '<?=$da['now']?>';
+PROJECT			= '<?=$da['p']?>';
+</script>
 <style>
 .input{width:250px;height:24px;line-height:20px}
 </style>
-{/literal}
+</head>
 <body style="padding:10px">
 <center>
-	<div style="padding:10px;font-size:30px;"><b>{$TITLE}-安装</b></div>
+	<div style="padding:10px;font-size:30px;"><b><?=TITLE?>-安装</b></div>
 	<div style="width:550px;padding:10px;border:2px #cccccc solid">
 		<div style="text-align:left;">
 			<div id="step1" style="padding:20px;line-height:30px;font-size:16px;display:">
@@ -17,6 +32,7 @@
 				<p style="color:red">版权来自：ROCKOA技术团队开发，二次开发请标识来自ROCKOA。</p>
 				<p>合作开发：如您需要定制ROCKOA上其他模块，二次开发，方便可以联系我们，时时满足您的系统要求。</p>
 				<p>技术支持：<a href="http://www.xh829.com/" class="blue" target="_blank">ROCKOA技术研发</a></p>
+				<p>版本：V<?=VERSION?></p>
 				<p><a href="http://www.xh829.com/view_demo.html" class="blue" target="_blank"><u>在线演示</u></a>&nbsp; &nbsp; &nbsp; 已安装？<a href="?m=login" class="blue"><u>直接登录</u></a></p>
 				<div align="center" style="text-align:center;padding-top:15px"><a class="webbtn" onclick="nextabc()" href="javascript:">我知道了</a></div>
 			</div>
@@ -67,7 +83,7 @@
 				
 				<tr>
 					<td align="right"><font color=red>*</font>系统名称：</td>
-					<td><input class="input" name="title" value="{$TITLE}"></td>
+					<td><input class="input" name="title" value="<?=TITLE?>"></td>
 				</tr>
 				
 				<tr><td height="8"></td></tr>
@@ -92,13 +108,13 @@
 			
 			<div id="step3" style="display:none;padding:20px">
 				<div style="color:green;font-size:30px;padding:50px" align="center">安装完成</div>
-				<div align="center"><a href="?m=login"  class="blue"  ><u>前去登录页面</u></a>&nbsp; &nbsp;<font color=#888888>记得删除安装目录哦</font></div>
+				<div align="center"><a href="?m=login"  class="blue"  ><u>前去登录页面</u></a>&nbsp; &nbsp;<font color=#888888>记得删除安装目录(webrock/install)哦</font></div>
 			</div>
 		</div>
 	</div>
 	
 	<div align="center" style="line-height:40px;color:#555555">
-	Copyright &copy;{$smarty.now|date_format:"%Y"} {$TITLE} &nbsp; - &nbsp; 
+	Copyright &copy;<?=date('Y')?> <?=TITLE?> &nbsp; - &nbsp; 
 	技术支持：<a href="http://www.xh829.com/" class="blue" target="_blank">ROCKOA技术</a>
 	</div>
 	

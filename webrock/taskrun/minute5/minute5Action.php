@@ -62,19 +62,30 @@ class minute5ClassAction extends Action{
 	{
 		$dt		= $this->date;
 		$todo	= m('todo');
-		$rows 	= m('work')->getall("`mid`>0 and `istx`=1 and `state` in('待执行','执行中')");
+		$reim	= m('reim');
+		$dbw	= m('work');
+		$rows 	= $dbw->getall("`mid`>0 and `istx`=1 and `state` in('待执行','执行中')");
 		$time	= time();
+		$zttz	= $this->option->getval('worktongzhi_zann');
+		$retz	= $this->option->getval('worktongzhi_reim');
+		
 		foreach($rows as $k=>$rs){
 			$sttime = strtotime($rs['startdt']);
 			$state  = $rs['state'];
-			$bgtime  = $rs['bgtime'];
+			$bgtime = $rs['bgtime'];
 			$ettime	= 999999999999;
 			
 			if(!$this->isempt($rs['enddt']))$ettime = strtotime($rs['enddt']);
-			$jg = $sttime - $time;
+			$jg 	= $sttime - $time;
+			$url 	= $reim->createurl('work', $rs['id']);
+			$distid	= $rs['distid'];
 			
 			if($jg <= 6*60 && $jg>=0 && $state =='待执行'){
-				$todo->addtz($rs['distid'], '工作任务', '['.$rs['type'].'.'.$rs['title'].']待执行', 'work', $rs['mid']);
+				$cont = '您有['.$rs['type'].'.'.$rs['title'].']工作任务待执行，任务将在['.$rs['startdt'].']开始，请及时处理!';
+				if($zttz=='是')$todo->addtz($distid, '工作任务', $cont, 'work', $rs['mid'], $url);
+				if($retz=='是'){
+					$reim->sendsystem(0, $distid, '项目任务', $cont, 'work', $rs['id'], $url);
+				}	
 			}
 			
 			if(!$this->isempt($bgtime) && $ettime >= $time && $sttime <= $time){
@@ -83,13 +94,12 @@ class minute5ClassAction extends Action{
 				$jg 	= $bgsj1 - $time;
 				
 				if($jg <= 6*60 && $jg>=0){
-					$todo->addtz($rs['distid'], '任务报告', '['.$rs['title'].']请在'.$bgsj.'前填写任务报告给'.$rs['baoname'].'', 'workbao', $rs['mid']);
+					$cont = '['.$rs['title'].']请在'.$bgsj.'前填写任务报告给'.$rs['baoname'].'';
+					if($zttz=='是')$todo->addtz($distid, '任务报告', $cont, 'workbao', $rs['mid'], $url);
+					if($retz=='是')$reim->sendsystem(0, $distid, '项目任务', $cont, 'work',$rs['id'], $url);
 				}
 			}
 		}
-	}
-	private function workurl($sid)
-	{
-		
+		$reim->sendstart();
 	}
 }

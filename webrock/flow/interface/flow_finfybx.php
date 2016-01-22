@@ -14,4 +14,11 @@ class finfybxflowClass extends flowChajian
 		);
 		return $arr;
 	}
+	
+	protected function flowfields($arr)
+	{
+		unset($arr['purpose']);
+		unset($arr['purresult']);
+		return $arr;
+	}
 }

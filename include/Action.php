@@ -34,11 +34,12 @@ abstract class mainAction{
 	
 	public $table;
 	public $extentid	= 0;
-	public $importjs	= '';		//引入js文件
+	public $importjs	= '';
 	public $perfix		= '';
 	public $tplname		= '';		//模板文件
 	public $tplpath		= '';		//模板文件路径
 	public $tpltype		= 'tpl';
+	public $tpldom		= 'html';
 	
 	public function __construct()
 	{

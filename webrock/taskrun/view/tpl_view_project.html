@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript">
+js.path = '<?=PATH?>';
+PROJECT = '<?=P?>';
+</script>
+<style>
+.tdys1,.tdys2{padding:2px 5px;border:1px #000000 solid;line-height:24px}
+.tdys1{color:#555555;text-align:right}
+.tdys2{text-align:left}
+.tdys3{padding:2px 5px;border-top:1px #000000 solid;border-right:1px #000000 solid;text-align:center}
+</style>
+</head>
+<body style="padding:15px">
+
+<div align="center">
+
+	<div style="width:720px">
+	
+		<div class="blank10"></div>
+		<div style="font-size:20px"><?=$da['rs']['title']?></div>
+		<div class="blank20"></div>
+		
+		<table  border="0" width="100%" style="border-collapse:collapse" cellspacing="0" bordercolor="#000" cellpadding="0" align="center">
+		<tr><td class="tdys1">标题</td><td class="tdys2" colspan="3"><?=$da['rs']['title']?></td></tr>
+		
+		<tr>
+		<td class="tdys1" width="17%">项目类别</td><td width="33%" class="tdys2"><?=$da['rs']['typename']?></td>
+		<td class="tdys1" width="17%">项目状态</td><td width="33%" class="tdys2"><?=$da['rs']['state']?></td>
+		</tr>
+		
+		<tr>
+			<td class="tdys1">开始时间</td><td class="tdys2"><?=$da['rs']['startdt']?></td>
+			<td class="tdys1">截止时间</td><td class="tdys2"><?=$da['rs']['enddt']?></td>
+		</tr>
+		<tr>
+			<td class="tdys1">负责人</td><td class="tdys2"><?=$da['rs']['fuze']?></td>
+			<td class="tdys1">执行人员</td><td class="tdys2"><?=$da['rs']['runuser']?></td>
+		</tr>
+		<tr>
+			<td class="tdys1">进度</td><td class="tdys2"><?=$da['rs']['progress']?>%</td>
+			<td class="tdys1">授权查看</td><td class="tdys2"><?=$da['rs']['viewuser']?></td>
+		</tr>
+		<tr><td class="tdys1">说明</td><td class="tdys2" colspan="3"><?=$da['rs']['remark']?></td></tr>
+		
+		<tr><td class="tdys1">相关文件</td><td class="tdys2" colspan="3">
+			<?php foreach($da['filers'] as $k=>$rs) {?>
+			<?=$k+1?>、<a href="javascript:" onclick="return js.downshow('<?=$rs['id']?>')" class="blue"><?=$rs['filename']?></a> (<?=$rs['filesizecn']?>)<br>
+			<?php }?>
+		</td></tr>
+		
+		<tr><td class="tdys1">项目进度告</td><td colspan="3" style="padding:0" class="tdys2">
+			
+			<table  border="0" width="100%" style="border-collapse:collapse" cellspacing="0" bordercolor="#000" cellpadding="0" align="center">
+			<tr>
+				<td align="center">状态</td>
+				<td align="center">操作人</td>
+				<td align="center">操作时间</td>
+				<td align="center">说明</td>
+			</tr>
+			
+			<?php foreach($da['rsbg'] as $k=>$rs) {?>
+			<tr>
+				<td class="tdys3"><?=$rs['state']?>(<?=$rs['progress']?>%)</td>
+				<td class="tdys3"><?=$rs['optname']?></td>
+				<td class="tdys3"><?=$rs['optdt']?></td>
+				<td class="tdys3"><?=$rs['explain']?></td>
+			</tr>
+			<?php if($rs['filers']) {?>
+			<tr>
+				<td class="tdys3"  colspan="4"><div align="left">
+					相关文件：<br>
+					<?php foreach($rs['filers'] as $k1=>$rs1) {?>
+					<?=$k1+1?>、<a href="javascript:" onclick="return js.downshow('<?=$rs1['id']?>')" class="blue"><?=$rs1['filename']?></a> (<?=$rs1['filesizecn']?>)<br>
+					<?php }?>
+				</div></td>
+			</tr>
+			<?php } }?>
+			</table>
+			
+		
+		</td></tr>
+		
+		<tr>
+		<td class="tdys1">创建者</td><td class="tdys2"><?=$da['rs']['optname']?></td>
+		<td class="tdys1">修改时间</td><td class="tdys2"><?=$da['rs']['optdt']?></td>
+		</tr>
+		
+		</table>
+		
+	</div>
+	
+	
+</div>
+
+</body>
+</html>

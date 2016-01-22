@@ -67,7 +67,7 @@ if($xhrock->display && ($ajaxbool == 'html' || $ajaxbool == 'false')){
 	$tplpaths					= ''.$temppath.''.$d.''.$m.'/';
 	$tplname					= 'tpl_'.$m.'';
 	if($a!='default')$tplname  .= '_'.$a.'';
-	$tplname				   .= '.html';
+	$tplname				   .= '.'.$xhrock->tpldom.'';
 	$mpathname					= $tplpaths.$tplname;
 	if(!file_exists($mpathname) || !$methodbool){
 		if(!$methodbool){

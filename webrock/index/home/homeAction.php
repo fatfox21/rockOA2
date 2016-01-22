@@ -1,6 +1,44 @@
 <?php
 class homeClassAction extends Action
 {
+	/**
+		首页项目管理读取的
+	*/
+	public function indexAction()
+	{
+		$this->tpltype 	= 'html';
+		$this->tpldom  	= 'js';
+		
+		$str 			= '';
+		$defitem 		= 'daib,work,wannl|todo,gong';
+		$lie1 = $lie2 = $lie3 = '';
+		$where 			= m('admin')->getbhmy('receid', $this->adminid);
+		$rows 			= m('homeitems')->getall('valid=1 '.$where.' order by `sort`');
+		$path 			= ROOT_PATH.'/'.P.'/index/home/aitems/aitems_';
+		foreach($rows as $k=>$rs){
+			$num 	= $rs['num'];
+			$paths  = $path.''.$num.'.js';
+			if(!file_exists($paths))continue;
+			
+			$cont = file_get_contents($paths);
+			$str .= "\n\n".$cont;
+			if($rs['ismr']==1){
+				$lie = $rs['lie'];
+				if($lie>3)$lie=3;
+				if($lie<1)$lie=1;
+				if($lie==1)$lie1.=','.$num.'';
+				if($lie==2)$lie2.=','.$num.'';
+				if($lie==3)$lie3.=','.$num.'';
+			}
+		}
+		$lies = array();
+		if($lie1!='')$lies[] = substr($lie1, 1);
+		if($lie2!='')$lies[] = substr($lie2, 1);
+		if($lie3!='')$lies[] = substr($lie3, 1);
+		if(count($lies)>0)$defitem = join('|', $lies);
+		$this->smartydata['homeitems'] 	= $str;
+		$this->smartydata['defitem'] 	= $defitem;
+	}
 	
 
 	public function daiclAjax()
@@ -43,7 +81,7 @@ class homeClassAction extends Action
 		}
 		
 		//未完成工作任务
-		$to		= m('work')->rows("mid>0 and instr(concat(',', distid, ','), ',$this->adminid,')>0 and `state` in('待执行','执行中')");
+		$to		= m('work')->getwwctotal($this->adminid);
 		if($to>0){
 			$rows[]= array(
 				'title'		=> '未完成任务',

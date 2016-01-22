@@ -9,7 +9,7 @@ Ext.define('Ext.rock.base',{});
 
 Ext.define('Ext.rock.optioncombo',{
 	extend: 'Ext.form.field.ComboBox',
-	alias: 'widget.optioncombo',
+	alias: ['widget.optioncombo', 'widget.rockcombo'],
 	editable:false,
 	optionmnum:'',
 	triggerAction:'all',
@@ -18,9 +18,10 @@ Ext.define('Ext.rock.optioncombo',{
 	initComponent: function(){
 		var me	= this;
 		Ext.applyIf(this,{
-			defaultstore:[],valuefields:'name',loadstore:false,autoloadlist:false,
-			store:[['loading','加载中...']]
+			defaultstore:[],valuefields:'name',displayfields:'name',loadstore:false,autoloadlist:false,
+			store:[['loading','加载中...']],fiststore:false
 		});
+		me.store=me.store.concat(me.defaultstore);
 		me.on({
 			expand:function(){
 				me._expandshow();
@@ -28,6 +29,10 @@ Ext.define('Ext.rock.optioncombo',{
 			select:this.select,
 			change:this.change
 		});
+		if(!me.url)me.url = js.getajaxurl('getmnum','index','',{mnum:this.optionmnum});
+		if(me.url=='company'){
+			me.url = js.getajaxurl('getcompanydata','dept','system');
+		}
 		this.callParent();
 		if(me.autoloadlist)me._expandshow();
 	},
@@ -41,7 +46,7 @@ Ext.define('Ext.rock.optioncombo',{
 	},
 	loadlist:function(){
 		var me = this;
-		$.get(js.getajaxurl('getmnum','index','',{mnum:this.optionmnum}),function(da){
+		$.get(me.url,function(da){
 			me._expandshowcall(da);
 		});
 	},
@@ -55,7 +60,7 @@ Ext.define('Ext.rock.optioncombo',{
 		this._datajoa = {};
 		for(i=0;i<a.length;i++){
 			vs0 = a[i][this.valuefields];
-			vs1	= a[i].name;
+			vs1	= a[i][this.displayfields];
 			this._datajoa[vs0] = vs1;
 			b.push([vs0,vs1]);
 		}

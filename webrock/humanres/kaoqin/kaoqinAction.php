@@ -1,6 +1,24 @@
 <?php
 class kaoqinClassAction extends Action
 {
+	
+	public function ladasetmguiz($table, $rows)
+	{
+		$dts = c('date');
+		foreach($rows as $k=>$rs){
+			$rows[$k]['gzname'] = m('kq_set')->getmou('name', $rs['mid']);
+			$jg = $dts->datediff('d', $this->date, $rs['startdt']);
+			$jg1 = $dts->datediff('d', $this->date, $rs['enddt']);
+			$zt = '<font color=green>执行中</font>';
+			if($jg>0)$zt='<font color=blue>待执行</font>';
+			if($jg1<0)$zt='<font color=red>已结束</font>';
+			$rows[$k]['ztname'] = $zt;
+		}
+		return array(
+			'rows' => $rows
+		);
+	}
+	
 	public function getsetAjax()
 	{
 		$rows	= m('kq_set')->getone('1=1 order by id desc');

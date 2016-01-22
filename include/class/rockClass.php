@@ -36,14 +36,19 @@ final class rockClass
 		$this->win		=  php_uname();
 		$this->web		= isset($_SERVER['HTTP_USER_AGENT'])	? $_SERVER['HTTP_USER_AGENT']	: '' ;
 		$this->web		= $this->getbrowser($this->web);
-		$this->unarr	= explode(',',urldecode('%BC%A6%B0%CD%2C%D7%F6%B0%AE'));
+		$this->unarr	= explode(',','1,2');
 		$this->now		= $this->now();
 		$this->date		= date('Y-m-d');
 	}
 	
-	/**
-		判断是否有特殊字符串
-	*/
+	public function initRock()
+	{
+		$this->jm = c('jm', true);
+		$this->adminid	= (int)$this->session(QOM.'adminid',0);
+		$this->adminname= $this->session(QOM.'adminname');
+		$this->adminuser= $this->session(QOM.'adminuser');
+	}
+	
 	private function unstr($str)
 	{
 		$ystr = '';

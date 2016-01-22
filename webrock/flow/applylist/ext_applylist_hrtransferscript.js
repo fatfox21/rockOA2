@@ -1,5 +1,5 @@
 var panel= {
-	xtype:'rockflowgrid',opentype:params.opentype,flownum:'hrtransfer',formtitle:'人事调动',
+	xtype:'rockflowgrid',opentype:params.opentype,flownum:'hrtransfer',formtitle:'人事调动',exceltitle:'人事调动',
 	tablename:'hrtransfer',defaultorder:'id desc',
 	columns:[{
 		xtype: 'rownumberer',

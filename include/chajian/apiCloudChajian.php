@@ -4,8 +4,8 @@
 */
 class apiCloudChajian extends Chajian{
 	
-	private $AppID 		= 'A6984534540961';
-    private $AppKey 	= '730CED46-6BA5-608E-E685-E364D8BBEA25';
+	private $AppID 		= 'A6998518517144';
+    private $AppKey 	= '8CD01DFE-F9F4-370A-5F45-B3D46C9518E1';
     private $AppPath 	= 'https://p.apicloud.com/api/push/message';
     private	$timeOut 	= 30;
         

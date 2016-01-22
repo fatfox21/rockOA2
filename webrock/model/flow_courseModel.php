@@ -57,7 +57,11 @@ class flow_courseClassModel extends Model
 		}
 		if(!$this->isempt($rs['nowcheckname']) && $status!=1){
 			if($ztname!='')$ztname.=$sp;
-			$ztname .= '<font color=blue>待'.$rs['nowcheckname'].'处理</font>';
+			if($status==0){
+				$ztname .= '<font color=blue>待'.$rs['nowcheckname'].'处理</font>';
+			}else{
+				$ztname .= '<font color=#9854F7>待提交人处理</font>';
+			}
 		}
 		if($status==1 && $ztname=='')$ztname='<font color=green>已处理完成</font>';
 		return $ztname;

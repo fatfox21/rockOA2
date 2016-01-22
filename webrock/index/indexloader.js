@@ -5,7 +5,7 @@ var mainjsarr = [
 	'webrock/index/indexscript.js',
 	'webrock/index/indexpublic.js',
 	'mode/My97DatePicker/WdatePicker.js',
-	'webrock/extjs/rock/base.js',
+	'webrock/extjs/rock/base.js?rnd='+Math.random()+'',//?rnd='+Math.random()+'
 	'webrock/extjs/rock/option.js',
 	'webrock/extjs/rock/rate.js',
 	'webrock/extjs/rock/tree.js',

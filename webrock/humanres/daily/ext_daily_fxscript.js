@@ -1,7 +1,7 @@
 var month = js.now('Y-m');
 
 var panel = {
-	xtype:'rockgrid',tablename:'dailyfx',exceltitle:'工作日报分析',url:publiccheckstore(mode,dir),opentype:3,searchtools:true,
+	xtype:'rockgrid',tablename:'dailyfx',exceltitle:'工作日报分析',url:publiccheckstore(mode,dir),opentype:7,searchtools:true,
 	defaultwhere:"[A][K]a.`month` like '"+month+"%'",
 	tbarcenter:[{
 		xtype:'rockdate',format:'month',emptyText:'月份',width:80,id:'month_'+rand+'',value:month,maxDate:month

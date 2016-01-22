@@ -212,44 +212,51 @@ class Action extends mainAction
 		$fields		= $this->request('storefields','*');
 		$aftera		= $this->request('storeafteraction', 'publicstoreAfter');
 		$order		= $this->request('defaultorder');
+		$status		= $this->request('statusabc');
 		$opentype	= (int)$this->request('opentype');
 		$execldown	= $this->request('execldown');
 		$tables 	= $this->rock->strformat('?0 a left join ?1 b on a.uid=b.id', $this->T($table), $this->T('admin'));
 		$where		= 'a.`status`<>5';
+		$uid 		= $this->adminid;
 		
 		if($fields=='*')$fields='a.*,b.deptid,b.deptname,b.name';
 		
 		if($opentype == 0){
-			$where.=" and a.uid='$this->adminid'";
+			$where.=" and (a.uid='$uid' or a.optid='$uid')";
 		}
 		//审核
 		if($opentype == 1){
-			$where.=" and ".$this->rock->dbinstr('a.nowcheckid', $this->adminid);
+			$where.=" and ".$this->rock->dbinstr('a.nowcheckid', $uid);
 		}
 		//查询
 		if($opentype == 2){
-			$where.=" and ((a.uid='$this->adminid') or ( instr(b.superpath, '[$this->adminid]')>0 and a.`isturn`=1 ) or (".$this->rock->dbinstr('a.allcheckid', $this->adminid)."))";
-			
+			$where.=" and ((a.uid='$uid') or (a.optid='$uid') or ( instr(b.superpath, '[$uid]')>0 and a.`isturn`=1 ) or (".$this->rock->dbinstr('a.allcheckid', $uid)."))";
 		}
-		//全部记录
+		//全部记录(不包含状态5)
 		if($opentype == 3){
+			//$where .= ' and a.id>0';
+		}
+		//全部记录(包含状态5)
+		if($opentype == 7){
 			$where = 'a.id>0';
 		}
 		//下属记录
 		if($opentype == 4){
-			$where = "a.id>0 and instr(b.superpath, '[$this->adminid]')>0 ";
+			$where = "a.id>0 and instr(b.superpath, '[$uid]')>0 ";
 		}
 		//我自己的
 		if($opentype == 5){
-			$where = "a.id>0 and a.uid='$this->adminid'";
+			$where = "a.id>0 and (a.uid='$uid' or a.optid='$uid')";
 		}
 		//授权查看
 		if($opentype == 6){
-			$uissd = m('admin')->getextsjoinv($table, $this->adminid);
+			$uissd = m('admin')->getextsjoinv($table, $uid);
 			$where = "a.uid in($uissd)";
 		}
 		
-		if($opentype<0 || $opentype>6)$where='1=2';//防止
+		if($opentype<0 || $opentype>7)$where='1=2';
+		if($status != '')$where.=' and a.`status`='.$status.'';
+		$where.=' and ifnull(a.`uid`,0)>0';
 		
 		$arr	= $this->limitRows($tables, $fields, $where, $order);
 		$total	= $arr['total'];
@@ -266,20 +273,17 @@ class Action extends mainAction
 			foreach($rows as $k=>$rs){
 				$nowcheckid = ','.$rs['nowcheckid'].',';
 				$notbtnarr		= array();
-				if($this->contain($nowcheckid, ','.$this->adminid.',') && ($rs['status'] == 0 || $rs['status'] == 2) && $rs['isturn']==1){
+				if($this->contain($nowcheckid, ','.$uid.',') && ($rs['status'] == 0 || $rs['status'] == 2) && $rs['isturn']==1){
 					$notbtnarr	= $rudb->getcheckact($table, $rs['id']);
 				}	
 				$rows[$k]['notbtnarr'] = $notbtnarr;
 			}
 		}
-		
-		
+
 		$bacarr	= array(
 			'totalCount'=> $total,
 			'rows'		=> $rows
 		);
-		
-		
 		
 		if(method_exists($this, $aftera)){
 			$narr	= $this->$aftera($table, $rows);
@@ -296,10 +300,10 @@ class Action extends mainAction
 	
 	public function exceldown($arr)
 	{
-		$fields = explode(',', $this->rock->post('excelfields','',1));
-		$header = explode(',', $this->rock->post('excelheader','',1));
-		$title	= $this->rock->post('exceltitle','',1);
-		$chuli	= $this->rock->post('excelchuli','',1);
+		$fields = explode(',', $this->post('excelfields','',1));
+		$header = explode(',', $this->post('excelheader','',1));
+		$title	= $this->post('exceltitle','',1);
+		$chuli	= $this->post('excelchuli','',1);
 		
 		$headArr	= array();
 		$rows		= $arr['rows'];
@@ -311,14 +315,14 @@ class Action extends mainAction
 			$chulia = explode(',', $chuli);
 			foreach($rows as $k=>$rs){
 				foreach($chulia as $chua){
-					$s 	= $this->rock->post($chua,'',1);
+					$s 	= $this->post($chua,'',1);
 					if($s == ''){
-						$s1 = $this->rock->post($chua.'_arr','',1);
+						$s1 = $this->post($chua.'_arr','',1);
 						if($s1 != ''){
 							$s1a = explode(',', $s1);
 							$s2	 = '';
 							if(isset($rs[$chua]))$s2 = $rs[$chua];
-							if(!$this->rock->isempt($s2))if(isset($s1a[$s2]))$s = $s1a[$s2];
+							if(!$this->isempt($s2))if(isset($s1a[$s2]))$s = $s1a[$s2];
 						}
 					}
 					if($s != '')$rows[$k][$chua] = $this->rock->reparr($s, $rs);
@@ -415,7 +419,7 @@ class Action extends mainAction
 					$uaarr['status']= '0';
 					$uaarr['optid']	= $this->adminid;
 					$uaarr['optname']= $this->adminname;
-					if($id==0)$uaarr['applydt']= $this->date;
+					if($id==0)$uaarr['applydt']= $this->post('applydtPost', $this->date);
 				}
 				foreach($fields as $field){
 					$val	= $this->post(''.$field.'Post');

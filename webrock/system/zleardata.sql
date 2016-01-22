@@ -78,3 +78,5 @@ delete from `rock_work`;
 alter table `rock_work` AUTO_INCREMENT=1;
 delete from `rock_workbg`;
 alter table `rock_workbg` AUTO_INCREMENT=1;
+delete from `rock_reward`;
+alter table `rock_reward` AUTO_INCREMENT=1;

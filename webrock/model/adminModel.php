@@ -153,4 +153,34 @@ class adminClassModel extends Model
 		}
 		return '总'.$total.'条记录,更新了'.$cl.'条';
 	}
+	
+	
+	/**
+		获取对应人下属
+	*/
+	public function getdownuser($uid)
+	{
+		$usid = $this->db->getjoinval('[Q]admin','id', "`id`>0 and instr(`superpath`, '[$uid]')>0");//1,2,3,4
+		return $usid;
+	}
+	
+	public function getbhmy($fields, $uid=0, $arsa=array())
+	{
+		$urs 		= $this->getone($uid, 'deptpath,id');
+		$tjarr[] 	= $this->rock->dbinstr($fields, 'u'.$urs['id']);
+		$tjarr[] 	= "$fields='all'";
+		if($urs){
+			$patar = $urs['deptpath'];
+			if(!$this->isempt($patar)){
+				$ars = explode(',', str_replace(array('[',']'), array('',''), $patar));
+				foreach($ars as $depid){
+					$tjarr[] 	= $this->rock->dbinstr($fields, 'd'.$depid);
+				}
+			}
+		}
+		$tjarr 	= array_merge($tjarr, $arsa);  
+		$where 	= join(' or ', $tjarr);
+		$where 	= "and ($where)";
+		return $where;
+	}
 }

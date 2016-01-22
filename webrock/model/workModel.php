@@ -73,7 +73,7 @@ class workClassModel extends Model
 				$msid.=','.$rs['mid'].'';
 			}
 		}  
-		if($btype == '')$this->delete("`mid` in($msid) and id not in($ssid) and `state`='待执行' and `dt`='$dt' $swhe");
+		if($btype == '')$this->delete("`mid` in($msid) and id not in($ssid)  and `dt`='$dt' $swhe");
 		return $rowsa;
 	}
 	
@@ -104,8 +104,41 @@ class workClassModel extends Model
 	}
 	public function delwork($id)
 	{
-		$where = "`mid` in($id) and `state`='待执行'";
+		$where = "`mid` in($id)";// and ifnull(`state`,'')<>'已完成'
 		$this->db->delete('[Q]todo', "`table` in('work','workbao') and `mid` in(select `id` from `[Q]work` where $where)");
 		$this->delete("( $where) or (`id` in($id) ) ");
+	}
+	
+	public function sendbaogao($id, $zt, $cont='')
+	{
+		$rs = $this->getone($id);
+		$this->update("`state`='$zt'", $id);
+		if(!$this->isempt($rs['baoid'])){
+			$reim	= m('reim');
+			$cont 	= ''.$this->adminname.'提交了['.$rs['title'].']的任务报告，任务状态['.$zt.']';
+			$url 	= $reim->createurl('work', $rs['id']);
+			
+			m('todo')->addtz($rs['baoid'], '任务报告', $cont, 'work', $rs['id'], $url);
+			$reim->sendsystem($this->adminid, $rs['baoid'], '项目任务', $cont, 'work', $rs['id'], $url);
+		}
+	}
+	
+	public function getwwctotal($uid)
+	{
+		$dt = $this->rock->date;
+		$to = $this->rows("mid>0 and instr(concat(',', distid, ','), ',$uid,')>0 and `startdt`<='$dt 23:59:59' and `state` in('待执行','执行中')");
+		return $to;
+	}
+	
+	public function getwwcwork($uid, $tlx=0)
+	{
+		$dt = $this->rock->date;
+		$where 	= "mid>0 and((`dt`='$dt') or (`dt`<'$dt' && `state` in('待执行','执行中'))) and  instr(concat(',', distid, ','), ',$uid,')>0 ";
+		if($tlx == 0){
+			$rows = $this->getall($where." order by `startdt`",'`type`,`title`,`state`,`startdt`');
+		}else{
+			$rows = $this->rows($where);
+		}
+		return $rows;
 	}
 }

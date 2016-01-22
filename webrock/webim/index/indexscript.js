@@ -101,10 +101,11 @@ function moveform(){
 }
 
 function objecttostr(a){
-	var a1,s='';
+	var a1,s='',v;
 	if(!a)a={};
 	for(a1 in a){
-		s+=','+a1+':"'+a[a1]+'"';
+		v = a[a1];
+		s+=','+a1+':"'+v+'"';
 	}
 	if(s!='')s = s.substr(1);
 	s = jm.encrypt('{'+s+'}');

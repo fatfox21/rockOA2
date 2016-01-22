@@ -28,7 +28,6 @@ class kaoqinClassAction extends Action{
 			$dtss = explode(' ', $sjl);
 			$dkrs[$rs['finge']][] = array($dtss[0], $dtss[1], $sjl, strtotime($sjl));
 		}
-		$set	= $this->readkaoset();
 		$db1 	= m('kq_anay');
 		$kq 	= m('kq');
 		$allarr = array();
@@ -48,6 +47,7 @@ class kaoqinClassAction extends Action{
 					$dtdk	= $this->getdk($dkrs, $urs['finge'], $sdt); //当天打卡记录
 					$iswork	= $kq->isworkdt($sdt, $uid, 'int');
 					$len	= count($dtdk);
+					$set 	= $kq->readkaoset($sdt, $uid);
 					foreach($set as $k1=>$cog){//状态分析
 						$ztname = $cog['name'];
 						$sarr = array(
@@ -177,7 +177,7 @@ class kaoqinClassAction extends Action{
 	}
 
 	//读取考勤设置
-	private function readkaoset()
+	private function _readkaoset()
 	{
 		$db 	= m('kq_set');
 		$rows	= $db->getall("`type`=0 and `mid`=0 order by `sort`", '`id`,`receid`');
@@ -199,6 +199,9 @@ class kaoqinClassAction extends Action{
 	
 	public function testAjax()
 	{
+		echo ACTPATH;
+		//echo m('kq')->getkqid('2015-08-30', 1);
+		echo '<hr>success';
 		/*
 		$api = c('apiCloud', true);
 		echo $api->send('1', array(

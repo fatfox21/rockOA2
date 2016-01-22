@@ -13,7 +13,7 @@ var frompanel={
 		xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
 			fieldLabel:'外出时间',name:'outtimePost',allowBlank: false,xtype:'datetimefield',width:'49%'
 		},{
-			fieldLabel:'预计回岗时间',name:'intimePost',allowBlank: false,xtype:'datetimefield',width:'49%'
+			fieldLabel:'预计回岗时间',name:'intimePost',allowBlank: false,xtype:'datetimefield',width:'50%'
 		}]
 	},{
 		fieldLabel:'前往地址',name:'addressPost',allowBlank: false

@@ -3,7 +3,7 @@ var atype = params.atype;
 var panel = {
 	xtype:'rockgrid',url:publicstore(mode,dir),
 	storeafteraction:'getwcslistwock',storebeforeaction:'getwcslistbefore',
-	tablename:'work',searchtools:true,defaultorder:'startdt desc',fields:['sjla','sjsj'],
+	tablename:'work',searchtools:true,defaultorder:'startdt desc',fields:['sjla','sjsj','sjks'],
 	paramsbase:{atype:atype},
 	columns:[{
 		xtype: 'rownumberer',
@@ -24,6 +24,7 @@ var panel = {
 				v='<font color=green>'+v+'</font>';
 			}else{
 				if(d.data.sjsj>0)v+='<br><font color=red>超'+d.data.sjla+'</font>';
+				if(d.data.sjks>0 && v=='待执行')v='<font color=red>'+v+'</font>';
 			}				
 			return v;
 		}

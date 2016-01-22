@@ -1,14 +1,36 @@
 js.imports('js/rmb.js');
 var grids,form;
 var frompanel={
-	submitfields:'money,moneycn,explain',labelWidth:100,url:publicsave('finsave','finasys'),aftersaveaction:'fybxsave',
+	submitfields:'money,moneycn,explain,applydt,bills,fullname,paytype,cardid,openbank',labelWidth:100,url:publicsave('finsave','finasys'),aftersaveaction:'fybxsave',
 	params:{otherfields:'type=0'},
 	items:[{
 		value:'0',name:'idPost',hidden:true
 	},{
-		fieldLabel:'报销人',xtype:'displayfield',value:adminname,name:'namePost'
+		xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+			fieldLabel:'报销人',xtype:'displayfield',value:adminname,name:'namePost',width:'49%'
+		},{
+			fieldLabel:'报销部门',xtype:'displayfield',value:admindeptname,name:'deptnamePost',width:'49%'
+		}]
 	},{
-		fieldLabel:'报销部门',xtype:'displayfield',value:admindeptname,name:'deptnamePost'
+		xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+			fieldLabel:'申请日期',name:'applydtPost',width:'49%',value:js.now(),readOnly:true
+		},{
+			fieldLabel:'附单据',name:'billsPost',width:'40%',xtype:'numberfield',value:0,allowBlank: false,minValue:0,maxValue:100
+		},{
+			xtype:'displayfield',value:'&nbsp;(张)',hideLabel:true
+		}]
+	},{
+		xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+			fieldLabel:'收款人全称',name:'fullnamePost',width:'49%',allowBlank: false
+		},{
+			fieldLabel:'付款方式',name:'paytypePost',width:'50%',allowBlank: false,xtype:'optioncombo',optionmnum:'finpaytype'
+		}]
+	},{
+		xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+			fieldLabel:'收款帐号',name:'cardidPost',width:'49%',allowBlank: false
+		},{
+			fieldLabel:'开户行',name:'openbankPost',width:'50%',allowBlank: false
+		}]
 	},{
 		xtype:'fieldset',title: '报销明细',collapsible: true,padding:5,
 		items:{
@@ -72,6 +94,18 @@ var frompanel={
 		this.setVal('moneycn', AmountInWords(mon));
 	}
 };
+
+if(params.mid==0){
+	$.get(js.getajaxurl('getlast','finsave','finasys'),function(da){
+		if(da){
+			var d = js.decode(da);
+			form.setVal('paytype', d.paytype);
+			form.setVal('cardid', d.cardid);
+			form.setVal('openbank', d.openbank);
+			form.setVal('fullname', d.fullname);
+		}
+	});
+}
 
 var panelss = {
 	xtype:'rockflowform',

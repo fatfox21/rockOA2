@@ -49,11 +49,11 @@ PROJECT			= '<?=$da['p']?>';
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					  <tr>
 						<td height="70" align="right" width="80">帐号：</td>
-						<td align="left"><input class="input" style="width:200px" onKeyUp="if(event.keyCode==13)form('adminpass').focus()" value="<?=$da['ca_adminuser']?>"  name="adminuser"></td>
+						<td align="left"><input class="input" style="width:200px" onKeyUp="if(event.keyCode==13)get('adminpass').focus()" value="<?=$da['ca_adminuser']?>"  name="adminuser"></td>
 					  </tr>
 					  <tr>
 						<td height="70" align="right">密码：</td>
-						<td align="left"><input class="input" style="width:200px" onKeyUp="if(event.keyCode==13)loginsubmit()" value="<?php if($da['ca_rempass']=='1')echo $da['ca_adminpass'];?>"  name="adminpass" type="password"></td>
+						<td align="left"><input class="input" style="width:200px" onKeyUp="if(event.keyCode==13)loginsubmit()" value="<?php if($da['ca_rempass']=='1')echo $da['ca_adminpass'];?>" id="adminpass" name="adminpass" type="password"></td>
 					  </tr>
 					  <tr>
 						<td align="right" ></td>

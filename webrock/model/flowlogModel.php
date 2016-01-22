@@ -10,10 +10,11 @@ class flowlogClassModel extends Model
 	{
 		$where		= "`table`='$table' and `mid`='$mid'";
 		$rs			= m($table)->getone($mid);
-		$urs		= $log	= $setrs = $logarr	= array();
+		$urs	= $aurs	= $log	= $setrs = $logarr	= array();
 		$status 	= 0;
 		if($rs){
 			$urs 	= m('admin')->getone($rs['uid'], 'name,deptname');
+			$aurs 	= m('admin')->getone($rs['optid'], 'name,deptname');
 			$logarr	= m('flow_log')->getall("$where order by `id`");
 			$setrs 	= $this->getone("`num`='$flownum'", "`id`,`name`");
 			$status = $rs['status'];
@@ -55,6 +56,7 @@ class flowlogClassModel extends Model
 		if($rs){
 			$rs['checkstatustext']	= m('flow_course')->getstatuss($table, $rs);
 			$bos1	= $this->contain(','.$uids.',', ','.$rs['uid'].',');
+			if(!$bos1)$bos1	= $this->contain(','.$uids.',', ','.$rs['optid'].',');
 			$nstatus= $rs['nstatus'];
 			if($status != 1 && $bos1){
 				if($nstatus == 0)$isedit = 1;
@@ -92,6 +94,7 @@ class flowlogClassModel extends Model
 		$arr		= array(
 			'data'	=> $rs,
 			'user'	=> $urs,
+			'aurs'	=> $aurs,
 			'log'	=> $log,
 			'logstr'=> $this->getlogstr($log),
 			'logarr' => $logarr,

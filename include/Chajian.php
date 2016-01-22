@@ -22,10 +22,16 @@ abstract class Chajian{
 	{
 		$this->rock			= $GLOBALS['rock'];
 		$this->db			= $GLOBALS['db'];
-		$this->adminid		= (int)$this->rock->session(QOM.'adminid',0);
-		$this->adminname	= $this->rock->session(QOM.'adminname');
+		$this->adminid		= $this->rock->adminid;
+		$this->adminname	= $this->rock->adminname;
 		$this->initChajian();
 	}
+	
+	public function __destruct()
+	{
+		$this->destChajian();
+	}
+	
 	public function isempt($str)
 	{
 		return $this->rock->isempt($str);
@@ -35,4 +41,5 @@ abstract class Chajian{
 		return $this->rock->contain($str, $s1);
 	}	
 	protected function initChajian(){}
+	protected function destChajian(){}
 }

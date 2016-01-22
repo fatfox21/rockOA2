@@ -86,4 +86,17 @@ class inforClassAction extends Action
 			'wdtotal'	=> $wyd
 		);
 	}
+	
+	//推送到REIM
+	public function reimsendinfor($table, $cans, $id)
+	{
+		if($this->post('isreimPost')!='1')return;
+		$recrids = $cans['faobjid'];
+		$recruid = m('admin')->gjoin($recrids);
+		if($recruid=='')return;
+		$reim 	= m('reim');
+		$cont	= '['.$cans['typename'].']'.$cans['title'].'';
+		$url	= $reim->createurl('gong', $id);
+		$reim->sendsystem($this->adminid, $recruid, 'OA通告', $cont, 'infor',$id, $url);
+	}
 }

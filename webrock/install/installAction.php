@@ -3,6 +3,7 @@ class installClassAction extends Action{
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
 		$this->title	= TITLE.'_安装';
 	}
 	
@@ -20,6 +21,9 @@ class installClassAction extends Action{
 		$highpass 	= $this->post('highpass');
 		
 		$msg  		= '';
+		
+		if($dbtype=='mysql' && !function_exists('mysql_connect'))exit('未开启mysql扩展模块');
+		if($dbtype=='mysqli' && !class_exists('mysqli'))exit('未开启mysqli扩展模块');
 		
 		//1
 		$db1 		= import($dbtype);

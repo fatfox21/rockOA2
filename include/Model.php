@@ -24,8 +24,8 @@ abstract class Model{
 	{
 		$this->rock			= $GLOBALS['rock'];
 		$this->db			= $GLOBALS['db'];
-		$this->adminid		= (int)$this->rock->session(QOM.'adminid',0);
-		$this->adminname	= $this->rock->session(QOM.'adminname');
+		$this->adminid		= $this->rock->adminid;
+		$this->adminname	= $this->rock->adminname;
 		$this->settable($table);
 		$this->initModel();
 	}

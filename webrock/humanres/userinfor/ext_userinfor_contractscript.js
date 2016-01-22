@@ -6,9 +6,11 @@ var panel = {
 	},{
 		text:'姓名',dataIndex:'name',width:80,search:true,qz:'b.'
 	},{
-		text:'部门',dataIndex:'deptname',width:150,autowidth:true,search:true,qz:'b.'
+		text:'部门',dataIndex:'deptname',width:100,autowidth:true,search:true,qz:'b.'
 	},{
 		text:'合同类型',dataIndex:'httype',width:150,search:true,qz:'a.'
+	},{
+		text:'签署公司',dataIndex:'company',width:100,autowidth:true,search:true,qz:'a.'
 	},{
 		text:'开始日期',dataIndex:'startdt',width:110,search:true,qz:'a.',atype:'date'
 	},{
@@ -16,7 +18,7 @@ var panel = {
 	},{
 		text:'说明',dataIndex:'explain',flex:1,align:'left',search:true,qz:'a.'
 	},{
-		text:'合同状态',dataIndex:'state',width:100,search:true,qz:'a.'
+		text:'合同状态',dataIndex:'state',width:90,search:true,qz:'a.'
 	},{
 		text:'提前截止日期',dataIndex:'tqenddt',width:110,search:true,qz:'a.',atype:'date'
 	},{
@@ -44,7 +46,7 @@ var panel = {
 	bbaritems:['无截止日期为长期合同'],
 	formwidth:400,
 	formparams:{
-		submitfields:'startdt,enddt,explain,uid,httype,state,tqenddt',
+		submitfields:'startdt,enddt,explain,uid,httype,state,tqenddt,company',autoScroll:false,
 		params:{int_filestype:'uid',otherfields:'optdt={now},atype=ract'},labelWidth:100,
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
@@ -54,6 +56,8 @@ var panel = {
 			name:'uidPost',id:'uid_'+rand+'',hidden:true
 		},{
 			fieldLabel:''+bitian+'人员',otherfields:{deptname:'deptname_'+rand+''},nameidfields:'uid_'+rand+'',name:'namePost',xtype:'changedeptuser',changetitle:'选择人员',changetype:'user',allowBlank: false
+		},{
+			fieldLabel:''+bitian+'签署公司',name:'companyPost',xtype:'rockcombo',url:'company',editable:true,allowBlank: false
 		},{
 			fieldLabel:''+bitian+'合同类型',name:'httypePost',xtype:'optioncombo',optionmnum:'hetongtype',allowBlank: false
 		},{

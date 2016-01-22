@@ -11,7 +11,7 @@ function opentablss(a){
 var panel = {
 	xtype:'rockgrid',tablename:'flow_bill',searchtools:true,defaultorder:'optdt desc',
 	url:publicstore(mode,dir),storeafteraction:'checkmychange',storebeforeaction:'checkmybefore',
-	fields:['uid','status','nstatus'],
+	fields:['uid','status','nstatus','optid'],
 	tbarleft:[{
 		xtype:'combo',store:[['0','所有模块']],width:130,editable:false,id:'mode_'+rand+'',value:'0'
 	}],
@@ -50,7 +50,7 @@ var panel = {
 		this.down('#zj').setDisabled(true);
 		this.down('#cb').setDisabled(true);
 		this.down('#del').setDisabled(true);
-		if(!bo&&d.uid==adminid && d.status!=1){
+		if(!bo&& (d.uid==adminid || d.optid==adminid) && d.status!=1){
 			if(d.status!=1)this.down('#zj').setDisabled(bo);
 			if(d.status==0)this.down('#cb').setDisabled(bo);
 			if(d.nstatus!=1)this.down('#del').setDisabled(bo);
@@ -134,7 +134,7 @@ var panel = {
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'模块',width:110,dataIndex:'modename',search:false,sortable:true,qz:'a.'
+		text:'模块',width:110,dataIndex:'modename',search:false,sortable:true,qz:'a.',autowidth:true
 	},{
 		text:'单号',width:100,dataIndex:'sericnum',search:true,sortable:true,autowidth:true,qz:'a.'
 	},{
@@ -142,9 +142,11 @@ var panel = {
 	},{
 		text:'姓名',width:80,dataIndex:'name',sortable:false,search:true,qz:'b.'
 	},{
-		text:'时间',width:150,dataIndex:'optdt',sortable:true,atype:'date',search:true,autowidth:true,qz:'a.'
+		text:'申请日期',width:100,dataIndex:'applydt',sortable:true,atype:'date',search:true,qz:'a.'
 	},{
 		text:'状态',width:150,dataIndex:'statustext'
+	},{
+		text:'操作人',width:80,dataIndex:'optname',sortable:true,search:true,qz:'a.'
 	},{
 		text:'摘要',flex:1,dataIndex:'summary',sortable:false,renderer:rendercont,align:'left'
 	},{

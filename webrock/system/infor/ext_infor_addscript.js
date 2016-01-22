@@ -25,6 +25,7 @@ var panel= {
 	width:750,xtype:'rockform',
 	submitfields:'title,typename,xu,isshow,content,zuozhe,indate,faobjid,faobjname',border:false,
 	params:{int_filestype:'xu,isshow,atype',otherfields:'optdt={now},optname={admin},optid={adminid},atype='+atype+''},tablename:'infor',
+	url:publicsave(mode,dir),aftersaveaction:'reimsendinfor',
 	items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true	
 		},{
@@ -33,7 +34,9 @@ var panel= {
 			},{
 				name:'faobjidPost',id:'faobjid_'+rand+'',xtype:'textfield',hidden:true
 			},{
-				fieldLabel:'发布给',nameidfields:'faobjid_'+rand+'',name:'faobjnamePost',xtype:'changedeptuser',changetitle:'选择接收对象',changetype:'deptusercheck',width:'50%'
+				fieldLabel:'发布给',nameidfields:'faobjid_'+rand+'',name:'faobjnamePost',xtype:'changedeptuser',changetitle:'选择接收对象',changetype:'deptusercheckall',width:'38%'
+			},{
+				hideLabel:true,name:'isreimPost',xtype:'checkboxfield',boxLabel:'REIM推送',width:'12%',inputValue:'1',labelSeparator:'',margin:'0 0 0 10'
 			}]
 		},{
 			fieldLabel:''+bitian+'主题',name:'titlePost',allowBlank: false

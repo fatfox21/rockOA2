@@ -74,7 +74,7 @@ var guser = {
 		if(this.bool)return;
 		var o	= $('#content');
 		var nr	= strformat.sendinstr(o.val());
-		nr		= nr.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
+		nr		= nr.replace(/</gi,'&lt;').replace(/>/gi,'&gt;').replace(/\n/gi,'<br>');
 		if(ssnr)nr=ssnr;
 		if(isempt(nr))return false;
 		var conss = jm.encrypt(nr);

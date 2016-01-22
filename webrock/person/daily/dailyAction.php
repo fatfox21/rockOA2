@@ -68,10 +68,11 @@ class dailyClassAction extends Action{
 		echo json_encode($rows);
 	}
 	
+	
+	
 	public function dailyafter($table, $cans, $id)
 	{
 		if($this->post('huitypePost')=='super'){
-			
 			$rows 	 		= m('daily')->getone($id);
 			$rows['name'] 	= $rows['optname'];
 			$superid = m('admin')->getmou('superid', $rows['uid']);

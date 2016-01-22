@@ -8,16 +8,21 @@ var panel= {
 	},{
 		text:'姓名',dataIndex:'name',width:90,search:true
 	},{
-		text:'部门',dataIndex:'deptname',width:200,search:true,autowidth:true
+		text:'部门',dataIndex:'deptname',width:100,search:true,autowidth:true
 	},{
-		text:'报销金额',dataIndex:'money',width:160,search:true
+		text:'报销金额',dataIndex:'money',width:100,search:true
+	},{
+		text:'申请日期',dataIndex:'applydt',width:90,search:true,atype:'date'
+	},{
+		text:'单据(张)',dataIndex:'bills',width:90
+	},{
+		text:'付款方式',dataIndex:'paytype',width:100,search:true
+	},{
+		text:'收款人',dataIndex:'fullname',width:100,search:true,autowidth:true
 	},{
 		text:'状态',dataIndex:'status'
 	},{
 		text:'说明',align:'left',dataIndex:'explain',flex:1,sortable:false
-	}],
-	tbarcenter:[{
-		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:80
 	}]
 };
 

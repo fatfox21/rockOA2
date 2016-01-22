@@ -3,6 +3,7 @@ var tree,
 
 function btn(bo){
 	try{
+	getcmp('adddowns_'+rand+'').setDisabled(bo);
 	getcmp('adddown_'+rand+'').setDisabled(bo);
 	getcmp('edit_'+rand+'').setDisabled(bo);
 	getcmp('del_'+rand+'').setDisabled(bo);
@@ -27,6 +28,10 @@ var chengbianh = function(){
 	var rnd = parseInt(Math.random()*999)+1;
 	rnd = num+'_'+rnd;
 	form.setVal('num', rnd);
+}
+function clickcogal(){
+	var da = tree.changedata;
+	rockoption.setlist(da.name, da.num);
 }
 
 function windowsss(){
@@ -76,6 +81,8 @@ var panelss = {
 	tbar:[{
 		text:'刷新',handler:function(){tree.storereload()},icon:gicons('reload')
 	},'需要新增下级需要有编号,编号不要随意更改','->',{
+		text:'管理下级',icon:gicons('cog'),handler:function(){clickcogal()},disabled:true,id:'adddowns_'+rand+''
+	},'-',{
 		text:'新增下级',icon:gicons('add'),handler:function(){clickadddown()},disabled:true,id:'adddown_'+rand+''
 	},'-',{
 		text:'修改',icon:gicons('edit'),disabled:true,id:'edit_'+rand+'',handler:function(){clickedit()}
@@ -103,7 +110,10 @@ var panelss = {
 			getcmp('edit_'+rand+'').setDisabled(true);
 			getcmp('del_'+rand+'').setDisabled(true);
 		}
-		if(isempt(v.raw.num))getcmp('adddown_'+rand+'').setDisabled(true);
+		if(isempt(v.raw.num)){
+			getcmp('adddown_'+rand+'').setDisabled(true);
+			getcmp('adddowns_'+rand+'').setDisabled(true);
+		}
 	},
 	dblclick:function(a, v){
 		if(v.parentNode.parentNode!=null)clickedit();

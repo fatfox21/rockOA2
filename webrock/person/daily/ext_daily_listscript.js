@@ -1,18 +1,6 @@
 var panel = {
-	xtype:'rockgridform',tablename:'daily',formtitle:'工作日报',exceltitle:'工作日报',url:publiccheckstore(mode,dir),opentype:5,
-	defaultorder:'a.`dt` desc',
-	grideditwhere:function(da, o){
-		return da.uid==adminid && da.xiu==1;
-	},
-	griddelwhere:function(da, o){
-		return da.uid==adminid && da.xiu==1;
-	},
-	loadgrid:function(){
-		var val = this.getData('minDate');
-		if(val){
-			this.formparams.items[3].minValue=val;
-		}
-	},
+	xtype:'rockgrid',tablename:'daily',formtitle:'工作日报',exceltitle:'工作日报',url:publiccheckstore(mode,dir),opentype:5,
+	defaultorder:'a.`dt` desc',searchtools:true,
 	_qiehuanzt:function(lx){
 		this.setparams({opentype:lx},true);
 	},
@@ -22,7 +10,28 @@ var panel = {
 		text:'下属人员日报',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(4);}
 	},,{
 		text:'授权查看',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(6);}
-	},'->'],
+	},'->',{
+		text:'新增',icon:gicons('add'),handler:function(){
+			this.up('grid')._clickeadd();
+		}
+	},'-',{
+		text:'编辑',icon:gicons('edit'),id:'editbtn_'+rand+'',disabled:true,handler:function(){
+			this.up('grid')._clickedit();
+		}
+	}],
+	click:function(){
+		getcmp('editbtn_'+rand+'').setDisabled(false);
+	},
+	beforeload:function(){
+		getcmp('editbtn_'+rand+'').setDisabled(true);
+	},
+	_clickedit:function(){
+		var sid = this.changedata.id;
+		addtabs('新增日报','person,daily,add,id='+sid+',index='+index+'','dailyadd_'+sid+'',{icon:gicons('edit')});
+	},
+	_clickeadd:function(){
+		addtabs('新增日报','person,daily,add,index='+index+'','dailyadd',{icon:gicons('add')});
+	},
 	columns:[{
 		xtype: 'rownumberer',
 		width: 30
@@ -31,7 +40,11 @@ var panel = {
 	},{
 		text:'姓名',dataIndex:'name',width:120,search:true,sortable:true
 	},{
-		text:'日报日期',dataIndex:'dt',width:180,search:true,sortable:true
+		text:'类型',dataIndex:'type',qz:'a.',width:100,search:true,sortable:true,atype:'select',store:js.arraystr('0|日报,1|周报,2|月报,3|年报'),renderer:function(v){
+			var as =['日报','周报','月报','年报'];return as[v];
+		}
+	},{
+		text:'日报日期',dataIndex:'dt',width:180,search:true,sortable:true,qz:'a.'
 	},{
 		text:'星期',dataIndex:'week',width:120
 	},{
@@ -39,36 +52,18 @@ var panel = {
 	},{
 		text:'操作时间',dataIndex:'optdt',width:170,search:true,sortable:true
 	}],
-	formwidth:500,
-	formparams:{
-		submitfields:'content,dt',
-		addjudgewhere:"id<>{id} and dt='{dt}' and uid={adminid}",editjudgewhere:'add',labelWidth:100,
-		url:publicsave(mode,dir),aftersaveaction:'dailyafter',
-		params:{int_filestype:'uid',add_otherfields:'adddt={now}',otherfields:'optdt={now},optname={admin},uid={adminid}'},
-		items:[{
-			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
-		},{
-			fieldLabel:'姓名',name:'namePost',xtype:'displayfield',value:adminname
-		},{
-			fieldLabel:'部门',name:'deptnamePost',xtype:'displayfield',value:admindeptname
-		},{
-			fieldLabel:''+bitian+'日报日期',name:'dtPost',allowBlank: false,value:new Date(),format:'Y-m-d',xtype:'datefield',editable:false,maxValue:new Date()
-		},{
-			fieldLabel:''+bitian+'内容',name:'contentPost',allowBlank: false,xtype:'textarea',height:150
-		},{
-			fieldLabel:'以邮件汇报给',name:'huitypePost',xtype:'combo',editable:false,store:[['','不汇报'],['super','直属上级']]
-		}]
-	},
-	fields:['content'],
+	fields:['content','plan'],
 	features: [{
 		ftype: 'rowbody',
 		getAdditionalData: function(v, index) {
 			var cont = v.content,
-				s	= '';
+				s	= '',s1,plan = v.plan;
 			var cls = 'x-grid-row-body-hidden';
 			if(!isempt(cont)){
 				cls = '';
-				s	= '<div style="padding:2px;padding-left:5px;line-height:20px">【工作内容】<br>'+cont+'</div>';
+				s1 = '【工作内容】<br>'+cont+'';
+				if(!isempt(plan))s1+= '<br>【下次计划】<br>'+plan+'';
+				s	= '<div style="padding:2px;padding-left:5px;line-height:20px">'+s1+'</div>';
 			}
 			return {
 				rowBody: s,
@@ -81,5 +76,13 @@ var panel = {
 };
 
 return {
-	panel:panel
+	panel:panel,
+	tabson:{
+		show:function(){
+			if(rock[index].isreadload){
+				rock[index].storereload();
+				rock[index].isreadload=false;
+			}	
+		}
+	}
 };

@@ -4,6 +4,9 @@ class socketChajian extends Chajian
 	public $serverip = '127.0.0.1';
 	public $serverport = 0;
 	
+	private $socket = null;
+	private $daisend= array();
+	
 	/**
 		读取配置
 	*/
@@ -21,35 +24,72 @@ class socketChajian extends Chajian
 	public function send($sendid, $receid, $conarr)
 	{
 		if(!function_exists('socket_create'))return 'not open socket';
-		
 		$this->inithost();
+		$this->daisend[] = array(
+			'sendid'	=> $sendid,
+			'receid'	=> $receid,
+			'conarr'	=> $conarr
+		);
+	}
+	
+	public function sendstart()
+	{
+		$this->sendstarts();
+		$this->daisend = array();
+	}
+	
+	private function sendstarts()
+	{
+		$len = count($this->daisend);
+		if($len <= 0)return;
 		$host 		= $this->serverip;  
 		$port 		= $this->serverport;
-		
-		if($this->isempt($host) || $port ==0)return 'sorry not';
-		
 		$msg		= '';
-		@$socket 	= socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-		if($socket==null)$msg = '无法使用';
+		if($this->isempt($host) || $port ==0)return;
+		if($this->socket == null){
+			if($this->isempt($host) || $port ==0)return 'sorry not';
 
-		if($msg == ''){
-			@$connection = socket_connect($socket, $host, $port);
-			if($connection==null)$msg = '无法连接';
+			@$this->socket 	= socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+			if($this->socket==null)$msg = '无法使用';
+
+			if($msg == ''){
+				@$connection = socket_connect($this->socket, $host, $port);
+				if($connection==false)$msg = '无法连接';
+			}
 		}
+		if($msg != '' || $this->socket ==null)return $msg;
 		
-		if($msg == ''){
+		$senar = $recear = $strar = array();
+		foreach($this->daisend as $k=>$rs){
 			$s = '';
-			foreach($conarr as $k=>$v){
+			foreach($rs['conarr'] as $k=>$v){
 				$s .= ','.$k.':"'.$v.'"';
 			}
 			$s = substr($s, 1);
 			$s = $this->rock->jm->encrypt('{'.$s.'}');
-			$secont	= 'phpsend@@@'.$sendid.'@@@'.$receid.'@@@'.$s.'';
-			if(!socket_write($socket, $secont, strlen($secont))){
-				$msg = '无法发送';
-			}
-			socket_close($socket);
+			$senar[] 	= $rs['sendid'];
+			$recear[] 	= $rs['receid'];
+			$strar[] 	= $s;
 		}
+		$secont	= 'phpsend@@@';
+		$secont.= join('$$$', $senar);
+		$secont.= '@@@';
+		$secont.= join('$$$', $recear);
+		$secont.= '@@@';
+		$secont.= join('$$$', $strar);
+		
+		@$bola	= socket_write($this->socket, $secont, strlen($secont));
+		if(!$bola)$msg = '无法发送';
+		
+		socket_close($this->socket);
+		$this->socket = null;
 		return $msg;
 	}
-}                                                                                                                                                            
+	
+	protected function destChajian()
+	{
+		$this->sendstarts();
+		$this->daisend = array();
+	}
+	
+}

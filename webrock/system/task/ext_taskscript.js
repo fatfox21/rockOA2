@@ -1,6 +1,7 @@
 
 var  panel = {
 	xtype:'rockgridform',tablename:'task',celleditbool:true,formtitle:'任务',iconqz:'time_',
+	url:publicstore(mode,dir),storeafteraction:'taskaftershow',
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -13,15 +14,18 @@ var  panel = {
 	},{
 		text:'启用',dataIndex:'status',width:60,editor:{xtype:'combo',editable:false,store:js.arraystr()},renderer:renderbox,search:true,atype:'select'
 	},{
-		text:'运行频率',align:'left',dataIndex:'ratecont',width:200,search:true,autowidth:true,renderer:rendercont
+		text:'运行频率',align:'left',dataIndex:'ratecont',width:100,search:true,autowidth:true,renderer:rendercont
 	},{
-		text:'最后运行时间',dataIndex:'lastrundt',width:160,search:true,atype:'date'
+		text:'最后运行',dataIndex:'lastrundt',width:90,search:true,atype:'date',renderer:function(v){
+			if(!isempt(v))v=v.replace(' ','<br>');
+			return v;
+		}
 	},{
 		text:'最后状态',dataIndex:'lastrunzt',width:80,search:true,boxdata:js.arraystr('#888888|未运行,green|成功,red|失败'),renderer:renderbox
 	},{
 		text:'说明',dataIndex:'explain',autowidth:true,search:true,editor:'textfield'
 	},{
-		text:'ID',dataIndex:'id',width:60
+		text:'提醒通知',dataIndex:'todocont',width:80,autowidth:true,align:'left'
 	}],
 	formadd:function(){
 		getcmp('ratels_'+rand+'').reset();
@@ -32,8 +36,8 @@ var  panel = {
 	formwidth:500,
 	formparams:{
 		url:publicsave('task','system'),labelWidth:70,
-		submitfields:'typename,name,url,status,ratecont,explain',autoScroll:false,
-		params:{int_filestype:'status',otherfields:'optdt={now},optname={admin},optid={adminid}'},
+		submitfields:'typename,name,url,status,ratecont,explain,zntx,emtx,confuid',autoScroll:false,
+		params:{int_filestype:'status,zntx,emtx,confuid',otherfields:'optdt={now},optname={admin},optid={adminid}'},
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 		},{
@@ -47,11 +51,19 @@ var  panel = {
 		},{
 			fieldLabel:''+bitian+'处理地址',name:'urlPost',allowBlank: false
 		},{
-			fieldLabel:'&nbsp;',name:'statusPost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:''
-		},{
 			xtype:'rockrate',fieldLabel:'运行频率',tablename:'task',id:'ratels_'+rand+''
 		},{
 			fieldLabel:'说明',name:'explainPost',xtype:'textareafield',height:60
+		},{
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:'&nbsp;',name:'statusPost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:''
+			},{
+				fieldLabel:'&nbsp;',name:'zntxPost',xtype:'checkboxfield',boxLabel:'站内通知',inputValue:'1',labelSeparator:''
+			},{
+				fieldLabel:'&nbsp;',name:'emtxPost',xtype:'checkboxfield',boxLabel:'邮件通知',inputValue:'1',labelSeparator:''
+			}]
+		},{
+			fieldLabel:'接收对象',name:'confuidPost',value:'0',defaultstore:[['0','-无-']],xtype:'rockcombo',optionmnum:'tasktype',valuefields:'id',url:js.getajaxurl('gettaskuser','task','system')
 		}],
 		submitcheck:function(o){
 			var s='',s1='';

@@ -66,22 +66,21 @@ function addtabs(title,urlnr,num1,opts){
 		return;
 	}
 	if(!num1)num1=js.getrand();
-	var num = 'tabs_'+num1+'',dir,mode;
+	var num = 'tabs_'+num1+'',dir='',mode='',url='',act='';
 	if(!closetabs(num1))return;
-	var rand = js.getrand(),i,oi=2;
-	var ura	= urlnr.split(',');
+	var rand = js.getrand(),i,oi=2,urlnrs=urlnr+'',iqz='ext';
+	if(urlnr.indexOf('@')==0){iqz='tpl';urlnrs=urlnrs.substr(1);}
+	var ura	= urlnrs.split(',');
 	dir	= ura[0];mode= ura[1];
-	var url =''+PROJECT+'/'+dir+'/'+mode+'/ext_'+mode+'';
-	if(ura[2]){
-		if(ura[2].indexOf('=')<0){
-			oi=3;url+='_'+ura[2]+'';
-		}
-	}
-	url+='script.js';
+	if(iqz=='ext')url =''+PROJECT+'/'+dir+'/'+mode+'/'+iqz+'_'+mode+'';
+	if(ura[2]){if(ura[2].indexOf('=')<0){oi=3;url+='_'+ura[2]+'';act=ura[2];}}
+	if(iqz=='ext')url+='script.js';
+	if(iqz=='tpl')url = ''+js.path+'.php?d='+dir+'&m='+mode+'&a='+act+'';
 	var urlpms={};
 	for(i=oi;i<ura.length;i++){
 		var nus	= ura[i].split('=');
 		urlpms[nus[0]]=nus[1];
+		if(iqz=='tpl')url+='&'+nus[0]+'='+nus[1]+'';
 	}
 	indexxu++;
 	var loaders = {
@@ -94,11 +93,7 @@ function addtabs(title,urlnr,num1,opts){
 		},
 		success:function(a,v){
 			var s = v.responseText,can,cas,parsent,len,fun,funs,init,i,tabson;
-			var index = a.indexss;
-			parsent = a.getTarget();
-			parsent.removeAll();
-			parsent.getEl().unmask();
-			parsent.update('');
+			var index = a.indexss;parsent = a.getTarget();parsent.removeAll();parsent.getEl().unmask();parsent.update('');
 			try{
 				if(s.indexOf('panel')<0)s=jm.uncrypt(s);
 				s	= s.replace(/\[rock\]/gi, 'rock['+index+']');
@@ -325,7 +320,7 @@ function createindex(){
 			}]
 		}]
 	});
-	addtabs('首页','index,home','home',{closable:false,icon:gicons('house')});
+	addtabs('首页','@index,home,index','home',{closable:false,icon:gicons('house')});
 	showmenula(getcmp('index_menu').down('#menuTree_'+topmenu[0].id+''));
 	
 	function loadmenuid(id,na){

@@ -1,9 +1,12 @@
 <?php
 class reimClassModel extends Model
 {
+	private $socket;
+	
 	public function initModel()
 	{
 		$this->settable('im_mess');
+		$this->socket = c('socket', true);
 	}	
 		
 	/**
@@ -22,38 +25,87 @@ class reimClassModel extends Model
 		}else{
 			$gid	= $onrs['id'];
 		}
-		if($table!=''){
-			//$this->update("`zt`=1", "`table`='$table' and `mid`='$mid' and `zt`=0 and `type`='system' and `sendid`='$gid' and `receid` in($receid)");
+		if($this->isempt($receid))return 'not receuid';
+		$receids = $receid;
+		$wheres	 = " and `id` in($receid)";
+		if($receid=='all')$wheres='';
+		$apsid 		= $resid = $allsid = '';
+		$recrarr 	= $this->db->getall("select id,applastdt,imonline,imlastdt from [Q]admin where `status`=1 and `state`<>5 $wheres");
+		$time 		= time();
+		foreach($recrarr as $k=>$rs){
+			if(!$this->isempt($rs['applastdt']))$apsid.=','.$rs['id'].'';
+			if(!$this->isempt($rs['imlastdt'])){
+				$time1= strtotime($rs['imlastdt']);
+				if($time1>$time-60*15)$resid.=','.$rs['id'].'';
+			}
+			$allsid.=','.$rs['id'].'';
 		}
-		$this->insert(array(
-			'type'	=> 'system',
-			'optdt'	=> $this->rock->now,
-			'zt'	=> 0,
-			'cont'	=> $this->rock->jm->encrypt($cont),
-			'sendid'=> $sendid,
-			'receid'=> $gid,
-			'optid'	=> $sendid,
-			'receuid' => $receid,
-			'table'	=> $table,
-			'mid'	=> $mid,
-			'url'	=> $url
-		));
-		$messid	= $this->db->insert_id();
+		if($allsid != ''){
+			$allsid = substr($allsid, 1);
+			$this->insert(array(
+				'type'	=> 'system',
+				'optdt'	=> $this->rock->now,
+				'zt'	=> 0,
+				'cont'	=> $this->rock->jm->encrypt($cont),
+				'sendid'=> $sendid,
+				'receid'=> $gid,
+				'optid'	=> $sendid,
+				'receuid' => $allsid,
+				'table'	=> $table,
+				'mid'	=> $mid,
+				'url'	=> $url
+			));
+			$messid	= $this->db->insert_id();
+			$this->db->insert('[Q]im_messzt','`mid`,`uid`','select '.$messid.',id from `[Q]admin` where id in('.$allsid.') and `status`=1 and `state`<>5 ', true);
+		}
 		
-		$this->db->insert('[Q]im_messzt','`mid`,`uid`','select '.$messid.',id from `[Q]admin` where id in('.$receid.') and `status`=1 and `state`<>5 ', true);
-
-		$socket	= c('socket', true);
-		return $socket->send($sendid, $receid, array(
-			'cont'	=> $cont,
-			'gname'	=> $gname,
-			'gid'	=> $gid,
-			'type'	=> 'system',
-			'now'	=> $this->rock->now,
-			'messid'=> $messid,
-			'url'	=> $url
-		));
+		if($resid != ''){
+			$resid = substr($resid, 1);
+			if($receids=='all')$resid = 'all';
+			$this->socket->send($sendid, $resid, array(
+				'cont'	=> $cont,
+				'gname'	=> $gname,
+				'gid'	=> $gid,
+				'type'	=> 'system',
+				'now'	=> $this->rock->now,
+				'messid'=> $messid,
+				'url'	=> $url
+			));
+		}
+		//app推送
+		if($apsid != ''){
+			$apsid = substr($apsid, 1);
+			c('apiCloud')->send($apsid, array(
+				'type' 	=> 'system',
+				'gname'	=> $gname,
+				'gid'	=> $gid,
+				'messid'=> $messid,
+				'sendname'	=> $this->adminname
+			),'['.$gname.']发来一条信息');
+		}
+		return true;
 	}
 	
+	public function sendstart()
+	{
+		$this->socket->sendstart();
+	}
+
+	//创建发送URL
+	public function createurl($act, $mid, $arr=array())
+	{
+		$cans 	= array(
+			'm' 	=> 'view',
+			'd' 	=> 'taskrun',
+			'a' 	=> $act,
+			'uid' 	=> $this->adminid,
+			'id' 	=> $mid
+		);
+		foreach($arr as $k=>$v)$cans[$k]=$v;
+		$token	= $this->rock->jm->strrocktoken($cans);
+		$url 	= '?rocktoken='.$token.'';
+		return $url;
+	}	
 	
 	//获取REIM未读的
 	public function getwdarr($mid=0)

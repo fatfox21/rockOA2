@@ -63,7 +63,7 @@ if($sendci==$maxsend){
 	if(!$boolc1 && $optid==0)$boolc1 = true;
 
 	$izztbo = false;
-	if(!$boolc1 || $ztfile)$izztbo = true;
+	if(!$boolc1 || $botxtl)$izztbo = true;
 
 	if($izztbo){
 		$content	= file_get_contents($tempfile);

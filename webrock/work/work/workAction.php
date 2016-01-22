@@ -3,7 +3,8 @@ class workClassAction extends Action
 {
 	public function publicaftersave($table, $cans, $id)
 	{
-		$db = m('tasktime');
+		$db 	= m('tasktime');
+		$ndt	= $this->date;
 		
 		$ffsid	= $this->rock->post('plidPost','0');
 		$db->record(array('table'=>$table,'mid'=>$id), "id in($ffsid)");
@@ -11,7 +12,12 @@ class workClassAction extends Action
 		
 		$scdb = m('work');
 		$scdb->updatecont($id);
-		$scdb->addday($this->date, '', $id);
+		$scdb->addday($ndt, '', $id);
+		$rowss	= $db->getall("`table`='$table' and mid='$id' and `shijian`<'$ndt' and `atype`='仅一次'",'shijian');
+		foreach($rowss as $k=>$rs){
+			$dtss = substr($rs['shijian'], 0, 10);
+			$scdb->addday($dtss, '', $id);
+		}
 	}
 	
 	
@@ -33,12 +39,16 @@ class workClassAction extends Action
 		foreach($rows as $k=>$rs){
 			$sjla = '';
 			$sjsj = 0;
+			$sjks = 0;
 			if(!$this->isempt($rs['enddt'])){
 				$sjla = $dtc->diffstr($this->now, $rs['enddt'], 'd天H时i分', 1); 
 				$sjsj = $dtc->datediff('i', $rs['enddt'],$this->now); 
 			}
+			
 			$rows[$k]['sjla'] = $sjla;
 			$rows[$k]['sjsj'] = $sjsj;
+			$rows[$k]['sjks'] = $dtc->datediff('i', $rs['startdt'],$this->now); 
+		
 		}
 		return array('rows'=>$rows);
 	}
@@ -46,7 +56,7 @@ class workClassAction extends Action
 	//我的任务
 	public function getwcslistbefore($table)
 	{
-		$s = "and mid>1 and instr(concat(',', distid, ','), ',$this->adminid,')";
+		$s = "and mid>0 and instr(concat(',', distid, ','), ',$this->adminid,')>0";
 		$atype = (int)$this->request('atype','0');
 		if($atype==1){//未完成
 			$s.="  and ifnull(state,'')<>'已完成'";
@@ -57,6 +67,27 @@ class workClassAction extends Action
 		if($atype==3){//超期
 			$s.="  and ifnull(state,'')<>'已完成' and `enddt`<'$this->now'";
 		}
+		if($atype==10){
+			$s = "and mid>0 and instr(concat(',', baoid, ','), ',$this->adminid,')>0";
+		}
+		
+		//列出我下属id
+		if($atype==11){
+			$dusrt = m('admin')->getdownuser($this->adminid);
+			if($dusrt==''){
+				$s = 'and 1=2';
+			}else{
+				$dusrts = explode(',', $dusrt);
+				foreach($dusrts as $uids){
+					$tjw[] = " instr(concat(',', baoid, ','), ',$uids,')>0 ";
+				}
+				$s1	= join(' or ', $tjw);
+				$s = 'and mid>0 and ('.$s1.')';
+			}
+		}
+		if($atype==12){
+			$s = "and mid>0 and `optid`='$this->adminid'";
+		}
 		return $s;
 	}
 	
@@ -64,8 +95,7 @@ class workClassAction extends Action
 	public function workbgaftersave($table, $cans, $id)
 	{
 		$mid = $cans['mid'];
-		m('work')->update("`state`='".$cans['state']."'", $mid);
-		
+		m('work')->sendbaogao($mid, $cans['state'], $cans['explain']);
 	}
 	
 	public function getmontlistAjax()

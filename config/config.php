@@ -57,4 +57,4 @@ define('QOM', $config['qom']);
 define('VERSION', $config['version']);
 define('HIGHPASS', $config['highpass']);
 define('SYSURL', ''.URL.PATH.'.php');
-$rock->jm = c('jm', true);
+$rock->initRock();

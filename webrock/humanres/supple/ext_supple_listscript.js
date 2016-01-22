@@ -10,7 +10,10 @@ var panel = {
 	},{
 		text:'价格',dataIndex:'price',width:100
 	},{
-		text:'库存',dataIndex:'total',width:100
+		text:'库存',dataIndex:'total',width:100,renderer:function(v){
+			if(v<0)v='<font color=red>'+v+'</font>';
+			return v;
+		}
 	},{
 		text:'序号',dataIndex:'sort',width:100
 	},{

@@ -1,6 +1,25 @@
 <?php
 class taskClassAction extends Action
 {
+	public function taskaftershow($table, $rows)
+	{
+		$db = m('taskuser');
+		foreach($rows as $k=>$rs){
+			$s = '';
+			if($rs['zntx'])$s.=',站内';
+			if($rs['emtx'])$s.=',邮件';
+			if($s!=''){
+				$s = substr($s, 1).'通知';
+				$rso = $db->getone("`id`='".$rs['confuid']."'",'recename,chaoname');
+				if($rso){
+					$s.='<br>接收:'.$rso['recename'].'';
+					if(!$this->isempt($rso['chaoname']))$s.=';抄送:'.$rso['chaoname'].'';
+				}
+			}
+			$rows[$k]['todocont'] = $s;
+		}
+		return array('rows'=>$rows);
+	}
 	
 	public function publicaftersave($table, $cans, $id)
 	{
@@ -30,5 +49,11 @@ class taskClassAction extends Action
 			'totalCount'=> count($rows),
 			'rows'		=> $rows
 		));
+	}
+	
+	public function gettaskuserAjax()
+	{
+		$rows = m('taskuser')->getall('id>0 order by `sort`','id,name');
+		echo json_encode($rows);
 	}
 }

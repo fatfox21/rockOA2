@@ -8,12 +8,11 @@ class workhClassAction extends Action
 		$uid 	= $this->adminid;
 		
 		//今日工作任务
-		$where 	= "`dt`='$dt' and mid>0 and instr(concat(',', distid, ','), ',$uid,')>0 order by `startdt`";
-		$rows 	= m('work')->getall($where,'`type`,`title`,`state`,`startdt`');
+		$rows 	= m('work')->getwwcwork($uid);
 		foreach($rows as $k=>$rs){
-			$rows[$k]['tabsnum'] = 'worklist';
-			$rows[$k]['tabstitle'] = '今日任务';
-			$rows[$k]['tabsurl'] = 'work,work,list,atype=0';
+			$rows[$k]['tabsnum'] = 'workmwc';
+			$rows[$k]['tabstitle'] = '未完成任务';
+			$rows[$k]['tabsurl'] = 'work,work,mwc,atype=1';
 		}
 		
 		
@@ -70,7 +69,7 @@ class workhClassAction extends Action
 			
 			$_rs['tabsnum'] 	= 'projectbg';
 			$_rs['tabstitle'] 	= '项目进度报告';
-			$_rs['tabsurl'] 	= 'project,project,list,atype=bg';
+			$_rs['tabsurl'] 	= 'work,project,list,atype=bg';
 			$rows[] = $_rs;
 			
 		}	

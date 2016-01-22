@@ -1,7 +1,7 @@
 var 
 dt1 = js.now('Y-m-01'),grid,
 panel={
-	xtype:'rockgrid',firstsearchbool:true,
+	xtype:'rockgrid',firstsearchbool:true,opentype:7,
 	tablename:'kq_anay',searchtools:true,url:publiccheckstore(mode,dir),exceltitle:'考勤分析',
 	storeafteraction:'kaoqinfxafter',defaultorder:'dt desc',fields:['iswork'],
 	tbarcenter:['日期从',{

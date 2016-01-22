@@ -20,7 +20,8 @@ Ext.define('Ext.rock.flowgrid',{
 			tbar:[],
 			iconqz:'',
 			rand:js.getrand(),
-			delurl:js.getajaxurl('flowdel','flow','')
+			delurl:js.getajaxurl('flowdel','flow',''),
+			tbarcenter:[]
 		});
 		me.url += '&flownum='+me.flownum+'';
 		me.delurl += '&flownum='+me.flownum+'';
@@ -34,7 +35,7 @@ Ext.define('Ext.rock.flowgrid',{
 		}];
 		me.tbar = me.tbar.concat(tbass);
 		me.columns.push({
-			text:'查看',dataIndex:'viewopt',width:60,xtype:'actioncolumn',
+			text:'查看',dataIndex:'viewopt',width:60,xtype:'actioncolumn',notexcel:true,
 			items: [{
 				icon: gicons('page_white_text'),
 				tooltip: '查看',
@@ -44,7 +45,9 @@ Ext.define('Ext.rock.flowgrid',{
 				}
 			}]
 		});
-		
+		me.tbarcenter.push({
+			xtype:'combo',width:100,value:'',store:js.arraystr('|-所有状态-,0|待处理,1|处理通过,2|处理不通过'),editable:false,listeners:{change:function(o){me.setparams({statusabc:o.value});}}
+		});
 		me.click = function(a, v,item,index ,e){
 			me.flow.iseditdel(v,'edit','del');
 			getcmp('view_'+me.rand+'').setDisabled(false);

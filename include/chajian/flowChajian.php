@@ -41,6 +41,7 @@ class flowChajian extends Chajian{
 	protected function flownothrough(){}
 	protected function flowthrough($sm){}
 	protected function contentother(){}
+	protected function flowfields($arr){}
 	
 	
 	
@@ -421,6 +422,7 @@ class flowChajian extends Chajian{
 			'mid' 	=> $this->id,
 			'optdt' => $this->rock->now,
 			'optname' 	=> $this->adminname,
+			'optid' 	=> $this->adminid,
 			'modeid'  	=> $this->setid,
 			'isdel'		=> '0',
 			'nstatus'	=> '0',
@@ -443,6 +445,8 @@ class flowChajian extends Chajian{
 		foreach($farr as $k=>$rs){
 			$arr[$k] = $rs['name'];
 		}
+		$arrs = $this->flowfields($arr);
+		if(is_array($arrs))$arr = $arrs;
 		return $arr;
 	}
 	

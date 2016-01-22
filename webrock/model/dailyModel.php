@@ -53,7 +53,7 @@ class dailyClassModel extends Model
 					}	
 				}
 				if($xbo){
-					if($this->rows("uid='$uid' and `dt`='$dt'")>0){
+					if($this->rows("uid='$uid' and `dt`='$dt' and `type`=0")>0){
 						$totalx++;
 						$zt  = '已写';
 						$col = '#ff6600';

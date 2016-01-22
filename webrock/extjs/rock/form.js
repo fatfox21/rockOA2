@@ -11,7 +11,7 @@ Ext.define('Ext.rock.form',{
 	layout:'anchor',
 	bodyPadding:5,
 	frame:false,
-	labelWidth:75,
+	labelWidth:90,
 	defaultPadding:0,
 	fieldDefaults:{labelAlign: 'right',xtype:'textfield',anchor:'99%',padding:0,labelSeparator:':'},
 	rand:'',

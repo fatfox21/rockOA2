@@ -11,13 +11,14 @@ class applyClassAction extends Action
 	public function applydata($table, $rows)
 	{
 		$mwhere	= m('where');
+		$whers	= ' (`uid`='.$this->adminid.' or optid='.$this->adminid.')';
 		foreach($rows as $k=>$rs){
 			$db 	= m($rs['table']);
 			$whre	= $mwhere->getstring('flowset_'.$rs['num']);
 			
-			$rows[$k]['totals0'] = $db->rows('`status`=0 and `isturn`=1 and uid='.$this->adminid.' '.$whre.'');//待审核
-			$rows[$k]['totals2'] = $db->rows('`status`=2 and `isturn`=1 and uid='.$this->adminid.' '.$whre.'');
-			$rows[$k]['totals3'] = $db->rows('`status`=1 and uid='.$this->adminid.' '.$whre.'');
+			$rows[$k]['totals0'] = $db->rows('`status`=0 and `isturn`=1 and '.$whers.' '.$whre.'');//待审核
+			$rows[$k]['totals2'] = $db->rows('`status`=2 and `isturn`=1 and '.$whers.' '.$whre.'');
+			$rows[$k]['totals3'] = $db->rows('`status`=1 and '.$whers.' '.$whre.'');
 			
 			$rows[$k]['temp_type'] = $rs['type'];
 		}
@@ -45,7 +46,7 @@ class applyClassAction extends Action
 		$protype	= (int)$this->post('protype');
 		$modeid		= (int)$this->post('modeid','0');
 		$modenum	= '';
-		$s 			= "and a.`uid`='$uid'";
+		$s 			= "and (a.`uid`='$uid' or a.`optid`='$uid')";
 		$fields 	= "a.*";
 		if($modeid >0)$modenum=m('flow_set')->getmou('num', $modeid);
 		//经我处理的

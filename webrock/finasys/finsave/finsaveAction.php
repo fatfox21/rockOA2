@@ -9,6 +9,7 @@ class finsaveClassAction extends Action
 		for($i=0; $i<$count; $i++){
 			$sid = (int)$this->post('id_'.$i.'');
 			$arr = array(
+				'address' 	=> $this->post('address_'.$i.''),
 				'items' 	=> $this->post('items_'.$i.''),
 				'startdt' 	=> $this->post('startdt_'.$i.''),
 				'moneys' 	=> $this->post('moneys_'.$i.''),
@@ -25,5 +26,12 @@ class finsaveClassAction extends Action
 			}
 		}
 		$db->delete("`id` not in($ids)");
+	}
+	
+	public function getlastAjax()
+	{
+		$rs = m('fininfom')->getone("`uid`='$this->adminid' order by `optdt` desc",'paytype,cardid,openbank,fullname');
+		if(!$rs)$rs='';
+		echo json_encode($rs);
 	}
 }

@@ -50,7 +50,7 @@ Ext.define('Ext.rock.grid',{
 			checkcolumns:false,
 			storeautoLoad:true,
 			defaultwhere:'',
-			opentype:3,
+			opentype:7,
 			storeafteraction:'',
 			storebeforeaction:'',
 			storedeleteaction:'',
@@ -568,7 +568,7 @@ Ext.define('Ext.rock.grid',{
 		da.dir 		= me.sortdir;
 		if(isempt(me.excelfields)){
 			for(i=0; i<a.length; i++){
-				if(a[i].dataIndex && !a[i].hidden)olm.push(a[i].dataIndex);
+				if(a[i].dataIndex && !a[i].hidden && !a[i].notexcel)olm.push(a[i].dataIndex);
 			};
 		}else{
 			olm = me.excelfields;

@@ -111,6 +111,13 @@ Ext.define('Ext.rock.flowform',{
 				}]
 			}]
 		};
+		me._formparams.items.push({
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:'申请人',readOnly:true,value:adminname,name:'applynamePost',width:'49%'
+			},{
+				fieldLabel:'申请人部门',readOnly:true,value:admindeptname,name:'applydeptnamePost',width:'50%'
+			}]
+		});
 		me._formparams.items.push(shenpl);
 		me.items = me._formparams;
 	},
@@ -173,6 +180,8 @@ Ext.define('Ext.rock.flowform',{
 		if(me.form.getField('fileid')){
 			me.form.getField('fileid').loadfile(me.tablename, me.mid, !me.isEdit());
 		}
+		me.form.setVal('applyname', a.aurs.name);
+		me.form.setVal('applydeptname', a.aurs.deptname);
 		me.showdata(me.form, a, me);
 	},
 	_loadinforshow:function(a){

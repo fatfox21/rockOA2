@@ -22,7 +22,7 @@ class todoClassModel extends Model
 	/**
 		添加唯一的通知
 	*/
-	public function addtz($uid, $title, $mess, $table='', $mid='')
+	public function addtz($uid, $title, $mess, $table='', $mid='', $url='')
 	{
 		$where = '';
 		if($table != '')$where = " and `table`='$table'";
@@ -33,7 +33,8 @@ class todoClassModel extends Model
 		
 		$this->add($uid, $title, $mess, array(
 			'table'	=> $table,
-			'mid'	=> $mid
+			'mid'	=> $mid,
+			'url'	=> $url
 		));
 	}
 	

@@ -4,6 +4,7 @@ class kqClassModel extends Model
 	public $xiudb;
 	public $xiumrs 	= array();
 	public $userarr = array();
+	public $setmrs	= array();
 	
 	public function initModel()
 	{
@@ -25,16 +26,34 @@ class kqClassModel extends Model
 		$this->xiumrs = $rows;
 	}
 	
-	//读取考勤设置每天的状态
-	private function readkaoset()
+	
+	private function getsetmrs($dt)
 	{
-		$rows	= $this->getall("`type`=0 and `mid`=0 order by `sort`", '`id`,`receid`');
-		$mid 	= 0;
-		$a		= array();
-		foreach($rows as $k=>$rs){
-			$receid = $rs['receid'];
-			if($this->isempt($receid))$mid = $rs['id'];
+		$a = array();
+		if(isset($this->setmrs[$dt])){
+			$a = $this->setmrs[$dt];
+			return $a;
 		}
+		$where= "`startdt`<='$dt' and `enddt`>='$dt' and `receid` is not null";
+		$rows = $this->db->getall("select `startdt`,`enddt`,`id`,`mid`,`receid` from `[Q]kq_setm` where $where  order by `sort`");
+		foreach($rows as $k=>$rs){
+			$st1	= 0;$et1 = 9999999999999;
+			if(!$this->isempt($rs['startdt']))$st1 	= strtotime($rs['startdt']);
+			if(!$this->isempt($rs['enddt']))$et1 	= strtotime($rs['enddt']);
+			$rows[$k]['starttime'] = $st1;
+			$rows[$k]['endtime'] = $et1;
+		}
+		$this->setmrs[$dt] = $rows;
+		return $rows;
+	}
+	
+	/**
+		读取考勤设置每天的状态
+	*/
+	public function readkaoset($dt, $uid=0)
+	{
+		$mid 	= $this->getkqid($dt, $uid);
+		$a		= array();
 		$rows	= $this->getall("`type`='$mid' order by `sort`", '`id`,`name`,`stime`');
 		foreach($rows as $k=>$rs){
 			$rs['state'] = '';
@@ -46,36 +65,22 @@ class kqClassModel extends Model
 	}
 	
 	/**
-		获取默认某天应该上班时间段
+		获取默认某天应该上班时间段,默认都是1全体人员
 		返回array(array('每天上班时间断'))
 	*/
 	public function getsbarr($uid=0, $dts='')
 	{
-		$rows	= $this->getall("`type`=0 and `mid`=0 order by `sort`", '`id`,`receid`');
-		$mid 	= 0;
-		foreach($rows as $k=>$rs){
-			$receid = $rs['receid'];
-			if($this->isempt($receid))$mid = $rs['id'];
-		}
+		$mid 	= $this->getkqid($dts, $uid);
 		$rows	= $this->getall("`type`='$mid' and `stime` is not null and `etime` is not null order by `sort`", '`id`,`name`,`stime`,`etime`,`dt`');
-		$arr 	= array();
-		foreach($rows as $k=>$rs){
-			$dt = $rs['dt'];
-			if($this->isempt($dt)){
-				$arr[] = $rs;
-			}else{
-				if($dt == $dts)$arr[] = $rs;
-			}
-		}
+		$arr 	= $rows;
 		return $arr;
 	}
 	
 	/**
-		根据时间间隔获取上班时间（分钟，秒）
+		根据时间间隔获取上班时间小时
 	*/
 	public function getsbtime($sdt, $edt, $uid=0)
 	{
-		$arr 	= $this->getsbarr($uid);
 		$tot	= 0;
 		$sdt1	= strtotime($sdt);
 		$edt1	= strtotime($edt);
@@ -87,6 +92,7 @@ class kqClassModel extends Model
 		for($i=0; $i<$jg+1; $i++){
 			if($i>0)$dts = $dtobj->adddate($dts, 'd', 1);
 			if(!$this->isworkdt($dts, $uid))continue;
+			$arr 	= $this->getsbarr($uid, $dts);
 			foreach($arr as $k=>$rs){
 				$_sts = strtotime($dts.' '.$rs['stime']);
 				$_ets = strtotime($dts.' '.$rs['etime']);
@@ -100,13 +106,31 @@ class kqClassModel extends Model
 	}
 	
 	/**
-		匹配人员应该属于那种休息日
+		匹配人员应该属于那种休息日(xium)
+		数据匹配
 		$uid 数组 或者 deptid,deptpath
 	*/
 	public function getxiuid($dt, $uid=0)
 	{
+		return $this->getxiuidss($dt, $uid, $this->xiumrs, 'id');
+	}
+	
+	/**
+		匹配对应考勤id（setm）
+	*/
+	public function getkqid($dt, $uid=0)
+	{
+		if($uid==0 || $dt=='')return 1;
+		$arr = $this->getsetmrs($dt);
+		return $this->getxiuidss($dt, $uid, $arr, 'mid');
+	}
+	
+	
+	private function getxiuidss($dt, $uid=0, $xiumrs, $esfi='mid')
+	{
 		$mid 	= 1;
 		if($uid==0)return $mid;
+		$mid 	= 0;
 		$deptpath = '';
 		if(is_array($uid)){
 			$uid = $uid['id'];
@@ -118,13 +142,17 @@ class kqClassModel extends Model
 			}
 			$deptpath = $this->userarr[$uid]['deptpath'];
 		}
-		$utid  	= $dtid  	= array();
+		$utid  	= $dtid  =  array();$allars=false;
 		$dttime	= strtotime($dt);
-		foreach($this->xiumrs as $k=>$rs){
+		foreach($xiumrs as $k=>$rs){
 			$artid = explode(',', $rs['receid']);
 			if($rs['starttime'] > $dttime || $rs['endtime'] < $dttime)continue;
 			foreach($artid as $ssid){
 				if($ssid=='')continue;
+				if($ssid=='all'){
+					$allars = $rs;
+					continue;
+				}
 				$fs  = substr($ssid, 0, 1);
 				$sid = str_replace('u','', $ssid);
 				$sid = str_replace('d','', $sid);
@@ -135,13 +163,15 @@ class kqClassModel extends Model
 				}					
 			}
 		}
-		if(isset($utid[$uid]))$mid = $utid[$uid]['id'];
-		if($mid == 1 && !$this->isempt($deptpath)){
+		if(isset($utid[$uid]))$mid = (int)$utid[$uid][$esfi];
+		if($mid == 0 && !$this->isempt($deptpath)){
 			$depa = explode(',', str_replace(array('[',']'), array('',''), $deptpath));
 			foreach($depa as $depas){
-				if(isset($dtid[$depas]))$mid = $dtid[$depas]['id'];
+				if(isset($dtid[$depas]))$mid = (int)$dtid[$depas][$esfi];
 			}
 		}
+		if($mid == 0 && is_array($allars))$mid = (int)$allars[$esfi];
+		if($mid==0)$mid=1;
 		return $mid;
 	}
 	
@@ -181,5 +211,14 @@ class kqClassModel extends Model
 			if($dtc == $dts)break;
 		}
 		return $oixu;
+	}
+	
+	
+	/**
+		读取某个人日期对应考勤时间
+	*/
+	public function getkqtime()
+	{
+		
 	}
 }
