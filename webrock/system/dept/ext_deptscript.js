@@ -28,8 +28,8 @@ function btn(bo){
 
 var panel=[{
 	xtype:'rocktree',
-	url:publictreestore({order:'sort'}),
-	tablename:'dept',
+	url:publictreestore({order:'sort',expandall:'true'},mode, dir),
+	tablename:'dept',fields:['companyid'],
 	tbar:[{
 		text:'刷新',handler:function(){tree.storereload()},icon:gicons('arrow_refresh')
 	},'-',{
@@ -47,15 +47,17 @@ var panel=[{
 	}],
 	columns:[{
 		xtype: 'treecolumn',
-		text:'名称',align:'left',dataIndex:'name',width:'40%'
+		text:'名称',align:'left',dataIndex:'name',width:'35%'
 	},{
 		text:'编号',align:'center',dataIndex:'num',width:'10%'
 	},{
-		text:'序号',align:'center',dataIndex:'sort',width:'10%'
+		text:'序号',align:'center',dataIndex:'sort',width:'8%'
 	},{
 		text:'负责人',align:'center',dataIndex:'headman',width:'15%'
 	},{
-		text:'ID',align:'center',dataIndex:'id',width:'10%'
+		text:'所属单位',align:'center',dataIndex:'companyname',flex:1
+	},{
+		text:'ID',align:'center',dataIndex:'id',width:'6%'
 	}],
 	beforeload:function(){
 		btn(true);
@@ -68,7 +70,7 @@ var panel=[{
 	}
 },{
 	region:'east',title:'组织结构管理',width:250,split:true,xtype:'rockform',rand:rand,collapsible:true,tablename:'dept',
-	url:js.getajaxurl('publicsave','dept','system'),autoScroll:false,
+	url:js.getajaxurl('publicsave','dept','system'),autoScroll:false,labelWidth:70,
 	items:[{
 		fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 	},{
@@ -83,9 +85,11 @@ var panel=[{
 		fieldLabel:'负责人',nameidfields:'headid_'+rand+'',name:'headmanPost',xtype:'changedeptuser',changetype:'usercheck'
 	},{
 		fieldLabel:'序号',name:'sortPost',value:'0',minValue:0,xtype:'numberfield'
+	},{
+		fieldLabel:'所属单位',name:'companyidPost',xtype:'rockcombo',url:'company',valuefields:'id',autoloadlist:true
 	}],
-	submitfields:'name,num,pid,sort,headman,headid',
-	params:{int_filestype:'sort'},
+	submitfields:'name,num,pid,sort,headman,headid,companyid',
+	params:{int_filestype:'sort,companyid'},
 	success:function(bac){
 		tree.storereload();
 	}

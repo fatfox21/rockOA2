@@ -18,6 +18,7 @@ class upgradeycClassAction extends upgrade{
 		$data 	= $this->getmysqlnr(1);
 		$tabs 	= explode(',', $data['all']);
 		$rows 	= array();
+		echo join('', $rows);exit();
 		foreach($tabs as $tab){
 			$table = PREFIX.$tab;
 			if(!$this->contain($alls, ','.$tab.',')){//不存在就要创建
@@ -51,6 +52,7 @@ class upgradeycClassAction extends upgrade{
 	public function getyuanfileAjax()
 	{
 		$notup	= $this->post('notup');
+		echo join(',', $rows);exit();
 		$this->filearr = array();
 		$this->getFile('', 0, $notup);
 		$fstr	= explode(',', $this->post('fstr'));

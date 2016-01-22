@@ -35,4 +35,13 @@ class deptClassAction extends Action
 		$rows = m('company')->getall('id>0 order by `sort`','`id`,`name`');
 		echo json_encode($rows);
 	}
+	
+	public function publicstoreAfter($table, $rows)
+	{
+		$dbs 	= m('company');
+		foreach($rows as $k=>$rs){
+			$rows[$k]['companyname']=$dbs->getmou('name', $rs['companyid']);
+		}
+		return array('rows'=>$rows);
+	}
 }

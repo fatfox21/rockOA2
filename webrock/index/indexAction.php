@@ -165,4 +165,15 @@ class indexClassAction extends Action{
 		}
 		return $guid;
 	}
+	
+	public function testAction()
+	{
+		$this->display = false;
+		$arr = m('weixin:index')->sendnews('1', '今日会议', array(
+			'title' => '会议',
+			'description' => "参会人：开发部门\n时间：09:00-12:00",
+			'url'	=> 'http://m.rockoa.com/meet.html'
+		));
+		print_r($arr);
+	}
 }

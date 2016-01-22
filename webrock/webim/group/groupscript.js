@@ -32,6 +32,7 @@ function resetw(){
 	if(h<50)return;
 	h = h-40-100-36-30;
 	$('#listcontent').css({height:''+(h)+'px'});
+	$('#grouplistview').css({height:''+(winHb()-220)+'px'});
 }
 
 var guser = {

@@ -47,7 +47,7 @@ Ext.define('Ext.rock.optioncombo',{
 	loadlist:function(){
 		var me = this;
 		$.get(me.url,function(da){
-			me._expandshowcall(da);
+			try{me._expandshowcall(da);}catch(e){}
 		});
 	},
 	_expandshowcall:function(da){

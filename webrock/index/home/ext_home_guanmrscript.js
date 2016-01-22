@@ -5,13 +5,13 @@ var panel = {
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'名称',dataIndex:'name',width:150,editor:'textfield',search:true
+		text:'名称',dataIndex:'name',width:'50%',editor:'textfield',search:true
 	},{
-		text:'可用对象',dataIndex:'recename',width:200,search:true
+		text:'可用对象',dataIndex:'recename',flex:1,search:true
 	},{
-		text:'排序号',dataIndex:'sort',width:80,editor:{xtype:'numberfield',minValue:0}
+		text:'排序号',dataIndex:'sort',width:'10%',editor:{xtype:'numberfield',minValue:0}
 	},{
-		text:'ID',dataIndex:'id',width:70
+		text:'ID',dataIndex:'id',width:'10%'
 	}],
 	clickgrid:function(){
 		getcmp('inugua_'+rand+'').setDisabled(false);

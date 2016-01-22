@@ -8,22 +8,22 @@ class flowlogClassModel extends Model
 
 	public function getdatalog($flownum, $table, $mid, $uids='')
 	{
-		$setrs 		= $this->getone("`num`='$flownum'", "`id`,`name`,`table`");
+		$setrs 		= $this->getone("`num`='$flownum'", "`id`,`name`,`table`,`isflow`");
 		$table 		= $setrs['table'];
 		$where		= "`table`='$table' and `mid`='$mid'";
 		$rs			= m($table)->getone($mid);
 		$urs		= $aurs	= $log	= $logarr = $coursers	= array();
-		$status 	= $isflow = 1;
+		$status 	= 1;
+		$isflow 	= $setrs['isflow'];
+		$nextcheck	= array();
+		$ncourseid 	= 0;
 		if($rs){
 			if(!isset($rs['uid']))$rs['uid']=0;
 			if(!isset($rs['isturn']))$rs['isturn']=0;
 			if(!isset($rs['nstatus']))$rs['nstatus']=0;
 			if(!isset($rs['status']))$rs['status']=0;
 			if(!isset($rs['applydt']))$rs['applydt']='';
-			if(!isset($rs['nowcheckid'])){
-				$rs['nowcheckid']='';
-				$isflow=0;
-			}
+			if(!isset($rs['nowcheckid']))$rs['nowcheckid']='';
 			$optid 	= (int)$rs['optid'];
 			if($optid==0)$optid=$rs['uid'];
 			$urs 	= m('admin')->getone($rs['uid'], 'name,deptname');
@@ -53,6 +53,17 @@ class flowlogClassModel extends Model
 				$oi	= $i+1;
 				if($oi<$step)$zt=0;
 				if($oi==$step)$zt=1;
+				if($oi==$step+1)$ncourseid=$fefoid;
+				if($oi==$step+1 && !$this->isempt($useridarr[$i])){
+					$_an1 = explode(',', $useridarr[$i]);
+					$_an2 = explode(',', $userarr[$i]);
+					foreach($_an1 as $l1=>$v1s){
+						$nextcheck[]= array(
+							'name' 	=> $_an2[$l1],
+							'nameid' => $_an1[$l1]
+						);
+					}
+				}
 				if(isset($fowsetr[$fefoid]))$tecuna=$fowsetr[$fefoid];
 				$log[] = array(
 					'name'	=> $userarr[$i],
@@ -110,6 +121,8 @@ class flowlogClassModel extends Model
 			$logarr[$k]['statuscolor'] 	= $col;
 			$logarr[$k]['filearr'] 		= $fdb->getfile('flow_log', $logs['id']);
 		}
+		$inputrs	= array();
+		if($inputid>0)$inputrs=m('flow_courseinput')->getall("`mid`='$inputid' and `mid`>0 order by `sort`");
 		$arr		= array(
 			'data'	=> $rs,
 			'user'	=> $urs,
@@ -123,10 +136,14 @@ class flowlogClassModel extends Model
 			'actarr' => $actarr,
 			'flownum'=> $flownum,
 			'flowname'=> $setrs['name'],
+			'nextcheck'=> $nextcheck,
 			'mid'	 => $mid,
 			'coursers'	=> $coursers,
-			'courseid'	=> $courseid, 'inputid' => $inputid,
-			'isflow'	=> $isflow
+			'courseid'	=> $courseid, 
+			'inputid' => $inputid,
+			'inputrs'	=> $inputrs,
+			'isflow'	=> $isflow,
+			'ncourseid'	=> $ncourseid
 		);
 		return $arr;
 	}

@@ -23,14 +23,16 @@ if(atype!=0)typenum = 'infortype_dept_'+admindeptnum+'';
 
 var panel= {
 	width:750,xtype:'rockform',
-	submitfields:'title,typename,xu,isshow,content,zuozhe,indate,faobjid,faobjname',border:false,
+	submitfields:'title,typename,typenum,xu,isshow,content,zuozhe,indate,faobjid,faobjname',border:false,
 	params:{int_filestype:'xu,isshow,atype',otherfields:'optdt={now},optname={admin},optid={adminid},atype='+atype+''},tablename:'infor',
 	url:publicsave(mode,dir),aftersaveaction:'reimsendinfor',
 	items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true	
 		},{
+			value:'',name:'typenamePost',hidden:true
+		},{
 			xtype: 'fieldcontainer',layout:'hbox',items:[{
-				fieldLabel:''+bitian+'信息类型',name:'typenamePost',allowBlank: false,xtype:'optioncombo',optionmnum:typenum,width:'49%',editable:true
+				fieldLabel:''+bitian+'信息类型',name:'typenumPost',allowBlank: false,xtype:'optioncombo',optionmnum:typenum,width:'49%',editable:true,valuefields:'num',autoloadlist:true
 			},{
 				name:'faobjidPost',id:'faobjid_'+rand+'',xtype:'textfield',hidden:true
 			},{
@@ -58,6 +60,7 @@ var panel= {
 		}
 	],
 	submitcheck:function(){
+		form.setVal('typename', form.getField('typenum').getRawValue());
 		getcmp('content_'+rand+'').submitValue();
 	},
 	success:function(){

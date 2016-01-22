@@ -4,21 +4,36 @@ class leaveClassAction extends Action{
 	
 	public function publicbeforesave($table, $arr, $id)
 	{
-		$msg 	= '';
-		$start 	= $arr['stime'];
-		$end 	= $arr['etime'];
-		$qjkind	= $arr['qjkind'];
-		$db		= m($table);
-		$sdf 	= $db->rows("`uid`='".$arr['uid']."' and ((`stime`<='$start' and `etime`>='$start') or (`stime`<='$end' and `etime`>='$end') or (`stime`>='$start' and `etime`<='$end')) and `kind`='请假' and `id`<>'$id' and `status`<>5 ");
-		if($sdf > 0){
-			$msg = '该时间段已申请过了';
+		
+		$msg 	= m('kaoqin')->leavepan($arr['uid'], $arr['qjkind'], $arr['stime'], $arr['etime'], $arr['totals'], $id);
+		return array('msg'=>$msg);
+	}
+	
+	public function sickbeforeaction($table, $arr, $id)
+	{
+		$msg = '';
+		$type= $arr['type'];
+		$mid = $arr['mid'];
+		$uid = $arr['uid'];
+		$ladt = c('date')->lastmonth($this->date,'Y-m-01');
+		$to   = 0;
+		if($type==0){
+			$tabs = 'kq_info';
+			$rso = m($tabs)->getone("`id`='$mid' and `uid`='$uid' and `status`=1 and isxj=0 and `stime`>='$ladt' and `id`='$mid'",'qjkind');
+			if($rso){
+				$to 	= 1;
+				$msg 	= m('kaoqin')->leavepan($uid, $rso['qjkind'], $arr['stime'], $arr['etime'], $arr['totals'], $mid);
+			}
+		}else{
+			$tabs = 'kq_out';
+			$to = m($tabs)->rows("`id`='$mid' and `uid`='$uid' and `status`=1 and isxj=0 and `outtime`>='$ladt'");
 		}
-		$tsjia	= '事假,病假';
-		if($msg == '' && !$this->contain($tsjia, $qjkind)){
-			$sy1	= m('kaoqin')->getqjsytime($arr['uid'], $qjkind, $start, $id);
-			if($sy1<0)$sy1=0;
-			if($arr['totals']>$sy1)$msg = '剩余['.$qjkind.']'.$sy1.'小时,不能申请';
+		if($to==0)$msg='该单不能申请销假，可能已过期';
+		if($msg==''){
+			$to = m($table)->rows("`type`='$type' and `mid`='$mid' and `id`<>$id");
+			if($to>0)$msg='请不要重复申请';
 		}
+		
 		return array('msg'=>$msg);
 	}
 	
@@ -46,5 +61,33 @@ class leaveClassAction extends Action{
 			$arr['totalstring'] = '本月请假<font color=red>'.$to1.'</font>小时，可用假期<font color=green>'.$to3.'</font>小时';
 		}
 		return $arr;
+	}
+	
+	
+	/**
+		读取销假的
+	*/
+	public function changetypesickAjax()
+	{
+		$type = (int)$this->get('type');
+		$rows = array();
+		$ladt = c('date')->lastmonth($this->date,'Y-m-01');
+		if($type==0){
+			$tabs = 'kq_info';
+			$rows = m($tabs)->getall("`uid`='$this->adminid' and `status`=1 and isxj=0 and `stime`>='$ladt' order by `stime` desc",'`id`,`stime`,`etime`,`totals`');
+		}else{
+			$tabs = 'kq_out';
+			$rows = m($tabs)->getall("`uid`='$this->adminid' and `status`=1 and isxj=0 and `outtime`>='$ladt' order by `outtime` desc",'`id`,`outtime`,`intime`');
+		}
+		$dbs 	= m('flow_bill');
+		$rowss = array();
+		foreach($rows as $k=>$rs){
+			$vsl = $dbs->getmou('sericnum', "`table`='$tabs' and `mid`='".$rs['id']."'");
+			if($vsl){
+				if($type==0)$rowss[]=array($rs['id'], $vsl,$rs['stime'],$rs['etime'],$rs['totals']);
+				if($type==1)$rowss[]=array($rs['id'], $vsl,$rs['outtime'],$rs['intime'],0);
+			}
+		}
+		echo json_encode($rowss);
 	}
 }

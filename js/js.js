@@ -362,8 +362,7 @@ js.getchecked=function(na,bh){
 	return s;
 }
 js.cookie=function(name){
-	var str=document.cookie;
-	var val='';
+	var str=document.cookie,cda,val='',arr,i;
 	if(str.length<=0)return '';
 	arr=str.split('; ');
 	for(i=0;i<arr.length;i++){
@@ -681,4 +680,37 @@ js.getparenta=function(o, oi){
 		this.allparent+=','+id;
 	}
 	this.getparenta(o.parent(), oi+1);
+}
+js.ajaxbool = false;
+js.ajax = function(url,da,fun,type,efun){
+	if(js.ajaxbool)return;
+	if(!da)da={};if(!type)type='get';
+	if(typeof(fun)!='function')fun=function(){};
+	if(typeof(efun)!='function')efun=function(){};
+	js.ajaxbool=true;
+	$.ajax({
+		type:type,
+		data:da,url:url,
+		success:function(str){
+			js.ajaxbool=false
+			fun(str);
+		},error:function(){
+			js.ajaxbool=false
+			js.msg('msg','处理出错');
+			efun();
+		}
+	});
+}
+js.setoption=function(k,v){
+	if(isempt(v)){
+		localStorage.removeItem(k);
+	}else{
+		localStorage.setItem(k, v);
+	}
+}
+js.getoption=function(k,dev){
+	var s = localStorage.getItem(k);
+	if(isempt(dev))dev='';
+	if(isempt(s))s=dev;
+	return s;
 }

@@ -117,7 +117,7 @@ var panel = {
 	url:publicstore('admin','system'),
 	columns:[{
 		xtype: 'rownumberer',
-		width: 30
+		width: 35
 	},{
 		text:'用户名',dataIndex:'user',width:60,autowidth:true,search:true
 	},{
@@ -151,6 +151,8 @@ var panel = {
 			return val;
 		}
 	},{
+		text:'所属单位',dataIndex:'companyname',autowidth:true
+	},{
 		text:'ID',dataIndex:'id',width:60
 	}],
 	formadd:function(f){
@@ -164,10 +166,11 @@ var panel = {
 		for(i=0; i<a.length;i++)b.push([a[i].id, a[i].name]);
 		f.getField('groupname').getStore().loadData(b);
 	},
+	formwidth:600,
 	formparams:{
 		url:publicsave(mode,dir),
-		submitfields:'user,pass,name,tel,email,status,groupname,gender,mobile,type,ranking,superman,superid,deptid,deptname,sort',
-		params:{int_filestype:'status,type,deptid,sort',add_otherfields:'adddt={now},workdate={date},state=2',md5_filestype:'pass',otherfields:'optdt={now},optname={admin},optid={adminid}'},autoScroll:false,editrecord:true,
+		submitfields:'user,pass,name,tel,email,status,groupname,gender,mobile,type,ranking,superman,superid,deptid,deptname,sort,companyid',
+		params:{int_filestype:'status,type,deptid,sort,companyid',add_otherfields:'adddt={now},workdate={date},state=2',md5_filestype:'pass',otherfields:'optdt={now},optname={admin},optid={adminid}'},autoScroll:false,editrecord:true,
 		submitparams:function(o,f){
 			return {groupnamess:o.getField('groupname').getRawValue()};
 		},
@@ -184,42 +187,56 @@ var panel = {
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 		},{
-			fieldLabel:''+bitian+'用户名',name:'userPost',allowBlank: false
-		},{
-			fieldLabel:'密码',name:'passPost'
-		},{
-			fieldLabel:''+bitian+'姓名',name:'namePost',allowBlank: false
-		},{
-			fieldLabel:'电话',name:'telPost'
-		},{
-			fieldLabel:'手机号',name:'mobilePost'
-		},{
-			fieldLabel:'邮箱',name:'emailPost'
-		},{
-			xtype: 'radiogroup',fieldLabel: '性别',
-			items: [{
-				boxLabel: '男', name: 'genderPost', inputValue: '男', checked: true
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:''+bitian+'用户名',name:'userPost',allowBlank: false,width:'49%'
 			},{
-				boxLabel: '女', name: 'genderPost', inputValue: '女'
+				fieldLabel:'密码',name:'passPost',width:'50%'
 			}]
 		},{
-			fieldLabel:'&nbsp;',name:'statusPost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:''
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:''+bitian+'姓名',name:'namePost',allowBlank: false,width:'49%'
+			},{
+				fieldLabel:'电话',name:'telPost',width:'50%'
+			}]
 		},{
-			fieldLabel:'&nbsp;',name:'typePost',xtype:'checkboxfield',boxLabel:'可登录系统',inputValue:'1',checked:true,labelSeparator:''
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:'手机号',name:'mobilePost',width:'49%'
+			},{
+				fieldLabel:'邮箱',name:'emailPost',width:'50%'
+			}]
 		},{
-			fieldLabel:''+bitian+'职位',name:'rankingPost',allowBlank: false,xtype:'optioncombo',optionmnum:'ranking',editable:true
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				xtype: 'radiogroup',fieldLabel: '性别',width:'49%',
+					items: [{
+						boxLabel: '男', name: 'genderPost', inputValue: '男', checked: true
+					},{
+						boxLabel: '女', name: 'genderPost', inputValue: '女'
+				}]
+			},{
+				fieldLabel:'&nbsp;',name:'statusPost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:'',width:'30%'
+			},{
+				fieldLabel:'',name:'typePost',xtype:'checkboxfield',boxLabel:'可登录系统',inputValue:'1',checked:true,labelSeparator:'',width:'20%'
+			}]
 		},{
-			name:'deptidPost',id:'deptid_'+rand+'',hidden:true
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:''+bitian+'职位',name:'rankingPost',allowBlank: false,xtype:'optioncombo',optionmnum:'ranking',editable:true,width:'49%'
+			},{
+				name:'deptidPost',id:'deptid_'+rand+'',hidden:true
+			},{
+				fieldLabel:''+bitian+'所属部门',nameidfields:'deptid_'+rand+'',name:'deptnamePost',xtype:'changedeptuser',changetitle:'选择部门',allowBlank: false,width:'50%'
+			}]
 		},{
-			fieldLabel:''+bitian+'所属部门',nameidfields:'deptid_'+rand+'',name:'deptnamePost',xtype:'changedeptuser',changetitle:'选择部门',allowBlank: false
-		},{
-			name:'superidPost',id:'superid_'+rand+'',hidden:true
-		},{
-			fieldLabel:'直属上级',nameidfields:'superid_'+rand+'',name:'supermanPost',xtype:'changedeptuser',changetitle:'选择对应的直属上级',changetype:'usercheck'
-		},{
-			fieldLabel:'排序号',name:'sortPost',value:'0',minValue:0,xtype:'numberfield'
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:'直属上级',nameidfields:'superid_'+rand+'',name:'supermanPost',xtype:'changedeptuser',changetitle:'选择对应的直属上级',changetype:'usercheck',width:'49%'
+			},{
+				name:'superidPost',id:'superid_'+rand+'',hidden:true
+			},{
+				fieldLabel:'排序号',name:'sortPost',value:'0',minValue:0,xtype:'numberfield',width:'50%'
+			}]
 		},{
 			fieldLabel:'所在组',name:'groupnamePost',xtype:'checkcombo',editable:false,store:[['1','管理员']]
+		},{
+			fieldLabel:''+bitian+'所属单位',name:'companyidPost',xtype:'rockcombo',url:'company',allowBlank: false,valuefields:'id',autoloadlist:true
 		}]
 	}
 };

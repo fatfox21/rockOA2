@@ -88,19 +88,6 @@ class flowClassAction extends Action{
 			}
 		}
 		
-		//未完成工作任务
-		$to		= m('work')->getwwctotal($this->adminid);
-		if($to>0){
-			$rows[]= array(
-				'title'		=> '未完成任务',
-				'stotal' 	=> $to,
-				'url'		=> 'work,work,mwc,atype=1',
-				'menunum'	=> 'workmwc'
-			);
-		}
-		
-		
-		
 		foreach($rows as $k=>$rs){
 			$rows[$k]['xuhao'] = $k+1;
 		}

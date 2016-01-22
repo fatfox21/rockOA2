@@ -32,7 +32,7 @@ class workClassModel extends Model
 		if($aid != '')$wherea.=" and `id`='$aid'";
 		
 		$rows	= $rate->result('work', $dt, $wherea);
-		//写入到表里面
+		
 		$msid	= '0';
 		$ssid	= '0';
 		$rowsa	= array();	
@@ -104,7 +104,7 @@ class workClassModel extends Model
 	}
 	public function delwork($id)
 	{
-		$where = "`mid` in($id)";// and ifnull(`state`,'')<>'已完成'
+		$where = "`mid` in($id)";
 		$this->db->delete('[Q]todo', "`table` in('work','workbao') and `mid` in(select `id` from `[Q]work` where $where)");
 		$this->delete("( $where) or (`id` in($id) ) ");
 	}
@@ -116,26 +116,37 @@ class workClassModel extends Model
 		if(!$this->isempt($rs['baoid'])){
 			$reim	= m('reim');
 			$cont 	= ''.$this->adminname.'提交了['.$rs['title'].']的任务报告，任务状态['.$zt.']';
-			//$url 	= $reim->createurl('work', $rs['id']);
-			
 			m('todo')->addtz($rs['baoid'], '任务报告', $cont, 'work', $rs['id']);
 			$reim->sendsystem($this->adminid, $rs['baoid'], '项目任务', $cont, 'work', $rs['id']);
 		}
 	}
 	
+	public function addworks($mid, $state, $sm)
+	{
+		$arr = array(
+			'mid' 	=> $mid,
+			'table' => 'work',
+			'state' => $state,
+			'explain' => $sm,
+			'optdt' => $this->rock->now,
+			'optid' => $this->adminid,
+			'optname' => $this->adminname
+		);
+		$this->db->record('[Q]workbg', $arr);
+	}
+	
 	public function getwwctotal($uid)
 	{
-		$dt = $this->rock->date;
-		$to = $this->rows("mid>0 and instr(concat(',', distid, ','), ',$uid,')>0 and `startdt`<='$dt 23:59:59' and `state` in('待执行','执行中')");
+		$to = $this->getwwcwork($uid,1);
 		return $to;
 	}
 	
 	public function getwwcwork($uid, $tlx=0)
 	{
-		$dt = $this->rock->date;
-		$where 	= "mid>0 and((`dt`='$dt') or (`dt`<'$dt' && `state` in('待执行','执行中'))) and  instr(concat(',', distid, ','), ',$uid,')>0 ";
+		$dt 	= $this->rock->date;
+		$where 	= " ((startdt like '$dt%') or (startdt < '$dt' and `enddt` is null)) and (`state`='待执行' or `state` like  '执行中%') and ".$this->rock->dbinstr('distid',$uid);
 		if($tlx == 0){
-			$rows = $this->getall($where." order by `startdt`",'`type`,`title`,`state`,`startdt`');
+			$rows = $this->getall($where." order by `startdt`",'`type`,`title`,`state`,`startdt`,`grade`');
 		}else{
 			$rows = $this->rows($where);
 		}

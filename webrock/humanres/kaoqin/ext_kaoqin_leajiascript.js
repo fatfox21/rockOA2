@@ -23,17 +23,17 @@ var panel= {
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'部门',dataIndex:'deptname',width:200,search:true,autowidth:true
+		text:'部门',dataIndex:'deptname',width:120,search:true,autowidth:true
 	},{
 		text:'姓名',dataIndex:'name',width:90,search:true
 	},{
-		text:'类型',dataIndex:'kind',width:100,search:true
+		text:'类型',dataIndex:'kind',width:90,search:true,sortable:true
 	},{
-		text:'类别',dataIndex:'qjkind',width:60,search:true
+		text:'类别',dataIndex:'qjkind',width:60,search:true,sortable:true
 	},{
-		text:'开始时间',dataIndex:'stime',width:160,search:true,atype:'date'
+		text:'开始时间',dataIndex:'stime',width:150,search:true,atype:'date',sortable:true
 	},{
-		text:'结束时间',dataIndex:'etime',width:160,search:true,atype:'date'
+		text:'结束时间',dataIndex:'etime',width:150,search:true,atype:'date',sortable:true
 	},{
 		text:'时间(小时)',dataIndex:'totals',width:120,renderer:function(v,a,b){
 			var lx = b.raw.kind,s;
@@ -46,7 +46,7 @@ var panel= {
 			}
 		}
 	},{
-		text:'状态',align:'center',width:150,dataIndex:'status',renderer:function(v,a,b){
+		text:'状态',width:130,dataIndex:'status',renderer:function(v,a,b){
 			var s = '<font color="blue">待'+b.raw.nowcheckname+'审核</font>';
 			var ns = b.raw.statusman;if(isempt(ns))ns='';
 			if(v=='2')s = ns+'<font color="red">审核不通过</font>';
@@ -55,6 +55,12 @@ var panel= {
 		}
 	},{
 		text:'说明',align:'left',dataIndex:'explain',flex:1
+	},{
+		text:'销假',dataIndex:'isxj',sortable:true,width:90,renderer:function(v){
+			var s='';
+			if(v==1)s='<font color=green>有销假过</font>';
+			return s;
+		}
 	}],
 	tbarcenter:[{
 		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:80

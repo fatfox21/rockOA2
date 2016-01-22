@@ -67,7 +67,7 @@ class apiCloudChajian extends Chajian{
 			'type'		=> $type,
 			'platform'	=> 2, //0:全部平台，1：ios, 2：android
 		);
-		return $this->pushtesmp($da);
+		//return $this->pushtesmp($da);
 	}
 }  
 /*

@@ -79,7 +79,7 @@ function addworkl(lx){
 		var cans = winopt({title:'管理',width:300,items:{
 			border:false,tablename:'userjl',submittext:'确定',
 			submitfields:'atype,name,ranking,startdt,enddt,uid',autoScroll:false,cancelbool:true,
-			xtype:'rockform',autoScroll:false,
+			xtype:'rockform',
 			items:[{
 				fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 			},{

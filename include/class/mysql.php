@@ -112,7 +112,9 @@ abstract class mysql{
 			$_dt 	= date('Y-m');
 			$fdir	= ''.ROOT_PATH.'/log/'.$_dt.'';
 			if(!file_exists($fdir))mkdir($fdir);
-			$txt	= '[错误SQL]：《'.$sql.'》----------原因：'.$this->error().'';
+			$txt	= ''.D.'/'.M.'/'.A.',[错误SQL]：《'.$sql.'》----------原因：'.$this->error().'
+地址：'.$_SERVER['QUERY_STRING'].'
+';
 			$this->rock->createtxt('log/'.$_dt.'/mysql'.date('YmdHis').'_'.rand(1000,9000).'.log', $txt);
 		}
 		return $rsbool;
@@ -120,7 +122,9 @@ abstract class mysql{
 	
 	public function execsql($sql)
 	{
-		return $this->query($sql);
+		$rsa	= $this->query($sql);
+		$this->iudarr[]=$rsa;
+		return $rsa;
 	}
 	
 	public function getLastSql()
@@ -427,7 +431,7 @@ abstract class mysql{
 	public function record($table,$array,$where='')
 	{
 		$addbool  	= true;
-		if($where != '')$addbool=false;
+		if(!$this->isempt($where))$addbool=false;
 		$cont		= '';
 		if(is_array($array)){
 			foreach($array as $key=>$val){
@@ -482,7 +486,7 @@ abstract class mysql{
 	
 	public function gettablefields($table)
 	{
-		$sql	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types` from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='$this->db_base' order by `ORDINAL_POSITION`";
+		$sql	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types`,`COLUMN_DEFAULT` as dev from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='$this->db_base' order by `ORDINAL_POSITION`";
 		return $this->getall($sql);
 	}
 	

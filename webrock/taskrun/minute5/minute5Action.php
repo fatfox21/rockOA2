@@ -7,7 +7,7 @@ class minute5ClassAction extends Action{
 	public function runtaskAjax()
 	{
 		$this->meettodo();
-		$this->worktodo();
+		//$this->worktodo();
 		echo 'success';
 	}
 	
@@ -23,6 +23,7 @@ class minute5ClassAction extends Action{
 		$adm	= m('admin');
 		$zttz	= $this->option->getval('meettodo_zann');
 		$retz	= $this->option->getval('meettodo_reim');
+		$wxtz	= $this->option->getval('meettodo_weixin');
 		foreach($rows as $k=>$rs){
 			$zt 	= $rs['state'];
 			$dts	= explode(' ', $rs['startdt']);
@@ -33,25 +34,24 @@ class minute5ClassAction extends Action{
 			if($ettime <= $time){
 				$nzt = 2;
 			}else{
-				$jg = $sttime - $time;
-				if($jg<=0){
+				if($time >= $sttime && $time< $ettime){
 					if($zt==0)$nzt = 1;//进行中
 				}else{
+					$jg = $sttime - $time;
 					if($jg <= 6*60 && $rs['istz'] == 0 && $zt==0){
 						$istz = 1;
-						$nzt  = 0;
 						$tzuid = $adm->gjoin($rs['joinid']);//添加通知
 						$cont  = '['.$rs['title'].']会议将在5分钟后'.$dts[1].'开始，请做好准备,会议室['.$rs['hyname'].']';
 						if($tzuid != ''){
 							if($zttz=='是')$todo->add($tzuid, '会议通知', $cont);
 							if($retz=='是')m('reim')->sendsystem(0, $tzuid, '会议通知', $cont);
+							if($wxtz=='是')m('weixin:index')->sendtext($tzuid, '今日会议', $cont);
 						}
+						$db->update("`istz`='$istz'", $rs['id']);
 					}
 				}
 			}
-			if($nzt != -1){
-				$db->update("`state`='$nzt', `istz`='$istz'", $rs['id']);
-			}
+			if($nzt != -1)$db->update("`state`='$nzt'", $rs['id']);
 		}
 	}
 	

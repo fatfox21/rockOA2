@@ -17,9 +17,9 @@ var panel= {
 	},{
 		text:'类型',dataIndex:'atype',width:80,search:true,atype:'select',store:js.arraystr('外出,出差'),sortable:true
 	},{
-		text:'外出时间',dataIndex:'outtime',width:160,search:true,atype:'date'
+		text:'外出时间',dataIndex:'outtime',width:150,search:true,atype:'date',sortable:true
 	},{
-		text:'预计回岗时间',dataIndex:'intime',width:160,search:true,atype:'date'
+		text:'预计回岗时间',dataIndex:'intime',width:150,search:true,atype:'date',sortable:true
 	},{
 		text:'状态',width:150,dataIndex:'status',renderer:function(v,a,b){
 			var s = '<font color="blue">待'+b.raw.nowcheckname+'审核</font>';
@@ -34,6 +34,12 @@ var panel= {
 		text:'外出事由',dataIndex:'reason',search:true
 	},{
 		text:'说明',align:'left',dataIndex:'explain',flex:1,sortable:false,search:true
+	},{
+		text:'销假',dataIndex:'isxj',sortable:true,width:90,renderer:function(v){
+			var s='';
+			if(v==1)s='<font color=green>有销假过</font>';
+			return s;
+		}
 	}],
 	tbarcenter:[{
 		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:80

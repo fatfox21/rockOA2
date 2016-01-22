@@ -1,6 +1,6 @@
 <?php
 include_once('../../config/config.php');
-if($rock->adminid==0)exit('sorry not sign');
+//if($rock->adminid==0)exit('sorry not sign');
 $now		= $rock->now();
 $action		= $rock->get('action');
 if($action != 'xml' && $action != 'send')exit('Sorry!');

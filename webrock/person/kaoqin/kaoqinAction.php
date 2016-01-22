@@ -3,64 +3,10 @@ class kaoqinClassAction extends Action{
 
 	public function getkaoqinAjax()
 	{
-		$uid 	= $this->rock->get('uid');
-		$y 		= $this->rock->get('year');
-		$m 		= $this->rock->get('month');
-		$marr   = array(31,28,31,30,31,30,31,31,30,31,30,31);
-		$max	= $marr[(int)$m-1];
-		if($y%4==0 && $max==28)$max++;
-		
-		$month	= ''.$y.'-'.$m.'';
-		$start	= ''.$y.'-'.$m.'-01';
-		$end	= ''.$y.'-'.$m.'-'.$max.'';
-		$rows	= array();
-		
-		$ssras	= array();
-		$ssra	= $this->db->getall("SELECT ztname,time,state,states,dt,iswork,emiao FROM `[Q]kq_anay` where `dt`>='$start' and `dt`<='$end' and `uid`='$uid' order by dt,sort");
-		foreach($ssra as $k=>$rs)$ssras[$rs['dt']][] = $rs;
-		$tojarr = array();
-		for($i=1; $i<=$max; $i++){
-			$str	= '';
-			$iswork	= 0;
-			$oi		= $i;
-			if($i<10)$oi = '0'.$oi.'';
-			$dt		= ''.$month.'-'.$oi.'';
-			if(isset($ssras[$dt])){
-				foreach($ssras[$dt] as $k1=>$rs){
-					$iswork	= $rs['iswork']; $state = $rs['state']; $states = $rs['states']; $emiao = $rs['emiao'];
-					if(!isset($tojarr[$state]))$tojarr[$state] = 0;
-					
-					$str.=''.$rs['ztname'].'：';
-					$s11 = '';
-					$s11.=''.$state.'';
-					if(!$this->isempt($rs['time'])){
-						if(!$this->isempt($emiao)){
-							$ois = floor((int)$emiao / 60);
-							$s11.=''.$ois.'分钟';
-						}
-						$s11.='('.$rs['time'].')';
-					}
-					$col1 = '';
-					if($state!='正常'){
-						if($this->isempt($states))$col1='red';
-					}	
-					if($iswork==0){
-						$col1='#888888';
-						$s11.=',休息日';
-					}
-					if(!$this->isempt($states))$s11.=','.$states.'';
-					$s11='<font color='.$col1.'>'.$s11.'</font>';
-					$str.=''.$s11.'<br>';
-					
-					if($iswork==1 && $this->isempt($states))$tojarr[$state]++;//异常
-				}
-			}
-			$rows[$i] = array(
-				'str' 		=> $str,
-				'iswork'	=> $iswork
-			);
-		}
-		$rows[99] = $tojarr;
+		$uid 	= $this->get('uid');
+		$y 		= $this->get('year');
+		$m 		= $this->get('month');
+		$rows 	= m('kaoqin')->getanay($uid, ''.$y.'-'.$m.'');
 		echo json_encode($rows);
 	}
 	

@@ -365,7 +365,7 @@ Ext.define('Ext.rock.grid',{
 				var to = a.getCount();
 				if(to>0)me._resetgridwidth(me.headerCt.getGridColumns());
 				var o1 = Ext.getCmp('pagesizela_'+me.rand+'');
-				if(o1)o1.setDisabled(to<=0);
+				if(o1)o1.setDisabled(me.gettotalCount()<=me.pageSize);
 				me.load(me,a,b,c,d,e,f);
 			},
 			datachanged:function(a, b){

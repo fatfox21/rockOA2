@@ -58,6 +58,8 @@ Ext.define('Ext.rock.tree',{
 		Ext.applyIf(this,{
 			listeners:{},
 			storeconfig:{},
+			storeafteraction:'',
+			storebeforeaction:'',
 			url:publictreestore(),
 			params:{},
 			destroypanel:[],
@@ -139,7 +141,7 @@ Ext.define('Ext.rock.tree',{
 		}
 		for(i=0;i<this.fields.length;i++)fields.push(this.fields[i]);
 		var url = this.url;
-		var params = {where:this.where,tablename_abc:this.tablename,fistwhere:me.fistwhere};
+		var params = {where:this.where,tablename_abc:this.tablename,fistwhere:me.fistwhere,storeafteraction:me.storeafteraction,storebeforeaction:me.storebeforeaction};
 		Ext.apply(params, me.params);
 		var storeopt= {
 			fields:fields,

@@ -61,26 +61,45 @@ class htmlChajian extends Chajian{
 		@param	string  $headstr 表格表头(如：lie1,列1,left@lie2,列2,center)
 		@return	string
 	*/
-	public function createrows($rows, $headstr='', $bor='#C9ECFF')
+	public function createrows($rows, $headstr='', $bor='#C9ECFF',$lx='')
 	{
 		if($headstr == '')$headstr	= $this->request('header');
 		if($headstr	== '')return '';
 		$arrh		= explode('@', $headstr);
 		$thead		= count($arrh);
+		$lens		= $thead-1;
+		$rlen		= count($rows);
 		for($i=0; $i<$thead; $i++){
 			$te_str	= $arrh[$i];
 			if(count(explode(',', $te_str)) < 3)$te_str.=',center';
 			$head[]	= explode(',', $te_str);
 		}
 		$txt	 = '';	//DBE6E3
-		$style	 = "style='padding:5px;border:1px ".$bor." solid'";
+		$style	 = "padding:5px;border:1px ".$bor." solid";
 		$txt	.= '<table width="100%" class="createrows" border="0" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;" >';
 		$txt	.= '<tr>';
-		for($h=0; $h<$thead; $h++)$txt.= '<td '.$style.' bgcolor="#eeeeee" align="'.$head[$h][2].'"><b>'.$head[$h][1].'</b></td>';
+		for($h=0; $h<$thead; $h++){
+			$stls= $style;
+			if($lx=='noborder'){
+				$stls.=';border-top:none';
+				if($h==0)$stls.=';border-left:none';
+				if($h==$lens)$stls.=';border-right:none';
+			}
+			$txt.= '<td style="'.$stls.'" bgcolor="#eeeeee" align="'.$head[$h][2].'"><b>'.$head[$h][1].'</b></td>';
+		}
 		$txt	.= '</tr>';
-		foreach($rows as $rs){
+		foreach($rows as $k=>$rs){
 			$txt	.= '<tr>';
-			for($h=0; $h<$thead; $h++)$txt	.= '<td '.$style.' align="'.$head[$h][2].'">'.$rs[$head[$h][0]].'</td>';
+			for($h=0; $h<$thead; $h++){
+				$stls= $style;
+				$stls.='';
+				if($lx=='noborder'){
+					if($h==0)$stls.=';border-left:none';
+					if($h==$lens)$stls.=';border-right:none';
+					if($k==$rlen-1)$stls.=';border-bottom:none';
+				}
+				$txt	.= '<td style="'.$stls.'" align="'.$head[$h][2].'">'.$rs[$head[$h][0]].'</td>';
+			}	
 			$txt	.= '</tr>';
 		}
 		$txt	.= '</table>';

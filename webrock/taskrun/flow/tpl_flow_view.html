@@ -27,11 +27,13 @@ function initbody(){
 	if(js.request('rocktoken'))$('#printdiv').hide();
 }
 
-function check(o1){var da = {sm:form('check_explain').value,id:'<?=$da['arr']['mid']?>',flownum:'<?=$da['arr']['flownum']?>',zt:_getaolvw('check_status'),cid:_getaolvw('check_name')};if(da.zt==''){js.setmsg('请选择处理动作');return;}if(da.zt=='2'&&isempt(da.sm)){js.setmsg('此动作必须填写说明');return;}
+function check(o1){
+	var da = {sm:form('check_explain').value,id:'<?=$da['arr']['mid']?>',flownum:'<?=$da['arr']['flownum']?>',zt:_getaolvw('check_status'),cid:_getaolvw('check_name'),nextcheckid:js.getchecked('check_nextchangeid')};
+	if(da.zt==''){js.setmsg('请选择处理动作');return;}if(da.zt=='2'&&isempt(da.sm)){js.setmsg('此动作必须填写说明');return;}
 	if(da.zt=='1'){for(var csa in btianarr){if(form(csa).value==''&&btianarr[csa]!=''){js.setmsg('【'+btianarr[csa]+'】不能为空');return;}}}
 	js.setmsg('处理中...');
 	o1.disabled = true;
-	for(var csa in btianarr)da[csa]=form(csa).value;
+	for(var csa in btianarr)da[csa]=jm.base64encode(form(csa).value);
 	da.fileid = form('fileid').value;
 	var url = js.getajaxurl('check','flow','taskrun');
 	$.ajax({type:'post',url:url,data:da,success:function(das){backreturn();if(das.indexOf('成功')>-1){js.setmsg(das,'green');if(get('autocheckbox').checked)connectclose();}else{js.setmsg(das);o1.disabled = false;}},error:function(){js.setmsg('处理失败请重试');o1.disabled = false;}});
@@ -93,6 +95,9 @@ function openprint(){
 .tabled2 tr:hover,.tdcont tr:hover{background:#f1f1f1}
 .tabled2 td.pandys{padding:5px;text-align:center}
 .createtable{width:100%}
+.ys2{padding:0px 5px; border:1px #000000 solid}
+.ys1{padding:0px 5px; border:1px #000000 solid}
+.ys0{border:1px #000000 solid}
 </style>
 </head>
 <body style="padding:15px">
@@ -184,11 +189,24 @@ function openprint(){
 			<td><div align="left">
 			<?php 
 			foreach($da['arr']['actarr'] as $k=>$act){
-				echo '<label><input name="check_status" type="radio" value="'.$act[0].'">'.$act[1].'</label>&nbsp; ';
+				echo '<label><input name="check_status"  type="radio" value="'.$act[0].'">'.$act[1].'</label>&nbsp; ';
 			}
 			?>
 			</div></td>
 		</tr>
+		
+		<?php
+		if(count($da['arr']['nextcheck'])>0){?>
+		<tr>
+			<td ><div  align="right" style="color:#555555"><a href="http://www.rockoa.com/view_nextchange.html" target="_blank">?</a>指定下步审核人:</div></td>
+			<td><div align="left">
+			<?php
+			foreach($da['arr']['nextcheck'] as $u=>$us){
+				echo '<label><input type="checkbox" name="check_nextchangeid" value="'.$us['nameid'].'"> '.$us['name'].'</label>&nbsp; &nbsp; ';
+			}
+			?>
+			<div></td>
+		<?php }?>
 		
 		<?php
 		

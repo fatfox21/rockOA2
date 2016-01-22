@@ -23,12 +23,13 @@ class flowClassAction extends Action{
 		$id			= (int)$this->post('id');
 		$cid		= (int)$this->post('cid');
 		$zt			= (int)$this->post('zt');
+		$checkid	= $this->post('nextcheckid');
 		$sm			= $this->post('sm');
 		$flow = f($flownum);
 		$flow->adminid 		= $cid;
 		$flow->adminname 	= m('admin')->getmou('name',"`id`='$cid'");
 		$flow->initrecord($id);
-		echo $flow->check($zt, $sm, $cid);
+		echo $flow->check($zt, $sm, $cid, $checkid);
 	}
 	
 	/**
@@ -57,7 +58,7 @@ class flowClassAction extends Action{
 		$arr		= $dbs->getdatalog($modenum, $table, $mid, $uid);
 		$this->smartydata['arr']		= $arr;
 		$this->smartydata['urs']		= m('admin')->getall("`id` in($uid) order by `sort`",'`id`,`name`,`ranking`');
-		$this->smartydata['inputrs']	= m('flow_courseinput')->getall("`mid`='".$arr['inputid']."' and `mid`>0 order by `sort`");
+		$this->smartydata['inputrs']	= $arr['inputrs'];
 	}
 	
 	public function printAction()
@@ -84,6 +85,6 @@ class flowClassAction extends Action{
 		$this->printAction();
 		$filename = $this->title.'.doc';
 		header('Content-type:application/msword');
-		header('Content-disposition:attachment;filename='.$filename.'');
+		header('Content-disposition:attachment;filename='.iconv("utf-8","gb2312", $filename).'');
 	}
 }

@@ -14,6 +14,14 @@ class dateChajian extends Chajian
 	{
 		return date($format,strtotime($dt));
 	}
+	
+	/**
+		获取上月
+	*/
+	public function lastmonth($dt, $type='Y-m')
+	{
+		return $this->adddate($dt,'m',-1,$type);
+	}
 
 	/**
 		计算时间间隔

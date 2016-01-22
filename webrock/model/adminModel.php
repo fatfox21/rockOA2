@@ -183,4 +183,25 @@ class adminClassModel extends Model
 		$where 	= "and ($where)";
 		return $where;
 	}
+	
+	/*
+		获取在线的人员Id
+	*/
+	public function getonline($receid, $lx=15)
+	{
+		$dts 		= c('date')->adddate($this->rock->now,'i', 0-$lx);
+		$wheres		= '';
+		if($receid != 'all')$wheres=" and `id` in($receid)";
+		$jonus 		= $jiesid = $this->db->getjoinval('[Q]admin','id', "`status`=1 and `state`<>5 and `imlastdt`>'$dts' $wheres");
+		return $jonus;
+	}
+	
+	/**
+		获取已绑定微信人员
+	*/
+	public function getwxuser()
+	{
+		$arows	= $this->getall('`status`=1 and `state`<>5 and `iswx`=1', '`id`,`user`,`face`,`name`');
+		return $arows;
+	}
 }

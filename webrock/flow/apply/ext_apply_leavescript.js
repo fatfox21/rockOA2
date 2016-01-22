@@ -54,7 +54,7 @@ var frompanel={
 				return (v>0)?true:'请假时间至少要1个小时';
 			}
 		},{
-			xtype:'label',html:'<div id="tisnshuto_'+rand+'">&nbsp;0天0小时</div>'
+			xtype:'label',html:'<div style="padding-top:3px;font-size:12px" id="tisnshuto_'+rand+'">&nbsp;0天0小时</div>'
 		}]
 	},{
 		fieldLabel:'说明',name:'explainPost',allowBlank: false,xtype:'textareafield',height:100

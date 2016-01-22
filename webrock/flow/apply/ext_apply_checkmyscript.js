@@ -29,6 +29,9 @@ var panel = [{
 	xtype:'rockgrid',tablename:'flow_bill',searchtools:true,defaultorder:'optdt desc',paramsbase:{protype:atype},
 	url:publicstore(mode,dir),storeafteraction:'checkmychange',storebeforeaction:'checkmybefore',
 	fields:['uid','status','nstatus','optid'],
+	tbarcenter:[{
+		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:90
+	}],
 	tbar:['->',{
 		text:'打印',icon:gicons('printer'),disabled:true,itemId:'print',handler:function(){
 			var a = this.up('grid')._openurl('print');
@@ -44,8 +47,9 @@ var panel = [{
 		this.setparams({protype:oi}, true);
 	},
 	outsearch:function(){
-		//this.setparams({modeid:});
-		return '';
+		var yf=getcmp('month_'+rand+'').getValue(),s='';
+		if(yf)s="and `applydt` like '"+yf+"%'";
+		return s;
 	},
 	_openurl:function(lx){
 		var a = this.changedata;

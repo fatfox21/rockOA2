@@ -34,7 +34,7 @@ var panel=[{
 	xtype:'rockgridform',bbarbool:false,defaultorder:'sort',formtitle:'处理表单',
 	tablename:'flow_courseinput',storeautoLoad:false,searchtools:false,
 	region:'center',
-	tbar:['请限制选择左边对应列'],
+	tbar:['请选择左边对应列'],
 	formaddbefore:function(){
 		if(mid==0){
 			js.msg('msg','没有选择左边记录');

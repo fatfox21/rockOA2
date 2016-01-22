@@ -17,7 +17,10 @@ class meetClassModel extends Model
 				$dt 	= ''.str_replace($dts.' ', '', $rs['startdt']).'至'.str_replace($dts.' ', '', $rs['enddt']).'';
 				$arr[]= array(
 					'type' 		=> '会议',
+					'hyname' 	=> $rs['hyname'],
 					'title' 	=> '['.$rs['hyname'].']'.$rs['title'].'',
+					'titles' 	=> $rs['title'],
+					'joinname' 	=> $rs['joinname'],
 					'state' 	=> $state,
 					'status' 	=> $zt,
 					'startdt' 	=> $dt,

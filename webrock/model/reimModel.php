@@ -56,7 +56,7 @@ class reimClassModel extends Model
 				'url'	=> $url
 			));
 			$messid	= $this->db->insert_id();
-			$this->db->insert('[Q]im_messzt','`mid`,`uid`','select '.$messid.',id from `[Q]admin` where id in('.$allsid.') and `status`=1 and `state`<>5 ', true);
+			$this->db->insert('[Q]im_messzt','`mid`,`uid`,`gid`','select '.$messid.',id,'.$gid.' from `[Q]admin` where id in('.$allsid.') and `status`=1 and `state`<>5 ', true);
 		}
 		
 		if($resid != ''){
@@ -73,17 +73,6 @@ class reimClassModel extends Model
 				'mid'	=> $mid,
 				'url'	=> $url
 			));
-		}
-		//app推送
-		if($apsid != ''){
-			$apsid = substr($apsid, 1);
-			c('apiCloud')->send($apsid, array(
-				'type' 	=> 'system',
-				'gname'	=> $gname,
-				'gid'	=> $gid,
-				'messid'=> $messid,
-				'sendname'	=> $this->adminname
-			),'['.$gname.']发来一条信息');
 		}
 		return true;
 	}
@@ -147,10 +136,11 @@ class reimClassModel extends Model
 		$gid 	= '0';
 		foreach($groupa as $_gid=>$kvs)$gid.=','.$_gid.'';
 		$arr 	= $this->getall("`type`='group' and `receid` in($gid) and $whes and id in(select mid from [Q]im_messzt where uid='$mid') group by `receid`", "`receid`,count(1) as stotal,max(optdt) as optdts");
+		$typea	= array('group','taolun');
 		foreach($arr as $k=>$rs){
 			$grs	= $groupa[$rs['receid']];
 			$rows[] = array(
-				'type' 	=> 'group',
+				'type' 	=> $typea[$grs['type']],
 				'id'	=> $rs['receid'],
 				'stotal'=> $rs['stotal'],
 				'optdt'	=> $rs['optdts'],

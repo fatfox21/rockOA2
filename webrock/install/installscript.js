@@ -45,7 +45,7 @@ function submitla(){
 		return;
 	}
 	if(isempt(a.highpass)){
-		js.setmsg('超级管理密码');
+		js.setmsg('超级密码不能为空');
 		return;
 	}
 	if(!form('opendbq').checked){

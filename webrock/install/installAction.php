@@ -1,6 +1,11 @@
 <?php 
 class installClassAction extends Action{
 	
+	public function initAction()
+	{
+		if(getconfig('systype')=='demo')exit('');
+	}
+	
 	public function defaultAction()
 	{
 		$this->tpltype	= 'html';
@@ -53,7 +58,6 @@ class installClassAction extends Action{
 		$this->rock->createtxt($paths, '<?php return array();');
 		if(!file_exists($inpaths))exit('无法写入文件夹webrock');
 		
-		
 		//1
 		$db1 		= import($dbtype);
 		$db1->changeattr($host, $user, $pass, 'information_schema');
@@ -90,9 +94,8 @@ class installClassAction extends Action{
 				exit('导入失败:'.$db->error().'');
 			}
 		}
-		
-		$usql 	= "update `".$perfix."option` set `value`='$title' where `num`='systemtitle'";
-		$db->query($usql);
+		$db->query("update `".$perfix."option` set `value`='$title' where `num`='systemtitle'");
+		$db->query("delete from `".$perfix."option` where `num`='modekeysval'");
 		$rand	= $this->rock->jm->getRandkey();
 		$this->rock->jm->setRandkey($rand);
 		$host 	= $this->rock->jm->encrypt($host);
@@ -100,6 +103,7 @@ class installClassAction extends Action{
 		$pass 	= $this->rock->jm->encrypt($pass);
 		$base 	= $this->rock->jm->encrypt($base);
 		$txt 	= "<?php
+//不会？如何修改配置文件？可查看帮助网址：http://www.rockoa.com/view_config.html		
 return array(
 	'url'		=> '$url',		//系统URL
 	'title'		=> '$title',	//系统默认标题
@@ -115,7 +119,8 @@ return array(
 	'install'	=> true			//已安装，不要去掉啊
 );";
 		$this->rock->createtxt($paths, $txt);
-		@file_get_contents('http://www.xh829.com/index.php?m=index&a=install&version='.VERSION.'&web='.$this->rock->web.'&ip='.$this->rock->ip.'&ajaxbool=true');//我们用来统计安装数量而已
+		$url='http://www.rockoa.com/index.php?m=index&a=install&version='.VERSION.'&web='.$this->rock->web.'&ip='.$this->rock->ip.'&ajaxbool=true';
+		c('curl')->getfilecont($url);
 		$this->delinstall();
 		echo 'success';
 	}

@@ -178,7 +178,7 @@ Ext.define('Ext.rock.flowgrid',{
 		Ext.MessageBox.prompt('系统提示', ''+bitian+'请输入删除的原因:',function(a,b){
 			if(a=='ok' && b){
 				js.msg('wait','删除中...');
-				$.post(js.getajaxurl('flowdel','flow',''),{flownum:me.flownum,id:me.changedata.mid,sm:b}, function(da){
+				$.post(js.getajaxurl('flowdel','flow',''),{flownum:me.flownum,id:me.changedata.id,sm:b}, function(da){
 					if(da=='success'){
 						js.msg('success','删除成功');
 						me.storereload();

@@ -260,6 +260,7 @@ var im = {
 		for(i=0; i<wda.length; i++){
 			sto		= parseInt(wda[i].stotal);
 			tylx	= wda[i].type;
+			if(tylx=='taolun')tylx='group';
 			if(sto>0){
 				to = to + sto;
 				if(tylx=='user'){
@@ -269,7 +270,7 @@ var im = {
 						wda[i].icons = a.face;
 					}
 				}
-				if(tylx=='group' || tylx=='system'){
+				if(tylx=='group' || tylx=='taolun' || tylx=='system'){
 					a = grouparr[wda[i].id];
 					if(a){
 						wda[i].name  = a.name;
@@ -298,7 +299,7 @@ var im = {
 					if(d1.type=='user'){
 						get('user_'+d1.id+'').click();
 					}
-					if(d1.type=='group' || d1.type=='system'){
+					if(d1.type=='group' || d1.type=='taolun' || d1.type=='system'){
 						get('group_'+d1.id+'').click();
 					}
 				}
@@ -390,8 +391,7 @@ var im = {
 			a  = grouparr[gid],
 			na = a.name;
 		var winobj = 'windowgroup'+gid+'';
-		var url = URL+js.getajaxurl('$','group','webim',{gid:gid,aid:adminid,winobj:winobj});
-			
+		var url = URL+js.getajaxurl('$','group','webim',{gid:gid,aid:adminid,winobj:winobj});			
 		if(a.type=='2'){
 			url = URL+js.getajaxurl('$system','group','webim',{gid:gid,aid:adminid,winobj:winobj});
 			width = 400;
@@ -621,8 +621,10 @@ var im = {
 				}
 			}else if(a.type=='group' || a.type=='system'){
 				d 	= grouparr[a.nameid];
-				$('#grouphistory_'+d.id+'').remove();
-				s1	= '<div id="grouphistory_'+d.id+'" '+attr+' onclick="im.opengroup('+d.id+')"><img src="'+d.face+'" align="absmiddle">'+d.name+'</div>';
+				if(d){
+					$('#grouphistory_'+d.id+'').remove();
+					s1	= '<div id="grouphistory_'+d.id+'" '+attr+' onclick="im.opengroup('+d.id+')"><img src="'+d.face+'" align="absmiddle">'+d.name+'</div>';
+				}
 			}
 			if(s1!=''){
 				if(lxa==0)o.append(s1);

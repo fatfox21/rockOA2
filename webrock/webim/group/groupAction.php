@@ -11,7 +11,7 @@ class groupClassAction extends Action{
 		$ars	= $db->getone($aid, '`name`,`id`,`face`');
 		$grs	= m('im_group')->getone($gid, '`name`,`id`,`type`');
 		
-		$imgarr	= array('groups_blue','duihua_blue','shezhi_blue');
+		$imgarr	= array('groups_blue','taolun_blue','shezhi_blue');
 		$typarr	= array('group','group','system');
 		$type 	= $typarr[$grs['type']];
 		
@@ -68,47 +68,23 @@ class groupClassAction extends Action{
 			foreach($wdarr as $k=>$rs){
 				$wdarr[$k]['zt'] = 1;
 			}
+		}else{
+			foreach($wdarr as $k=>$rs){
+				$wdarr[$k]['zt'] = 0;
+			}
 		}
 		return $wdarr;
 	}
 	
 	public function saveAjax()
 	{
-		$receid		= $this->post('receid');
-		$sendid		= $this->post('sendid');
-		$type		= $this->post('type');
-		$optdt		= $this->post('optdt');
-		
-		
-		$aors			= m('im_groupuser')->getall("`gid`='$receid'",'uid');
-		$asid			= $asids =  '';
-		foreach($aors as $k=>$rs){
-			$_uid = $rs['uid'];
-			if($_uid != $sendid)$asid.=','.$_uid;
-			$asids.=','.$_uid;
-		}
-		
-		if($asids != '')$asids = substr($asids, 1);
-			
-		$arr = array(
-			'cont'		=> $this->post('cont'),
-			'sendid'	=> $sendid,
-			'receid'	=> $receid,
-			'receuid'	=> $asids,
-			'type'		=> $type,
-			'optdt'		=> $optdt,
-			'zt'		=> 0
-		);
-		$bo = m('im_mess')->insert($arr);
-		$arr['id'] 		= $this->db->insert_id();
-		$arr['nuid'] 	= $this->post('nuid');
-		$arr['gid'] 	= $receid;
-		
-		if($asid != ''){
-			$asid = substr($asid, 1);
-			$this->db->insert('[Q]im_messzt','`mid`,`uid`','select '.$arr['id'].',id from `[Q]admin` where id in('.$asid.') and `status`=1 and `state`<>5 ', true);
-		}
-		$arr['receid']	= $asid;
+		$gid 		= $this->post('receid');
+		$arr 		= m('reims')->sendgroup($gid, array(
+			'cont'	=> $this->post('cont'),
+			'sendid'=> $this->post('sendid'),
+			'optdt'	=> $this->post('optdt'),
+			'type'	=> $this->post('type')
+		), 1);
 		echo json_encode($arr);
 	}
 	
@@ -143,6 +119,7 @@ class groupClassAction extends Action{
 		$aid	= (int)$this->get('aid');
 		$gid	= (int)$this->get('gid');
 		m('im_groupuser')->delete("`gid`='$gid' and `uid`='$aid'");
+		m('im_messzt')->delete("`gid`='$gid' and `uid`='$aid'");
 	}
 	
 	public function yaoqingAjax()

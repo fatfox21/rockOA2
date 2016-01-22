@@ -187,12 +187,16 @@ var panel= [{
 			return true;
 		}
 	},{
-		name:'checktypeidPost',value:'',hidden:true,id:'checktypeid_'+rand+''
+		name:'checktypeidPost',value:'',id:'checktypeid_'+rand+'',hidden:true
 	},{
 		fieldLabel:'<font color=red>*</font>审核人类型',name:'checktypePost',editable:false,xtype:'optioncombo',optionmnum:'flowchecktype',autoloadlist:true,valuefields:'value',allowBlank: false,change:function(o){
 			var val = o.value;
 			form.field('rankingPost').setVisible((val=='rank')?true:false);
-			form.field('checktypenamePost').setVisible((val=='user')?true:false);
+			var o1 = form.field('checktypenamePost');
+			o1.setVisible((val=='user'||val=='depta')?true:false);
+			var xytps='usercheck';
+			if(val=='depta')xytps='deptcheck';
+			o1.setchangeype(xytps);
 		}
 	},{
 		fieldLabel:''+bitian+'选择职位',name:'rankingPost',xtype:'optioncombo',optionmnum:'ranking',autoloadlist:true,hidden:true
@@ -236,6 +240,9 @@ var panel= [{
 		}else if(ctype=='user'){
 			var ranks = ctynae.getValue();
 			if(isempt(ranks))return '请选择审核人';
+		}else if(ctype=='depta'){
+			var ranks = ctynae.getValue();
+			if(isempt(ranks))return '请选择指定部门';
 		}else{
 			ctynae.setValue('');
 			ctynai.setValue('');
@@ -354,7 +361,7 @@ var c = {
 		var s = '<img src="images/loading.gif" align="absmiddle"> 加载中...';
 		$('#raphael_'+rand+'').html(s);
 		bool = true;
-		$.post(url,{tablename_abc:jm.encrypt(flow_course),keywhere:'and setid='+setid+'',fistwhere:'and id='+lid+''},function(da){
+		$.post(url,{tablename_abc:jm.encrypt('flow_course'),keywhere:'and setid='+setid+'',fistwhere:'and id='+lid+''},function(da){
 			var a = js.decode(da);
 			c.jsondata = da;
 			c.movedata = {};

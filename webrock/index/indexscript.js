@@ -341,7 +341,7 @@ function createindex(){
 			id:'index_bottom',region:'south',xtype:'toolbar',
 			items:[{
 				icon:gicons('user'),text:'用户：'+adminuser+'',showSeparator:false
-			},'-','登录次数:'+adminloginci+'','->','-','基于<a href="http://www.rockoa.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
+			},'-','登录次数:'+adminloginci+'','->','基于<a href="http://www.rockoa.com" target="_blank" class="a">RockOA</a>版本：V'+VERSION+'','-','<a href="http://www.rockoa.com/mobile.shtml" target="_blank" class="a">手机版</a>','-',{
 				text:'重新加载',icon:gicons('arrow_refresh'),handler:benreload
 			},'-',{
 				text:'全屏',icon:gicons('arrow_out'),handler:fullscreen
@@ -395,11 +395,11 @@ function createindex(){
 		var toparr= [{
 			name:'提醒<font id=tixing_count color=red>(0)</font>',icons:gicons('bell'),url:'return gototixingla()'
 		},{
-			name:'切换样式v',icons:gicons('color_wheel'),url:'return false',menuobj:false,menu:[{
+			name:'样式v',icons:gicons('color_wheel'),url:'return false',menuobj:false,menu:[{
 				text:'经典样式',num:0,yss:'classic',handler:qiehuanys
 			},{
 				text:'蓝色经典样式',num:1,yss:'neptune',handler:qiehuanys
-			},'-',{
+			},{
 				text:'黑暗墨黑样式',num:2,yss:'access',handler:qiehuanys
 			},{
 				text:'经典灰色样式',num:3,yss:'gray',handler:qiehuanys
@@ -409,9 +409,11 @@ function createindex(){
 		},{
 			name:'帮助',icons:gicons('help'),url:'http://www.rockoa.com/help.html',attr:'target="_blank"'
 		},{
+			name:'手机版',icons:gicons('shouji'),url:'http://www.rockoa.com/mobile.shtml',attr:'target="_blank"'
+		},{
 			name:'退出',icons:gicons('report_go'),url:'?m=login&a=exit'
 		}];
-		toparr[1].menu[stylebody[0]].icon = gicons('ok');
+		toparr[1].menu[parseInt(stylebody[0])].icon = gicons('ok');
 		var s='<div style="height:25px;overflow:hidden;line-height:25px;padding-right:10px"><span class="topzhu" id="index_datetime">2014年12月10日[星期三] 21:58:51</span></div>';
 		s+='<div align="right"><table height="25" border="0" cellspacing="0" cellpadding="0"><tr>';
 		for(var i=0;i<toparr.length;i++){

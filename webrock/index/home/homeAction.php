@@ -9,13 +9,14 @@ class homeClassAction extends Action
 		$mid 			= (int)$this->get('mid', '0');
 		$where 			= '';
 		if($mid==-1)$where 	= m('admin')->getbhmy('receid', $this->adminid);
-		$rows 			= $db->getall('`mid`=0 and `valid`=1 and `type`=0 '.$where.' order by `sort`','`id`,`num`,`title`,`ismr`,`x`,`y`,`w`,`h`,`icons`');
+		$hethal			= "`mid`=0 and `valid`=1 and `type`=0 ";
+		$rows 			= $db->getall(''.$hethal.' '.$where.' order by `sort`','`id`,`num`,`title`,`ismr`,`x`,`y`,`w`,`h`,`icons`');
 		$this->smartydata['homearr'] 	= json_encode($rows);
 		$this->smartydata['mid'] 		= $mid;
 		
 		$showarr 		= array();
 		if($mid > 0){
-			$arr 	= $db->getall("`mid`='$mid'", '`type`,`x`,`y`,`w`,`h`');
+			$arr 	= $db->getall("`mid`='$mid' and `type` in(select id from [Q]homeitems where $hethal)", '`type`,`x`,`y`,`w`,`h`');
 			foreach($arr as $k=>$rs){
 				$rs['id'] = $rs['type'];
 				$showarr[$rs['type']] = $rs;
@@ -108,7 +109,7 @@ class homeClassAction extends Action
 		$path 			= ROOT_PATH.'/'.P.'/index/home/aitems/aitems_';
 		foreach($rows as $k=>$rs){
 			$id 	= (int)$rs['mid'];
-			$rs1 	= $db->getone($id);
+			$rs1 	= $db->getone("`id`='$id' and `valid`=1");
 			if(!$rs1)continue;	
 			$num 	= $rs1['num'];
 			$paths  = $path.''.$num.'.js';

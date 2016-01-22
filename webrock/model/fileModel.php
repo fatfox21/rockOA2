@@ -14,6 +14,19 @@ class fileClassModel extends Model
 		}
 	}
 	
+	public function getstr($mtype, $mid, $lx=0)
+	{
+		$filearr 	= $this->getfile($mtype, $mid);
+		$fstr		= '';
+		foreach($filearr as $k=>$rs){
+			if($k>0)$fstr.='<br>';
+			$str = 'href="'.URL.'mode/upload/uploadshow.php?id='.$rs['id'].'" target="_blank"';
+			if($lx==1)$str='href="javascript:" onclick="return js.downshow('.$rs['id'].')"';
+			$fstr .='<img src="'.URL.'mode/fileicons/'.$rs['fileext'].'.gif" align="absmiddle" height=16 width=16> <a '.$str.' style="color:blue"><u>'.$rs['filename'].'</u></a> ('.$rs['filesizecn'].')';
+		}
+		return $fstr;
+	}
+	
 	public function getfiles($mtype, $mid)
 	{
 		$rows		= $this->getall("`mtype`='$mtype' and `mid`='$mid' order by `id`");

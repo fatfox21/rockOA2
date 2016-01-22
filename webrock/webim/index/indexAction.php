@@ -71,7 +71,7 @@ class indexClassAction extends Action{
 	//读取我所在的群和讨论组
 	public function getmygroup()
 	{
-		$facarr = array('images/im/groups_blue.png','images/im/duihua_blue.png','images/im/shezhi_blue.png');
+		$facarr = array('images/im/groups_blue.png','images/im/taolun_blue.png','images/im/shezhi_blue.png');
 		$rows 	= m('reim')->getgroup($this->adminid, $facarr);
 		return $rows;
 	}

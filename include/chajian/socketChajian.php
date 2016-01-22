@@ -61,7 +61,7 @@ class socketChajian extends Chajian
 		if($msg != '' || $this->socket ==null)return $msg;
 		return 'success';
 	}
-	
+
 	/**
 		推送提醒
 	*/

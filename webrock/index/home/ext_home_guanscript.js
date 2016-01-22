@@ -4,25 +4,25 @@ var panel = {
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'图标',dataIndex:'icons',width:80,editor:'textfield',renderer:function(v){return '<img src="'+gicons(v)+'" height=16 width=16>'}
+		text:'图标',dataIndex:'icons',width:'8%',editor:'textfield',renderer:function(v){return '<img src="'+gicons(v)+'" height=16 width=16>'}
 	},{
-		text:'标题',dataIndex:'title',width:150,editor:'textfield',search:true
+		text:'标题',dataIndex:'title',flex:1,editor:'textfield',search:true,align:'left'
 	},{
-		text:'编号',dataIndex:'num',width:120,search:true
+		text:'编号',dataIndex:'num',width:'7%',search:true
 	},{
-		text:'可用对象',dataIndex:'recename',width:200,search:true
+		text:'可用对象',dataIndex:'recename',width:'16%',search:true
 	},{
-		text:'排序号',dataIndex:'sort',width:80,editor:{xtype:'numberfield',minValue:0}
+		text:'排序号',dataIndex:'sort',width:'7%',editor:{xtype:'numberfield',minValue:0}
 	},{
-		text:'是否可用',dataIndex:'valid',width:80,editor:{xtype:'combo',store:js.arraystr(),editable:false},renderer:renderbox
+		text:'是否可用',dataIndex:'valid',width:'7%',editor:{xtype:'combo',store:js.arraystr(),editable:false},renderer:renderbox
 	},{
-		text:'是否默认',dataIndex:'ismr',width:80,editor:{xtype:'combo',store:js.arraystr(),editable:false},renderer:renderbox
+		text:'是否默认',dataIndex:'ismr',width:'7%',editor:{xtype:'combo',store:js.arraystr(),editable:false},renderer:renderbox
 	},{
-		text:'宽',dataIndex:'w',width:80,editor:{xtype:'numberfield',minValue:0}
+		text:'宽',dataIndex:'w',width:'7%',editor:{xtype:'numberfield',minValue:0}
 	},{
-		text:'高',dataIndex:'h',width:80,editor:{xtype:'numberfield',minValue:0}
+		text:'高',dataIndex:'h',width:'7%',editor:{xtype:'numberfield',minValue:0}
 	},{
-		text:'ID',dataIndex:'id',width:70
+		text:'ID',dataIndex:'id',width:'7%'
 	}],
 	tbar:['需在index/home/aitems/目录下创建js文件','->',{
 		text:'默认排序',icon:gicons('cog'),handler:function(o){

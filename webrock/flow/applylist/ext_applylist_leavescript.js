@@ -41,7 +41,7 @@ var panel= {
 		text:'说明',align:'left',dataIndex:'explain',flex:1,sortable:false
 	}],
 	tbarcenter:[{
-		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:80
+		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:90
 	}],
 	outsearch:function(){
 		var s = '',

@@ -16,14 +16,18 @@ class adminClassAction extends Action
 	public function publicstoreBefore($table)
 	{
 		return array(
-			'fields' => 'id,user,name,tel,email,status,groupname,gender,mobile,type,ranking,superman,superid,deptid,deptname,sort,quitdt,status,type,state,workdate,isdaily,isvcard,positivedt,syenddt'
+			'fields' => 'id,user,name,tel,email,status,groupname,gender,mobile,type,ranking,superman,superid,deptid,deptname,sort,quitdt,status,type,state,workdate,isdaily,isvcard,positivedt,syenddt,companyid'
 		);
 	}
 	
 	public function publicstoreAfter($table, $rows)
 	{
 		$group	= m('group')->getall('1=1 order by `sort`', '`id`,`name`');
-		return array('group'=>$group);
+		$dbs 	= m('company');
+		foreach($rows as $k=>$rs){
+			$rows[$k]['companyname']=$dbs->getmou('name', $rs['companyid']);
+		}
+		return array('group'=>$group,'rows'=>$rows);
 	}
 
 	public function publicbeforesave($table, $cans, $id)

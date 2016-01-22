@@ -52,7 +52,7 @@ var upload = {
 	},
 	uploadback:function(str, fsize, path){
 		if(str==''){
-			this.errorprogress('无法读取文件,无法上传');
+			this.errorprogress('无法读取文件,无法上传2');
 			return;
 		}
 		fsize		= parseInt(fsize);
@@ -170,14 +170,13 @@ var upload = {
 		var s = '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>';
 		for(i=oi1; i<=oi2; i++){
 			oi++;
-			s+='<td width="'+j1+'%" align="center"><img onclick="upload.backemts(\''+wj+'\','+i+')" src="images/im/emots/'+wj+'/'+i+'.gif" width="'+dx+'" height="'+dx+'"></td>';
+			s+='<td width="'+j1+'%" title="'+strformat.emotsarr[i+1]+'" align="center"><img onclick="upload.backemts(\''+strformat.emotsarr[i+1]+'\')" src="images/im/emots/'+wj+'/'+i+'.gif" width="'+dx+'" height="'+dx+'"></td>';
 			if(oi % fzd==0)s+='</tr><tr>';
 		}
 		s+='</tr></table>';
 		return s;
 	},
-	backemts:function(wj, oi){
-		var s = '(:'+wj+'_'+oi+':)';
+	backemts:function(s){
 		var o = $('#content');
 		o.val(o.val()+s);
 		o.focus();
@@ -203,6 +202,7 @@ var upload = {
 var strformat = {
 	sendcodearr:{},
 	sendcuxo:0,
+	emotsstr:',[微笑],[撇嘴],[色],[发呆],[得意],[流泪],[害羞],[闭嘴],[睡],[大哭],[尴尬],[发怒],[调皮],[呲牙],[惊讶],[难过],[酷],[冷汗],[抓狂],[吐],[偷笑],[愉快],[白眼],[傲慢],[饥饿],[困],[恐惧],[流汗],[憨笑],[悠闲],[奋斗],[咒骂],[疑问],[嘘],[晕],[疯了],[衰],[骷髅],[敲打],[再见],[擦汗],[抠鼻],[鼓掌],[糗大了],[坏笑],[左哼哼],[右哼哼],[哈欠],[鄙视],[委屈],[快哭了],[阴险],[亲亲],[吓],[可怜],[无语],[蜡烛],[叹气],[石化],[狂汗],[扮鬼脸],[偷可怜],[猪头],[玫瑰],[凋谢],[嘴唇],[爱心],[心碎],[蛋糕],[闪电],[炸弹],[刀],[足球],[瓢虫],[便便],[月亮],[太阳],[礼物],[拥抱],[强],[弱],[握手],[胜利],[抱拳],[勾引],[拳头],[差劲],[爱你],[NO],[OK],[菜刀],[西瓜],[啤酒],[篮球],[乒乓],[咖啡],[饭]',
 	addcode:function(key, val){
 		this.sendcuxo++;
 		key	= key+','+this.sendcuxo;
@@ -232,6 +232,15 @@ var strformat = {
 		str	= this.strcontss(str,'IMG', '<img src="{s1}" onclick="strformat.openimg(this.src)" width="150">');
 		str	= this.strcontss(str,'FILE', '<a onclick="return js.downshow(\'{s1}\',this)" href="javascript:"><img src="mode/fileicons/{s3}.gif" align="absmiddle" class="icon">{s2}</a>');//[FILE]fid[/FILE]
 		
+		var patt1	= new RegExp("\\[(.*?)\\](.*?)", "gi"),emu,i,st1,oi;
+		 emu		= str.match(patt1);
+		if(emu!=null){
+			for(i=0;i<emu.length; i++){
+				st1=emu[i];
+				oi=this.emotsarrss[st1];
+				if(oi)str	= str.replace(st1, '<img src="images/im/emots/qq/'+(oi-1)+'.gif">');
+			}
+		}
 		str	= str.replace(/\n/gi, '<br>');//换行的
 		return str;
 	},
@@ -298,7 +307,7 @@ var strformat = {
 		var nr	= '';
 		nr+='<div class="ltcont">';
 		nr+='	<div class="qipao" align="'+type+'">';
-		nr+='		<div class="dt" style="padding-'+type+':61px">'+name+'说('+dt+')</div>';
+		nr+='		<div class="dt" style="padding-'+type+':61px">'+name+'('+dt.substr(5,11)+')</div>';
 		nr+='		<table border="0" cellspacing="0" cellpadding="0">';
 		
 		
@@ -338,8 +347,18 @@ var strformat = {
 			img = src.substr(0,src.lastIndexOf('_'))+'.'+ext;
 		}
 		js.open(img);
+	},
+	emotsarrss:{},
+	init:function(){
+		var a = this.emotsstr.split(',');
+		this.emotsarr=a;
+		var len = a.length,i;
+		for(i=1;i<len;i++){
+			this.emotsarrss[a[i]]=i;
+		}
 	}
 }
+strformat.init();
 
 //发送
 function connectsend(msg){
