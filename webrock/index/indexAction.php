@@ -11,11 +11,13 @@ class indexClassAction extends Action{
 		
 		$mewhere	= '';
 		$myext		= $this->allmenuid;
+		$admintype	= '1';
 		if($myext != '-1'){
+			$admintype	= '0';
 			$mewhere	= ' and `id` in('.str_replace(array('[',']'), array('',''), $myext).')';
 		}
 		$menu							= $this->db->getall("select `name`,`id`,`icons` from `[Q]menu` where `pid`=0 and `status`=1 $mewhere order by `sort`");
-		$my								= $this->db->getone('[Q]admin', "`id`='$this->adminid'", '`id`,`name`,`deptname`,`ranking`,`face`,`style`,`loginci`,`deptid`,`homeitems`,`user`');
+		$my								= $this->db->getone('[Q]admin', "`id`='$this->adminid'", '`id`,`name`,`deptname`,`ranking`,`face`,`style`,`loginci`,`deptid`,`user`');
 		$dept							= $this->db->getone('[Q]dept', "`id`='".$my['deptid']."'");
 		
 		$menu[] = array(
@@ -26,6 +28,7 @@ class indexClassAction extends Action{
 		
 		$this->smartydata['menu']		= json_encode($menu); 
 		$this->smartydata['my']			= $my;
+		$this->smartydata['admintype']	= $admintype;
 		$this->smartydata['dept']		= $dept;
 		$this->smartydata['face']		= $this->rock->repempt($my['face'], 'images/noface.jpg');
 		$this->smartydata['systemtitle']= $this->option->getval('systemtitle');
@@ -89,7 +92,8 @@ class indexClassAction extends Action{
 			if($bo)$rows[]	= $rs;
 		}
 		return $rows;
-	}	
+	}
+	
 	//常用菜单
 	public function getmenuchang()
 	{
@@ -109,24 +113,24 @@ class indexClassAction extends Action{
 		}
 		return $arr;
 	}
+	
 	//添加常用
 	public function addchangmenuAjax()
 	{
 		$num = $this->post('num');
-		if($num!=''){
-			$db = m('menucom');
-			if($db->rows("`num`='$num'")==0){
-				$db->insert(array(
-					'uid' => $this->adminid,
-					'url' => $this->post('url'),
-					'num' => $this->post('num'),
-					'name' => $this->post('name'),
-					'icon' => $this->post('icon'),
-					'menuid' => $this->post('menuid'),
-					'optdt' => $this->now,
-				));
-			}
-		}
+		if($num=='')return;
+		$db 	= m('menucom');
+		$where 	= "`num`='$num' and `uid`='$this->adminid'";
+		if($db->rows($where)==0)$where='';
+		$db->record(array(
+			'uid' => $this->adminid,
+			'url' => $this->post('url'),
+			'num' => $this->post('num'),
+			'name' => $this->post('name'),
+			'icon' => $this->post('icon'),
+			'menuid' => $this->post('menuid'),
+			'optdt' => $this->now
+		), $where);
 	}
 
 	/**
@@ -134,10 +138,12 @@ class indexClassAction extends Action{
 	*/	
 	private function getuserext($uid)
 	{
+		$guid 	= '-1';
+		if($this->adminuser=='admin')return $guid;
 		$gasql	= " ( id in( select `sid` from `[Q]sjoin` where `type`='ug' and `mid`='$uid') or id in( select `mid` from `[Q]sjoin` where `type`='gu' and `sid`='$uid') )";//用户所在组id
 		$gsql	= "select `id` from `[Q]group` where $gasql ";
 		$owhe	= " and (`id` in(select `sid` from `[Q]sjoin` where ((`type`='um' and `mid`='$uid') or (`type`='gm' and `mid` in($gsql) ) ) ) or `id` in(select `mid` from `[Q]sjoin` where ((`type`='mu' and `sid`='$uid') or (`type`='mg' and `sid` in($gsql) )) ))";
-		if($this->db->rows('[Q]group',"`ispir`=0 and $gasql")>0)$owhe=''; 	//不用权限验证的用户
+		if($this->db->rows('`[Q]group`',"`ispir`=0 and $gasql")>0)$owhe=''; 	//不用权限验证的用户
 		$guid	= '[0]';
 		if($owhe != ''){
 			$arss	= $this->db->getall("select `id`,`pid`,(select `pid` from `[Q]menu` where `id`=a.`pid`)as `mpid` from `[Q]menu` a where (`status` =1 $owhe) or (`status` =1 and `ispir`=0) order by `sort`");
@@ -154,18 +160,7 @@ class indexClassAction extends Action{
 					}
 				}
 			}
-		}else{
-			$guid = '-1';
 		}
 		return $guid;
-	}
-	
-	public function getoptionAjax()
-	{
-		//$mnum	= $this->rock->request('mnum');
-		///$db 	= $this->option->getall("`mnum`='$mnum' order by `xu`,`id`");
-		//$rows	= $this->option->getmnum($mnum);
-		
-		echo json_encode($rows);
 	}
 }

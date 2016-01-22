@@ -11,7 +11,7 @@ function boackindie(){
 	}
 }
 var panel= {
-	width:650,xtype:'rockform',
+	width:650,xtype:'rockform',editrecord:true,
 	submitfields:'carnum,carbrand,carmode,cartype,buydt,buyprice,enginenb,ispublic,state,framenum',border:false,
 	url:publicsave(mode, dir),
 	params:{int_filestype:'ispublic',otherfields:'optdt={now},optname={admin},optid={adminid}',add_otherfields:'adddt={now},addname={admin}'},tablename:'carm',

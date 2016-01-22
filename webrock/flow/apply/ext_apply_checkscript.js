@@ -1,3 +1,4 @@
+var grid;
 function openurl(a){
 	var sas = ['申请','审核'];
 	var url = a.url,
@@ -12,8 +13,8 @@ function openurl(a){
 	addtabs(txt, url, num);
 }
 
-function opentablss(a){
-	addtabs('[查看]'+a.modename,'flow,apply,'+a.modenum+',flownum='+a.modenum+',tablename='+a.tablename+',opentype=1,mid='+a.mid+',gridid=', ''+a.modenum+'_'+a.mid+'');
+function opentablss(a, gsid){
+	addtabs('[查看]'+a.modename,'flow,apply,'+a.modenum+',flownum='+a.modenum+',tablename='+a.tablename+',opentype=1,mid='+a.mid+',gridid='+gsid+'', ''+a.modenum+'_'+a.mid+'',{menutype:'cy'});
 }
 
 var flowrand = js.getrand();
@@ -67,9 +68,9 @@ var panel = {
 		items: [{
 			icon: gicons('page_go'),
 			tooltip: '打开',
-			handler: function(grid, rowIndex, colIndex) {
-				var rec = grid.getStore().getAt(rowIndex);
-				opentablss(rec.data);
+			handler: function(grids, rowIndex, colIndex) {
+				var rec = grids.getStore().getAt(rowIndex);
+				opentablss(rec.data,grid.getId());
 			}
 		}]
 	}],
@@ -88,5 +89,13 @@ var panel = {
 	}
 };
 return {
-	panel:panel
+	panel:panel,
+	init:function(){
+		grid = objpanel.down('rockgrid');
+	},
+	tabson:{
+		show:function(){
+			rock[index].isReload();
+		}
+	}
 };

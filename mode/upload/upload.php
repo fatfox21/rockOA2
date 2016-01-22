@@ -1,14 +1,15 @@
 <?php 
 include_once('../../config/config.php');
-$title		= '';
+$title		= urldecode($rock->get('title'));
 if($title=='')$title='文件上传';
-$callback	= $rock->get('callback');		//回传
-$savepath	= $rock->get('savepath');		//保存路径
-$maxup		= (int)$rock->get('maxup','0'); //最多可上传几个文件
-$maxsize	= (int)$rock->get('maxsize','100');//(MB)最大的
+$callback	= $rock->get('callback');
+$savepath	= $rock->get('savepath');
+$maxup		= (int)$rock->get('maxup','0');
+$maxsize	= (int)$rock->get('maxsize','50');
 $uptype		= $rock->get('uptype','*');
 $upkey		= $rock->get('upkey');
-$thumbnail	= $rock->get('thumbnail');	//所累图
+$showid		= $rock->get('showid');
+$thumbnail	= $rock->get('thumbnail');
 $maxwidth	= $rock->get('maxwidth','0');
 $thumbtype	= $rock->get('thumbtype','0');
 ?>
@@ -17,23 +18,25 @@ $thumbtype	= $rock->get('thumbtype','0');
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script language="javascript" src="../../js/jquery.js"></script>
 <script language="javascript" src="../../js/js.js"></script>
+<link rel="shortcut icon" href="../../favicon.ico" />
 <title><?php echo $title?></title>
 <script language="javascript">
-var mkdir	= '<?=date('Y-m')?>';
-var callback= '<?=$callback?>';
-var savepath= '<?=$savepath?>';
-var maxup	= <?=$maxup?>;//最多可上传多个个(0)不限制
-var uptype	= '<?=$uptype?>';//可上传文件类型
-var thumbnail = '<?=$thumbnail?>';
-var maxwidth  = '<?=$maxwidth?>';
-var thumbtype  = '<?=$thumbtype?>';//缩略图类型0可能去掉看不到的默认， 1整图缩略可以看到白
+var mkdir	= '<?=date('Y-m')?>',
+	callback= '<?=$callback?>',
+	savepath= '<?=$savepath?>',
+	maxup	= <?=$maxup?>,
+	uptype	= '<?=$uptype?>',
+	thumbnail = '<?=$thumbnail?>',
+	maxwidth  = '<?=$maxwidth?>',
+	showid  	= '<?=$showid?>',
+	thumbtype  = '<?=$thumbtype?>';//缩略图类型0可能去掉看不到的默认， 1整图缩略可以看到白
 var up={
 	reader:false,
 	filearr:[],
 	bool:false,
 	upsize:1024*200,
-	upsizea:0,//上传速度
-	maxsize:<?=$maxsize?>,//(MB)最大的
+	upsizea:0,
+	maxsize:<?=$maxsize?>,
 	moi:0,
 	wcarr:[],
 	init:function()
@@ -89,14 +92,12 @@ var up={
 	change1:function(oi)
 	{
 		var obja	= get('inputfileid').files;
-		
 		if(maxup!=0){
 			if(this.gsize()>=maxup){
 				this.rexushow();
 				return false;
 			}
 		}
-		
 		if(oi>=obja.length){
 			setTimeout('document.myform.reset()',500);
 			this.rexushow();
@@ -109,9 +110,6 @@ var up={
 		var filename	= file.name;
 		var fileext		= filename.substr(filename.lastIndexOf('.')+1).toLowerCase();
 		var filetype	= file.type;
-		//alert(filetype)
-		
-		//判断文件是不是符合要求
 		if(uptype!='*' && uptype!=''){
 			var uobo = true;
 			if(uptype=='image'){
@@ -128,7 +126,6 @@ var up={
 				return false;
 			}
 		}
-		
 		if(filesize>this.maxsize*1024*1024){
 			js.msg('msg','['+filename+']文件超过'+this.maxsize+' MB，当前文件大小'+filesizecn+'');
 			up.change1(oi+1);
@@ -205,9 +202,9 @@ var up={
 			js.msg('msg','请添加上传文件');
 			return false;
 		}
-		
 		this.filearr=[];
 		get('addbtn').disabled=true;
+		get('quebtn').disabled=true;
 		get('clearbtn').disabled=true;
 		get('startbtn').disabled=true;
 		this.bool	= true;
@@ -225,13 +222,11 @@ var up={
 			get('addbtn').disabled=false;
 			get('clearbtn').disabled=false;
 			get('startbtn').disabled=false;
+			get('quebtn').disabled=false;
 			this.bool	= false;
 			<?php 
 				if($callback!=''){
-			?>
-			if(callback!=''){
-				try{opener.<?=$callback?>(this.wcarr,js.request('params1'), js.request('params2'))}catch(e){}
-			}
+			?>try{opener.<?=$callback?>(this.wcarr,js.request('params1'), js.request('params2'))}catch(e){}
 			<?php }?>
 			if(callback.indexOf('autoclose')>0)window.close();
 			return false;
@@ -311,6 +306,11 @@ var up={
 		for(var i=0;i<o.length;i++){
 			o[i].innerHTML=''+(i+1)+'. ';
 		}
+	},
+	okla:function(){
+		if(showid=='')return;
+		opener.js.downupshow(this.wcarr, showid);
+		window.close();
 	}
 }
 window.onbeforeunload=function(){
@@ -318,6 +318,7 @@ window.onbeforeunload=function(){
 }
 </script>
 <style type="text/css">
+button{cursor:pointer}
 .alert{ padding:1px 5px; border:1px #996 solid; background-color:#ffffff; color:#933}
 *{ font-size:12px;font-family:微软雅黑,Verdana, Geneva, sans-serif;}
 .mdiv{ border-bottom:1px #cccccc solid; height:22px; overflow:hidden}
@@ -330,6 +331,7 @@ window.onbeforeunload=function(){
 #proudiv{ position:absolute; left:0px; top:0px; height:18px; overflow:hidden; background-color:#09F;width:0%}
 button{ cursor:pointer}
 #footmsg{ text-align:left; padding:3px}
+.quebntha{position:fixed;right:10px;bottom:10px;}
 </style>
 </head>
 <body style="padding:1px" onLoad="up.init()">
@@ -352,6 +354,8 @@ button{ cursor:pointer}
 </div>
 <div id="upfile"></div>
 <div id="footmsg"></div>
+
+<div <?php if($showid=='')echo 'style="display:none"'; ?> class="quebntha"><button type="button" disabled id="quebtn" onClick="up.okla()">确定</button></div>
 </center>
 </body>
 </html>

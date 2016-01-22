@@ -35,6 +35,7 @@ Ext.define('Ext.rock.grid',{
 		this.callParent();
 	},
 	storereload:function(){
+		if(this.loadbool)return;
 		this.store.reload()
 	},
 	sortname:'',
@@ -268,7 +269,12 @@ Ext.define('Ext.rock.grid',{
 		if(s!='')s=s.substr(1);
 		return s;
 	},
-	del:function(odel,check, _backs){
+	deleteData:function(check,  parcns, _backs){
+		if(!parcns)parcns={};
+		if(!_backs)_backs='';
+		this.del(false, check, _backs, parcns);
+	},
+	del:function(odel,check, _backs, parcns){
 		var me= this,
 			s = me.getSelectValue('id', check),
 			sm = me.getsel(),i,delurl = me.delurl;
@@ -283,7 +289,10 @@ Ext.define('Ext.rock.grid',{
 			if(a=='yes'){
 				js.msg('wait','删除中...');
 				if(odel)odel.setDisabled(true);
-				$.post(delurl, {table:me.tablename,id:s,deljudgewhere:me.deljudgewhere,storedeleteaction:me.storedeleteaction}, function(da){
+				if(!parcns)parcns={};
+				var params = {table:me.tablename,id:s,deljudgewhere:me.deljudgewhere,storedeleteaction:me.storedeleteaction};
+				params	= js.apply(params, parcns);
+				$.post(delurl, params, function(da){
 					if(da=='success'){
 						js.msg('success','删除成功');
 						if(typeof(_backs)=='function'){
@@ -435,9 +444,9 @@ Ext.define('Ext.rock.grid',{
 	},
 	search:function(jgbool, alex)
 	{
+		if(this.loadbool)return '';
 		var mo	   = this.rand,
-			awhere = '';
-			
+			awhere = '',outs='';
 		if(Ext.get('fields_'+mo+'-inputEl')){
 			var oper   = getcmp('logic_'+mo+'').getValue(),
 				key    = getcmp('keyword_'+mo+'').getValue(),
@@ -476,7 +485,13 @@ Ext.define('Ext.rock.grid',{
 			if((oper.indexOf('LIKE')>=0 || oper=='=') && keyss =='')awhere='';
 		}
 		if(jgbool)awhere = this.sqlwhere + awhere;
-		awhere+=this.outsearch(this);	
+		outs	= this.outsearch(this);
+		var tyof= typeof(outs);
+		if(tyof=='string'){
+			awhere += outs;
+		}else if(tyof=='object'){
+			this.setparams(outs);
+		}			
 		if(!alex)this.searchgoto(awhere);
 		return awhere;
 	},
@@ -490,7 +505,7 @@ Ext.define('Ext.rock.grid',{
 			this.paging.moveFirst();
 		}else{
 			this.store.reload();
-		}		
+		}	
 		return whe;
 	},
 	_highsearch:function(){
@@ -596,5 +611,12 @@ Ext.define('Ext.rock.grid',{
 			var a1 = js.decode(a);
 			js.msg('success', '处理成功，共有记录'+a1.totalCount+'条/导出'+a1.downCount+'条，点我直接<a class="a" href="'+a1.url+'" target="_blank">[下载]</a>', 60);
 		});
+	},
+	setReload:function(bo){
+		this.reloadbool = bo;
+	},
+	isReload:function(){
+		if(this.reloadbool)this.storereload();
+		this.setReload(false);
 	}
 });

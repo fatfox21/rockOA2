@@ -35,11 +35,11 @@ Ext.define('Ext.rock.flowform',{
 			tablename:me.tablename,
 			flownum:me.flownum,
 			xtype:'rockform',
-			editjudgewhere:'status in(0,2) and uid={uid} and id={id}',
+			editjudgewhere:'status in(0,2)[K][A][K](uid[D]{uid}[K]or[K]optid[D]{optid})[K][A][K]id[D]{id}',
 			success:function(a, a1){
 				me.formsuccess(me, a);
 				var ssa = '编辑';
-				if(this.mid==0)ssa='新增';
+				if(me.mid==0)ssa='新增';
 				js.msg('success', ''+ssa+'保存成功');
 				a1.setBtnhidden(true);
 				me._setpreoad();
@@ -206,15 +206,17 @@ Ext.define('Ext.rock.flowform',{
 		$.ajax({
 			type:'post',url:js.getajaxurl('check','flow'),data:das,
 			success:function(da){
+				me._setpreoad();
 				if(da.indexOf('成功')){
 					me.form.setmsg(da, 'green');
 					getcmp('checkbtn_'+me.rand+'').setDisabled(true);
 					try{reloaddaiban()}catch(e){}
+					js.msg('success', da);
+					closetabsnow();
 				}else{
 					me.form.bool = false;
 					me.form.setmsg(da);
 				}
-				me._setpreoad();
 			},
 			error:function(){
 				me.form.bool = false;

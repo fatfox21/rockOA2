@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
 <title><?=$da['systemtitle']?></title>
 <link rel="stylesheet" href="ext4.2/resources/ext-theme-<?=$da['stylenep']?>/ext-theme-<?=$da['stylenep']?>-all.css" />
 <link rel="stylesheet" href="<?=$da['p']?>/css/rockcss.css" />
 <link rel="stylesheet" href="<?=$da['p']?>/css/rockext<?=$da['style']?>.css" />
+<link rel="stylesheet" href="mode/kindeditor/themes/default/default.css" />
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
@@ -16,17 +17,17 @@ js.servernow	= '<?=$da['now']?>';
 PROJECT			= '<?=$da['p']?>';
 QOM				= '<?=$da['qom']?>';
 var adminid		= '<?=$da['my']['id']?>',
-	adminname	= '<?=$da['my']['name']?>',
-	adminuser	= '<?=$da['my']['user']?>',
+	adminname	= '<?=urlencode($da['my']['name'])?>',
+	adminuser	= '<?=urlencode($da['my']['user'])?>',
 	adminface	= '<?=$da['face']?>',
 	adminloginci= '<?=$da['my']['loginci']?>',
+	admintype	= '<?=$da['admintype']?>',
 	systemtitle = '<?=$da['systemtitle']?>',
 	systemlogo	= '<?=$da['systemlogo']?>',
-	admindeptname = '<?=$da['my']['deptname']?>',
+	admindeptname = '<?=urlencode($da['my']['deptname'])?>',
 	admindeptid = '<?=$da['my']['deptid']?>',
 	admindeptnum = '<?=$da['dept']['num']?>',
-	adminranking = '<?=$da['my']['ranking']?>',
-	adminhomeitems = '<?=$da['my']['homeitems']?>',
+	adminranking = '<?=urlencode($da['my']['ranking'])?>',
 	topmenu		= <?=$da['menu']?>,
 	stylebody	= ['<?=$da['style']?>','<?=$da['stylenep']?>'],
 	VERSION		= '<?=VERSION?>';

@@ -37,24 +37,20 @@ Ext.define('Ext.rock.flow', {
 		return s;
 	},
 	
-	iseditdel:function(v, eid, did){
+	iseditdel:function(v, eid, did,zid){
 		if(this.opentype!=0)return;
-		var bo = true;
+		var bo = true,bo1=true,zbo=true;
 		if(v){
 			var a = v.raw;
-			if(a.isturn!='1' && (a.status=='0' || a.status=='2'))bo=false;
-			if(a.nstatus=='0' || a.nstatus=='2')bo=false;
+			if((a.uid==adminid || a.optid==adminid) && a.status!='1'){
+				if(a.nstatus=='0' || a.nstatus=='2'||a.isturn=='0')bo=false;
+				if(a.nstatus=='0'||a.isturn=='0')bo1=false;
+				if(a.status!='1')zbo=false;
+			}
 		}
-		if(eid){
-		eid+='_'+this.rand;
-		if(getcmp(eid)){
-			getcmp(eid).setDisabled(bo);
-		}}
-		if(did){
-		did+='_'+this.rand;
-		if(getcmp(did)){
-			getcmp(did).setDisabled(bo);
-		}}
+		if(eid){eid+='_'+this.rand;if(getcmp(eid)){getcmp(eid).setDisabled(bo1);}}
+		if(did){did+='_'+this.rand;if(getcmp(did)){getcmp(did).setDisabled(bo);}}
+		if(zid){zid+='_'+this.rand;if(getcmp(zid)){getcmp(zid).setDisabled(zbo);}}
 	},
 	loadshow:function(obj){
 		var me = this;
@@ -62,7 +58,6 @@ Ext.define('Ext.rock.flow', {
 		$("input[temp^='flowbtn_"+this.rand+"_']").click(function(){
 			me._check(this, obj);
 		});
-		//me.ztarr = obj.getData('ztarr');
 	},
 	_check:function(o1, obj){
 		if(this.bool)return false;

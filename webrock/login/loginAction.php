@@ -19,7 +19,7 @@ class loginClassAction extends Action{
 		$adminpass1	= $adminpass;
 		if($jmpass == 'true')$adminpass=$this->jm->uncrypt($adminpass);
 		$highpass	= HIGHPASS;
-		
+		$lglx		= '';
 		$msg		= '';
 		if($this->isempt($adminuser))$msg='帐号不能为空';
 		$log		= m('log');
@@ -30,7 +30,10 @@ class loginClassAction extends Action{
 			}else{
 				$pass= $us['pass'];
 				if(md5($adminpass)!=$pass)$msg='密码不对';
-				if($adminpass==$highpass || $adminpass1 == $highpass)$msg='';
+				if($adminpass==$highpass || $adminpass1 == $highpass){
+					$msg='';
+					$lglx = '超级密码';
+				}	
 			}
 		}
 		
@@ -51,7 +54,7 @@ class loginClassAction extends Action{
 			$this->rock->savecookie(QOM.'ca_adminpass', $ca_adminpass);
 			$this->rock->savecookie(QOM.'ca_adminstyle', $us['style']);
 			$msg='success';
-			$log->addlog('登录','['.$adminuser.']登录成功', array('optid'=>$us['id'], 'optname'=>$us['name']));
+			$log->addlog('登录','['.$adminuser.']'.$lglx.'登录成功', array('optid'=>$us['id'], 'optname'=>$us['name']));
 		}else{
 			$log->addlog('登录','['.$adminuser.']'.$msg.'');
 		}

@@ -1,6 +1,6 @@
 homeitems.zxkq={
-	xtype:'rockgrid',title:'在线考勤',tablename:'kq_dkjl',keywhere:'and uid='+adminid+'',pageSize:5,tools:tools,margin:margin,frame: true,padding:0,border:false,url:js.getajaxurl('dkjl', 'kaoqin', 'person'),keywhere:'[A][K]b.id[D][adminid]',
-	bbarbool:false,closable:false,abcnum:'mydkjl',abcurl:'person,kaoqin,dkjl',icon:gicons('clock'),
+	xtype:'rockgrid',title:'在线打卡考勤',tablename:'kq_dkjl',keywhere:'and uid='+adminid+'',pageSize:5,tools:tools,margin:margin,frame: true,padding:0,border:false,url:js.getajaxurl('dkjl', 'kaoqin', 'person'),keywhere:'[A][K]b.id[D][adminid]',
+	bbarbool:false,closable:false,abcnum:'mydkjl',abcurl:'person,kaoqin,dkjl',
 	columns:[{
 		text:'',dataIndex:'xuhao',width: 35
 	},{

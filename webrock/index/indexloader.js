@@ -5,7 +5,7 @@ var mainjsarr = [
 	'webrock/index/indexscript.js',
 	'webrock/index/indexpublic.js',
 	'mode/My97DatePicker/WdatePicker.js',
-	'webrock/extjs/rock/base.js?rnd='+Math.random()+'',//?rnd='+Math.random()+'
+	'webrock/extjs/rock/base.js',//?rnd='+Math.random()+'
 	'webrock/extjs/rock/option.js',
 	'webrock/extjs/rock/rate.js',
 	'webrock/extjs/rock/tree.js',
@@ -22,10 +22,17 @@ var mainjsarr = [
 	'webrock/extjs/ux/CheckCombo.js',
 	'webrock/extjs/ux/form/MultiSelect.js',
 	'webrock/extjs/ux/form/ItemSelector.js',
-	'webrock/extjs/ux/calendar.js'
+	'webrock/extjs/ux/calendar.js',
+	'mode/kindeditor/kindeditor-min.js',
+	'mode/kindeditor/zh_CN.js'
 ];
 var loadercishu = 0;
 function initbody(){
+	adminname 		= decodeURI(adminname);
+	adminuser 		= decodeURI(adminuser);
+	admindeptname 	= decodeURI(admindeptname);
+	adminranking 	= decodeURI(adminranking);
+
 	var  s = '<div id="loadtshoale_show" style="padding:20px;border:1px #cccccc solid;position:absolute;left:40%;top:40%;font-size:14px"><img height="32" width="32" src="images/mloading.gif" align="absmiddle">&nbsp; 拼命载入中[<a href="javascript:" style="color:blue;" onclick="return loadscript(loadercishu)"><u>不动了?重试</u></a>](<span id="jinduload">0%</span>)...</div>';
 	$('body').append(s);
 	loadscript(0);

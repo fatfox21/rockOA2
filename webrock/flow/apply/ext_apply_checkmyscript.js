@@ -1,10 +1,10 @@
 var grid;
-function opentablss(a){
+function opentablss(a, gsid){
 	if(isempt(a.modenum)){
 		js.msg('msg','记录不存在了');
 		return;
 	}
-	addtabs('[查看]'+a.modename,'flow,apply,'+a.modenum+',flownum='+a.modenum+',tablename='+a.table+',opentype=0,mid='+a.mid+',gridid=', ''+a.modenum+'_'+a.mid+'');
+	addtabs('[查看]'+a.modename,'flow,apply,'+a.modenum+',flownum='+a.modenum+',tablename='+a.table+',opentype=0,mid='+a.mid+',gridid='+gsid+'', ''+a.modenum+'_'+a.mid+'',{menutype:'cy'});
 }
 
 
@@ -146,7 +146,7 @@ var panel = {
 	},{
 		text:'状态',width:150,dataIndex:'statustext'
 	},{
-		text:'操作人',width:80,dataIndex:'optname',sortable:true,search:true,qz:'a.'
+		text:'提交人',width:80,dataIndex:'optname',sortable:true,search:true,qz:'a.'
 	},{
 		text:'摘要',flex:1,dataIndex:'summary',sortable:false,renderer:rendercont,align:'left'
 	},{
@@ -154,9 +154,9 @@ var panel = {
 		width:70,text:'查看',
 		items: [{
 			icon: gicons('page_go'),tooltip: '打开详情',
-			handler: function(grid, rowIndex, colIndex) {
-				var rec = grid.getStore().getAt(rowIndex);
-				opentablss(rec.raw);
+			handler: function(gridv, rowIndex, colIndex) {
+				var rec = gridv.getStore().getAt(rowIndex);
+				opentablss(rec.raw, grid.getId());
 			}
 		}]
 	}]
@@ -165,5 +165,10 @@ return {
 	panel:panel,
 	init:function(){
 		grid = objpanel.down('rockgrid');
+	},
+	tabson:{
+		show:function(){
+			rock[index].isReload();
+		}
 	}
 };

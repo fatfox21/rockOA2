@@ -1,15 +1,33 @@
 <?php 
 class kaoqinClassAction extends Action{
 	
-	//考勤分析
+		
+	/**
+		考勤分析天的来算
+	*/	
 	public function fenxiAjax()
 	{
 		$sdt	= $this->post('startdt');
 		$edt	= $this->post('enddt');
 		$uid	= $this->post('uid');
-
+		$this->fenxi($sdt, $edt, $uid);
+		echo 'success';
+	}
+	
+	public function fenximonthAjax()
+	{
+		$month  = $this->get('month', date('Y-m'));
+		$dtobj	= c('date');
+		$sdt 	= $month.'-01';
+		$edt 	= $dtobj->getenddt($month);
+		$this->fenxi($sdt, $edt);
+		echo 'success';
+	}
+	
+	private function fenxi($sdt='', $edt='', $uid='')
+	{
 		$date	= $this->date;
-		$dtobj	= c('date', true);
+		$dtobj	= c('date');
 		
 		if($sdt == '')$sdt = $dtobj->adddate($date,'d', -3);
 		if($edt == '')$edt = $dtobj->adddate($date,'d', -1);
@@ -116,8 +134,6 @@ class kaoqinClassAction extends Action{
 				$db1->delete("`id` not in($zid) and `dt`='$sdt' and `uid`='$uid'");
 			}
 		}
-		
-		echo 'success';
 	}
 	
 	/**

@@ -12,8 +12,8 @@ function boackindie(){
 }
 var panel= {
 	width:750,xtype:'rockform',
-	submitfields:'title,typename,num,brand,remark,address,model,laiyuan,state',border:false,
-	url:publicsave(mode, dir),beforesaveaction:'autopannum',
+	submitfields:'title,typename,num,brand,remark,address,model,laiyuan,state,buydt,price',border:false,
+	url:publicsave(mode, dir),beforesaveaction:'autopannum',editrecord:true,
 	params:{int_filestype:'',otherfields:'optdt={now},optname={admin}',add_otherfields:'adddt={now}'},tablename:'assetm',
 	items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true	
@@ -40,6 +40,12 @@ var panel= {
 				fieldLabel:''+bitian+'资产来源',name:'laiyuanPost',width:'49%',xtype:'optioncombo',optionmnum:'assetslaiyuan',allowBlank: false
 			},{
 				fieldLabel:''+bitian+'状态',name:'statePost',width:'49%',xtype:'optioncombo',optionmnum:'assetsstate',allowBlank: false
+			}]
+		},{
+			xtype: 'fieldcontainer',defaultType:'textfield',layout:'hbox',items:[{
+				fieldLabel:'购进日期',name:'buydtPost',width:'49%',xtype:'datefield',format:'Y-m-d',editable:false
+			},{
+				fieldLabel:'价格',name:'pricePost',width:'49%',xtype:'numberfield',minValue:0
 			}]
 		},{
 			fieldLabel:'备注说明',name:'remarkPost',xtype:'textareafield',height:100

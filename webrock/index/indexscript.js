@@ -60,11 +60,15 @@ function closetabs(num1){
 	}
 	return bo;
 }
+function closetabsnow(){
+	closetabs(nowtab.num);
+}
 function addtabs(title,urlnr,num1,opts){
 	if(isempt(urlnr)){
 		js.msg('msg','没有设置访问地址');
 		return;
 	}
+	if(!opts)opts={};
 	if(!num1)num1=js.getrand();
 	var num = 'tabs_'+num1+'',dir='',mode='',url='',act='';
 	if(!closetabs(num1))return;
@@ -135,16 +139,11 @@ function addtabs(title,urlnr,num1,opts){
 			}
 		}
 	};
-	var pad = 5;
-	if(num1=='home')pad=0;
 	var pan={
-		xtype:'panel',border:false,padding:pad,title:title,closable:true,autoScroll: false,layout:'border',rand:rand,icon:'',
+		xtype:'panel',border:false,padding:5,title:title,closable:true,autoScroll: false,layout:'border',rand:rand,icon:'',
 		bodyStyle:'background:white;',html:'',id:num,loader:loaders,num:num1,urlstr:url,urlstring:urlnr,menuid:'',menutype:''
 	};
-	Ext.apply(pan,opts);
-	menuTabs.add(pan).show();
-	menuTabs.setActiveTab(num);
-	nowtab.getEl().mask('加载中...');
+	if(urlpms.padding)opts.padding=urlpms.padding;Ext.apply(pan,opts);menuTabs.add(pan).show();menuTabs.setActiveTab(num);nowtab.getEl().mask('加载中...');
 }
 
 function reloadtabs(num){
@@ -311,16 +310,16 @@ function createindex(){
 			id:'index_bottom',region:'south',xtype:'toolbar',
 			items:[{
 				icon:gicons('user'),text:'用户：'+adminuser+'',showSeparator:false
-			},'-','登录次数:'+adminloginci+'','->','-','基于<a href="http://www.xh829.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
-				text:'首页项',id:'index_btn_homeitems',icon:gicons('application_view_tile')
-			},'-',{
+			},'-','登录次数:'+adminloginci+'',{
+				text:'选择卡信息',hidden:admintype=='0',handler:function(){js.getarr(nowtab)}
+			},'->','-','基于<a href="http://www.xh829.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
 				text:'重新加载',icon:gicons('arrow_refresh'),handler:benreload
 			},'-',{
 				text:'全屏',icon:gicons('arrow_out'),handler:fullscreen
 			}]
 		}]
 	});
-	addtabs('首页','@index,home,index','home',{closable:false,icon:gicons('house')});
+	addtabs('首页','@index,home,index','home',{closable:false,icon:gicons('house'),padding:'0 0 8 0'});
 	showmenula(getcmp('index_menu').down('#menuTree_'+topmenu[0].id+''));
 	
 	function loadmenuid(id,na){
@@ -379,19 +378,23 @@ function createindex(){
 		},{
 			name:'刷新',icons:gicons('arrow_refresh'),url:'return location.reload();'
 		},{
-			name:'帮助',icons:gicons('help'),url:'return false'},{name:'退出',icons:gicons('report_go'),url:'?m=login&a=exit'
+			name:'帮助',icons:gicons('help'),url:'http://www.xh829.com/help.html',attr:'target="_blank"'
+		},{
+			name:'退出',icons:gicons('report_go'),url:'?m=login&a=exit'
 		}];
 		toparr[1].menu[stylebody[0]].icon = gicons('ok');
 		var s='<div style="height:25px;overflow:hidden;line-height:25px;padding-right:10px"><span class="topzhu" id="index_datetime">2014年12月10日[星期三] 21:58:51</span></div>';
 		s+='<div align="right"><table height="25" border="0" cellspacing="0" cellpadding="0"><tr>';
 		for(var i=0;i<toparr.length;i++){
 			var urls = 'href="javascript:"',
-				urla = toparr[i].url;
+				urla = toparr[i].url,
+				attr = toparr[i].attr;
 			if(urla.indexOf('return')==0){
 				urls+=' onclick="'+urla+'"';
 			}else{
 				urls = 'href="'+urla+'"';
 			}
+			if(attr)urls+=' '+attr+'';
 			s+='<td width="18" nowrap align="left"><div style="height:16px;overflow:hidden"><img src="'+toparr[i].icons+'" height="16" width="16"></div></td><td nowrap><a id="topicons_'+i+'" oi="'+i+'" class="topzhu" '+urls+'>'+toparr[i].name+'</a></td><td width="10" nowrap></td>';
 		}
 		s+='</tr></table></div>';

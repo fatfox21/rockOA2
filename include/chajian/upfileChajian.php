@@ -18,7 +18,7 @@ class upfileChajian extends Chajian{
 		@param	$path string 上传目录 如：upload|e|ee
 		@param	$maxsize ing 上传大小(MB)
 	*/
-	function __construct($ext,$path,$maxsize=1)
+	public function __construct($ext,$path,$maxsize=1)
 	{
 		$this->ext		= $ext;
 		$this->maxsize	= $maxsize;
@@ -31,8 +31,9 @@ class upfileChajian extends Chajian{
 		@param	$cfile	string	文件名心的文件名，不带扩展名的
 		@return	string/array
 	*/
-	function up($name,$cfile='')
+	public function up($name,$cfile='')
 	{
+		if(!$_FILES)return 'sorry!';
 		$file_name		= $_FILES[$name]['name'];
 		$file_size		= $_FILES[$name]['size'];//字节
 		$file_type		= $_FILES[$name]['type'];

@@ -1,6 +1,11 @@
 <?php
 class taskClassAction extends Action
 {
+	public function taskrestartAjax()
+	{
+		$msg = c('socket')->sendshell('taskrestart');
+		echo $msg;
+	}
 	public function taskaftershow($table, $rows)
 	{
 		$db = m('taskuser');

@@ -83,4 +83,42 @@ class htmlChajian extends Chajian{
 		$txt	.= '</table>';
 		return $txt;
 	}
+	
+	/**
+		post请求
+	*/
+	public function httppost($url, $data = array())
+	{
+		$str		= '';
+		foreach($data as $k=>$v)$str.='&'.$k.'='.$v.'';
+		$content	= substr($str, 1);
+		$data_len	= strlen($content);
+		$result		= @file_get_contents($url, false, stream_context_create(
+					array(
+						'http'=>array(
+							'method'	=> 'POST', 
+							'header'	=> "Content-type: application/x-www-form-urlencoded\r\nContent-Length: $data_len\r\n", 
+							'content'	=> $content,
+							'timeout'	=> 60
+						)
+					)
+			)
+		);
+		return $result;
+	}
+	
+	/**
+		get请求
+	*/
+	public function httpget($url, $data = array())
+	{
+		$str		= '';
+		foreach($data as $k=>$v)$str.='&'.$k.'='.$v.'';
+		$content	= substr($str, 1);
+		$fh 		= '?';
+		if($this->contain($url,'?'))$fh = '&';
+		if($str!='')$url = $url.$fh.$str;
+		$result		= @file_get_contents($url);
+		return $result;
+	}
 }                                                                                                                                                            

@@ -12,7 +12,7 @@ function windowsss(){
 			id:'form_'+rand+'',border:false,
 			submitfields:'name,num,mnum,value,xu,ism',
 			params:{int_filestype:'xu,ism',otherfields:'optdt={now},optid={adminid}'},tablename:'option',
-			url:publicsave(mode,dir),
+			url:publicsave(mode,dir),cancelbool:true,
 			xtype:'rockform',items:[{
 				fieldLabel:'id号',value:'0',name:'idPost',hidden:true	
 			},{
@@ -26,7 +26,7 @@ function windowsss(){
 			},{
 				fieldLabel:'序号',name:'xuPost',value:'0',minValue:0,xtype:'numberfield'
 			},{
-				fieldLabel:'&nbsp;',name:'ismPost',xtype:'checkboxfield',boxLabel:'显示在左边',inputValue:'1'
+				fieldLabel:'&nbsp;',name:'ismPost',xtype:'checkboxfield',boxLabel:'显示在左边',inputValue:'1',labelSeparator:''
 			}],
 			success:function(){
 				grid.storereload();
@@ -37,12 +37,13 @@ function windowsss(){
 	win.show();
 	form = getcmp('form_'+rand+'');	
 }
-function clickadd(abs){
+function clickadd(abs,pids){
 	windowsss();
 	form.reset();
 	form.setmsg('新增状态','blue');
 	if(abs){
-		form.field('mnumPost').setValue(abs);
+		form.setVal('mnum', abs);
+		//form.setVal('pid', pids);
 	}
 }
 function btn(bo, das){
@@ -62,9 +63,9 @@ function aaguanli(){
 
 var omenu=Ext.create('Ext.menu.Menu',{
 	items:[{
-		text:'新增下级选项',id:'danjiadd_'+rand+'',handler:function(a){clickadd(grid.changedata.num)},icon:gicons('add')
+		text:'新增下级选项',id:'danjiadd_'+rand+'',handler:function(a){clickadd(grid.changedata.num, grid.changedata.id)},icon:gicons('add')
 	},{
-		text:'新增同级选项',handler:function(a){clickadd(grid.changedata.mnum)}
+		text:'新增同级选项',handler:function(a){clickadd(grid.changedata.mnum, grid.changedata.pid)}
 	},'-',{
 		text:'编辑',handler:function(){},icon:gicons('page_eidt'),handler:function(){clickedit()}
 	},'-',{
@@ -80,7 +81,7 @@ function gotodown(num){
 }
 
 var panel= [{
-	xtype:'rocktree',tablename:'option',region:'west',width:250,split:true,bbarbool:false,title:'选项列表',collapsible: true,url:publictreestore({order:'xu',expandall:'true',pidfields:'mnum',idfields:'num',fistid:'rock'}),where:'and ism=1',
+	xtype:'rocktree',tablename:'option',region:'west',width:320,split:true,bbarbool:false,title:'选项列表',collapsible: true,url:publictreestore({order:'xu',expandall:'true',pidfields:'mnum',idfields:'num',fistid:'rock'}),where:'and ism=1',
 	tools:[{
 		type:'refresh',handler:function(){tree.storereload()},tooltip:'刷新'
 	},{
@@ -89,10 +90,14 @@ var panel= [{
 		type:'collapse',tooltip:'全部收起',handler:function(){tree.collapseAll()}
 	}],
 	columns:[{
-		xtype: 'treecolumn',text:'名称',align:'left',dataIndex:'name',width:'99%'
+		xtype: 'treecolumn',text:'名称',align:'left',dataIndex:'name',flex:1
+	},{
+		text:'编号',width:100,dataIndex:'num',align:'center'
+	},{
+		text:'ID',dataIndex:'id',width:60,align:'center'
 	}],
 	bbar:[{
-		text:'新增顶级',handler:function(){clickadd('rock')},icon:gicons('add')
+		text:'新增顶级',handler:function(){clickadd('rock','0')},icon:gicons('add')
 	},'-',{
 		text:'管理',handler:function(){rockoption.setlist('系统选项','rock',{savecall:function(){tree.storereload()}})}
 	}],
@@ -102,7 +107,7 @@ var panel= [{
 	}
 },{
 	xtype:'rockgrid',exceltitle:'系统选项',
-	tablename:'option',celleditbool:true,searchtools:true,defaultorder:'xu',
+	tablename:'option',celleditbool:true,searchtools:true,defaultorder:'mnum,xu',
 	tbar:['->',{
 		text:'下级选项',icon:gicons('cog'),handler:function(){aaguanli()},id:'gldown_'+rand+'',disabled:true
 	},'-',{

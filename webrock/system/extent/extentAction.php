@@ -13,9 +13,9 @@ class extentClassAction extends Action
 	*/
 	public function saveAjax()
 	{
-		$type		= $this->rock->post('type');
-		$mid		= $this->rock->post('mid');
-		$checkaid	= $this->rock->post('checkaid');
+		$type		= $this->post('type');
+		$mid		= $this->post('mid');
+		$checkaid	= $this->post('checkaid');
 		if($type == 'um'){
 			$this->extentclear($mid);
 		}else{

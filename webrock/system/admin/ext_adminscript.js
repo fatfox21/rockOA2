@@ -109,6 +109,9 @@ var panel = {
 			me.storereload();
 		});
 	},
+	griddelwhere:function(d){
+		return d.user!='admin';
+	},
 	exceltitle:'用户',
 	execlparams:{excelchuli:'status,type,state',state_arr:',正式员工,试用期,实习生,兼职,离职员工',type_arr:'否,是',status_arr:'否,是'},
 	url:publicstore('admin','system'),
@@ -164,7 +167,7 @@ var panel = {
 	formparams:{
 		url:publicsave(mode,dir),
 		submitfields:'user,pass,name,tel,email,status,groupname,gender,mobile,type,ranking,superman,superid,deptid,deptname,sort',
-		params:{int_filestype:'status,type,deptid,sort',add_otherfields:'adddt={now},workdate={date},state=2',md5_filestype:'pass',otherfields:'optdt={now},optname={admin},optid={adminid}'},autoScroll:false,
+		params:{int_filestype:'status,type,deptid,sort',add_otherfields:'adddt={now},workdate={date},state=2',md5_filestype:'pass',otherfields:'optdt={now},optname={admin},optid={adminid}'},autoScroll:false,editrecord:true,
 		submitparams:function(o,f){
 			return {groupnamess:o.getField('groupname').getRawValue()};
 		},

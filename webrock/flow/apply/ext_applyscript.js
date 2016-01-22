@@ -29,7 +29,7 @@ var panel = {
 		icon:gicons('reload'),text:'刷新',handler:function(){
 			this.up('grid').storereload();
 		}
-	},'-','以下是统计我申请的记录'],
+	},'-','以下是统计是针对我或者操作人是我的申请记录'],
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40

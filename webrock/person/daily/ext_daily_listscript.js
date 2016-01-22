@@ -4,6 +4,14 @@ var panel = {
 	_qiehuanzt:function(lx){
 		this.setparams({opentype:lx},true);
 	},
+	tbarcenter:[{
+		xtype:'combo',id:'type_'+rand+'',width:100,editable:false,store:js.arraystr('|-日报类型-,0|日报,1|周报,2|月报,3|年报'),value:''
+	}],
+	outsearch:function(){
+		var typ = getcmp('type_'+rand+'').getValue(),s='';
+		if(typ!='')s='and a.`type`='+typ+'';
+		return s;
+	},
 	tbar:['->',{
 		text:'我的日报',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(5);}
 	},'-',{
@@ -40,7 +48,7 @@ var panel = {
 	},{
 		text:'姓名',dataIndex:'name',width:120,search:true,sortable:true
 	},{
-		text:'类型',dataIndex:'type',qz:'a.',width:100,search:true,sortable:true,atype:'select',store:js.arraystr('0|日报,1|周报,2|月报,3|年报'),renderer:function(v){
+		text:'类型',dataIndex:'type',qz:'a.',width:100,sortable:true,renderer:function(v){
 			var as =['日报','周报','月报','年报'];return as[v];
 		}
 	},{

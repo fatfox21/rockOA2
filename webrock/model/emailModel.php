@@ -56,4 +56,10 @@ class emailClassModel extends Model
 	{
 		return $this->sendmail($num, $this->adminid, array(), 1);
 	}
+	
+	
+	/**
+		统计未读邮件
+	*/
+	
 }

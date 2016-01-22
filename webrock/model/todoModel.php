@@ -38,8 +38,10 @@ class todoClassModel extends Model
 		));
 	}
 	
-	public function deltodo($table='', $mid='')
+	public function setyidu($table='', $mid='', $uid=0)
 	{
-		
+		if($uid==0)$uid=$this->adminid;
+		$where = "`table`='$table' and `mid`='$mid' and `uid`='$uid'";
+		$this->update('`status`=1', $where);
 	}
 }

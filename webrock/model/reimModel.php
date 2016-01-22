@@ -174,6 +174,18 @@ class reimClassModel extends Model
 		return $rows;
 	}
 	
+	public function getweitotal($uid, $type, $sid=0, $blx=0)
+	{
+		$whes	= $this->rock->dbinstr('receuid', $uid);
+		$where  = "`type`='$type' and `receid` ='$sid' and $whes and id in(select mid from [Q]im_messzt where uid='$uid')";
+		if($type == 'user'){
+			$where  = "`zt`=0 and `receid`='$uid' and `type`='user'";
+		}
+		if($blx==1)return $where;
+		$to 	= $this->rows($where);
+		return $to;
+	}
+	
 	public function getgroup($uid, $facarr=array('','',''))
 	{
 		$ids	= '0';
@@ -186,5 +198,14 @@ class reimClassModel extends Model
 			$rows[$k]['face'] = $this->rock->repempt($rs['face'], $facarr[$rs['type']]);
 		}
 		return $rows;
+	}
+	
+	/**
+		设置已读
+	*/
+	public function setyd($ids, $receid)
+	{
+		$this->update("`zt`=1", "`id` in($ids) and receid='$receid' and `type` in ('user')");
+		m('im_messzt')->delete("uid='$receid' and `mid` in($ids)");
 	}
 }

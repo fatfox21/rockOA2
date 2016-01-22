@@ -20,6 +20,7 @@ class flowClassAction extends Action{
 	*/
 	public function viewAction()
 	{
+		$this->tpltype = 'html';
 		$uid		= $this->jm->gettoken('uid');
 		$modenum	= $this->jm->gettoken('modenum');
 		$table		= $this->jm->gettoken('table');

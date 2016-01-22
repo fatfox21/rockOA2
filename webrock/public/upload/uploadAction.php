@@ -4,18 +4,15 @@ class uploadClassAction extends Action{
 	
 	public function getfileAjax()
 	{
-		$mtype		= $this->rock->request('table');
-		$mid		= $this->rock->request('mid');
-		$rows		= m('file')->getall("`mtype`='$mtype' and `mid`='$mid' order by `id`");
-		foreach($rows as $k=>$rs){
-			$rows[$k]['status'] = 4;
-		}
+		$mtype		= $this->request('table');
+		$mid		= $this->request('mid');
+		$rows 		= m('file')->getfiles($mtype, $mid);
 		echo json_encode($rows);
 	}
 	
 	public function delfileAjax()
 	{
-		$id		= $this->rock->request('id');
+		$id		= $this->request('id');
 		m('file')->delete($id);
 	}
 }

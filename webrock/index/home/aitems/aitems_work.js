@@ -1,5 +1,5 @@
 homeitems.work = {
-	xtype:'rockgrid',title:'今日['+js.now('Y-m-d 周W')+']事项/任务',margin:margin,tools:tools,bbarbool:false,closable:false,tablename:'work',frame: true,padding:0,border:false,url:js.getajaxurl('gettoday','workh|work','work'),abcnum:'worklist',abcurl:'work,work,list,atype=0',pageSize:30,icon:gicons('pencil'),fields:['state','startdt'],
+	xtype:'rockgrid',title:'今日['+js.now('Y-m-d 周W')+']事项/任务',margin:margin,tools:tools,bbarbool:false,closable:false,tablename:'work',frame: true,padding:0,border:false,url:js.getajaxurl('gettoday','workh|work','work'),abcnum:'worklist',abcurl:'work,work,list,atype=0',pageSize:30,fields:['state','startdt'],tabstitle:'今日任务',
 	columns:[{
 		text:'',dataIndex:'xuhao',width: 35
 	},{

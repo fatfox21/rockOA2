@@ -7,7 +7,7 @@ function btn(bo){
 	}catch(e){}	
 }
 var panelss = {
-	xtype:'rockgrid',tablename:'assetm',celleditbool:false,searchtools:true,exceltitle:'资产列表',region:'center',
+	xtype:'rockgrid',tablename:'assetm',celleditbool:false,highsearchbool:true,searchtools:true,exceltitle:'资产列表',region:'center',
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -27,6 +27,8 @@ var panelss = {
 		text:'状态',dataIndex:'state',width:100,editor:{xtype:'optioncombo',optionmnum:'assetsstate'},search:true
 	},{
 		text:'规格/型号',dataIndex:'model',flex:1,editor:'textfield',search:true
+	},{
+		text:'购进日期',dataIndex:'buydt',width:100,search:true
 	}],
 	tbar:['双击行查看登记状态','->',{
 		text:'登记状态',icon:gicons('pencil'),disabled:true,id:'zt_'+rand+'',handler:function(){

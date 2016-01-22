@@ -14,7 +14,7 @@ function boackindie(){
 
 var panel= {
 	width:700,
-	xtype:'rockform',tablename:'work',
+	xtype:'rockform',tablename:'work',editrecord:true,
 	submitfields:'title,type,grade,distid,dist,explain,baoid,baoname,plcont,bgtime,wctime,wcsj,wclx,istx,status',border:false,
 	params:{int_filestype:'wcsj,istx,status',otherfields:'optdt={now},optname={admin},optid={adminid},mid=0'},
 	url:publicsave(mode,dir),

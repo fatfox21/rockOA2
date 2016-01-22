@@ -75,8 +75,10 @@ a.webbtn:hover,.webbtn:hover{ background-color:#046DA5;box-shadow:0px 0px 5px rg
 .alert_success{ background-color:#e3f6d1;border:0px #78b146 solid;color:green}
 .alert_wait{ background-color:#f8f8f8;border:0px #cccccc solid;color:#555555}
 
-
-
+.content{line-height:24px}
+.content p{padding:5px 5px;text-indent:24pt}
+.content a:link,.content a:visited{color:blue;TEXT-DECORATION:none;}
+.content a:hover{TEXT-DECORATION:underline;color:red;}
 
 a.zhu0:link,a.zhu0:visited,.zhu0{color:#0441b0;font-size:12px}
 

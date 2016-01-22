@@ -27,7 +27,7 @@ Ext.define('Ext.rock.where', {
 		this.maincans = js.apply({callback:function(){},opttype:'',qz:'',fields:''}, cans);
 		this.istype = istype;
 		if(typeof(wherewindow)!='object'){
-			var cans = winopt({title: '条件管理',width:570,border:false,items:{
+			var cans = winopt({title: '条件管理',width:570,modal:true,border:false,items:{
 					height:250,region:'center',xtype:'grid',id:'wherewin_grid',hideHeaders:false,
 					tbar:[{
 						xtype:'combo',id:'wherewin_luoji',store:this.luojiarr,value:'',width:80,editable:false,listeners:{change:function(a,nv,ov){me._changlj(a,ov)}}
@@ -162,6 +162,7 @@ Ext.define('Ext.rock.where', {
 	_reset:function(){
 		for(var a in this._put)this._put[a].reset();
 		this._chanbtn(0);
+		this._index=-1;
 	},
 	_add:function(){
 		if(isempt(this._instda.field)){
@@ -201,7 +202,6 @@ Ext.define('Ext.rock.where', {
 			this._insert(da);
 		}
 		this._reset();
-		this._index=-1;
 	},
 	_goptlxn:function(ls){
 		var s = '';
@@ -266,6 +266,7 @@ Ext.define('Ext.rock.where', {
 			}
 			if(bo)d.push(a[oi]);
 		}
+		this._put.field.reset();
 		this._put.field.getStore().loadData(d);	
 	},
 	_loadfieldss:function(as){
@@ -292,6 +293,7 @@ Ext.define('Ext.rock.where', {
 		var rows = as.list;
 		this._store.loadData(rows[0].clildren);
 		getcmp('wherewin_explain').setValue(rows[0].name);
+		this._reset();
 	},
 	_changfield:function(a){
 		var da = a.valueModels[0].raw,
@@ -312,7 +314,7 @@ Ext.define('Ext.rock.where', {
 			lx  = 'select';
 			this._setseldate(xes, o2);
 			dc = [['=','等于'],['<>', '不等于'],['NULL', '为空'],['NO NULL', '不为空']];
-		}else if(xle.indexOf('int')>-1){
+		}else if(xle.indexOf('int')>-1 || xle=='decimal'){
 			o1.hide();
 			o2.hide();
 			o3.hide();
@@ -337,6 +339,7 @@ Ext.define('Ext.rock.where', {
 			lx  = 'key';
 			dc	= [['LIKE', '包含'],['NOT LIKE', '不包含'],['=','等于'],['<>', '不等于'],['NULL', '为空'],['NO NULL', '不为空'],['LEFT', '开始以'],['RIGHT', '结束以']];
 		}
+		//dc = this.logicarr;
 		var lsox= this._put.optlx;
 		lsox.getStore().loadData(dc);
 		lsox.setValue(dc[0][0]);

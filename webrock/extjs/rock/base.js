@@ -433,3 +433,62 @@ Ext.define('Ext.rock.changerockdate',{
 		this.changetimeshow();
 	}
 });	
+
+
+Ext.define('Ext.rock.kindeditor',{
+	extend: 'Ext.form.field.TextArea',
+	alias: 'widget.kindeditor',
+	editorobj:false,
+	initComponent: function(){
+		var me		= this;
+		var rand 	= js.getrand();
+		Ext.applyIf(this,{
+			id:'rockdate_'+rand+'',
+			editorparams:{}
+        });
+		this.callParent();
+	},
+	afterRender:function(){
+		var me		= this;
+		me.callParent();
+		js.imports('mode/kindeditor/kindeditor-min.js',function(){
+			setTimeout(function(){
+				me._showkindeditor();
+			},10);
+		});
+	},
+	_showkindeditor:function(){
+		var cans = {
+			resizeType : 0,
+			allowPreviewEmoticons : false,
+			allowImageUpload : true,
+			formatUploadUrl:false,
+			uploadJson:'mode/kindeditor/kindeditor_upload.php',
+			allowFileManager:true,
+			items : [
+				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+				'insertunorderedlist', '|','image', 'link','unlink','|','source','clearhtml','fullscreen'],
+			blur:function(){
+				alert(1)
+			}
+		};
+		Ext.apply(cans, this.editorparams);
+		this.editorobj = KindEditor.create('#'+this.id+'-inputEl', cans);
+		this.focus();
+	},
+	setContent:function(s){
+		if(this.editorobj)this.editorobj.html(s);
+	},
+	focus:function(){
+		this.editorobj.focus();
+	},
+	getContent:function(){
+		var s = '';
+		if(this.editorobj)s = this.editorobj.html();
+		return s;
+	},
+	submitValue:function(){
+		this.setValue(this.getContent());
+	}
+});	

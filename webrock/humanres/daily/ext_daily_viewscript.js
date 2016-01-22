@@ -1,6 +1,14 @@
 var panel = {
 	xtype:'rockgrid',tablename:'daily',formtitle:'工作日报',url:publiccheckstore('daily','person'),opentype:7,
 	defaultorder:'a.`dt` desc',searchtools:true,
+	tbarcenter:[{
+		xtype:'combo',id:'type_'+rand+'',width:100,editable:false,store:js.arraystr('|-日报类型-,0|日报,1|周报,2|月报,3|年报'),value:''
+	}],
+	outsearch:function(){
+		var typ = getcmp('type_'+rand+'').getValue(),s='';
+		if(typ!='')s='and a.`type`='+typ+'';
+		return s;
+	},
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -9,7 +17,7 @@ var panel = {
 	},{
 		text:'姓名',dataIndex:'name',width:120,search:true,sortable:true
 	},{
-		text:'类型',dataIndex:'type',qz:'a.',width:100,search:true,sortable:true,atype:'select',store:js.arraystr('0|日报,1|周报,2|月报,3|年报'),renderer:function(v){
+		text:'类型',dataIndex:'type',qz:'a.',width:100,search:false,sortable:true,renderer:function(v){
 			var as =['日报','周报','月报','年报'];return as[v];
 		}
 	},{

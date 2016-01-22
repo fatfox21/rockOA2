@@ -17,6 +17,7 @@ Ext.define('Ext.rock.form',{
 	rand:'',
 	autoScroll:true,
 	submittext:'保存',
+	submiticons:'disk',
 	defaultType: 'textfield',
 	form:null,
 	bool:false,
@@ -34,6 +35,7 @@ Ext.define('Ext.rock.form',{
 	tablename:'',
 	buttonsbool:true,
 	cancelbool:false,
+	editrecord:false,
 	msgerrortpl:'',
 	buttonsitems:[],
 	initComponent: function(){
@@ -46,7 +48,7 @@ Ext.define('Ext.rock.form',{
 			me.buttons=[{id:'formmsg_'+me.rand+'',xtype:'tbtext'}];
 			me.buttons = me.buttons.concat(me.buttonsitems);
 			me.buttons.push({
-				id:'formsave_'+me.rand+'',text:me.submittext,handler:function(){me._efeesaddsve()},formBind: true,icon:gicons('disk')
+				id:'formsave_'+me.rand+'',text:me.submittext,handler:function(){me._efeesaddsve(1)},formBind: true,icon:gicons(me.submiticons)
 			});
 			if(me.cancelbool)me.buttons.push({
 				text:'取消',handler:function(){me.up('window').close()},icon:gicons('cancel')
@@ -76,7 +78,10 @@ Ext.define('Ext.rock.form',{
 	editjudgewhere:'',
 	addjudgewhere:'',
 	submitfun:'',
-	_efeesaddsve:function(){
+	submitsave:function(lx){
+		this._efeesaddsve(lx);
+	},
+	_efeesaddsve:function(lx){
 		var me = this,s,params;
 		if(this.form==null)this.form = this.getForm();
 		if(this.bool)return;
@@ -97,23 +102,27 @@ Ext.define('Ext.rock.form',{
 		this.bool = true;
 		if(me.editjudgewhere!='')me.editjudgewhere=me.editjudgewhere.replace(/\'/g, '[F]');
 		if(me.addjudgewhere!='')me.addjudgewhere=me.addjudgewhere.replace(/\'/g, '[F]');
-		params={submitfields_postabc:this.submitfields,tablename_postabc:this.tablename,flownum_postabc:this.flownum,editjudgewhere:me.editjudgewhere,addjudgewhere:me.addjudgewhere,msgerrortpl:me.msgerrortpl,aftersaveaction:me.aftersaveaction,beforesaveaction:me.beforesaveaction};
+		params={submitfields_postabc:this.submitfields,tablename_postabc:this.tablename,flownum_postabc:this.flownum,editjudgewhere:me.editjudgewhere,addjudgewhere:me.addjudgewhere,msgerrortpl:me.msgerrortpl,aftersaveaction:me.aftersaveaction,beforesaveaction:me.beforesaveaction,savelx:lx};
 		Ext.apply(params, this.params, me.submitparams(me, form));
 		if(typeof(s)=='object')Ext.apply(params, s);
+		if(me.editrecord)params.editrecord_postabc='true';
 		var url = this.url;
 		if(url=='')url=publicsave();
+		var btno = getcmp('formsave_'+this.rand+'');
+		btno.setDisabled(true);
 		this.form.submit({
 			url: url,
 			method:'POST',
 			params:params,
 			success:function(f,o){
+				me.bool = false;
+				btno.setDisabled(false);
 				try{
 					me.setmsg(o.result.msg,'green');
-					me.success(o.result, me);
+					me.success(o.result, me, lx);
 				}catch(e){
 					me.setmsg('处理成功，但返回失败','green');
 				}
-				me.bool = false;
 			},
 			failure:function(f,o){
 				try{
@@ -122,8 +131,9 @@ Ext.define('Ext.rock.form',{
 					js.getarr(o.response);
 					me.setmsg('处理失败,返回出错','red');
 				}
-				me.failure();
 				me.bool = false;
+				btno.setDisabled(false);
+				me.failure();
 			}
 		});
 	},

@@ -81,7 +81,7 @@ abstract class mysql{
 		return $this->conn;
 	}
 	
-	public function query($sql)
+	public function query($sql, $ebo=true)
 	{
 		if($this->conn == null)$this->connect();
 		$sql	= trim($sql);
@@ -93,7 +93,7 @@ abstract class mysql{
 		$rsbool			= $this->querysql($sql);
 		$this->nowerror	= false;
 		if(!$rsbool)$this->nowerror = true;
-		if(!$rsbool && DEBUG){
+		if(!$rsbool && DEBUG && $ebo){
 			$rock	= $GLOBALS['rock'];
 			$fdir	= ''.ROOT_PATH.'/log/'.date('Y-m').'';
 			if(!file_exists($fdir))mkdir($fdir);
@@ -331,6 +331,35 @@ abstract class mysql{
 	{
 		$sql	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types` from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='".DB_BASE."' order by `ORDINAL_POSITION`";
 		return $this->getall($sql);
+	}
+	
+	/**
+		读取表结构
+	*/
+	public function gettablecolumn($table, $fields='')
+	{
+		$where 	= '';
+		if($fields!='')$where = "and `COLUMN_NAME`='$fields'";
+		$sql 	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types`,COLUMN_DEFAULT as 'defval' from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='".DB_BASE."' $where order by `ORDINAL_POSITION`";	
+		$arr 	= $this->getall($sql);
+		$rows 	= array();
+		foreach($arr as $k=>$rs){
+			$dev 	= 'NULL';
+			if(!$this->isempt($rs['defval']))$dev=$rs['defval'];
+			$str 	= "`".$rs['name']."` ".$rs['types']." DEFAULT ".$dev."";
+			
+			if(!$this->isempt($rs['explain']))$str.=" COMMENT '".$rs['explain']."'";
+			$rows[] = $str;
+		}
+		return $rows;
+	}
+	
+	public function showcreatetable($table)
+	{
+		$sql = "show create table `$table`";
+		$res= $this->query($sql);
+		list($ka,$nr) = $this->fetch_array($res, 1);
+		return $nr;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 homeitems.gong = {
-	xtype:'rockgrid',title:'信息公告<span id="inforweidutotal" class=red>(0)</span>',bbarbool:false,tablename:'infor',defaultorder:'xu,optdt desc',frame:true,padding:0,border:false,url:publicstore('infor','system'),storeafteraction:'inforgong',storebeforeaction:'beforeinforgong',
+	xtype:'rockgrid',title:'信息公告<span id="inforweidutotal" class=red></span>',bbarbool:false,tablename:'infor',defaultorder:'xu,optdt desc',frame:true,padding:0,border:false,url:publicstore('infor','system'),storeafteraction:'inforgong',storebeforeaction:'beforeinforgong',
 	storefields:'title,id,typename,istt,optdt',pageSize:6,tools:tools,closable:false,abcurl:'system,infor,gong',abcnum:'gong',
-	margin:margin,icon:gicons('sound_none'),fields:['xuhao','optdt','days','wd'],
+	margin:margin,fields:['xuhao','optdt','days','wd'],tabstitle:'信息公告',
 	columns:[{
 		text:'',dataIndex:'xuhao',width: 35
 	},{

@@ -13,6 +13,7 @@ function clickadddown(){
 	windowsss();
 	form.reset();
 	form.setVal('mnum',tree.changedata.num);
+	form.setVal('pid',tree.changedata.id);
 	form.setmsg('新增状态','blue');
 	win.setTitle('新增');
 }
@@ -39,7 +40,7 @@ function windowsss(){
 	if(!win){
 		var cans = winopt({title: '系统选项',width:300,items:{
 			id:'form_'+rand+'',border:false,
-			submitfields:'name,num,value,xu,mnum',
+			submitfields:'name,num,value,xu,mnum,pid',
 			url:publicsave(mode,dir),cancelbool:true,
 			autoScroll:false,
 			params:{int_filestype:'xu',otherfields:'optdt={now},optid={adminid}'},tablename:'option',xtype:'rockform',
@@ -53,6 +54,8 @@ function windowsss(){
 				}]
 			},{
 				fieldLabel:'',name:'mnumPost',hidden:true
+			},{
+				fieldLabel:'',name:'pidPost',hidden:true
 			},{
 				fieldLabel:''+bitian+'名称',name:'namePost',allowBlank: false
 			},{
@@ -80,7 +83,7 @@ var panelss = {
 	fistwhere:"and num='"+num+"'",
 	tbar:[{
 		text:'刷新',handler:function(){tree.storereload()},icon:gicons('reload')
-	},'需要新增下级需要有编号,编号不要随意更改','->',{
+	},'<span id="shonuj_'+rand+'"></span>需要新增下级需要有编号,编号不要随意更改','->',{
 		text:'管理下级',icon:gicons('cog'),handler:function(){clickcogal()},disabled:true,id:'adddowns_'+rand+''
 	},'-',{
 		text:'新增下级',icon:gicons('add'),handler:function(){clickadddown()},disabled:true,id:'adddown_'+rand+''
@@ -102,7 +105,9 @@ var panelss = {
 	},{
 		text:'对应值',align:'center',dataIndex:'value',width:'25%'
 	},{
-		text:'序号',align:'center',dataIndex:'xu',width:'10%'
+		text:'排序号',align:'center',dataIndex:'xu',width:'10%'
+	},{
+		text:'ID',align:'center',dataIndex:'id',width:'10%'
 	}],
 	click:function(a, v){
 		btn(false);
@@ -124,15 +129,20 @@ var panelss = {
 };
 
 var leftgrid = {
-	xtype:'rockgrid',bbarbool:false,title:'选项列表',collapsible: true,split:true,width:230,region:'west',tablename:'option',keywhere:"[A][K]mnum=[F]"+num+"[F]",pageSize:0,hideHeaders:true,defaultorder:'xu',
+	xtype:'rockgrid',bbarbool:false,title:'选项列表',collapsible: true,split:true,width:320,region:'west',tablename:'option',keywhere:"[A][K]mnum=[F]"+num+"[F]",pageSize:0,defaultorder:'xu',
 	columns:[{
 		xtype: 'rownumberer',
-		width: '15%'
+		width: 40
 	},{
-		text:'名称',width:'84%',dataIndex:'name',align:'left'
+		text:'名称',flex:1,dataIndex:'name',align:'left'
+	},{
+		text:'编号',width:100,dataIndex:'num'
+	},{
+		text:'ID',dataIndex:'id',width:60
 	}],
-	click:function(a, v){
-		tree.setparams({fistwhere:"[A][K]num[D][F]"+v.raw.num+"[F]"}, true);
+	dblclick:function(a, v){
+		$('#shonuj_'+rand+'').html('【'+v.data.name+'】');
+		tree.setparams({fistwhere:"[A][K]num[D][F]"+v.data.num+"[F]"}, true);
 	},
 	tools:[{
 		type:'refresh',handler:function(){this.up('rockgrid').storereload()},tooltip:'刷新'

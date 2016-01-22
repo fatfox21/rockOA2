@@ -395,6 +395,7 @@ class Action extends mainAction
 		$success= false;
 		$table	= $this->post('tablename_postabc');
 		$id		= (int)$this->rock->post('idPost');
+		$oldrs  = false;
 		if($table !='' ){
 			$db		= m($table);
 			$where	= "`id`='$id'";
@@ -405,6 +406,7 @@ class Action extends mainAction
 			$aftersavea			= $this->post('aftersaveaction', 'publicaftersave');
 			$beforesavea		= $this->post('beforesaveaction', 'publicbeforesave');
 			$submditfi 			= $this->post('submitfields_postabc');
+			$editrecord			= $this->post('editrecord_postabc');
 			$flownum 			= $this->post('flownum_postabc');
 			$fileid 			= $this->post('fileidPost', '0');
 			$isturn 			= (int)$this->post('isturn_postabc', '1');
@@ -489,6 +491,7 @@ class Action extends mainAction
 					}
 				}
 				if($msg == ''){
+					if($id>0 && $editrecord=='true')$oldrs = $db->getone($id);
 					if($db->record($uaarr, $where)){
 						$msg	= '处理成功';
 						$success= true;
@@ -504,6 +507,11 @@ class Action extends mainAction
 							$flow->initrecord($id);
 							$msg = $flow->submit($isturn);
 						}
+						if($oldrs){
+							$newrs = $db->getone($id);
+							c('edit')->record($table,$id, $oldrs, $newrs, 2);
+						}
+						m('todo')->setyidu($table, $id);
 					}else{
 						$msg = 'Error:'.$this->db->error();
 					}

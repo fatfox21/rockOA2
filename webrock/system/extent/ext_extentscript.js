@@ -40,9 +40,9 @@ function save()
 
 var user = {
 	xtype:'rockgrid',title:'人员列表',id:'userlist_'+rand+'',collapsible: true,
-	pageSize:0,searchtools:true,
-	tablename:'admin',bbarbool:false,storefields:'id,user,status,name,deptname',keywhere:'and status=1 and state<>5',
-	bbar:[{text:'刷新',handler:function(){uobj.storereload()}},'->'],
+	pageSize:15,searchtools:true,
+	tablename:'admin',storefields:'id,user,status,name,deptname',keywhere:'and status=1 and state<>5',
+	bbaritems:['-'],
 	columns:[{
 		xtype: 'rownumberer',
 		width: '8%'
@@ -119,7 +119,7 @@ if(type == 'um' || type == 'view'){
 		backquanxian();
 	}
 	if(type == 'um'){
-		user.bbar.push(savebtn);
+		user.bbaritems.push(savebtn);
 	}
 	panel = [user,menu];
 }
@@ -146,7 +146,9 @@ if(type == 'mu'){
 	user.width='48%';
 	menu.region='center';
 	user.columns.unshift(checkbox);
-	
+	user.pageSize=0;
+	user.bbarbool=false;
+	user.bbar = [{text:'刷新',handler:function(){uobj.storereload()}}];
 	menu.click=function(a,r){
 		if(bool)return;
 		changeid = r.data.id;

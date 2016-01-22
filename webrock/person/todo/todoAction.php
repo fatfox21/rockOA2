@@ -21,6 +21,7 @@ class todoClassAction extends Action{
 			}
 			$rows[$k]['temp_atype'] = $str;
 			$rows[$k]['xuhao'] = $k+1;
+			$rows[$k]['optdt'] = $dta->stringdt($rs['optdt']);
 		}
 		if(count($rows)==0){
 			$rows[] = array(

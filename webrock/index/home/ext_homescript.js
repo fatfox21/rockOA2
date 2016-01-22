@@ -87,9 +87,8 @@ var remenu  = Ext.widget({
 		handler: function () {
 			var a = objpan.up('grid');
 			if(a.abcnum){
-				var tit = a.title;
-				var stit = '信息公告';
-				if(tit.indexOf(stit)>-1)tit=stit;
+				var tit = a.tabstitle;
+				if(!tit)tit=a.title;
 				addtabs(tit, a.abcurl, a.abcnum);
 			}
 		}

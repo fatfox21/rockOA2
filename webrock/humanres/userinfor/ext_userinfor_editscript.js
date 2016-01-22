@@ -125,7 +125,7 @@ if(type==1){
 
 var panel= {
 	xtype:'rockform',tablename:'admin',rand:rand,
-	submitfields:jifield,labelWidth:90,
+	submitfields:jifield,labelWidth:90,editrecord:true,
 	params:{otherfields:'optdt={now},optname={admin},optid={adminid}'},autoScroll:true,
 	items:[{
 		fieldLabel:'id号',value:'0',name:'idPost',hidden:true
@@ -222,7 +222,7 @@ var panel= {
 	success:function(){
 		if(type==1)rock[params.index].isreadload = true;
 	},
-	width:720,border:false
+	width:780,border:false
 };
 
 

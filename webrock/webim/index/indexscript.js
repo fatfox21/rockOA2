@@ -291,7 +291,7 @@ var im = {
 		}
 		if(to>0){
 			this.showwemenu = $('#tixingtotalspan').rockmenu({
-				data:d,top:24,left:15,width:130,
+				data:d,top:24,left:15,width:160,
 				resultbody:function(d1, o, oi){
 					return '<img src="'+d1.icons+'" class="iconsa">'+d1.name+' <font color=#ff6600>('+d1.stotal+')</font>';
 				},

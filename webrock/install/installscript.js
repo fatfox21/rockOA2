@@ -32,6 +32,10 @@ function submitla(){
 		js.setmsg('数据库名称不能为空');
 		return;
 	}
+	if(isempt(a.perfix)){
+		js.setmsg('表名前缀不能为空');
+		return;
+	}
 	if(isempt(a.highpass)){
 		js.setmsg('超级管理密码');
 		return;

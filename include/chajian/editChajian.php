@@ -10,18 +10,18 @@ class editChajian extends Chajian{
 		获取修改记录
 		$table 表
 		$id id值
-		$narr 新数组
+		$oners 旧数组
+		$newrs 新数组
 		return string
 	*/
-	public function record($table, $id, $narr, $glx=1)
+	public function record($table, $id, $oners, $newrs, $glx=1)
 	{
 		$str	= '';
 		$db 	= m($table);
-		$oners	= $db->getone($id);
 		$this->editarr = array();
 		if($oners){
 			$farr = $this->getfield($table);
-			$str  = $this->editcont($farr, $oners, $narr);
+			$str  = $this->editcont($farr, $oners, $newrs);
 		}
 		if($glx == 1 && $str != ''){
 			$str  = '['.$this->adminname.']('.$this->rock->now.')修改：'.$str.'';

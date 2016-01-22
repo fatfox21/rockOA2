@@ -44,6 +44,7 @@ function quesngsho(){
 	bool = true;
 	$.post(js.getajaxurl('savefields',mode,dir),{id:changeid,fields:val},function(){
 		js.msg('success','保存成功');
+		grid.storereload();
 		bool=false;
 	});
 }

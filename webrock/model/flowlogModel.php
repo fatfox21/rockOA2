@@ -13,8 +13,10 @@ class flowlogClassModel extends Model
 		$urs	= $aurs	= $log	= $setrs = $logarr	= array();
 		$status 	= 0;
 		if($rs){
+			$optid 	= (int)$rs['optid'];
+			if($optid==0)$optid=$rs['uid'];
 			$urs 	= m('admin')->getone($rs['uid'], 'name,deptname');
-			$aurs 	= m('admin')->getone($rs['optid'], 'name,deptname');
+			$aurs 	= m('admin')->getone($optid, 'name,deptname');
 			$logarr	= m('flow_log')->getall("$where order by `id`");
 			$setrs 	= $this->getone("`num`='$flownum'", "`id`,`name`");
 			$status = $rs['status'];

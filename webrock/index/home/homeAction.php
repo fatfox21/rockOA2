@@ -1,6 +1,98 @@
 <?php
 class homeClassAction extends Action
 {
+	public function indextdAction()
+	{
+		$this->tpltype 	= 'html';
+		$this->tpldom  	= 'js';
+		$db 			= m('homeitems');
+		$mid 			= (int)$this->get('mid', '0');
+		$where 			= '';
+		if($mid==-1)$where 	= m('admin')->getbhmy('receid', $this->adminid);
+		$rows 			= $db->getall('`mid`=0 and `valid`=1 and `type`=0 '.$where.' order by `sort`','`id`,`num`,`title`,`ismr`,`x`,`y`,`w`,`h`,`icons`');
+		$this->smartydata['homearr'] 	= json_encode($rows);
+		$this->smartydata['mid'] 		= $mid;
+		
+		$showarr 		= array();
+		if($mid > 0){
+			$arr 	= $db->getall("`mid`='$mid'", '`type`,`x`,`y`,`w`,`h`');
+			foreach($arr as $k=>$rs){
+				$rs['id'] = $rs['type'];
+				$showarr[$rs['type']] = $rs;
+			}
+		}else if($mid == 0){
+			foreach($rows as $k=>$rs){
+				$showarr[$rs['id']] = $rs;
+			}
+		}else if($mid == -1){
+			$rows 		= $this->getpihome();
+			foreach($rows as $k=>$rs){
+				$showarr[$rs['mid']] = $rs;
+			}
+		}
+		$this->smartydata['showarr'] 	= json_encode($showarr);
+	}
+	
+	public function saveindexglAjax()
+	{
+		$s1		= $this->post('s1');
+		$s2		= $this->post('s2');
+		$mid 	= (int)$this->post('mid', '0');
+		$db 	= m('homeitems');
+		if($mid >0){
+			$sid = '0';
+			if($s1!=''){
+				$asr = explode(',', $s1);
+				foreach($asr as $asr1){
+					$a 		= explode('|', $asr1);
+					$whe 	= "`mid`='$mid' and `type`='$a[0]'";
+					$id 	= (int)$db->getmou('id', $whe);
+					if($id==0)$whe='';
+					$db->record("`x`='$a[1]',`y`='$a[2]',`w`='$a[3]',`h`='$a[4]',`mid`='$mid',`type`='$a[0]'", $whe);
+					if($id==0)$id= $this->db->insert_id();
+					$sid .= ','.$id.'';
+				}
+			}
+			$db->delete("`mid`='$mid' and `id` not in($sid)");
+		}else if($mid == 0){
+			if($s2!='')$db->update('`ismr`=0', "`id` in($s2)");
+			if($s1!=''){
+				$asr = explode(',', $s1);
+				foreach($asr as $asr1){
+					$a = explode('|', $asr1);
+					$db->update("`x`='$a[1]',`y`='$a[2]',`w`='$a[3]',`h`='$a[4]',ismr=1", "`id`='$a[0]'");
+				}
+			}
+		}else if($mid == -1){
+			$sid = '0';
+			if($s1!=''){
+				$asr = explode(',', $s1);
+				foreach($asr as $asr1){
+					$a 		= explode('|', $asr1);
+					$whe 	= "`uid`='$this->adminid' and `mid`='$a[0]'";
+					$id 	= (int)$db->getmou('id', $whe);
+					if($id==0)$whe='';
+					$db->record("`x`='$a[1]',`y`='$a[2]',`w`='$a[3]',`h`='$a[4]',`mid`='$a[0]',`uid`='$this->adminid'", $whe);
+					if($id==0)$id= $this->db->insert_id();
+					$sid .= ','.$id.'';
+				}
+			}
+			$db->delete("`uid`='$this->adminid' and `id` not in($sid)");
+		}
+	}
+	
+	private function getpihome()
+	{
+		$db 			= m('homeitems');
+		$rows 			= $db->getall("`uid`='$this->adminid and `mid`>0' ",'`mid`,`x`,`y`,`w`,`h`');	
+		if($this->db->count==0){
+			$rows 			= $db->getall('`mid`=0 and `type`=1', 'id,receid');
+			$mid 			= m('pipei')->getpipeimid($this->adminid, $rows, 'id', 7);
+			$rows 			= $db->getall("`mid`='$mid'",'`type` as mid,`x`,`y`,`w`,`h`');	
+		}
+		return $rows;
+	}
+	
 	/**
 		首页项目管理读取的
 	*/
@@ -8,106 +100,36 @@ class homeClassAction extends Action
 	{
 		$this->tpltype 	= 'html';
 		$this->tpldom  	= 'js';
-		
+		$db 			= m('homeitems');
 		$str 			= '';
-		$defitem 		= 'daib,work,wannl|todo,gong';
-		$lie1 = $lie2 = $lie3 = '';
-		$where 			= m('admin')->getbhmy('receid', $this->adminid);
-		$rows 			= m('homeitems')->getall('valid=1 '.$where.' order by `sort`');
+		$homearr		= array();
+		
+		$rows 			= $this->getpihome();
 		$path 			= ROOT_PATH.'/'.P.'/index/home/aitems/aitems_';
 		foreach($rows as $k=>$rs){
-			$num 	= $rs['num'];
+			$id 	= (int)$rs['mid'];
+			$rs1 	= $db->getone($id);
+			if(!$rs1)continue;	
+			$num 	= $rs1['num'];
 			$paths  = $path.''.$num.'.js';
-			if(!file_exists($paths))continue;
-			
+			if(!file_exists($paths))continue;	
 			$cont = file_get_contents($paths);
 			$str .= "\n\n".$cont;
-			if($rs['ismr']==1){
-				$lie = $rs['lie'];
-				if($lie>3)$lie=3;
-				if($lie<1)$lie=1;
-				if($lie==1)$lie1.=','.$num.'';
-				if($lie==2)$lie2.=','.$num.'';
-				if($lie==3)$lie3.=','.$num.'';
-			}
+			$homearr[] = array(
+				'id' 	=> $id,
+				'num' 	=> $num,
+				'title' => $rs1['title'],
+				'icons' => $rs1['icons'],
+				'x' => $rs['x'],
+				'y' => $rs['y'],
+				'w' => $rs['w'],
+				'h' => $rs['h'],
+			);
 		}
-		$lies = array();
-		if($lie1!='')$lies[] = substr($lie1, 1);
-		if($lie2!='')$lies[] = substr($lie2, 1);
-		if($lie3!='')$lies[] = substr($lie3, 1);
-		if(count($lies)>0)$defitem = join('|', $lies);
 		$this->smartydata['homeitems'] 	= $str;
-		$this->smartydata['defitem'] 	= $defitem;
+		$this->smartydata['homearr'] 	= json_encode($homearr);
 	}
 	
-
-	public function daiclAjax()
-	{
-		$rows 	= array();
-		$mwhere	= m('where');
-		$arows 	= m('flow_set')->getall('isflow=1 and `table` is not null order by `sort`', "`num`,`name`,`table`,`menunum`");
-		foreach($arows as $k=>$rs){
-			$whre	= $mwhere->getstring('flowset_'.$rs['num']);
-			$arows[$k]['where'] = $whre;
-			$to		= m($rs['table'])->rows("`status`=0 and ifnull(uid, 0)>0 and `isturn`=1 and instr(concat(',', nowcheckid, ','), ',$this->adminid,')>0 $whre");
-			if($to>0){
-				$rows[]= array(
-					'title'		=> '[待办]'.$rs['name'],
-					'stotal' 	=> $to,
-					'num'		=> $rs['num'],
-					'table'		=> $rs['table'],
-					'opentype'	=> 1,
-					'url'		=> 'check',
-					'menunum'	=> '1'
-				);
-			}
-		}
-		
-		//申请的
-		foreach($arows as $k=>$rs){
-			$whre	= $rs['where'];
-			$to		= m($rs['table'])->rows("`status`=2 and `isturn`=1 and `uid`='$this->adminid' $whre");
-			if($to>0){
-				$rows[]= array(
-					'title'		=> '[申请]'.$rs['name'],
-					'stotal' 	=> $to,
-					'num'		=> $rs['num'],
-					'table'		=> $rs['table'],
-					'opentype'	=> 0,
-					'url'		=> 'check',
-					'menunum'	=> '1'
-				);
-			}
-		}
-		
-		//未完成工作任务
-		$to		= m('work')->getwwctotal($this->adminid);
-		if($to>0){
-			$rows[]= array(
-				'title'		=> '未完成任务',
-				'stotal' 	=> $to,
-				'url'		=> 'work,work,mwc,atype=1',
-				'menunum'	=> 'workmwc'
-			);
-		}
-		
-		
-		
-		foreach($rows as $k=>$rs){
-			$rows[$k]['xuhao'] = $k+1;
-		}
-		if(count($rows)==0){
-			$rows[] = array(
-				'title'		=> '<div style="font-size:16px;height:40px;line-height:35px">无待办</div>',
-				'stotal' 	=> 0,
-				'xuhao'		=> ''
-			);
-		}
-		echo json_encode(array(
-			'totalCount'=>10,
-			'rows'	=> $rows
-		));
-	}
 
 	public function gettixingAjax()
 	{

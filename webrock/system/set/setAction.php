@@ -37,9 +37,9 @@ class setClassAction extends Action
 				for($i=0; $i<count($a)-1; $i++){
 					$sql 	= $a[$i];
 					$sql	= str_replace('`rock_', '`'.PREFIX.'', $sql);
-					$bo		= $this->db->query($sql);
-					if(!$bo)break;
-				}	
+					$bo		= $this->db->query($sql, false);
+				}
+				$bo = true;
 				if($bo){
 					$this->option->setval('systeminit', '1');
 				}else{

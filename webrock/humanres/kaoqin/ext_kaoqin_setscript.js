@@ -57,7 +57,7 @@ var panel=[{
 		grid2.searchgoto("and mid='"+sid+"'");
 	},
 	formparams:{
-		submitfields:'name,sort,type,stime,dt,etime',autoScroll:false,
+		submitfields:'name,sort,type,stime,etime',autoScroll:false,
 		params:{int_filestype:'sort,type',otherfields:'optdt={now}'},
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true

@@ -242,48 +242,6 @@ js.move=function(id,event){
 	document.onmousemove=_Move
 	document.onmouseup=_Up;
 }
-js.countdownadd=function(dt,spci){
-	var d1=js.now('time',dt);
-	var d2=js.now('time',js.servernow)+spci*1000;
-	var jg=d1-d2;
-	if(jg<0)jg=0;
-	if(jg<=0)return false;
-	var xiaoshi,t,s,f,m,hm;
-	xiaoshi=jg/1000/3600;//总小时
-	t=parseInt(xiaoshi/24);//天
-	xiaoshi=jg-24*3600*1000*t;
-	s=parseInt(xiaoshi/1000/3600);//时
-	xiaoshi=xiaoshi-s*3600*1000;
-	f=parseInt(xiaoshi/1000/60);
-	xiaoshi=xiaoshi-f*1000*60;
-	m=parseInt(xiaoshi/1000);if(m<10)m='0'+m;
-	hm=parseInt(Math.random()*99);
-	if(hm<10)hm='0'+hm;
-	if(f<10)f='0'+f;
-	var arr=[t,s,f,m,hm];
-	return arr;
-}
-js.countdt	= [];
-js.countdown=function(oi,spaa,spci){
-	clearTimeout(js.countdowntime);
-	if(!get(''+spaa+'second'))return false;
-	if(!spci)spci=0;
-	var dt=js.countdt[oi];
-	var arr=this.countdownadd(dt,spci);
-	if(arr){
-		js.countdowntime=setTimeout("js.countdown("+oi+",'"+spaa+"',"+(spci+1)+")",1000);
-	}else{
-		arr=[0,0,0,'00','00'];
-		if(typeof(countdownextent)=='function')countdownextent(spaa);//计时完成后执行函数
-	}
-	var miao=arr[3];
-	var d,h,m,s;
-	if(get(''+spaa+'day'))get(''+spaa+'day').innerHTML=''+arr[0]+'天';
-	if(get(''+spaa+'hour'))get(''+spaa+'hour').innerHTML=''+arr[1]+'时';
-	if(get(''+spaa+'minute'))get(''+spaa+'minute').innerHTML=''+arr[2]+'分';
-	get(''+spaa+'second').innerHTML=''+miao+'秒';
-	//get(''+spaa+'millisecond').innerHTML=''+arr[4]+'';
-}
 js.setdev=function(val,dev){
 	var cv	= val;
 	if(isempt(cv))cv=dev;
@@ -295,12 +253,40 @@ js.upload=function(call,can){
 	js.uploadrand	= js.now('YmdHis')+parseInt(Math.random()*999999);
 	var url = 'mode/upload/upload.php?callback='+call+'&upkey='+js.uploadrand+'&p='+PROJECT+'';
 	for(var a in can)url+='&'+a+'='+can[a]+'';
-	js.open(url,500,300);
+	js.open(url,500,300,'uploadopenla');
 	return false;
 }
 js.downshow=function(id){
 	js.open('mode/upload/uploadshow.php?id='+id+'&p='+PROJECT+'',600,350);
 	return false;
+}
+js.downupdel=function(sid, said, o1){
+	if(sid>0){
+		if(!confirm('确定要删除文件吗？'))return;
+		$.get(js.getajaxurl('delfile','upload','public',{id:sid}));
+	}
+	if(o1)$(o1).parent().remove();
+	var o = $('#view_'+said+'');
+	var to= $('#count_'+said+'');
+	var o1 = o.find('span'),s1='';
+	for(i=0;i<o1.length;i++)$(o1[i]).html(''+(i+1));
+	to.html('');
+	if(i>0)to.html('<font style="font-size:11px" color="#555555">文件:'+i+'</font>');
+	o1 = o.find('font');
+	for(i=0;i<o1.length;i++)s1+=','+$(o1[i]).html();
+	if(s1!='')s1=s1.substr(1);
+	$('#'+said+'-inputEl').val(s1);
+}
+js.downupshow=function(a, showid){
+	var s = '',i=0,s1='';
+	var o = $('#view_'+showid+'');
+	for(i=0; i<a.length; i++){
+		s='<div onmouseover="this.style.backgroundColor=\'#f1f1f1\'" onmouseout="this.style.backgroundColor=\'\'" style="padding:4px 5px;border-bottom:1px #eeeeee solid"><span>'+(i+1)+'</span><font style="display:none">'+a[i].id+'</font>、<a class="a" onclick="return js.downshow('+a[i].id+',\''+a[i].fileext+'\')" href="javascript:">'+a[i].filename+'</a> ('+a[i].filesizecn+')';
+		s+=' <a class="a" temp="dela" onclick="return js.downupdel('+a[i].id+',\''+showid+'\', this)" href="javascript:">×</a>';
+		s+='</div>';
+		o.append(s);
+	}
+	js.downupdel(0, showid, false);
 }
 js.getajaxurl=function(a,m,d,can){
 	if(!can)can={};if(!m)m=MODE;if(!d)d=DIR;if(d=='null')d='';
@@ -317,27 +303,6 @@ js.formatsize=function(size){
 	var e	= Math.floor(Math.log(size)/Math.log(1024));
 	var fs	= size/Math.pow(1024,Math.floor(e));
 	return js.float(fs)+' '+arr[e];
-}
-function AddFavorite(sURL, sTitle)
-{
-    try{
-        window.external.addFavorite(sURL, sTitle);
-    }catch (e){
-        try{
-            window.sidebar.addPanel(sTitle, sURL, "");
-        }catch (e){
-            alert("加入收藏失败，请使用Ctrl+D进行添加");
-        }
-    }
-	return false;
-}
-function SetHome(obj,vrl){
-	try{
-		obj.style.behavior='url(#default#homepage)';obj.setHomePage(vrl);
-	}catch(e){
-		alert("无法设置，请手动设置");
-	}
-	return false;
 }
 js.getformdata=function(na){
 	var da	={};

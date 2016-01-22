@@ -5,6 +5,19 @@ function xiang(){
 	var month = getcmp('month_'+rand+'').getValue();
 	addtabs('['+o.changedata.name+']的考勤','person,kaoqin,my,uid='+uid+',month='+month+'','kaoqin_'+uid+'');
 }
+var reloafenxi = function(){
+	var month = getcmp('month_'+rand+'').getValue();
+	var url = js.getajaxurl('fenximonth','kaoqin','taskrun',{month:month});
+	js.msg('wait','分析中...');
+	$.get(url, function(da){
+		if(da=='success'){
+			js.msg('success', '分析成功');
+			rock[index].storereload();
+		}else{
+			js.msg('msg', '分析失败');
+		}
+	});
+};
 var panel={
 	xtype:'rockgrid',tablename:'admin',searchtools:true,exceltitle:'考勤统计',defaultorder:'sort',
 	storeafteraction:'totalafter',url:publicstore(mode,dir),firstsearchbool:true,storefields:'deptname,id,`name`',
@@ -25,6 +38,8 @@ var panel={
 		return '';
 	},
 	tbar:['->',{
+		text:'重新分析当月',handler:reloafenxi
+	},'-',{
 		text:'详情',handler:xiang
 	}],
 	columns:[{

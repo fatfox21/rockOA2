@@ -5,13 +5,21 @@ class optionClassAction extends Action
 	public function publicbeforesave($table, $arr, $id)
 	{
 		$num 	= $arr['num'];
+		$mnum 	= $arr['mnum'];
+		$pid 	= '';
 		$msg	= '';
+		$db 	= m($table);
 		if(!$this->isempt($num)){
 			$tota = m($table)->rows("`num`='$num' and `id`<>'$id'");
 			if($tota > 0)$msg='编号['.$num.']已存在';
 		}
 		if($num == 'rock')$msg='[rock]编号不允许使用';
-		return array('msg'=>$msg);
+		if(!$this->isempt($mnum))$pid = $db->getmou('id', "`num`='$mnum'");
+		$rows['pid'] = $pid;
+		return array(
+			'msg'	=> $msg,
+			'rows' 	=> $rows
+		);
 	}
 	
 	public function delAjax()
@@ -37,13 +45,15 @@ class optionClassAction extends Action
 	
 	public function savelistAjax()
 	{
-		$mnum	= $this->rock->post('mnum');
-		$total	= (int)$this->rock->post('total');
+		$mnum	= $this->post('mnum');
+		$total	= (int)$this->post('total');
+		$pid 	= '';
 		$msg	= 'success';
 		$db		= m('option');
+		$pid 	= $db->getmou('id', "`num`='$mnum'");
 		for($i=0; $i<$total; $i++){
-			$id		= (int)$this->rock->post('id_'.$i.'');
-			$num	= $this->rock->post('num_'.$i.'');
+			$id		= (int)$this->post('id_'.$i.'');
+			$num	= $this->post('num_'.$i.'');
 			$num	= str_replace('{rand}', rand(10,9999), $num);
 			if(!$this->isempt($num)){
 				if($db->rows("`num`='$num' and `id`<>'$id'") >0 ){
@@ -54,9 +64,10 @@ class optionClassAction extends Action
 			$where	= "`id`='$id'";
 			if($id == 0)$where='';
 			$db->record(array(
-				'name'	=> $this->rock->post('name_'.$i.''),
-				'value'	=> $this->rock->post('value_'.$i.''),
+				'name'	=> $this->post('name_'.$i.''),
+				'value'	=> $this->post('value_'.$i.''),
 				'mnum'	=> $mnum,
+				'pid'	=> $pid,
 				'num'	=> $num,
 				'xu'	=> $i,
 				'optid'	=> $this->adminid,

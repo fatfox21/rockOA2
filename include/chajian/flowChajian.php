@@ -540,7 +540,6 @@ class flowChajian extends Chajian{
 			'm' => 'flow',
 			'd' => 'taskrun',
 			'a' => 'view',
-			'ajaxbool' => 'html',
 			'uid' => $nuid,
 			'modenum' => $this->flownum,
 			'table' => $this->table,
@@ -675,7 +674,7 @@ class flowChajian extends Chajian{
 	{
 		$msg = '';
 		if($this->rs[$this->statusfields]==1)$msg = '已完成不允许删除';
-		if($msg == '' && $this->uid != $this->adminid)$msg='不是您的单据';
+		if($msg == '' && $this->uid != $this->adminid && $this->rs['optid'] != $this->adminid)$msg='不是您的单据';
 		if($msg == ''){
 			$this->mdb->update("`$this->statusfields`=5", $this->id);
 			$this->dbrule->delete($this->where);
@@ -694,7 +693,7 @@ class flowChajian extends Chajian{
 	{
 		$msg = '';
 		if($this->rs[$this->statusfields]==1)$msg = '已完成不用追加';
-		if($msg == '' && $this->uid != $this->adminid)$msg='不是您的单据';
+		if($msg == '' && $this->uid != $this->adminid && $this->rs['optid'] != $this->adminid)$msg='不是您的单据';
 		if($msg == ''){
 			$this->mdb->update("`$this->statusfields`=0", $this->id);
 			$this->addlog(array(

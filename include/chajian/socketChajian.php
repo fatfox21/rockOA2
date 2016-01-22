@@ -19,6 +19,50 @@ class socketChajian extends Chajian
 	}
 	
 	/**
+		向服务器发送命令
+	*/
+	public function sendshell($cont='')
+	{
+		if($cont=='')return 'send is null';
+		$secont = 'shell@@@'.$cont.'';
+		$msg = $this->getsocketobj();
+		if($msg != 'success')return $msg;
+		$msg 	= '';
+		@$bola	= socket_write($this->socket, $secont, strlen($secont));
+		if(!$bola){
+			$msg = 'send fail';
+		}else{	
+			while(@$out = socket_read($this->socket, 8192)){
+				$msg.=$out;
+			}
+		}
+		socket_close($this->socket);
+		$this->socket = null;
+		if($msg==$secont)$msg='success';
+		return $msg;
+	}
+	
+	private function getsocketobj()
+	{
+		if(!function_exists('socket_create'))return 'not open socket';
+		$this->inithost();
+		$host 		= $this->serverip;  
+		$port 		= $this->serverport;
+		$msg		= '';
+		if($this->isempt($host) || $port ==0)return 'not set';
+		if($this->socket == null){
+			@$this->socket 	= socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+			if($this->socket==null)$msg = 'not use';
+			if($msg == ''){
+				@$connection = socket_connect($this->socket, $host, $port);
+				if($connection==false)$msg = 'not connect';
+			}
+		}
+		if($msg != '' || $this->socket ==null)return $msg;
+		return 'success';
+	}
+	
+	/**
 		推送提醒
 	*/
 	public function send($sendid, $receid, $conarr)
@@ -42,23 +86,8 @@ class socketChajian extends Chajian
 	{
 		$len = count($this->daisend);
 		if($len <= 0)return;
-		$host 		= $this->serverip;  
-		$port 		= $this->serverport;
-		$msg		= '';
-		if($this->isempt($host) || $port ==0)return;
-		if($this->socket == null){
-			if($this->isempt($host) || $port ==0)return 'sorry not';
-
-			@$this->socket 	= socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-			if($this->socket==null)$msg = '无法使用';
-
-			if($msg == ''){
-				@$connection = socket_connect($this->socket, $host, $port);
-				if($connection==false)$msg = '无法连接';
-			}
-		}
-		if($msg != '' || $this->socket ==null)return $msg;
-		
+		$msg		= $this->getsocketobj();
+		if($msg != 'success')return $msg;
 		$senar = $recear = $strar = array();
 		foreach($this->daisend as $k=>$rs){
 			$s = '';
@@ -79,7 +108,7 @@ class socketChajian extends Chajian
 		$secont.= join('$$$', $strar);
 		
 		@$bola	= socket_write($this->socket, $secont, strlen($secont));
-		if(!$bola)$msg = '无法发送';
+		if(!$bola)$msg = 'send fail';
 		
 		socket_close($this->socket);
 		$this->socket = null;

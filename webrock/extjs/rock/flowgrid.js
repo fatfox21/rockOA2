@@ -21,7 +21,8 @@ Ext.define('Ext.rock.flowgrid',{
 			iconqz:'',
 			rand:js.getrand(),
 			delurl:js.getajaxurl('flowdel','flow',''),
-			tbarcenter:[]
+			tbarcenter:[],
+			bbaritems:[]
 		});
 		me.url += '&flownum='+me.flownum+'';
 		me.delurl += '&flownum='+me.flownum+'';
@@ -33,6 +34,10 @@ Ext.define('Ext.rock.flowgrid',{
 		},'-',{
 			text:'删除',icon:gicons(''+me.iconqz+'delete'),disabled:true,handler:function(){me._del()},id:'del_'+me.rand+''
 		}];
+		var bbaritems=['->',{
+			text:'追加说明',icon:gicons('edit'),tooltip:'单据未处理完成都可以追加说明，上传相关文件等',disabled:true,id:'zhuijia_'+me.rand+'',handler:function(){this.up('grid')._zhuijiagrid()}
+		}];
+		
 		me.tbar = me.tbar.concat(tbass);
 		me.columns.push({
 			text:'查看',dataIndex:'viewopt',width:60,xtype:'actioncolumn',notexcel:true,
@@ -49,12 +54,12 @@ Ext.define('Ext.rock.flowgrid',{
 			xtype:'combo',width:100,value:'',store:js.arraystr('|-所有状态-,0|待处理,1|处理通过,2|处理不通过'),editable:false,listeners:{change:function(o){me.setparams({statusabc:o.value});}}
 		});
 		me.click = function(a, v,item,index ,e){
-			me.flow.iseditdel(v,'edit','del');
+			me.flow.iseditdel(v,'edit','del','zhuijia');
 			getcmp('view_'+me.rand+'').setDisabled(false);
 			me.clickgrid(a,v,item,index ,e);
 		}
 		me.beforeload = function(){
-			me.flow.iseditdel(false,'edit','del');
+			me.flow.iseditdel(false,'edit','del','zhuijia');
 			try{getcmp('view_'+me.rand+'').setDisabled(true);}catch(e){}
 		}
 		me.load = function(a,b,c,d,e,f){
@@ -72,6 +77,7 @@ Ext.define('Ext.rock.flowgrid',{
 		}else{
 			me.tbar.push('-');
 			me.tbar.push(viewbtn);
+			me.bbaritems = me.bbaritems.concat(bbaritems);
 		}
 		me._formparams={
 			border:false,
@@ -102,7 +108,38 @@ Ext.define('Ext.rock.flowgrid',{
 		var url = js.getajaxurl('$view','flow','taskrun',{uid:adminid,mid:a.id,modenum:this.flownum,table:this.tablename,jmbool:true});
 		js.open(url, 800);
 	},
-	
+	_zhuijiagrid:function(){
+		var me = this;
+		if(!me.changedata.id)return;
+		var tits = '追加说明';
+		if(!me._aawin){
+			var cans = winopt({title:tits,width:500,icon:gicons('edit'),items:{
+				border:false,tablename:'flow_log',submittext:'确定',url:js.getajaxurl('flowzhuijia','flow',''),
+				xtype:'rockform',autoScroll:false,cancelbool:true,submitfields:'explain',
+				items:[{
+					fieldLabel:'id号',value:'0',name:'idPost',hidden:true
+				},{
+					fieldLabel:'',value:'',name:'flownumPost',hidden:true
+				},{
+					fieldLabel:''+bitian+'追加说明',name:'explainPost',allowBlank: false,xtype:'textareafield',height:60
+				},uploadwindows.fields()],
+				success:function(){
+					me._aawin.close();
+					me.storereload();
+					js.msg('success','追加成功');
+				}
+			}});
+			me._aawin = Ext.create('Ext.Window',cans);
+			me.destroypanel.push(me._aawin);
+		}
+		me._aawin.show();
+		var form = me._aawin.child('rockform');
+		form.reset();
+		form.setVal('id', me.changedata.id);
+		form.setVal('flownum', me.flownum);
+		form.getField('fileid').clearData();
+		me._aawin.setTitle(tits);
+	},
 	openView:function(){
 		this._view();
 	},
@@ -124,7 +161,7 @@ Ext.define('Ext.rock.flowgrid',{
 		this._opentals('新增',0);
 	},
 	_opentals:function(tit, sid){
-		addtabs('['+tit+']'+this.formtitle,'flow,apply,'+this.flownum+',flownum='+this.flownum+',tablename='+this.tablename+',opentype='+this.opentype+',mid='+sid+',gridid='+this.getId()+'', ''+this.flownum+'_'+sid+'');
+		addtabs('['+tit+']'+this.formtitle,'flow,apply,'+this.flownum+',flownum='+this.flownum+',tablename='+this.tablename+',opentype='+this.opentype+',mid='+sid+',gridid='+this.getId()+'', ''+this.flownum+'_'+sid+'',{menutype:'cy'});
 	},
 	_edit:function(){
 		this._opentals('编辑',this.changedata.id);
@@ -161,12 +198,5 @@ Ext.define('Ext.rock.flowgrid',{
 			me.destroypanel=[me._win];
 		}
 		me.formwinshow(me.form, me);
-	},
-	setReload:function(bo){
-		this.reloadbool = bo;
-	},
-	isReload:function(){
-		if(this.reloadbool)this.storereload();
-		this.setReload(false);
 	}
 });

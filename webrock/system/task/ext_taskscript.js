@@ -1,7 +1,45 @@
-
+var dt = js.now();
 var  panel = {
 	xtype:'rockgridform',tablename:'task',celleditbool:true,formtitle:'任务',iconqz:'time_',
 	url:publicstore(mode,dir),storeafteraction:'taskaftershow',
+	tbar:['->',{
+		text:'重启任务',handler:function(){
+			this.up('grid')._taskrestart(this);
+		}
+	},'-',{
+		text:'运行',handler:function(){
+			this.up('grid')._taskrun(this);
+		}
+	},'-'],
+	_taskrestart:function(o1){
+		var url = js.getajaxurl('taskrestart', mode,dir);
+		js.msg('wait','重启中...');
+		o1.setDisabled(true);
+		$.get(url, function(da){
+			o1.setDisabled(false)
+			if(da=='success'){
+				js.msg('success','重启成功');
+			}else{
+				js.msg('msg','重启失败:'+da+'');
+			}
+		});
+	},
+	_taskrun:function(){
+		var d   = this.changedata,mid,a1;
+		mid = d.id;
+		if(!mid)return;
+		a1 = d.url.split(',');
+		var url = js.getajaxurl(a1[1],a1[0],'taskrun',{mid:mid});
+		js.msg('wait','运行中...');
+		$.get(url, function(da){
+			if(da=='success'){
+				js.msg('success', '运行成功');
+				rock[index].storereload();
+			}else{
+				js.msg('msg', '运行失败');
+			}
+		});
+	},
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -21,11 +59,18 @@ var  panel = {
 			return v;
 		}
 	},{
-		text:'最后状态',dataIndex:'lastrunzt',width:80,search:true,boxdata:js.arraystr('#888888|未运行,green|成功,red|失败'),renderer:renderbox
+		text:'最后状态',dataIndex:'lastrunzt',width:90,search:true,renderer:function(v,m,r){
+			if(!v)v=0;
+			var a = js.arraystr('#888888|未运行,green|成功,red|失败');
+			var s = '<font color='+a[v][0]+'>'+a[v][1]+'</font>';
+			var dts = r.data.lastrundt;
+			if(dts&&r.data.status==1)if(dts.indexOf(dt)<0)s+='<br><font color=red>今日未运行</font>';
+			return s;
+		}
 	},{
 		text:'说明',dataIndex:'explain',autowidth:true,search:true,editor:'textfield'
 	},{
-		text:'提醒通知',dataIndex:'todocont',width:80,autowidth:true,align:'left'
+		text:'提醒通知',dataIndex:'todocont',flex:1,align:'left'
 	}],
 	formadd:function(){
 		getcmp('ratels_'+rand+'').reset();

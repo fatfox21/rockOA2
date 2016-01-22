@@ -2,13 +2,12 @@
 /**
 	系统总配置文件，不可删除(否则只能呵呵)，可改$config 参数
 */
-
 @session_start();
 //date_default_timezone_set("PRC");
 header('Content-Type:text/html;charset=utf-8');
 define('ROOT_PATH',str_replace('\\','/',dirname(dirname(__FILE__))));
 define('HOST', $_SERVER['HTTP_HOST']);
-define('DEBUG', true);
+define('DEBUG', false);
 include_once(''.ROOT_PATH.'/include/rockFun.php');
 include_once(''.ROOT_PATH.'/include/Chajian.php');
 include_once(''.ROOT_PATH.'/include/class/rockClass.php');
@@ -21,7 +20,7 @@ if(!defined('PROJECT'))define('PROJECT', $rock->get('p', 'webrock'));
 $config		= array(
 	'title'		=> 'ROCKOA',
 	'url'		=> 'http://'.HOST.'/rock/',
-	'urly'		=> 'http://www.xh829.com/',
+	'urly'		=> 'http://127.0.0.1:90/rock/', //远程在线升级URL地址
 	'db_host'	=> 'localhost',
 	'db_user'	=> 'root',
 	'db_pass'	=> '',

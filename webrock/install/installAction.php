@@ -19,11 +19,13 @@ class installClassAction extends Action{
 		$qom 		= $this->post('qom');
 		$url 		= $this->post('url');
 		$highpass 	= $this->post('highpass');
+		$paths 		= 'webrock/webrockConfig.php';
 		
 		$msg  		= '';
 		
 		if($dbtype=='mysql' && !function_exists('mysql_connect'))exit('未开启mysql扩展模块');
 		if($dbtype=='mysqli' && !class_exists('mysqli'))exit('未开启mysqli扩展模块');
+		//if(!is_writable(ROOT_PATH.'/'.$paths))exit('无法写入目录:webrock/');
 		
 		//1
 		$db1 		= import($dbtype);
@@ -78,7 +80,7 @@ return array(
 	'db_drive'	=> '$dbtype',	//操作数据库驱动
 	'install'	=> true			//已安装，不要去掉啊
 );";
-		$this->rock->createtxt('webrock/webrockConfig.php', $txt);
+		$this->rock->createtxt($paths, $txt);
 		@file_get_contents('http://www.xh829.com/index.php?m=index&a=install&version='.VERSION.'&ajaxbool=true');//我们用来统计安装数量而已
 		echo 'success';
 	}

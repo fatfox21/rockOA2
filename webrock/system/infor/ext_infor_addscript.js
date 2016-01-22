@@ -41,7 +41,7 @@ var panel= {
 		},{
 			fieldLabel:''+bitian+'主题',name:'titlePost',allowBlank: false
 		},{
-			fieldLabel:'内容',name:'contentPost',xtype:'htmleditor',height:220
+			fieldLabel:'内容',name:'contentPost',xtype:'kindeditor',height:220,id:'content_'+rand+''
 		},
 		uploadwindows.fields({allowBlank:false}),{
 			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
@@ -57,6 +57,9 @@ var panel= {
 			}]
 		}
 	],
+	submitcheck:function(){
+		getcmp('content_'+rand+'').submitValue();
+	},
 	success:function(){
 		if(params.index){
 			rock[params.index][1].isreadload = true;

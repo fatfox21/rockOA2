@@ -12,7 +12,7 @@ function boackindie(){
 	}
 }
 var panel= {
-	width:750,xtype:'rockform',
+	width:750,xtype:'rockform',editrecord:true,
 	submitfields:'title,typename,state,startdt,enddt,fuze,fuzeid,runuser,runuserid,progress,viewuser,viewuserid,remark',border:false,
 	params:{int_filestype:'progress',otherfields:'optdt={now},optname={admin},optid={adminid}',add_otherfields:'adddt={now}'},tablename:'projectm',labelWidth:100,
 	editjudgewhere:"id={id} and `state`!='已完成'",

@@ -64,11 +64,11 @@ var panel=[{
 			}
 		}
 	},{
-		text:'启用',align:'center',dataIndex:'status',width:'7%',renderer:renderbox
+		text:'启用',align:'center',dataIndex:'status',width:'7%',renderer:renderbox,editor:{xtype:'combo',store:js.arraystr(),editable:false}
 	},{
-		text:'验证',align:'center',dataIndex:'ispir',width:'7%',renderer:renderbox
+		text:'验证',align:'center',dataIndex:'ispir',width:'7%',renderer:renderbox,editor:{xtype:'combo',store:js.arraystr(),editable:false}
 	},{
-		text:'展开',align:'center',dataIndex:'isopen',width:'7%',renderer:renderbox
+		text:'展开',align:'center',dataIndex:'isopen',width:'7%',renderer:renderbox,editor:{xtype:'combo',store:js.arraystr(),editable:false}
 	},{
 		text:'审核菜单',align:'center',dataIndex:'ischeck',width:'10%',renderer:renderbox,menuDisabled:true
 	},{

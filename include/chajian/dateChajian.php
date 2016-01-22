@@ -1,6 +1,14 @@
 <?php 
 class dateChajian extends Chajian
 {
+	public $now;
+	public $date;
+	
+	protected function initChajian()
+	{
+		$this->now 		= $this->rock->now;
+		$this->date 	= $this->rock->date;
+	}
 
 	public function formatdt($dt='',$format='Y-m-d H:i:s')
 	{
@@ -166,5 +174,44 @@ class dateChajian extends Chajian
 		$d	= $a[$m-1];
 		if($y%4 == 0 && $m==2 && $y%100 != 0)$d++;
 		return $d;
+	}
+	
+	public function cnweek($date)
+	{
+		$arr = array('日','一','二','三','四','五','六');
+		return $arr[date('w', strtotime($date))];
+	}
+	
+	/**
+		计算返回当前间隔分析：今天 10:20
+	*/
+	public function stringdt($dttime, $type='G H:i')
+	{
+		$s 	= '';$H=$s=$i='00';
+		$dts= explode(' ', $dttime);
+		$yms= explode('-', $dts[0]);
+		$Y 	= $yms[0];$m = $yms[1];$d = $yms[2];
+		$jg = $this->datediff('d', $dts[0], $this->date);
+		$G	= '';
+		if($jg==0)$G='今天';
+		if($jg==1)$G='昨天';
+		if($jg==2)$G='前天';
+		if($jg==-1)$G='明天';
+		if($jg==-2)$G='后天';
+		$A = $G;
+		if($G=='')$G=substr($dts[0], 5);
+		if($A=='')$A=$dts[0];
+		$w	 = $this->cnweek($dts[0]);
+		if(isset($dts[1])){
+			$sjs = explode(':', $dts[1]);
+			$H 	 = $sjs[0];
+			if(isset($sjs[1]))$i = $sjs[1];
+			if(isset($sjs[2]))$s = $sjs[2];
+		}
+		$str = str_replace(
+			array('A','G','H','i','s','w','Y','m','d'),
+			array($A,$G,$H,$i,$s,$w, $Y, $m, $d),
+		$type);
+		return $str;
 	}
 }                                                                                                                                                            
