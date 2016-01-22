@@ -5,9 +5,9 @@ class whereClassAction extends Action{
 	public function downexcelAjax()
 	{
 		$jm		= c('jm', true);
-		$fields	= $jm->unescape($this->rock->get('fields'));
-		$title	= $jm->unescape($this->rock->get('title'));
-		$cont	= $jm->unescape($this->rock->get('content'));
+		$fields	= $this->get('fields','', 1);
+		$title	= $this->get('title','', 1);
+		$cont	= $this->get('content','', 1);
 		
 		$farr	= explode(',', $fields);
 		$hearArr= array();

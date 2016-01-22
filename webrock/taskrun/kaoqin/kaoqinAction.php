@@ -33,9 +33,6 @@ class kaoqinClassAction extends Action{
 		$kq 	= m('kq');
 		$allarr = array();
 		
-		//请假和外出读取
-		
-		
 		for($i=0; $i<=$jg; $i++){
 			if($i>0)$sdt = $dtobj->adddate($sdt,'d', 1);
 			$sdtss = strtotime($sdt);
@@ -63,9 +60,10 @@ class kaoqinClassAction extends Action{
 							'uid'	=> $uid,
 							'optname'=> $this->adminname,
 							'optdt'	=> $this->now,
-							'iswork'=> $iswork
+							'iswork'=> $iswork,
+							'emiao'	=> ''
 						);
-						$time = '';$state = '未打卡';$remark = '';
+						$time = $remark = $states = $stiems ='';$state = '未打卡';
 						$zcarr= array();//读取正常时间段
 						foreach($cog['rows'] as $k2=>$cog2){
 							if($cog2['name']=='正常')$zcarr = $cog2;
@@ -84,20 +82,27 @@ class kaoqinClassAction extends Action{
 								$_lens = count($jilsh);
 								if($_lens > 0){
 									$jlsj	= $jilsh[0];
-									if($cog2['qtype']==1)$jlsj	= $jilsh[$_lens-1];
+									$stiems	= $st1;
+									if($cog2['qtype']==1){
+										$jlsj	= $jilsh[$_lens-1];
+										$stiems	= $et1;
+									}	
 									$time 	= $jlsj[1];
 									$state 	= $cog2['name'];
 									break;
 								}
 							}
 						}
-						$states = '';
 						if($iswork==1 && $state !='正常')$states = $this->getstates($zcarr, $sdt, $uid);
 						$sarr['time'] 	= $time;
 						$sarr['remark'] = $remark;
 						$sarr['state'] 	= $state;
-						$sarr['states'] = $states;
-						
+						$sarr['states'] = $states;	
+						if($state!='正常' && $time!=''){//计算迟到早退秒数
+							$emiao = $jlsj[3] - $stiems;
+							if($emiao<0)$emiao=0-$emiao;
+							$sarr['emiao'] = $emiao;	
+						}
 						$where 	= "`dt`='$sdt' and `uid`='$uid' and `ztname`='$ztname'";
 						$sid	= (int)$db1->getmou('id', $where);
 						if($sid == 0)$where='';
@@ -194,15 +199,14 @@ class kaoqinClassAction extends Action{
 	
 	public function testAjax()
 	{
-		//$api = c('apiCloud', true);
-		//echo $api->send('1','enenen');
-		//$json = "{'abc':'1','aa':'2'}";
-		///$a = json_decode($json);
-		//print_r($a);
-		//echo $json;
-		//echo m('flowlog')->getextview($this->adminid,'','a.');
-		//$kq = m('kq');
-		//echo $kq->isworkdt('2015-08-01', 1);
+		$api = c('apiCloud', true);
+		echo $api->send('1', array(
+			'type' 		=> 'user',
+			'receid' 	=> '1',
+			'sendid' 	=> '5',
+			'cont'		=> '哈哈哈哈哈哈哈哈'.time().'fewe',
+			'optdt' 	=> $this->now
+		),'REIM有一条未读信息');
 	}
 	
 	

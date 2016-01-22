@@ -43,7 +43,7 @@ var im = {
 		this.loadinit();
 	},
 	loadinit:function(){
-		var url = js.getajaxurl('loadinit','index','webim');
+		var url = js.getajaxurl('loadinit','index','webim',{aid:adminid});
 		$.get(url, function(da){
 			var a = js.decode(da);
 			mainarr = a;
@@ -64,7 +64,6 @@ var im = {
 		$('#userzong').html(i);
 	},
 	showgroup:function(a, oi){
-		var aimg = ['groups','duihua','shezhi'];
 		var toa  = [0,0,0];
 		var s = '',i,
 			o = $('#userlist');
@@ -73,7 +72,7 @@ var im = {
 			lx	= a[i].type;
 			grouparr[a[i].id] = a[i];
 			if(lx==oi){
-				s	= '<div onclick="openrecord(\'group\', '+a[i].id+')"><img src="images/im/'+aimg[lx]+'.png" align="absmiddle">'+a[i].name+'</div>';
+				s	= '<div onclick="openrecord(\'group\', '+a[i].id+')"><img src="'+a[i].face+'" align="absmiddle">'+a[i].name+'</div>';
 				o.append(s);
 			}
 			toa[lx]++;
@@ -131,7 +130,9 @@ var im = {
 			}
 			if(a[i].zt=='0')ids+=','+a[i].id;
 			cont = jm.uncrypt(a[i].cont);
-			if(!isempt(a[i].url))cont+='<br>[A]打开地址&gt;&gt;|'+a[i].url+'[/A]';
+			if(!isempt(a[i].url)){
+				cont+='<br><a href="javascript:" onclick="return openurlla(\''+a[i].url+'\')">打开地址&gt;&gt;</a>';
+			}
 			cont= strformat.showqp(lex,nas,a[i].optdt, cont,'', fase);
 			this.addcont(cont);
 		}

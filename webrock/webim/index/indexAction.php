@@ -3,26 +3,21 @@ class indexClassAction extends Action{
 	
 	public function beforeAction()
 	{
-		$this->adminid		= (int)$this->getsession('imadminid',0);
-		$this->adminuser	= $this->getsession('imadminuser');
-		$this->adminname	= $this->getsession('imadminname');
+		$this->adminid		= (int)$this->get('aid','0');
 	}
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
+		$uid			= $this->jm->gettoken('uid');
+		$this->adminid	= $uid;
 		$db		= m('admin');
-		$this->smartydata['adminid']	= $this->adminid;
-		$this->smartydata['adminname']	= $this->adminname;
-		
-		$ars	= $db->getone($this->adminid, '`name`,`id`,`face`,`ranking`');
+		$ars	= $db->getone("`id`='$uid'", '`name`,`id`,`face`,`ranking`');
+		if(!$ars)exit('sorry!');
 		$this->smartydata['ars'] 		= $ars;
 		$this->smartydata['aface']		= $this->rock->repempt($ars['face'], 'images/im/user100.png');
 	}
-	
-	public function websocketAction()
-	{
-		
-	}
+
 	
 	//定时更新我在线时间
 	private function updatemy()
@@ -76,15 +71,8 @@ class indexClassAction extends Action{
 	//读取我所在的群和讨论组
 	public function getmygroup()
 	{
-		$ids	= '0';
-		$idrsa	= m('im_groupuser')->getall("uid='$this->adminid'",'gid');
-		foreach($idrsa as $k=>$rs){
-			$ids.=','.$rs['gid'];
-		}
-		$rows 	= m('im_group')->getall("`id`>0 and ((`type`=2) or (`type` in(0,1) and `id` in($ids) ) ) order by `sort` ",'`type`,`name`,`id`');
-		foreach($rows as $k=>$rs){
-			//$urs[$k]['face'] = $this->rock->repempt($rs['face'], 'images/im/user100.png');
-		}
+		$facarr = array('images/im/groups_blue.png','images/im/duihua_blue.png','images/im/shezhi_blue.png');
+		$rows 	= m('reim')->getgroup($this->adminid, $facarr);
 		return $rows;
 	}
 	
@@ -98,7 +86,7 @@ class indexClassAction extends Action{
 			'type'			=> 1,
 			'name'			=> $val,
 			'createid'		=> $aid,
-			'createname'	=> $this->adminname,
+			'createname'	=> '',
 			'createdt'		=> $now
 		));
 		$gid	= $this->db->insert_id();
@@ -140,53 +128,21 @@ class indexClassAction extends Action{
 	*/
 	public function getwdarr()
 	{
-		$db 	= m('im_mess');
-		$rows 	= array();
-		$mid	= $this->adminid;
-		
-		$whes	= $this->rock->dbinstr('receuid', $mid);
-		
-		$arr 	= $db->getall("`zt`=0 and receid='$mid' and `type`='user' group by `sendid`", "`sendid`,count(1) as stotal");
-		foreach($arr as $k=>$rs){
-			$rows[] = array(
-				'type' 	=> 'user',
-				'id'	=> $rs['sendid'],
-				'stotal'=> $rs['stotal'],
-			);
-		}
-		
-		//组织结构
-		/*
-		$arr 	= $db->getall("`type`='dept' and id in(select mid from [Q]im_messzt where uid='$mid') group by `receid`", "`receid`,count(1) as stotal");
-		foreach($arr as $k=>$rs){
-			$rows[] = array(
-				'type' 	=> 'dept',
-				'id'	=> $rs['receid'],
-				'stotal'=> $rs['stotal'],
-			);
-		}*/
-		
-		// 讨论组 群
-		$arr 	= $db->getall("`type`='group' and $whes and id in(select mid from [Q]im_messzt where uid='$mid') group by `receid`", "`receid`,count(1) as stotal");
-		foreach($arr as $k=>$rs){
-			$rows[] = array(
-				'type' 	=> 'group',
-				'id'	=> $rs['receid'],
-				'stotal'=> $rs['stotal'],
-			);
-		}
-		
-		//系统信息的
-		$whes	= $this->rock->dbinstr('receuid', $mid);
-		$arr 	= $db->getall("`type`='system' and $whes and id in(select mid from [Q]im_messzt where uid='$mid') group by `receid`", "`receid`,count(1) as stotal");
-		foreach($arr as $k=>$rs){
-			$rows[] = array(
-				'type' 	=> 'system',
-				'id'	=> $rs['receid'],
-				'stotal'=> $rs['stotal'],
-			);
-		}
-		
+		$rows = m('reim')->getwdarr($this->adminid);
 		return $rows;
+	}
+	
+	
+	
+	
+	public function deptAction()
+	{
+		$this->smartydata['adminid'] = $this->adminid;
+		$this->smartydata['groupid'] = $this->get('gid');
+	}
+	public function loaddeptAjax()
+	{
+		$arr['darr'] 	= m('dept')->getdept(0, 'user');
+		echo json_encode($arr);
 	}
 }

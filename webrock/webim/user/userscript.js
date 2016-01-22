@@ -176,12 +176,7 @@ var guser = {
 		var o = $(o1);
 		var lx= o.attr('tools');
 		if(lx=='image' || lx=='file'){
-			if(upload.bool){
-				js.msg('msg','太快了?请稍后在试!');
-				return;
-			}
-			upload.uptype = lx;
-			get('fileid').click();
+			upload.changefile(lx);
 		}
 		if(lx=='clear'){
 			$('#listcontent').html('');

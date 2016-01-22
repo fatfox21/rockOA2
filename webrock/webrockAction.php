@@ -255,6 +255,11 @@ class Action extends mainAction
 		$total	= $arr['total'];
 		$rows	= $arr['rows'];
 		$rudb 	= m('flow_course');
+		if($flownum != ''){
+			foreach($rows as $k=>$rs){
+				$rows[$k]['statustext'] = $rudb->getstatuss($table, $rs, '<br>');
+			}
+		}
 		
 		//读取审核按钮
 		if($opentype == 1){
@@ -268,11 +273,10 @@ class Action extends mainAction
 			}
 		}
 		
-		$ztarr	= $rudb->getcourseact($flownum);
+		
 		$bacarr	= array(
 			'totalCount'=> $total,
-			'rows'		=> $rows,
-			'ztarr'		=> $ztarr
+			'rows'		=> $rows
 		);
 		
 		
@@ -381,7 +385,6 @@ class Action extends mainAction
 	/**
 		公共保存页面
 	*/
-
 	public function publicsaveAjax()
 	{
 		$msg	= '';
@@ -406,6 +409,14 @@ class Action extends mainAction
 			if($submditfi !=''){
 				$fields	= explode(',', $submditfi);
 				$uaarr	= array();
+				if($flownum != ''){
+					$uaarr['optdt'] = $this->now;
+					$uaarr['uid'] 	= $this->post('uidPost', $this->adminid);
+					$uaarr['status']= '0';
+					$uaarr['optid']	= $this->adminid;
+					$uaarr['optname']= $this->adminname;
+					if($id==0)$uaarr['applydt']= $this->date;
+				}
 				foreach($fields as $field){
 					$val	= $this->post(''.$field.'Post');
 					$type	= $this->post(''.$field.'_fieldstype');
@@ -419,18 +430,13 @@ class Action extends mainAction
 					}
 					if($boa)$uaarr[$field]=$val;
 				}
-				if($flownum != ''){
-					$uaarr['optdt'] = $this->now;
-					$uaarr['uid'] 	= $this->post('uidPost', $this->adminid);
-					$uaarr['status']= '0';
-				}
 				$otherfields		= $this->post('otherfields');
 				$addotherfields		= $this->post('add_otherfields');
 				$editotherfields	= $this->post('edit_otherfields');
 				if($id == 0)$otherfields.=','.$addotherfields.'';
 				if($id > 0)$otherfields.=','.$editotherfields.'';
 				if($otherfields != ''){
-					$otherfields = str_replace(array('{now}','{date}','{admin}','{adminid}'),array($this->now,date('Y-m-d'),$this->adminname,$this->adminid),$otherfields);
+					$otherfields = str_replace(array('{now}','{date}','{admin}','{adminid}'),array($this->now,$this->date,$this->adminname,$this->adminid),$otherfields);
 					$fiarsse = explode(',', $otherfields);
 					foreach($fiarsse as $ffes){
 						if($ffes!=''){
@@ -453,6 +459,7 @@ class Action extends mainAction
 						if(isset($befa['rows'])){
 							foreach($befa['rows'] as $bk=>$bv)$uaarr[$bk]=$bv;
 						}
+						if(is_string($befa))$ss = $befa;
 					}	
 				}
 				
@@ -494,7 +501,7 @@ class Action extends mainAction
 							$msg = $flow->submit($isturn);
 						}
 					}else{
-						$msg = 'Error:'.mysql_error();
+						$msg = 'Error:'.$this->db->error();
 					}
 				}
 			}

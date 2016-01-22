@@ -1,5 +1,4 @@
 <?php
-if(isset($_GET['p']))define('PROJECT', $_GET['p']);
 include_once('../../config/config.php');
 $now		= $rock->now();
 $action		= $rock->get('action');
@@ -30,7 +29,7 @@ if($action == 'xml'){
 	$savetype	= $rock->post('savetype','temp');
 	$filename	= $rock->post('filename');
 	$filetype	= $rock->post('filetype');
-	$fileext	= $rock->post('fileext');
+	$fileext	= trim($rock->post('fileext'));
 	$filesize	= $rock->post('filesize');
 	$filesizecn	= $rock->post('filesizecn');
 	$newfile	= $rock->post('newfile');
@@ -38,7 +37,6 @@ if($action == 'xml'){
 	$savepath	= $rock->post('savepath');//另存路径
 	$thumbnail	= $rock->post('thumbnail');
 }
-
 
 $smkdir		= '../../upload/'.$mkdir.'';
 if(!file_exists($smkdir))mkdir($smkdir);
@@ -54,15 +52,19 @@ fwrite($fc,$sendcont);
 fclose($fc);
 $id	= 0;
 if($sendci==$maxsend){
-	$boolc	= $rock->contain('|jpg|gif|png|jpeg|bmp|swf|','|'.$fileext.'|');
-	$boexe	= $rock->contain('|php|asp|js|exe|aspx|cs|jsp|dll|html|htm|html|shtml|vbs|java|','|'.$fileext.'|');
-	$boolc1	= $rock->isempt($savepath);//保存路径
+	
+	$optid	= (int)$rock->session(QOM.'adminid',0);
+	$imgext	= '|jpg|gif|png|jpeg|bmp|';
+	$boolc	= $rock->contain($imgext, '|'.$fileext.'|');
+	$ztfile	= $imgext.'doc|docx|xls|xlsx|ppt|pptx|pdf|swf|rar|zip|txt|gz|wav|mp3|wma|chm|';
+	$botxtl	= $rock->contain($ztfile,'|'.$fileext.'|');
+
+	$boolc1	= $rock->isempt($savepath);
+	if(!$boolc1 && $optid==0)$boolc1 = true;
 
 	$izztbo = false;
-	if($boolc || $savetype=='file')$izztbo = true;
-	if($boexe)$izztbo = false;
-	if(!$boolc1)$izztbo = true;
-	
+	if(!$boolc1 || $ztfile)$izztbo = true;
+
 	if($izztbo){
 		$content	= file_get_contents($tempfile);
 		$temp1file	= ''.$allfile.'.'.$fileext.'';
@@ -110,17 +112,16 @@ if($sendci==$maxsend){
 		'adddt'	=> $now,
 		'valid'	=> 1,
 		'filename'	=> $filename,
-		//'filetype'	=> $filetype,
 		'fileext'	=> $fileext,
 		'filesize'	=> $filesize,
 		'filesizecn'=> $filesizecn,
 		'filepath'	=> $filepath,
-		'optid'		=> 0,
+		'optid'		=> $optid,
 		'optname'	=> '',
 		'ip'		=> $rock->ip,
 		'web'		=> $rock->web
 	);
-	$db	= import('mysql');
+	$db	= import(DB_DRIVE);
 	$db->record(''.PREFIX.'file',$arr);
 	$id	= $db->insert_id();
 }

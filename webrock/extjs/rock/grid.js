@@ -40,8 +40,9 @@ Ext.define('Ext.rock.grid',{
 	sortname:'',
 	sortdir:'',
 	exceltitle:'',
-	excelsetcolumns:false,//导出不能设置列
-	firstsearchbool:false,//第一次搜索
+	excelsetcolumns:false,
+	firstsearchbool:false,
+	celleditautosave:true,
 	initComponent: function(){
 		var me		= this;
 		Ext.applyIf(this,{
@@ -105,7 +106,39 @@ Ext.define('Ext.rock.grid',{
 		me.createsoutbar();
 		me.callParent();
 	},
-	
+	insertData:function(da){
+		var csns = {id:'rand_'+js.getrand()+''},a = this.columns,i,dval;
+		for(i=0; i<a.length; i++){
+			if(a[i].dataIndex){
+				dval = a[i].defaultvalue;
+				if(!dval)dval='';
+				csns[a[i].dataIndex]=dval;
+			}
+		}
+		Ext.apply(csns, da);
+		var tocount	= this.store.data.items.length;
+		this.store.insert(tocount,csns);
+	},
+	removeRows:function(){
+		var sm = this.getsel();
+		if(sm.length>0)this.store.remove(sm[0]);
+	},
+	getjsonData:function(lxs,qz){
+		var a = this.store.data.items,
+			len = a.length, i, d=[],d1={},f,val;
+		for(i=0;i<len;i++)d.push(a[i].data);
+		if(!qz)qz='';
+		if(lxs=='params'){
+			d1['count'+qz] = len;
+			for(i=0;i<len;i++)for(f in d[i]){
+				val = d[i][f];
+				if(f=='id'&&val.indexOf('rand_')==0)val='0';
+				d1[''+f+'_'+i+''+qz+''] = val;
+			}	
+			return d1;
+		}
+		return d;
+	},
 	afterFirstLayout: function() {
         this.callParent(arguments);
         this.changefiels();
@@ -189,7 +222,7 @@ Ext.define('Ext.rock.grid',{
 		arr = arr.concat(this.tbar);
 		this.tbar = arr;
 	},
-	
+	celleditchange:function(){},
 	savecelledit:function(e){
 		var me = this;
 		if(me.savebool || !me.celleditbool)return;
@@ -197,7 +230,9 @@ Ext.define('Ext.rock.grid',{
 			neval = e.record.data[field],
 			data  = {fieldname:field,value:neval,id:e.record.data.id,oldvalue:me.editold};
 		if(data.value == data.oldvalue)return;
-		me.changfiledval(data, '保存');
+		var bo1 = me.celleditchange(field,neval,data.oldvalue,e);
+		if(typeof(bo1)=='boolean'&&!bo1)return;
+		if(me.celleditautosave)me.changfiledval(data, '保存');
 	},
 	changfiledval:function(cans, msg, backa, check){
 		var me = this;
@@ -266,6 +301,10 @@ Ext.define('Ext.rock.grid',{
 	_fieldsdata:{},
 	paramsbase:{},
 	loadbool:false,
+	setkeyWhere:function(ws,bo){
+		this.keywhere = ws;
+		this.setparams({keywhere:ws}, bo);
+	},
 	_createstore:function(){
 		var me		= this;
 		var com,i,fields=['id'],a=this.columns,params;

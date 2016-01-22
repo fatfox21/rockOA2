@@ -164,7 +164,7 @@ var panel= [{
 	},{
 		fieldLabel:'编号',name:'numPost'
 	},{
-		fieldLabel:'<font color=red>*</font>进程名称',name:'namePost',allowBlank: false,xtype:'optioncombo',optionmnum:'flowcoursename_'+setid+''
+		fieldLabel:'<font color=red>*</font>进程名称',name:'namePost',editable:true,allowBlank: false,xtype:'optioncombo',optionmnum:'flowcoursename_'+setid+''
 	},{
 		fieldLabel:'指定类型',name:'atypePost',value:'all',editable:false,xtype:'combo',store:[['all','所有人员'],['dept','指定部门/人']],listeners:{change:function(o){
 			var o1= form.field('atypeidPost'),

@@ -133,7 +133,8 @@ var guser = {
 					type:d.type,
 					now:d.optdt,
 					messid:d.id,
-					gid:d.gid
+					gid:d.gid,
+					gname:receivename
 				});
 			}
 		}catch(e){}
@@ -181,12 +182,7 @@ var guser = {
 		var o = $(o1);
 		var lx= o.attr('tools');
 		if(lx=='image' || lx=='file'){
-			if(upload.bool){
-				js.msg('msg','太快了?请稍后在试!');
-				return;
-			}
-			upload.uptype = lx;
-			get('fileid').click();
+			upload.changefile(lx);
 		}
 		if(lx=='clear'){
 			$('#listcontent').html('');
@@ -216,42 +212,30 @@ var guser = {
 		return false;
 	},
 	yaoqing:function(){
-		var o = js.xpbody();
-		var w = 250,h=200;
-		var l=(winWb()-w-10)*0.5,t=(winHb()-h-50)*0.5;
-		var s = '<div id="yaoqingla" style="position:absolute;background-color:#ffffff;left:'+l+'px;width:'+w+'px;top:'+t+'px;z-index:90;box-shadow:0px 0px 10px rgba(0,0,0,0.3);padding:15px">';
-		s+='<div>请输入邀请人员姓名(多人,分开)：</div>';
-		s+='<div style="padding:10px"><input id="keylasou" style="line-height:26px;height:30px;border:1px #cccccc solid;background-color:white;width:200px;padding:0px 5px"></div>';
-		s+='<div style="padding:10px"><a class="webbtn" onclick="return false" id="yaoqingbtn" href="javascript:">确定</a>&nbsp;<span id="msgview_yaoqing"></span></div>';
-		s+='</div>';
-		$('body').append(s);
-		o.click(function(){
-			$('#yaoqingla').remove();
-			o.remove();
-		});
-		$('#yaoqingbtn').click(function(){
-			var v = get('keylasou').value;
-			if(v==''){
-				js.setmsg('没有输入','red', 'msgview_yaoqing');
-				return;
-			}
-			var url = js.getajaxurl('yaoqing','group','webim', {gid:receiveid});
-			js.setmsg('邀请中...','', 'msgview_yaoqing');
-			$.post(url,{val:v}, function(da){
-				if(da.indexOf('success')==0){
-					var uids = da.replace('success','');
-					js.msg('success','邀请成功');
-					$('#yaoqingla').remove();
-					o.remove();
-					if(uids != ''){
-						sendstr(uids, 'groupupdate');//群更新
-						location.reload();
-					}
-				}else{
-					js.setmsg(da,'red', 'msgview_yaoqing');
-				}
-			});
-		});
+		var url = URL+js.getajaxurl('$dept','index','webim',{aid:adminid,gid:receiveid});
+		windowopen('组织结构','', url, 500,400);
 		return false;
+	},
+	yaoqingok:function(s){
+		if(isempt(s))return;
+		js.msg('wait','邀请中...');
+		var url = js.getajaxurl('yaoqinguid','group','webim', {gid:receiveid,aid:adminid});
+		$.post(url,{val:s}, function(da){
+			if(da.indexOf('success')==0){
+				var uids = da.replace('success','');
+				js.msg('success','邀请成功');
+				if(uids != ''){
+					sendstr(uids, 'groupupdate');//发送群更新
+					location.reload();
+				}
+			}else{
+				js.msg('msg',da);
+			}
+		});
 	}
+}
+
+//邀请
+function backyaoqing(str){
+	guser.yaoqingok(str)
 }

@@ -24,10 +24,20 @@
 			<form name="myform">
 			<table width="100%">
 				<tr><td  colspan="2" height="40" align="center"><font color=#888888>数据库采用是<font color=red>mysql</font>，请先配置好本地</font></td></tr>
+				
+				
+				<tr>
+					<td align="right">操作数据库方法：</td>
+					<td><select class="input" name="dbtype"><option value="mysqli">mysqli(推荐)</option><option value="mysql">mysql</option></select></td>
+				</tr>
+				<tr><td height="8"></td></tr>
+				
 				<tr>
 					<td align="right" width="160px"><font color=red>*</font>数据库地址：</td>
 					<td><input class="input" name="host" value="localhost"></td>
 				</tr>
+				
+				
 				
 				<tr><td height="8"></td></tr>
 				<tr>
@@ -37,8 +47,8 @@
 				
 				<tr><td height="8"></td></tr>
 				<tr>
-					<td align="right">密码：</td>
-					<td><input name="pass" class="input" value="666666"> <font color=#888888>您的数据库密码</font></td>
+					<td align="right">数据库密码：</td>
+					<td><input name="pass" class="input" value=""> <font color=#888888>您的数据库密码</font></td>
 				</tr>
 				
 				<tr><td height="8"></td></tr>

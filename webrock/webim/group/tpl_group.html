@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>{$da.grs.name}</title>
+<title><?=$da['grs']['name']?></title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -9,37 +9,38 @@
 <meta name="format-detection" content="telephone=no"/>
 <meta name="format-detection" content="email=no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
-<link rel="stylesheet" href="{$da.p}/css/webimcss.css" />
-<link rel="stylesheet" href="{$da.p}/css/webimcssa.css" />
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcss.css" />
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcssa.css" />
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
 <script type="text/javascript" src="js/base64-min.js"></script>
-<script type="text/javascript" src="{$da.p}/{$da.d}{$da.m}/{$da.m}script.js"></script>
-<script type="text/javascript" src="{$da.p}/{$da.d}index/upload.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?><?=$da['m']?>/<?=$da['m']?>script.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?>index/upload.js"></script>
 <script>
-js.path = '{$da.path}';
-js.servernow = '{$da.now}';
-var adminid 	= '{$da.ars.id}',
-	adminname 	= '{$da.ars.name}',
-	adminface	= '{$da.aface}',
-	receiveid 	= '{$da.grs.id}',
-	receivename = '{$da.grs.name}',
-	receiveface	= '{$da.gface}',
-	receivetype	= '{$da.grs.type}',
-	infortype 	= '{$da.types}',
-	wdarr		= {$da.wdarr};
+js.path = '<?=$da['path']?>';
+var URL = '<?=URL?>';
+js.servernow = '<?=$da['now']?>';
+PROJECT		 = '<?=$da['p']?>';
+var adminid 	= '<?=$da['ars']['id']?>',
+	adminname 	= '<?=$da['ars']['name']?>',
+	adminface	= '<?=$da['aface']?>',
+	receiveid 	= '<?=$da['grs']['id']?>',
+	receivename = '<?=$da['grs']['name']?>',
+	receiveface	= '<?=$da['gface']?>',
+	receivetype	= '<?=$da['grs']['type']?>',
+	infortype 	= '<?=$da['types']?>',
+	wdarr		= <?=$da['wdarr']?>;
 </script>
 </head>
 <body style="overflow:hidden" scroll="no">
-<form style="display:none" name="fileform"><input type="file" id="fileid"></form>
 <table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
 	<td colspan="3">
 		<div class="gusertop gradient" style="height:40px;overflow:hidden">
-			<div class="div01"><img style="background-color:#ffffff;border-radius:2px" src="{$da.gface}" height=24 width=24></div>
-			<div class="div02">{$da.grs.name}</div>
-			<div class="div03" {if $da.grs.type neq 1}style="display:none"{/if}><a href="javascript:" class="white"  onclick="return guser.yaoqing()">＋邀请</a> &nbsp; <a class="white" href="javascript:" onclick="return guser.exit()">退出</a>&nbsp;</div>
+			<div class="div01"><img style="background-color:#ffffff;border-radius:2px" src="<?=$da['gface']?>" height=24 width=24></div>
+			<div class="div02"><?=$da['grs']['name']?></div>
+			<div class="div03" <?php if($da['grs']['type'] !=1){?>style="display:none"<?php }?>><a href="javascript:" class="white"  onclick="return guser.yaoqing()">＋邀请</a> &nbsp; <a class="white" href="javascript:" onclick="return guser.exit()">退出</a>&nbsp;</div>
 		</div>
 	</td>
 </tr>
@@ -97,11 +98,11 @@ var adminid 	= '{$da.ars.id}',
 						
 					</div>
 				</div>
-				<div style="background-color:#eeeeee;overflow:hidden;height:30px;line-height:30px">&nbsp; 成员({$da.total.1}/{$da.total.0})</div>
+				<div style="background-color:#eeeeee;overflow:hidden;height:30px;line-height:30px">&nbsp; 成员(<?=$da['total'][1]?>/<?=$da['total'][0]?>)</div>
 				<div class="userlist" id="grouplistview" style="overflow:auto">
-					{foreach from=$da.uarr item=rs}
-					<div {if $rs.imonline neq 1}class="offline"{/if}><img src="{$rs.face}" align="absmiddle">{$rs.name}</div>
-					{/foreach}
+					<?php foreach($da['uarr'] as $k=>$rs){?>
+					<div <?php if($rs['imonline']!=1){?>class="offline" <?php }?>><img src="<?=$rs['face']?>" align="absmiddle"><?=$rs['name']?></div>
+					<?php }?>
 				</div>
 			</div>
 		</div>

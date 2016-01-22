@@ -16,7 +16,7 @@ class kaoqinClassAction extends Action{
 		$rows	= array();
 		
 		$ssras	= array();
-		$ssra	= $this->db->getall("SELECT ztname,time,state,states,dt,iswork FROM `[Q]kq_anay` where `dt`>='$start' and `dt`<='$end' and `uid`='$uid' order by dt,sort");
+		$ssra	= $this->db->getall("SELECT ztname,time,state,states,dt,iswork,emiao FROM `[Q]kq_anay` where `dt`>='$start' and `dt`<='$end' and `uid`='$uid' order by dt,sort");
 		foreach($ssra as $k=>$rs)$ssras[$rs['dt']][] = $rs;
 		$tojarr = array();
 		for($i=1; $i<=$max; $i++){
@@ -27,16 +27,19 @@ class kaoqinClassAction extends Action{
 			$dt		= ''.$month.'-'.$oi.'';
 			if(isset($ssras[$dt])){
 				foreach($ssras[$dt] as $k1=>$rs){
-					$iswork	= $rs['iswork'];
-					$state 	= $rs['state'];
-					$states = $rs['states'];
+					$iswork	= $rs['iswork']; $state = $rs['state']; $states = $rs['states']; $emiao = $rs['emiao'];
 					if(!isset($tojarr[$state]))$tojarr[$state] = 0;
 					
 					$str.=''.$rs['ztname'].'：';
 					$s11 = '';
 					$s11.=''.$state.'';
-					if(!$this->isempt($rs['time']))$s11.='('.$rs['time'].')';
-					
+					if(!$this->isempt($rs['time'])){
+						if(!$this->isempt($emiao)){
+							$ois = floor((int)$emiao / 60);
+							$s11.=''.$ois.'分钟';
+						}
+						$s11.='('.$rs['time'].')';
+					}
 					$col1 = '';
 					if($state!='正常'){
 						if($this->isempt($states))$col1='red';
@@ -107,7 +110,7 @@ class kaoqinClassAction extends Action{
 	public function adddkjlAjax()
 	{
 		$ip = $this->ip;
-		if($this->contain($ip,'127.0.0') || $this->contain($ip,'196.168.')){
+		if($this->contain($ip,'127.0.0') || $this->contain($ip,'192.168.')){
 			$finge	= m('admin')->getmou('finge', "`id`='$this->adminid'");
 			m('kq_dkjl')->insert(array(
 				'finge'	=> $finge,

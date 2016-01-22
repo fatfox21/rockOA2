@@ -3,26 +3,7 @@ class loginClassAction extends Action{
 	
 	public function defaultAction()
 	{
-		$formtype = $this->get('formtype');
-		if($formtype == 'form')
-		{
-			$adminuser  = $this->get('adminuser');
-			$us 		= m('admin')->getone("`user`='$adminuser'",'`id`,`name`,`user`');
-			if($us){
-				$this->setsess($us);
-				header('location:?m=index&d=webim');
-				exit();
-			}
-		}
-	}
-	
-	private function setsess($us)
-	{
-		$this->rock->savesession(array(
-			QOM.'imadminid'		=> $us['id'],
-			QOM.'imadminname'	=> $us['name'],
-			QOM.'imadminuser'	=> $us['user'],
-		));
+		
 	}
 	
 	public function checkAjax()
@@ -50,16 +31,13 @@ class loginClassAction extends Action{
 		if($msg==''){
 			$adminid = $us['id'];
 			m('admin')->update("`imonline`=1",$adminid);
-			$this->setsess($us);
-			$msg='success';
-		}else{
+			$keystr = $this->jm->strrocktoken(array(
+				'm' => 'index',
+				'd' => 'webim',
+				'uid'=>$adminid
+			));
+			$msg='success@@@'.$keystr.'';
 		}
 		echo $msg;
-	}
-	
-	public function exitAction()
-	{
-		$this->rock->clearsession(''.QOM.'imadminid,'.QOM.'imadminname,'.QOM.'imadminuser');
-		$this->rock->location('?m=login&d=webim');
 	}
 }

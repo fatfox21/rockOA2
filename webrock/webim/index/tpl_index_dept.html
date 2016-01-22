@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>组织结构</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="email=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="js/base64-min.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?><?=$da['m']?>/<?=$da['m']?>_deptscript.js"></script>
+<script>
+js.path = '<?=$da['path']?>';
+var URL = '<?=URL?>';
+var adminid = '<?=$da['adminid']?>';
+var groupnum= 'windowgroup<?=$da['groupid']?>';
+</script>
+</head>
+<body style="overflow:hidden" scroll="no">
+<table height="20" width="100%" cellspacing="0" cellpadding="0"><tr>
+	<td width="50%">
+		<div class="gradient" style="height:30px;line-height:28px">&nbsp; 组织结构</div>
+		<div id="deptlist" style="overflow:auto" class="userlist">
+			<span style="padding:20px;display:block" align="center"><img src="images/mloading.gif"></span>
+		</div>
+	</td>
+	<td style="border:1px #dddddd solid;border-width:0px 5px;padding:0px 5px">
+		<button onclick="im.clearla()" type="button">清空</button>
+	</td>
+	<td width="50%">
+		<div class="gradient" style="height:30px;line-height:28px">&nbsp; 已添加人员</div>
+		<div id="changeuserlist" style="overflow:auto" class="userlist"></div>
+	</td>
+</tr></table>
+
+<div style="height:36px; background-color:#eeeeee">
+	<div align="right" style="padding:9px">
+		<a class="webbtn" onclick="return false" id="AltC" href="javascript:">确定</a>
+	</div>
+</div>
+
+</body>
+</html>

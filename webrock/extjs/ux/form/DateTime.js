@@ -45,7 +45,7 @@ Ext.define('Ext.ux.form.DateTime', {
 				hideLabel:true,readOnly:true
 			},
 			items: [{
-				xtype:'tbtext',text:'&nbsp;时间'
+				xtype:'tbtext',text:'&nbsp;'
 			},{
 				maxValue:23,maxValues:23,flex:1,value:H,disabled:me.format.indexOf('H')<0,itemId:'shi',listeners:listeners('shi')
 			},{
@@ -160,10 +160,10 @@ Ext.define('Ext.ux.form.DateTime', {
 			
 		me._miaoshid = sid;	
 		$('#'+sid+'').remove();	
-		var s = '<div id="'+sid+'" style="border:1px #cccccc solid;left:2px;bottom:30px;position:absolute;padding:5px;border:1px #cccccc solid;background-color:#ffffff; text-align:left;z-index:2;box-shadow:0px 0px 2px #cccccc;">';
+		var s = '<div id="'+sid+'" style="border:1px #cccccc solid;left:2px;bottom:30px;position:absolute;padding:5px;border:1px #cccccc solid;background-color:#ffffff; text-align:left;font-size:12px;z-index:2;box-shadow:0px 0px 2px #cccccc;">';
 		for(i=a.minValues;i<=a.maxValues;i++){
 			ai	= this._xy10(i);
-			s1	= '<a onclick="return false" lx="'+lx+'" style="margin:3px">'+ai+'</a>';
+			s1	= '<a onclick="return false" lx="'+lx+'" style="margin:3px;color:#111111">'+ai+'</a>';
 			if(i<a.minValue || i>a.maxValue)s1='<span style="color:#cccccc;margin:3px">'+ai+'</span>';
 			if(ai==val)s1='<span style="color:#ff0000;margin:3px">'+ai+'</span>';
 			s+= s1;

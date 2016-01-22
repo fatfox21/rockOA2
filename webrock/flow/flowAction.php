@@ -62,9 +62,7 @@ class flowClassAction extends Action
 		echo json_encode($arr);
 	}
 	
-	/**
-		单据删除
-	*/
+
 	public function flowdelAjax()
 	{
 		$id		= (int)$this->post('id', '0');
@@ -75,9 +73,25 @@ class flowClassAction extends Action
 		if($msg==''){
 			$flow = f($flownum);
 			$flow->initrecord($id);
-			$flow->flowdelete($sm);
+			$msg = $flow->flowdelete($sm);
 		}
 		if($msg=='')$msg='success';
 		echo $msg;
+	}
+	
+	public function flowzhuijiaAjax()
+	{
+		$id		= (int)$this->post('idPost', '0');
+		$flownum= $this->request('flownumPost');
+		$sm		= $this->post('explainPost');
+		$fileid	= $this->post('fileidPost');
+		$msg	= '';
+		if($id==0 || $flownum=='')$msg='sorry;';
+		if($msg==''){
+			$flow = f($flownum);
+			$flow->initrecord($id);
+			$msg = $flow->addzhuijia($sm, $fileid);
+		}
+		$this->backmsg($msg, '追加成功');
 	}
 }

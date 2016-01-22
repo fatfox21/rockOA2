@@ -7,10 +7,17 @@ class leaveClassAction extends Action{
 		$msg 	= '';
 		$start 	= $arr['stime'];
 		$end 	= $arr['etime'];
+		$qjkind	= $arr['qjkind'];
 		$db		= m($table);
 		$sdf 	= $db->rows("`uid`='".$arr['uid']."' and ((`stime`<='$start' and `etime`>='$start') or (`stime`<='$end' and `etime`>='$end') or (`stime`>='$start' and `etime`<='$end')) and `kind`='请假' and `id`<>'$id' and `status`<>5 ");
 		if($sdf > 0){
 			$msg = '该时间段已申请过了';
+		}
+		$tsjia	= '事假,病假';
+		if($msg == '' && !$this->contain($tsjia, $qjkind)){
+			$sy1	= m('kaoqin')->getqjsytime($arr['uid'], $qjkind, $start, $id);
+			if($sy1<0)$sy1=0;
+			if($arr['totals']>$sy1)$msg = '剩余['.$qjkind.']'.$sy1.'小时,不能申请';
 		}
 		return array('msg'=>$msg);
 	}

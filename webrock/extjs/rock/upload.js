@@ -448,6 +448,7 @@ Ext.define('Ext.rock.upload',{
 	},
 	
 	_resetdata:false,
+	_olduipd:'',
 	fields:function(cans){
 		var me	= this;
 		var can = js.apply({
@@ -464,6 +465,9 @@ Ext.define('Ext.rock.upload',{
 					me._loadfile(this.id, tab, sid, noup);
 				},setNoup:function(bo){
 					me._setNoup(this.id, bo);
+				},clearData:function(){
+					me._fieldsstore[this.id].data=[];
+					me.resetdata(true);
 				}
 			}]
 		};
@@ -475,13 +479,15 @@ Ext.define('Ext.rock.upload',{
 	_upfields:function(o1, bid){
 		var me = this;
 		var oli= me.can.backid;
-		if(this._fieldsstore[bid].noup)return;//不能上传
+		if(this._fieldsstore[bid].noup)return;
+		if(me._olduipd != bid)me.resetdata(true);
 		uploadwindows.show({
 			callback:function(a,o){
 				me._backshow(a,o.can.backid);
 			},backid:bid
 		});
 		if(me._resetdata)me.loadfilestore(bid);
+		me._olduipd = bid;
 		return false;
 	},
 	_fieldsstore:{},

@@ -4,8 +4,8 @@
 */
 class apiCloudChajian extends Chajian{
 	
-	private $AppID 		= 'AppID';
-    private $AppKey 	= 'AppKey';
+	private $AppID 		= 'A6984534540961';
+    private $AppKey 	= '730CED46-6BA5-608E-E685-E364D8BBEA25';
     private $AppPath 	= 'https://p.apicloud.com/api/push/message';
     private	$timeOut 	= 30;
         
@@ -46,12 +46,24 @@ class apiCloudChajian extends Chajian{
 	/**
 		type – 消息类型，1:消息 2:通知
 	*/
-	public function send($touid, $mess, $type=1)
+	public function send($touid, $conarr, $title=TITLE, $type=1)
 	{
+		$s = '';
+		if(is_array($conarr)){
+			foreach($conarr as $k=>$v){
+				$s .= ','.$k.':"'.$v.'"';
+			}
+			$s = substr($s, 1);
+			$s = '{'.$s.'}';
+		}else{
+			$s = $conarr;
+		}
+		if($s=='')return 'not cont';
+		if(strlen($s)>168)return 'over 168 zi';
 		$da = array(
 			'userIds' 	=> $touid,
-			'title'		=> TITLE,
-			'content'	=> $mess,
+			'title'		=> $title,
+			'content'	=> $s,
 			'type'		=> $type,
 			'platform'	=> 2, //0:全部平台，1：ios, 2：android
 		);

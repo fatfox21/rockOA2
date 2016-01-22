@@ -43,7 +43,7 @@ function m($name)
 	$inbo 是否初始化
 	$param1,2,参数 
 */
-function c($name, $inbo=false, $param1='', $param2='')
+function c($name, $inbo=true, $param1='', $param2='')
 {
 	$class	= ''.$name.'Chajian';
 	$path	= ''.ROOT_PATH.'/include/chajian/'.$class.'.php';

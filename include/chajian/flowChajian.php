@@ -33,13 +33,14 @@ class flowChajian extends Chajian{
 		$this->initflow();
 	}
 	
-	protected function initflow(){}		//初始化流程加载
-	protected function initdachange(){} //初始化数据加载
+	protected function initflow(){}
+	protected function initdachange(){}
 	protected function flowcheckname($num){return '';}
 	protected function flowsubmit(){}
 	protected function flowcheckjudge(){}
 	protected function flownothrough(){}
 	protected function flowthrough($sm){}
+	protected function contentother(){}
 	
 	
 	
@@ -82,6 +83,7 @@ class flowChajian extends Chajian{
 	{
 		$this->id	= $id;
 		$this->rs	= $this->mdb->getone("`id`='$id'");
+		$this->where= "`table`='$this->table' and `mid`='$this->id'";
 		if(!$this->rs){
 			$this->addmsg('['.$id.']记录不存在;');
 			return;
@@ -93,7 +95,6 @@ class flowChajian extends Chajian{
 			return;
 		}
 		$this->drs	= $this->db->getone($this->rock->T('dept'), "`id`='".$this->urs['deptid']."'");
-		$this->where= "`table`='$this->table' and `mid`='$this->id'";
 		$this->brs	= m('flow_bill')->getone($this->where);
 		if(!$this->brs)$this->brs = $this->savebill();
 		$this->sericnum	= $this->brs['sericnum'];
@@ -126,7 +127,7 @@ class flowChajian extends Chajian{
 	{
 		$type	= $crs['checktype'];
 		$cuid 	= $name = '';
-		$uarr	= $this->flowcheckname($crs['num']);//额外
+		$uarr	= $this->flowcheckname($crs['num']);
 		if(is_array($uarr)){
 			if(!$this->isempt($uarr[0]))return $uarr;
 		}	
@@ -250,9 +251,6 @@ class flowChajian extends Chajian{
 		return $rsone;
 	}
 	
-	/**
-		添加到log表里面
-	*/
 	public function addlog($arr=array())
 	{
 		$addarr	= array(
@@ -272,9 +270,6 @@ class flowChajian extends Chajian{
 		return $this->db->insert_id();
 	}
 	
-	/**
-		更新审核信息，和当前审核人
-	*/
 	private function getrule($upd=false)
 	{
 		$this->getflow();
@@ -394,7 +389,7 @@ class flowChajian extends Chajian{
 			'explain'	=> $sm
 		));
 		if($lx==1){
-			$this->nexttodocl($arr['nowuserid'], 'next');
+			$this->nexttodocl($arr['nowuserid'], 'next', $sm);
 			$this->flowsubmit();
 		}
 		return $name.'成功';
@@ -429,6 +424,7 @@ class flowChajian extends Chajian{
 			'modeid'  	=> $this->setid,
 			'isdel'		=> '0',
 			'nstatus'	=> '0',
+			'applydt'	=> $this->rs['applydt'],
 			'modename'  => $this->flowname
 		);
 		if($biid==0){
@@ -442,7 +438,7 @@ class flowChajian extends Chajian{
 	
 	public function getfields()
 	{
-		$farr	= c('edit', true)->getfield($this->table);
+		$farr	= c('edit')->getfield($this->table, 1);
 		$arr	= array();
 		foreach($farr as $k=>$rs){
 			$arr[$k] = $rs['name'];
@@ -463,13 +459,24 @@ class flowChajian extends Chajian{
 			$fields['file_content'] 	= '相关文件';
 			$this->rs['file_content'] 	= $fstr;
 		}
-		$s		= c('html', true)->createtable($fields, $this->rs, $this->flowname);
+		$rows 	= $this->rs;
+		$ohtrn	= $this->contentother($fields);
+		if(is_array($ohtrn)){
+			foreach($ohtrn as $k=>$ors){
+				$fid 			= $ors['fields'];
+				$fields[$fid] 	= $ors['name'];
+				$rows[$fid]   	= $ors['data'];
+				if(isset($ors['fields_style']))$rows[$fid.'_style'] = $ors['fields_style'];
+			}
+		}
+		$s		= c('html')->createtable($fields, $rows, $this->flowname);
 		return $s;
 	}
 	
 	//发送通知
-	private function nexttodocl($nuid, $type='next', $oarr=array())
+	private function nexttodocl($nuid, $type='next',$sm='', $oarr=array())
 	{
+		if($this->isempt($nuid))return;
 		$this->dbtodo->delete($this->where." and uid in($nuid)");
 		$msg	= $cont	= $emal	= '';
 		$url	= $this->createcheckurl($nuid);
@@ -480,13 +487,17 @@ class flowChajian extends Chajian{
 		if($type == 'next'){
 			if($zntx==1){
 				$msg 	= '您有['.$this->urs['name'].']的['.$this->flowname.',单号:'.$this->sericnum.']需要处理';
+				if($sm!='')$msg .= ',说明:'.$sm.'';
 			}
 			if($imtx == 1){
 				$cont	= '单据处理<br>模块:'.$this->flowname.'<br>单号:'.$this->sericnum.'<br>申请人:'.$this->urs['name'].'<br>部门:'.$this->drs['name'].'';
+				if($sm!='')$cont .= '<br>说明:'.$sm.'';
 			}
 			if($emtx == 1){
 				$yjcont	= $this->contentview();
-				$emal	= '您好:<br>您有['.$this->rs['base_deptname'].'.'.$this->rs['base_name'].']的['.$this->flowname.',单号:'.$this->sericnum.']需要处理。(邮件由系统自动发送)<br><a href="'.SYSURL.''.$url.'" target="_blank" style="color:blue"><u>打开地址&gt;&gt;</u></a><br><br>';
+				$emal	= '您好:<br>您有['.$this->rs['base_deptname'].'.'.$this->rs['base_name'].']的['.$this->flowname.',单号:'.$this->sericnum.']需要处理';
+				if($sm!='')$emal .= ',说明:'.$sm.'';
+				$emal	.= '。请尽快去处理，谢谢！(邮件由系统自动发送)<br><a href="'.SYSURL.''.$url.'" target="_blank" style="color:blue"><u>打开地址&gt;&gt;</u></a><br><br>';
 				$emal	.= $yjcont;
 			}
 		}
@@ -519,9 +530,6 @@ class flowChajian extends Chajian{
 		}
 	}
 	
-	/**
-		创建审核查看URL地址
-	*/
 	public function createcheckurl($nuid)
 	{
 		$token	= $this->rock->jm->strrocktoken(array(
@@ -538,14 +546,9 @@ class flowChajian extends Chajian{
 		return $url;
 	}
 
-	/**
-		审核
-		@param int 		$zt  	审核状态1同意，2不同意
-		@param string 	$sm  	审核说明
-		@param int 		$shuid  审核人id，0当前用户
-	*/
 	public function check($zt, $sm='', $shuid=0)
 	{
+		if($this->errormsg != '')return $this->errormsg;
 		$msg		= '';
 		$ztfields	= $this->statusfields;
 		$this->dbtodo->delete($this->where." and uid='$this->uid'");
@@ -580,21 +583,24 @@ class flowChajian extends Chajian{
 		$nowcourseid		= $arr['nowcourseid'];
 		$this->nowcoursers	= $this->dbcourse->getone("`id`='$nowcourseid'");
 		$nowcoursers		= $this->nowcoursers;
-		$isback				= 0;//是否退回
+		$isback				= 0;
 		$ztname				= '';
 		$isend				= 0;
 		$ztnamearr			= array('','通过','不通过');
 		
 		$_shcnarr			= m('flow_courseact')->getone("`cid`='$nowcourseid' and `actv`='$zt'");
+		$color 				= '';
 		if(!$_shcnarr){
 			if($zt==2)$isback = 1;
 			$ztname	= $ztnamearr[$zt];
 		}else{
 			if($_shcnarr['nid']==-1)$isback = 1;
 			$ztname	= $_shcnarr['name'];
+			$color	= $_shcnarr['color'];
+			if(!$this->isempt($_shcnarr['names']))$ztname = $_shcnarr['names'];
 		}
 		
-		$this->dbtodo->delete($this->where." and `uid`='$checkid'");//删除站内通知
+		$this->dbtodo->delete($this->where." and `uid`='$checkid'");
 		
 		$this->addlog(array(
 			'name'		=> $nowcoursers['name'],
@@ -603,6 +609,7 @@ class flowChajian extends Chajian{
 			'explain'	=> $sm,
 			'checkname'	=> $checkname,
 			'checkid'	=> $checkid,
+			'color'		=> $color,
 			'courseid'	=> $arr['nowcourseid']
 		));
 		
@@ -637,7 +644,7 @@ class flowChajian extends Chajian{
 		}
 		
 		if($isback == 1){
-			$this->nexttodocl($this->uid, 'nothrough', array('ztname'=>$ztname,'sm'=>$sm,'checkname'=>$checkname,'checkid'=>$checkid));
+			$this->nexttodocl($this->uid, 'nothrough', $sm, array('ztname'=>$ztname,'sm'=>$sm,'checkname'=>$checkname,'checkid'=>$checkid));
 			$this->flownothrough($sm);
 		}
 		
@@ -662,13 +669,38 @@ class flowChajian extends Chajian{
 
 	public function flowdelete($sm='')
 	{
-		$this->mdb->update("`$this->statusfields`=5", $this->id);
-		$this->dbrule->delete($this->where);
-		$this->db->update('[Q]flow_bill', "`isdel`=1", $this->where);
-		$this->addlog(array(
-			'name'		=> '删除',
-			'explain'	=> $sm
-		));
+		$msg = '';
+		if($this->rs[$this->statusfields]==1)$msg = '已完成不允许删除';
+		if($msg == '' && $this->uid != $this->adminid)$msg='不是您的单据';
+		if($msg == ''){
+			$this->mdb->update("`$this->statusfields`=5", $this->id);
+			$this->dbrule->delete($this->where);
+			$this->db->update('[Q]flow_bill', "`isdel`=1", $this->where);
+			$this->addlog(array(
+				'name'		=> '删除',
+				'explain'	=> $sm
+			));
+			$this->dbtodo->delete($this->where);
+			m('im_mess')->delete($this->where);
+		}
+		return $msg;
+	}
+	
+	public function addzhuijia($sm='',$fileid='')
+	{
+		$msg = '';
+		if($this->rs[$this->statusfields]==1)$msg = '已完成不用追加';
+		if($msg == '' && $this->uid != $this->adminid)$msg='不是您的单据';
+		if($msg == ''){
+			$this->mdb->update("`$this->statusfields`=0", $this->id);
+			$this->addlog(array(
+				'name'		=> '追加说明',
+				'explain'	=> $sm
+			));
+			if($fileid!='')m('file')->addfile($fileid, $this->table, $this->id);
+			if($this->rs[$this->statusfields]==2)$this->nexttodocl($this->rs['nowcheckid'], 'next', $sm);
+		}
+		return $msg;
 	}
 	
 	
@@ -678,11 +710,7 @@ class flowChajian extends Chajian{
 	
 	
 	
-	
-	
-	/**
-		模块重新匹配
-	*/
+
 	public function reloadpipei()
 	{
 		return $this->reloadpipeisss();
@@ -694,12 +722,8 @@ class flowChajian extends Chajian{
 		$rows	= $this->mdb->getall($where, '`id`');
 		$total	= $this->db->count;
 		$str	= '';
-		$piep	= 0;
-		$wclt	= 0;
-		$ycli	= 0;
-		$pieid	= '0';
-		$wclid	= '0';
-		$yclid	= '0';
+		$piep	= $wclt	= $ycli	= 0;
+		$pieid	= $wclid = $yclid	= '0';
 		$oic	= 0;
 		$oistr	= '';
 		foreach($rows as $k=>$rs){

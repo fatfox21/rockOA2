@@ -22,20 +22,11 @@ Ext.define('Ext.rock.flow', {
 	_url:function(at,can){
 		return js.getajaxurl(at,'flow','',can);
 	},
-	ztarr:[],
 	showbtn:function(val,ma, c, fnum){
 		var s = '',s1='',
 			a = c.raw;
 		if(isempt(fnum))fnum=this.flownum;
-		var zt = a.status;
-		if(a.isturn!='1')return '待提交';
-		if(zt=='5')return '<font color=#888888>已作废</font>';
-		//2退回
-		var zta = this.ztarr[a.nstatus];
-		if(zta){
-			s = a.statusman+'<font color='+zta[1]+'>'+zta[0]+'</font><br>';
-		}
-		if(!isempt(a.nowcheckname))s+='<font color=blue>待'+a.nowcheckname+'处理</font>';
+		if(a.statustext)s = a.statustext;
 		if(this.opentype==1){
 			var btn = a.notbtnarr,dz;
 			for(dz in btn){
@@ -71,7 +62,7 @@ Ext.define('Ext.rock.flow', {
 		$("input[temp^='flowbtn_"+this.rand+"_']").click(function(){
 			me._check(this, obj);
 		});
-		me.ztarr = obj.getData('ztarr');
+		//me.ztarr = obj.getData('ztarr');
 	},
 	_check:function(o1, obj){
 		if(this.bool)return false;

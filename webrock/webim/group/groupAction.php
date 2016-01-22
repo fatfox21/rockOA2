@@ -117,7 +117,7 @@ class groupClassAction extends Action{
 		$aid	= (int)$this->get('aid');
 		$gid	= (int)$this->get('gid');
 		$ars	= $db->getone($aid, '`name`,`id`,`face`');
-		$grs	= m('im_group')->getone($gid, '`name`,`id`,`type`');
+		$grs	= m('im_group')->getone($gid, '`name`,`id`,`type`,`face`');
 		
 		
 		$type 	= 'system';
@@ -126,7 +126,7 @@ class groupClassAction extends Action{
 		$this->smartydata['aface']		= $this->rock->repempt($ars['face'], 'images/im/user100.png');
 		
 		$this->smartydata['grs'] 		= $grs;
-		$this->smartydata['gface']		= 'images/im/shezhi_blue.png';
+		$this->smartydata['gface']		= $this->rock->repempt($grs['face'], 'images/im/shezhi_blue.png');
 		$this->smartydata['now'] 		= $this->now;
 		$this->smartydata['types'] 		= $type;
 		
@@ -157,6 +157,27 @@ class groupClassAction extends Action{
 				$msg = '['.$na.']人员不存在';
 				break;
 			}
+			if($db->rows("gid='$gid' and `uid`='$uid'")==0){
+				$ids .= ','.$uid.'';
+				$db->insert("gid='$gid',`uid`='$uid',`adddt`='$this->now'");
+			}
+		}
+		if($ids!='')$ids = substr($ids,1);
+		if($msg==''){
+			$msg='success'.$ids.'';
+		}
+		echo $msg;
+	}
+	
+	public function yaoqinguidAjax()
+	{
+		$gid	= (int)$this->get('gid');
+		$val	= $this->post('val');
+		$ars	= explode(',', $val);
+		$ids 	= '';
+		$msg 	= '';
+		$db 	= m('im_groupuser');
+		foreach($ars as $uid){
 			if($db->rows("gid='$gid' and `uid`='$uid'")==0){
 				$ids .= ','.$uid.'';
 				$db->insert("gid='$gid',`uid`='$uid',`adddt`='$this->now'");

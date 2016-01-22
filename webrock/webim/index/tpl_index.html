@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>REIM即时通信-{$da.ars.name}</title>
+<title>REIM即时通信-<?=$da['ars']['name']?></title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -10,25 +10,26 @@
 <meta name="format-detection" content="telephone=no"/>
 <meta name="format-detection" content="email=no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
-<link rel="stylesheet" href="{$da.p}/css/webimcss.css" />
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcss.css" />
 <link rel="stylesheet" href="mode/menu/jquery-rockmenu.css" />
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
 <script type="text/javascript" src="js/base64-min.js"></script>
-<script type="text/javascript" src="{$da.p}/{$da.d}{$da.m}/{$da.m}script.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?><?=$da['m']?>/<?=$da['m']?>script.js"></script>
 <script type="text/javascript" src="mode/menu/jquery-rockmenu.js"></script>
 <script>
-js.path = '{$da.path}';
-var URL = '{$URL}';
-var adminid 	= '{$da.ars.id}',
-	adminname 	= '{$da.ars.name}',
-	adminface	= '{$da.aface}';
+js.path = '<?=$da['path']?>';
+var URL = '<?=URL?>';
+var adminid 	= '<?=$da['ars']['id']?>',
+	adminname 	= '<?=$da['ars']['name']?>',
+	adminface	= '<?=$da['aface']?>';
 </script>
 </head>
 <body style="overflow:hidden" oncontextmenu="return false" scroll="no">
 <div class="topheadlan">
-<span class="cursor" title="刷新页面" onclick="location.reload()"><img src="images/im/shuaxin16.png" align="absmiddle"></span>&nbsp;
+<span class="cursor" title="设置" onclick=""><img src="images/im/shezhi16.png" align="absmiddle"></span>&nbsp;&nbsp;
+<span class="cursor" title="刷新页面" onclick="location.reload()"><img src="images/im/shuaxin16.png" align="absmiddle"></span>&nbsp;&nbsp;
 <span class="cursor" title="未读信息" id="tixingtotalspan"><img src="images/im/tixing16.png" align="absmiddle"><font color=#ff6600 id="tixingtotal"></font></span>
 </div>
 
@@ -47,16 +48,24 @@ var adminid 	= '{$da.ars.id}',
 <div style="height:300;overflow:hidden" id="webimindex">
 	<div class="headertop gradient">
 		<div class="div00">
-			<img src="{$da.aface}" height="44" width="44">
+			<img src="<?=$da['aface']?>" height="44" width="44">
 		</div>
 		<div class="div01">
-			<div class="usertop">{$da.ars.name}(在线)</div>
+			<div class="usertop"><?=$da['ars']['name']?>(在线)</div>
 			<div class="iconstop"></div>
+		</div>
+	</div>
+	<div class="headersearch">
+		<div style="padding:0px 5px">
+			<table width="100%" cellspacing="0" cellpadding="0"><tr>
+			<td><input value="搜索联系人" id="searchinput" class="souinputys" type="text" ></td>
+			<td width="24" height="38" align="center"><img height="24" width="24" src="images/im/sousuo.png"></td>
+			</tr></table>
 		</div>
 	</div>
 	<div class="headertab">
 		<div class="active" title="所有人员" onclick="tabchagne(0, this)"><img tabimg="0" src="images/im/user_blue.png"></div>
-		<div style="width:34%" title="群/讨论组/系统信息" onclick="tabchagne(1,this)"><img tabimg="1" src="images/im/group.png"></div>
+		<div style="width:34%" title="群/讨论组/系统信息/组织结构" onclick="tabchagne(1,this)"><img tabimg="1" src="images/im/group.png"></div>
 		<div title="最近联系" onclick="tabchagne(2,this)"><img tabimg="2" src="images/im/dengdai.png"></div>
 	</div>
 	<div id="headercenter" style="overflow:auto">
@@ -74,9 +83,7 @@ var adminid 	= '{$da.ars.id}',
 			<div class="gsholiv" onclick="im.hidealislist(3,this)"><img src="images/im/xiangyou.png" align="absmiddle">组织结构</div>
 			<span id="grouplist3" style="display:none;" class="usersslist"></span>
 		</div>
-		<div id="recoredlist" tabdiv="2" class="userlist" style="display:none">
-			
-		</div>
+		<div id="recoredlist" oncontextmenu="return righthistorh(event)" tabdiv="2" class="userlist" style="display:none"></div>
 	</div>
 	<div class="blank1"></div>
 	<div class="headerfoot">

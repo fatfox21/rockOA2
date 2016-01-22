@@ -52,6 +52,7 @@ var panel=[{
 	xtype:'rockgridform',searchtools:false,pageSize:0,bbarbool:false,defaultorder:'`sort`',
 	grideditwhere:function(d){return d.id!=1;},
 	griddelwhere:function(d){return d.id!=1;},
+	tbar:['提示：双击行设置对应休息日'],
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40

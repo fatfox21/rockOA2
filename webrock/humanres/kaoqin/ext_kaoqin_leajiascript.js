@@ -14,8 +14,11 @@ var c = {
 }
 var panel= {
 	xtype:'rockgridform',url:publiccheckstore(),searchtools:true,exceltitle:'考勤.请假和加班',
-	tablename:'kq_info',defaultorder:'stime desc',opentype:3,editbool:false,
+	tablename:'kq_info',defaultorder:'stime desc',opentype:3,editbool:false,keywhere:'[A][K]a.status<>5',
 	execlparams:{excelchuli:'status',status_arr:'待审核,审核通过,审核不通过'},
+	griddelwhere:function(d){
+		return d.optid==adminid;
+	},
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -45,12 +48,13 @@ var panel= {
 	},{
 		text:'状态',align:'center',width:150,dataIndex:'status',renderer:function(v,a,b){
 			var s = '<font color="blue">待'+b.raw.nowcheckname+'审核</font>';
-			if(v=='2')s = b.raw.statusman+'<font color="red">审核不通过</font>';
-			if(v=='1')s = b.raw.statusman+'<font color="green">审核通过</font>';
+			var ns = b.raw.statusman;if(isempt(ns))ns='';
+			if(v=='2')s = ns+'<font color="red">审核不通过</font>';
+			if(v=='1')s = ns+'<font color="green">审核通过</font>';
 			return s;
 		}
 	},{
-		text:'说明',align:'left',dataIndex:'explain',width:100,sortable:false,autowidth:true
+		text:'说明',align:'left',dataIndex:'explain',flex:1
 	}],
 	tbarcenter:[{
 		xtype:'rockdate',format:'month',id:'month_'+rand+'',emptyText:'月份',width:80
@@ -65,9 +69,10 @@ var panel= {
 		
 	},
 	formotherfield:'id,name,deptname',
+	formtitle:'假期',
 	formparams:{
-		submitfields:'kind,stime,etime,totals,uid',
-		params:{int_filestype:'totals',otherfields:'optdt={now},status=1,isturn=1,statusman={admin}'},
+		submitfields:'kind,stime,etime,totals,uid,explain',
+		params:{int_filestype:'totals',otherfields:'optdt={now},optid={adminid},status=1,isturn=1,statusman={admin}'},
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 		},{
@@ -81,7 +86,7 @@ var panel= {
 		},{
 			fieldLabel:''+bitian+'开始时间',name:'stimePost',xtype:'datetimefield',allowBlank: false,editable:false
 		},{
-			fieldLabel:''+bitian+'截止时间',name:'etimePost',xtype:'datetimefield',editable:false,allowBlank: false
+			fieldLabel:'截止时间',name:'etimePost',xtype:'datetimefield',editable:true
 		},{
 			fieldLabel:''+bitian+'时长(小时)',name:'totalsPost',allowBlank: false,minValue:1,xtype:'numberfield',value:1
 		},{

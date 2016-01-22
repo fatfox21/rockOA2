@@ -4,7 +4,7 @@
 */
 
 @session_start();
-date_default_timezone_set("PRC");
+//date_default_timezone_set("PRC");
 header('Content-Type:text/html;charset=utf-8');
 define('ROOT_PATH',str_replace('\\','/',dirname(dirname(__FILE__))));
 define('HOST', $_SERVER['HTTP_HOST']);
@@ -31,7 +31,8 @@ $config		= array(
 	'highpass'	=> 'rock123456',
 	'install'	=> false,
 	'version'	=> require('version.php'),
-	'path'		=> 'rock'
+	'path'		=> 'rock',
+	'db_drive'	=> 'mysqli'
 );
 
 $_confpath		= $rock->strformat('?0/?1/?1Config.php', ROOT_PATH, PROJECT);
@@ -45,6 +46,7 @@ define('URL', $config['url']);
 define('URLY', $config['urly']);
 define('PATH', $config['path']);
 
+define('DB_DRIVE', $config['db_drive']);
 define('DB_HOST', $config['db_host']);
 define('DB_USER', $config['db_user']);
 define('DB_PASS', $config['db_pass']);

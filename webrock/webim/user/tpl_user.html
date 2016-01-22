@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>{$da.urs.name}</title>
+<title><?=$da['urs']['name']?></title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -9,36 +9,36 @@
 <meta name="format-detection" content="telephone=no"/>
 <meta name="format-detection" content="email=no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
-<link rel="stylesheet" href="{$da.p}/css/webimcss.css" />
-<link rel="stylesheet" href="{$da.p}/css/webimcssa.css" />
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcss.css" />
+<link rel="stylesheet" href="<?=$da['p']?>/css/webimcssa.css" />
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
 <script type="text/javascript" src="js/base64-min.js"></script>
-<script type="text/javascript" src="{$da.p}/{$da.d}{$da.m}/{$da.m}script.js"></script>
-<script type="text/javascript" src="{$da.p}/{$da.d}index/upload.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?><?=$da['m']?>/<?=$da['m']?>script.js"></script>
+<script type="text/javascript" src="<?=$da['p']?>/<?=$da['d']?>index/upload.js"></script>
 <script>
-js.path = '{$da.path}';
-js.servernow = '{$da.now}';
-PROJECT		 = '{$da.p}';
-var adminid 	= '{$da.ars.id}',
-	adminname 	= '{$da.ars.name}',
-	adminface	= '{$da.aface}',
-	receiveid 	= '{$da.urs.id}',
-	receivename = '{$da.urs.name}',
-	receiveface	= '{$da.uface}',
+js.path = '<?=$da['path']?>';
+var URL = '<?=URL?>';
+js.servernow = '<?=$da['now']?>';
+PROJECT		 = '<?=$da['p']?>';
+var adminid 	= '<?=$da['ars']['id']?>',
+	adminname 	= '<?=$da['ars']['name']?>',
+	adminface	= '<?=$da['aface']?>',
+	receiveid 	= '<?=$da['urs']['id']?>',
+	receivename = '<?=$da['urs']['name']?>',
+	receiveface	= '<?=$da['uface']?>',
 	infortype 	= 'user',
-	wdarr		= {$da.wdarr};
+	wdarr		= <?=$da['wdarr']?>;
 </script>
 </head>
 <body style="overflow:hidden" scroll="no">
-<form style="display:none" name="fileform"><input type="file" id="fileid"></form>
 <table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
 	<td colspan="3">
 		<div class="gusertop gradient" style="height:40px;overflow:hidden">
-			<div class="div01"><img style="background-color:#ffffff;border-radius:2px" src="{$da.uface}" height=24 width=24></div>
-			<div class="div02">{$da.urs.deptname}/{$da.urs.name}({$da.urs.ranking})</div>
+			<div class="div01"><img style="background-color:#ffffff;border-radius:2px" src="<?=$da['uface']?>" height=24 width=24></div>
+			<div class="div02"><?=$da['urs']['deptname']?>/<?=$da['urs']['name']?>(<?=$da['urs']['ranking']?>)</div>
 		</div>
 	</td>
 </tr>
@@ -93,16 +93,16 @@ var adminid 	= '{$da.ars.id}',
 			<div align="center">
 				<div class="blank20"></div>
 				<div style="height:230px;overflow:hidden;font-size:12px">
-					<div><img src="{$da.uface}" width="100" height="100"></div>
+					<div><img src="<?=$da['uface']?>" width="100" height="100"></div>
 					<div class="blank10"></div>
-					<div style="line-height:22px;height:20px;overflow:hidden;padding-left:10px" align="left"><font color=#888888>姓名：</font>{$da.urs.name}</div>
-					<div style="line-height:22px;height:20px;overflow:hidden;padding-left:10px" align="left"><font color=#888888>职位：</font>{$da.urs.ranking}</div>
-					<div style="line-height:22px;padding-left:10px" align="left"><font color=#888888>邮箱：</font>{$da.urs.email}</div>
+					<div style="line-height:22px;height:20px;overflow:hidden;padding-left:10px" align="left"><font color=#888888>姓名：</font><?=$da['urs']['name']?></div>
+					<div style="line-height:22px;height:20px;overflow:hidden;padding-left:10px" align="left"><font color=#888888>职位：</font><?=$da['urs']['ranking']?></div>
+					<div style="line-height:22px;padding-left:10px" align="left"><font color=#888888>邮箱：</font><?=$da['urs']['email']?></div>
 				</div>
 				<div style="background-color:#eeeeee;overflow:hidden;height:6px"></div>
 				<div class="blank20"></div>
 				<div>
-					<div><img src="{$da.aface}" onclick="strformat.openimg(this.src)" id="viewimg" width="100" height="100"></div>
+					<div><img src="<?=$da['aface']?>" onclick="strformat.openimg(this.src)" id="viewimg" width="100" height="100"></div>
 					<div style="color:#555555;margin-top:5px" id="viewimgtext"></div>
 				</div>
 			</div>

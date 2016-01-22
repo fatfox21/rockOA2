@@ -12,9 +12,8 @@ class daibanClassModel extends Model
 		foreach($arows as $k=>$rs){
 			$whre	= $mwhere->getstring('flowset_'.$rs['num']);
 			$rsto	= m($rs['table'])->getall("`status` in(0,2) and ifnull(uid, 0)>0 and `isturn`=1 and instr(concat(',', nowcheckid, ','), ',$uids,')>0 $whre");
-			$ztarr	= $rudb->getcourseact($rs['num']);
 			foreach($rsto as $k1=>$rs1){
-				$ztname 	= $this->getstatus($ztarr, $rs1, $sp);
+				$ztname 	= $rudb->getstatuss($rs['table'], $rs1, $sp);
 				$summary	= $rs['summary'];
 				$summary	= $this->rock->reparr($summary, $rs1);
 				$rows[] = array(
@@ -42,27 +41,10 @@ class daibanClassModel extends Model
 				$rows[$k]['deptname'] 	= $_uarr[$rs['uid']]['deptname'];
 			}
 		}
-		
 		return $rows;
 	}
 	
-	public function getstatus($ztarr, $rs1, $sp)
-	{
-		$nzt	= $rs1['status'];
-		$ztname = '';
-		if($nzt==5){
-			$ztname = '<font color=#888888>已删除</font>';
-			return $ztname;
-		}	
-		if(isset($ztarr[$rs1['nstatus']]) && !$this->isempt($rs1['statusman'])){
-			$ztname = ''.$rs1['statusman'].'<font color="'.$ztarr[$rs1['nstatus']][1].'">'.$ztarr[$rs1['nstatus']][0].'</font>'.$sp.'';
-		}
-		if(!$this->isempt($rs1['nowcheckname'])){
-			$ztname    .= '<font color=blue>待'.$rs1['nowcheckname'].'处理</font>';
-		}
-		return $ztname;
-	}
-	
+	//统计流程待办的
 	public function totaldaiban($uid)
 	{
 		$mwhere	= m('where');

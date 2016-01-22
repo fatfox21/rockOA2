@@ -53,7 +53,7 @@ input.checkbox,input.radio{ border:none;padding:0;margin-right:5px; width:16px; 
 
 
 .webbtn:link,.webbtn:visited,.webbtn{color:#ffffff; background-color:#0887CC; padding:3px 8px; border:none; cursor:pointer}
-.webbtn:hover,.webbtn:hover{ background-color:#0572AD;}
+.webbtn:hover{ background-color:#0572AD;color:#ffffff;}
 
 
 
@@ -73,9 +73,17 @@ input.checkbox,input.radio{ border:none;padding:0;margin-right:5px; width:16px; 
 .headertab div img{height:24px;width:24px;margin-top:8px}
 .headertab .active{background-color:white}
 
+.headersearch{
+height:40px;overflow:hidden; background-color:white;
+background:-ms-linear-gradient(top, #f1f1f1, #ffffff,#ffffff);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f1f1f1', centerColorstr='#ffffff',endColorstr='#ffffff', GradientType='0');
+}
+.headersearch div{border:1px #eeeeee solid;height:38px;overflow:hidden}
+.souinputys{height:36px;width:100%;background:none;border:none;line-height:30px;color:#888888;font-size:14px;overflow:hidden; }
+
 
 .gradient{
-	background:#545e6a;
+	background:#545e6a;color:white;overflow:hidden;
 	background:-moz-linear-gradient(top, #687584, #5d6875,#545e6a);
 	background:-webkit-linear-gradient(top,#687584,#5d6875,#545e6a);
 	background:-ms-linear-gradient(top, #687584, #5d6875,#545e6a);/*IE9以上*/
@@ -95,7 +103,7 @@ input.checkbox,input.radio{ border:none;padding:0;margin-right:5px; width:16px; 
 .gsholiv{padding:8px 5px 8px 10px;border-bottom:1px #f1f1f1 solid;cursor:default;}
 .gsholiv img{width:14px;height:14px;margin-right:5px}
 
-.userlist div{padding:8px 5px 8px 10px;border-bottom:1px #f1f1f1 solid;cursor:default;position:relative;}
+.userlist div{padding:8px 5px 8px 10px;border-bottom:1px #f1f1f1 solid;cursor:default;}
 .userlist div img{width:20px;height:20px;margin-right:5px}
 .userlist div span.right{position:absolute;right:5px;}
 .userlist div span.right img{width:16px;height:16px;}

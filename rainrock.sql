@@ -1,19 +1,20 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地
-Source Server Version : 50530
+Source Server         : 本地连接
+Source Server Version : 50540
 Source Host           : localhost:3306
 Source Database       : rainrock
 
 Target Server Type    : MYSQL
-Target Server Version : 50530
+Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2015-08-09 22:53:32
+Date: 2015-08-25 14:08:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for `rock_admin`
 -- ----------------------------
@@ -93,22 +94,23 @@ CREATE TABLE `rock_admin` (
   `imonline` tinyint(4) DEFAULT '0' COMMENT '@是否在线',
   `imlastdt` datetime DEFAULT NULL COMMENT '@最后上线',
   `deviceid` varchar(100) DEFAULT NULL COMMENT '@APP登录设备',
+  `applastdt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_admin
 -- ----------------------------
-INSERT INTO `rock_admin` VALUES ('1', 'admin', '雨中磐石', '管理员', 'e10adc3949ba59abbe56e057f20f883e', null, '976', '2014-09-11 09:32:20', '2015-08-09 14:11:53', 0x3132372E302E302E31, '127.0.0.1', '1', '男', '1582233', 'qqqq2900@126.com', '2015-08-01 17:09:27', '管理员', '1', 'upload/2015-02/05_1942579760.gif', '1', '1', '我的英文名是？', 'rainrock', '511', 'OA项目经理', '4', '[4]', '开发部', '刘备', '7', '[7]', '0', null, '1988-12-02', null, null, null, null, null, null, null, null, null, null, null, '汉族', '中专', null, null, null, '2015-01-01', '2015-08-01', '2015-08-03', null, null, null, null, null, null, '1', '1', null, '系统管理员', null, '1', '1', null, null, null, null, null, '0', '2015-07-31 09:50:57', '868152014849335');
-INSERT INTO `rock_admin` VALUES ('2', 'chenxihu', '风雨中小草', '陈稀糊', 'e10adc3949ba59abbe56e057f20f883e', null, '60', '2014-09-11 09:25:21', '2015-07-17 10:06:35', 0x3132372E302E302E31, '127.0.0.1', '1', '男', null, '290802026@qq.com', '2015-01-24 00:14:37', '管理员', '1', null, null, '1', null, null, '51', '工程师', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '21', null, '1993-12-16', null, null, null, null, null, null, null, null, null, null, null, '汉族', '大专', null, null, null, '2014-12-09', null, null, null, null, null, null, null, null, '2', '1', null, '系统管理员', null, '1', '1', null, null, null, null, null, '0', '2015-07-31 09:52:05', null);
-INSERT INTO `rock_admin` VALUES ('3', 'diaochan', null, '貂蝉', 'e10adc3949ba59abbe56e057f20f883e', null, '46', null, '2015-08-08 23:05:30', null, '127.0.0.1', '1', '女', '0592-222', null, '2015-05-17 10:55:48', '管理员', '1', 'upload/2015-06/02_2246506417_crop8455.jpg', null, '1', null, null, '0', '人事经理', '3', '[3]', '行政人事', '大乔', '4', '[7],[4]', '11', null, '1987-11-22', '36555', null, '0595-', null, null, '三国', '三国时期', null, null, '吕布', '10085', '回民', '博士后', '未婚', '158000', '三国户口', '2014-12-02', null, null, null, null, null, null, null, '222', null, '2', null, null, null, '1', '1', null, null, '2015-04-28', 'A型', '群众', '0', '2015-07-29 18:03:13', null);
-INSERT INTO `rock_admin` VALUES ('4', 'daqiao', null, '大乔', 'e10adc3949ba59abbe56e057f20f883e', null, '11', null, '2015-06-18 17:15:27', null, '127.0.0.1', '1', '女', null, null, '2015-01-19 13:34:23', '管理员', '1', null, null, '1', null, null, '0', '行政总监', '3', '[3]', '行政人事', '刘备', '7', '[7]', '10', null, '1968-01-01', null, null, null, null, null, null, null, null, null, null, null, '汉族', '初中', null, null, null, '2015-01-19', null, null, null, null, null, null, null, null, null, '1', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-07-31 09:51:02', null);
-INSERT INTO `rock_admin` VALUES ('5', 'xiaoqiao', null, '小乔', 'e10adc3949ba59abbe56e057f20f883e', null, '21', null, '2015-08-05 15:56:54', null, '127.0.0.1', '1', '女', null, null, '2015-01-24 00:14:05', '管理员', '1', 'upload/2015-04/30_1448539797_crop9267.jpg', null, '1', null, null, '0', '行政前台', '3', '[3]', '行政人事', '貂蝉', '3', '[7],[4],[3]', '12', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2014-12-01', null, null, null, null, null, null, null, null, null, '1', null, '组名', null, '1', '1', null, null, null, null, null, '0', '2015-06-03 14:43:51', null);
-INSERT INTO `rock_admin` VALUES ('6', 'liu1', null, '刘长', 'e10adc3949ba59abbe56e057f20f883e', null, '1', null, '2015-02-05 22:36:31', null, '127.0.0.1', '1', '男', null, null, '2015-02-05 13:25:16', '管理员', '1', null, null, '1', null, null, '0', '程序员', '4', '[4]', '开发部', '陈稀糊', '2', '[7],[1],[2]', '22', null, '1990-02-01', null, null, null, null, null, null, null, null, null, null, null, '汉族', '本科', null, null, null, '2015-02-05', null, null, null, null, null, null, null, null, null, '5', null, null, '2015-02-28', '1', '1', null, null, null, null, null, '0', null, null);
-INSERT INTO `rock_admin` VALUES ('7', 'liubei', null, '刘备', 'e10adc3949ba59abbe56e057f20f883e', '2015-01-06 13:40:48', '46', null, '2015-08-05 15:56:10', null, '127.0.0.1', '1', '男', '12', '1121', '2015-05-17 17:39:33', '管理员', '1', null, '3', '1', null, null, '0', '董事长', '1', '[1]', '管理部', null, null, null, '1', null, '1991-09-17', null, null, null, null, null, null, null, null, null, null, null, '回民', '初中', null, null, null, '2015-02-05', null, null, null, null, null, null, null, null, '3', '1', null, null, null, '1', '1', 'daib,gong|zxkq,work,todo', null, null, null, null, '0', '2015-06-11 10:52:59', null);
-INSERT INTO `rock_admin` VALUES ('8', 'zhangfei', null, '张飞', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-06 09:41:01', '1', null, '2015-05-08 21:08:15', null, '127.0.0.1', '1', '男', null, null, '2015-02-06 09:41:01', '管理员', '1', null, null, '1', null, null, '0', '程序员', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2015-02-06', null, null, null, null, null, null, null, null, null, '2', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-05-29 21:44:58', null);
-INSERT INTO `rock_admin` VALUES ('9', 'zhaozl', null, '赵子龙', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-06 09:44:39', '2', null, '2015-07-22 13:15:54', null, '127.0.0.1', '1', '男', null, null, '2015-03-11 16:37:46', '管理员', '1', null, null, '1', null, null, '0', '程序员', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '24', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2015-02-06', null, null, null, null, null, null, null, null, null, '3', null, null, null, '1', '1', null, null, null, null, null, '1', '2015-07-31 14:58:35', null);
-INSERT INTO `rock_admin` VALUES ('10', 'lvbu', null, '吕布', 'e10adc3949ba59abbe56e057f20f883e', '2015-08-02 00:03:12', '0', null, null, null, null, '1', '男', null, 'rockoa@xh829.com', '2015-08-02 00:03:12', '管理员', '1', null, null, '1', null, null, '0', '项目主管', '4', '[4]', '开发部', null, null, null, '25', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '158***', null, '2015-08-01', null, null, null, null, null, null, null, null, null, '2', null, null, null, '1', '1', null, null, null, null, null, '0', null, null);
+INSERT INTO `rock_admin` VALUES ('1', 'admin', '雨中磐石', '管理员', 'e10adc3949ba59abbe56e057f20f883e', null, '25', '2014-09-11 09:32:20', '2015-08-25 14:05:25', 0x3132372E302E302E31, '127.0.0.1', '1', '男', '1582233', 'qqqq2900@126.com', '2015-08-01 17:09:27', '管理员', '1', 'upload/2015-02/05_1942579760.gif', '1', '1', '我的英文名是？', 'rainrock', '511', 'OA项目经理', '4', '[4]', '开发部', '刘备', '7', '[7]', '0', null, '1988-12-02', null, null, null, null, null, null, null, null, null, null, null, '汉族', '中专', null, null, null, '2015-01-01', '2015-08-15', '2015-08-01', null, null, null, null, null, null, '1', '1', null, '系统管理员', null, '1', '1', null, null, null, null, null, '0', '2015-08-19 14:42:36', '868152014849335', '2015-08-16 00:12:53');
+INSERT INTO `rock_admin` VALUES ('2', 'chenxihu', '风雨中小草', '陈稀糊', 'e10adc3949ba59abbe56e057f20f883e', null, '0', '2014-09-11 09:25:21', '2015-07-17 10:06:35', 0x3132372E302E302E31, '127.0.0.1', '1', '男', null, '290802026@qq.com', '2015-08-20 17:16:36', '管理员', '1', null, null, '1', null, null, '51', '程序员', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '21', null, '1993-12-16', null, null, null, null, null, null, null, null, null, null, null, '汉族', '大专', null, null, null, '2014-12-09', null, null, null, null, null, null, null, null, '2', '1', null, '系统管理员', null, '1', '1', null, null, null, null, null, '0', '2015-08-14 09:53:23', '867112020521204', '2015-08-23 21:37:06');
+INSERT INTO `rock_admin` VALUES ('3', 'diaochan', null, '貂蝉', 'e10adc3949ba59abbe56e057f20f883e', null, '1', null, '2015-08-19 14:41:14', null, '127.0.0.1', '1', '女', '0592-222', null, '2015-05-17 10:55:48', '管理员', '1', 'upload/2015-06/02_2246506417_crop8455.jpg', null, '1', null, null, '0', '人事经理', '3', '[3]', '行政人事', '大乔', '4', '[7],[4]', '11', null, '1987-11-22', '36555', null, '0595-', null, null, '三国', '三国时期', null, null, '吕布', '10085', '回民', '博士后', '未婚', '158000', '三国户口', '2014-12-02', null, null, null, null, null, null, null, '222', null, '2', null, null, null, '1', '1', null, null, '2015-04-28', 'A型', '群众', '0', '2015-08-19 18:04:42', null, null);
+INSERT INTO `rock_admin` VALUES ('4', 'daqiao', null, '大乔', 'e10adc3949ba59abbe56e057f20f883e', null, '0', null, '2015-06-18 17:15:27', null, '127.0.0.1', '1', '女', null, null, '2015-01-19 13:34:23', '管理员', '1', null, null, '1', null, null, '0', '行政总监', '3', '[3]', '行政人事', '刘备', '7', '[7]', '10', null, '1968-01-01', null, null, null, null, null, null, null, null, null, null, null, '汉族', '初中', null, null, null, '2015-01-19', null, null, null, null, null, null, null, null, null, '1', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-08-14 16:15:27', null, null);
+INSERT INTO `rock_admin` VALUES ('5', 'xiaoqiao', null, '小乔', 'e10adc3949ba59abbe56e057f20f883e', null, '1', null, '2015-08-21 21:03:20', null, '127.0.0.1', '1', '女', null, null, '2015-01-24 00:14:05', '管理员', '1', 'upload/2015-04/30_1448539797_crop9267.jpg', null, '1', null, null, '0', '行政前台', '3', '[3]', '行政人事', '貂蝉', '3', '[7],[4],[3]', '12', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2014-12-01', null, null, null, null, null, null, null, null, null, '1', null, '组名', null, '1', '1', null, null, null, null, null, '0', '2015-08-16 00:23:28', null, null);
+INSERT INTO `rock_admin` VALUES ('6', 'liu1', null, '刘长', 'e10adc3949ba59abbe56e057f20f883e', null, '0', null, '2015-02-05 22:36:31', null, '127.0.0.1', '1', '男', null, null, '2015-02-05 13:25:16', '管理员', '1', null, null, '1', null, null, '0', '程序员', '4', '[4]', '开发部', '陈稀糊', '2', '[7],[1],[2]', '22', null, '1990-02-01', null, null, null, null, null, null, null, null, null, null, null, '汉族', '本科', null, null, null, '2015-02-05', null, null, null, null, null, null, null, null, null, '5', null, null, '2015-02-28', '1', '1', null, null, null, null, null, '0', null, null, null);
+INSERT INTO `rock_admin` VALUES ('7', 'liubei', null, '刘备', 'e10adc3949ba59abbe56e057f20f883e', '2015-01-06 13:40:48', '2', null, '2015-08-21 13:51:53', null, '127.0.0.1', '1', '男', '12', '1121', '2015-05-17 17:39:33', '管理员', '1', null, '3', '1', null, null, '0', '董事长', '1', '[1]', '管理部', null, null, null, '1', null, '1991-09-17', null, null, null, null, null, null, null, null, null, null, null, '回民', '初中', null, null, null, '2015-02-05', null, null, null, null, null, null, null, null, '3', '1', null, null, null, '1', '1', 'daib,gong|zxkq,work,todo', null, null, null, null, '0', '2015-08-19 14:41:20', null, null);
+INSERT INTO `rock_admin` VALUES ('8', 'zhangfei', null, '张飞', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-06 09:41:01', '0', null, '2015-05-08 21:08:15', null, '127.0.0.1', '1', '男', null, null, '2015-02-06 09:41:01', '管理员', '1', null, null, '1', null, null, '0', '程序员', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2015-02-06', null, null, null, null, null, null, null, null, null, '2', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-05-29 21:44:58', null, null);
+INSERT INTO `rock_admin` VALUES ('9', 'zhaozl', null, '赵子龙', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-06 09:44:39', '1', null, '2015-08-21 20:39:00', null, '127.0.0.1', '1', '男', null, null, '2015-08-20 17:17:50', '管理员', '1', null, null, '1', null, null, '0', '财务经理', '6', '[6]', '财务部', '管理员', '1', '[7],[1]', '24', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2015-02-06', null, null, null, null, null, null, null, null, null, '1', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-08-13 10:43:00', null, null);
+INSERT INTO `rock_admin` VALUES ('10', 'lvbu', null, '吕布', 'e10adc3949ba59abbe56e057f20f883e', '2015-08-02 00:03:12', '1', null, '2015-08-21 20:39:53', null, '127.0.0.1', '1', '男', null, 'rockoa@xh829.com', '2015-08-20 17:17:33', '管理员', '1', null, null, '1', null, null, '0', '出纳', '6', '[6]', '财务部', '赵子龙', '9', '[7],[1],[9]', '25', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '158***', null, '2015-08-01', null, null, null, null, null, null, null, null, null, '2', null, null, null, '1', '1', null, null, null, null, null, '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `rock_assetm`
@@ -206,51 +208,12 @@ CREATE TABLE `rock_dailyfx` (
   `dtjoin` varchar(500) DEFAULT NULL COMMENT '未写日期',
   `optname` varchar(10) DEFAULT NULL COMMENT '姓名',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_dailyfx
 -- ----------------------------
-INSERT INTO `rock_dailyfx` VALUES ('23', '1', '2015-04-01 16:40:25', '2015-03', '22', '3', '19', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-12,2015-03-13,2015-03-17,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '管理员');
-INSERT INTO `rock_dailyfx` VALUES ('24', '2', '2015-04-01 16:40:25', '2015-03', '22', '1', '21', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '陈稀糊');
-INSERT INTO `rock_dailyfx` VALUES ('25', '3', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '貂蝉');
-INSERT INTO `rock_dailyfx` VALUES ('26', '4', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '大乔');
-INSERT INTO `rock_dailyfx` VALUES ('27', '5', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '小乔');
-INSERT INTO `rock_dailyfx` VALUES ('28', '7', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '刘备');
-INSERT INTO `rock_dailyfx` VALUES ('29', '8', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '张飞');
-INSERT INTO `rock_dailyfx` VALUES ('30', '9', '2015-04-01 16:40:25', '2015-03', '22', '0', '22', '2015-03-02,2015-03-03,2015-03-04,2015-03-05,2015-03-06,2015-03-09,2015-03-10,2015-03-11,2015-03-12,2015-03-13,2015-03-16,2015-03-17,2015-03-18,2015-03-19,2015-03-20,2015-03-23,2015-03-24,2015-03-25,2015-03-26,2015-03-27,2015-03-30,2015-03-31', '赵子龙');
-INSERT INTO `rock_dailyfx` VALUES ('31', '1', '2015-04-30 12:01:00', '2015-04', '20', '0', '20', '2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '管理员');
-INSERT INTO `rock_dailyfx` VALUES ('32', '2', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '陈稀糊');
-INSERT INTO `rock_dailyfx` VALUES ('33', '3', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '貂蝉');
-INSERT INTO `rock_dailyfx` VALUES ('34', '4', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '大乔');
-INSERT INTO `rock_dailyfx` VALUES ('35', '5', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '小乔');
-INSERT INTO `rock_dailyfx` VALUES ('36', '7', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '刘备');
-INSERT INTO `rock_dailyfx` VALUES ('37', '8', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '张飞');
-INSERT INTO `rock_dailyfx` VALUES ('38', '9', '2015-04-30 12:01:00', '2015-04', '21', '0', '21', '2015-04-01,2015-04-02,2015-04-03,2015-04-06,2015-04-07,2015-04-08,2015-04-09,2015-04-10,2015-04-13,2015-04-14,2015-04-15,2015-04-16,2015-04-17,2015-04-20,2015-04-21,2015-04-22,2015-04-23,2015-04-24,2015-04-27,2015-04-28,2015-04-29', '赵子龙');
-INSERT INTO `rock_dailyfx` VALUES ('39', '1', '2015-05-20 12:01:00', '2015-05', '12', '1', '11', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-15,2015-05-18,2015-05-19', '管理员');
-INSERT INTO `rock_dailyfx` VALUES ('40', '2', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '陈稀糊');
-INSERT INTO `rock_dailyfx` VALUES ('41', '3', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '貂蝉');
-INSERT INTO `rock_dailyfx` VALUES ('42', '4', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '大乔');
-INSERT INTO `rock_dailyfx` VALUES ('43', '5', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '小乔');
-INSERT INTO `rock_dailyfx` VALUES ('44', '7', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '刘备');
-INSERT INTO `rock_dailyfx` VALUES ('45', '8', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '张飞');
-INSERT INTO `rock_dailyfx` VALUES ('46', '9', '2015-05-20 12:01:00', '2015-05', '12', '0', '12', '2015-05-04,2015-05-05,2015-05-06,2015-05-07,2015-05-08,2015-05-11,2015-05-12,2015-05-13,2015-05-14,2015-05-15,2015-05-18,2015-05-19', '赵子龙');
-INSERT INTO `rock_dailyfx` VALUES ('47', '1', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '管理员');
-INSERT INTO `rock_dailyfx` VALUES ('48', '2', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '陈稀糊');
-INSERT INTO `rock_dailyfx` VALUES ('49', '3', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '貂蝉');
-INSERT INTO `rock_dailyfx` VALUES ('50', '4', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '大乔');
-INSERT INTO `rock_dailyfx` VALUES ('51', '5', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '小乔');
-INSERT INTO `rock_dailyfx` VALUES ('52', '7', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '刘备');
-INSERT INTO `rock_dailyfx` VALUES ('53', '8', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '张飞');
-INSERT INTO `rock_dailyfx` VALUES ('54', '9', '2015-06-16 12:01:00', '2015-06', '15', '0', '15', '2015-06-01,2015-06-02,2015-06-03,2015-06-04,2015-06-05,2015-06-06,2015-06-07,2015-06-08,2015-06-09,2015-06-10,2015-06-11,2015-06-12,2015-06-13,2015-06-14,2015-06-15', '赵子龙');
-INSERT INTO `rock_dailyfx` VALUES ('55', '1', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '管理员');
-INSERT INTO `rock_dailyfx` VALUES ('56', '2', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '陈稀糊');
-INSERT INTO `rock_dailyfx` VALUES ('57', '3', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '貂蝉');
-INSERT INTO `rock_dailyfx` VALUES ('58', '4', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '大乔');
-INSERT INTO `rock_dailyfx` VALUES ('59', '5', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '小乔');
-INSERT INTO `rock_dailyfx` VALUES ('60', '7', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '刘备');
-INSERT INTO `rock_dailyfx` VALUES ('61', '8', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '张飞');
-INSERT INTO `rock_dailyfx` VALUES ('62', '9', '2015-07-20 12:01:00', '2015-07', '19', '0', '19', '2015-07-01,2015-07-02,2015-07-03,2015-07-04,2015-07-05,2015-07-06,2015-07-07,2015-07-08,2015-07-09,2015-07-10,2015-07-11,2015-07-12,2015-07-13,2015-07-14,2015-07-15,2015-07-16,2015-07-17,2015-07-18,2015-07-19', '赵子龙');
+INSERT INTO `rock_dailyfx` VALUES ('63', '1', '2015-08-10 11:30:14', '2015-08', '6', '0', '6', '2015-08-01,2015-08-03,2015-08-05,2015-08-06,2015-08-07,2015-08-08', '管理员');
 
 -- ----------------------------
 -- Table structure for `rock_dept`
@@ -297,13 +260,19 @@ CREATE TABLE `rock_docdeil` (
   `recename` varchar(20) DEFAULT NULL COMMENT '签收人',
   `optdt` datetime DEFAULT NULL COMMENT '操作时间',
   `explain` varchar(500) DEFAULT NULL COMMENT '说明',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_docdeil
 -- ----------------------------
-INSERT INTO `rock_docdeil` VALUES ('8', '1', '1', '1', null, '3', '1', '貂蝉', null, '一个文档', '3', '貂蝉', '2015-07-30 20:11:27', null);
+INSERT INTO `rock_docdeil` VALUES ('8', '1', '1', '1', null, '3', '1', '貂蝉', null, '一个文档', '3', '貂蝉', '2015-07-30 20:11:27', null, null, null, null);
+INSERT INTO `rock_docdeil` VALUES ('9', '1', '1', '1', null, '1', '1', '管理员', null, 'wewe', '1', '管理员', '2015-08-14 10:40:21', null, null, null, null);
+INSERT INTO `rock_docdeil` VALUES ('10', '1', '1', '1', null, '1', '1', '管理员', null, 'wcwwe', '1', '管理员', '2015-08-14 11:01:45', null, null, null, null);
+INSERT INTO `rock_docdeil` VALUES ('11', '1', '0', '1', '1', '1', '0', null, '管理员', '哈哈哈', '1', '管理员', '2015-08-21 11:25:09', null, '1', '管理员', '2015-08-21');
 
 -- ----------------------------
 -- Table structure for `rock_email`
@@ -373,21 +342,65 @@ CREATE TABLE `rock_file` (
   `mid` int(11) DEFAULT '0' COMMENT '管理id',
   `downci` int(11) DEFAULT '0' COMMENT '下载次数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_file
 -- ----------------------------
-INSERT INTO `rock_file` VALUES ('201', '1', '2.jpg', null, 'jpg', '35456', '34.63 KB', 'upload/2015-07/1435723654008_977.jpg', '0', null, '2015-07-01 12:07:35', '127.0.0.1', 'MSIE 9', 'docdeil', '7', '3');
-INSERT INTO `rock_file` VALUES ('202', '1', '截屏.jpg', null, 'jpg', '1290', '1.26 KB', 'upload/2015-07/15_1455474141.jpg', '0', null, '2015-07-15 14:55:47', '127.0.0.1', 'MSIE 9', null, '0', '0');
-INSERT INTO `rock_file` VALUES ('203', '1', '关机.bat', null, 'bat', '16', '16.00 Byte', 'upload/2015-07/1437101614532_3628.bat', '0', null, '2015-07-17 10:53:37', '127.0.0.1', 'MSIE 9', 'infor', '7', '0');
-INSERT INTO `rock_file` VALUES ('204', '1', 'banner_05.jpg', null, 'jpg', '109645', '107.08 KB', 'upload/2015-07/17_1717212307.jpg', '0', null, '2015-07-17 17:17:21', '127.0.0.1', 'MSIE 9', null, '0', '0');
-INSERT INTO `rock_file` VALUES ('205', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-07/1437361315259_110.jpg', '0', null, '2015-07-20 11:03:42', '127.0.0.1', 'MSIE 9', 'docdeil', '8', '2');
-INSERT INTO `rock_file` VALUES ('206', '1', 'kaoqin.exe', null, 'exe', '10752', '10.50 KB', 'upload/2015-07/1437361323293_1951.temp', '0', null, '2015-07-20 11:03:44', '127.0.0.1', 'MSIE 9', 'docdeil', '8', '1');
-INSERT INTO `rock_file` VALUES ('207', '1', '截屏.jpg', null, 'jpg', '8045', '7.86 KB', 'upload/2015-07/24_1545539765.jpg', '0', null, '2015-07-24 15:45:53', '127.0.0.1', 'MSIE 9', null, '0', '0');
-INSERT INTO `rock_file` VALUES ('208', '1', 'runweb.exe', null, 'exe', '44544', '43.50 KB', 'upload/2015-08/1438653194911_2205.temp', '0', null, '2015-08-04 09:53:17', '127.0.0.1', 'MSIE 9', 'workbg', '19', '0');
-INSERT INTO `rock_file` VALUES ('209', '1', 'runweb.vshost.exe', null, 'exe', '11600', '11.33 KB', 'upload/2015-08/1438654356157_746.temp', '0', null, '2015-08-04 10:12:41', '127.0.0.1', 'MSIE 9', 'workbg', '20', '0');
-INSERT INTO `rock_file` VALUES ('210', '1', 'runweb.exe.config', null, 'config', '77', '77.00 Byte', 'upload/2015-08/1438654359108_4730.config', '0', null, '2015-08-04 10:12:42', '127.0.0.1', 'MSIE 9', 'workbg', '20', '0');
+INSERT INTO `rock_file` VALUES ('1', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-08/1440127312697_7568.jpg', '1', null, '2015-08-21 11:22:02', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('2', '1', 'kaoqin.exe', null, 'exe', '10752', '10.50 KB', 'upload/2015-08/1440127321031_8334.exe', '1', null, '2015-08-21 11:22:03', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('3', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-08/1440127506020_2875.jpg', '1', null, '2015-08-21 11:25:06', '127.0.0.1', 'MSIE 9', 'docdeil', '11', '0');
+
+-- ----------------------------
+-- Table structure for `rock_fininfom`
+-- ----------------------------
+DROP TABLE IF EXISTS `rock_fininfom`;
+CREATE TABLE `rock_fininfom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(2) DEFAULT '0' COMMENT '单据类型@0|报销单,1|出差报销,2|请款单@not',
+  `uid` int(11) DEFAULT NULL,
+  `money` decimal(8,2) DEFAULT '0.00' COMMENT '金额',
+  `moneycn` varchar(100) DEFAULT NULL COMMENT '大写金额',
+  `optdt` datetime DEFAULT NULL COMMENT '操作时间',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
+  `explain` varchar(500) DEFAULT NULL COMMENT '说明',
+  `status` tinyint(1) DEFAULT '0',
+  `isturn` tinyint(1) DEFAULT '0',
+  `nowcheckid` varchar(50) DEFAULT NULL,
+  `allcheckid` varchar(200) DEFAULT NULL,
+  `nstatus` tinyint(1) DEFAULT '0',
+  `statusman` varchar(20) DEFAULT NULL,
+  `nowcheckname` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rock_fininfom
+-- ----------------------------
+INSERT INTO `rock_fininfom` VALUES ('1', '0', '1', '12.00', '壹拾贰元整', '2015-08-21 13:45:19', '1', '管理员', '2015-08-21', null, '1', '1', null, '7,9,10', '1', '吕布', null);
+
+-- ----------------------------
+-- Table structure for `rock_fininfos`
+-- ----------------------------
+DROP TABLE IF EXISTS `rock_fininfos`;
+CREATE TABLE `rock_fininfos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int(11) DEFAULT NULL,
+  `items` varchar(30) DEFAULT NULL,
+  `startdt` date DEFAULT NULL,
+  `enddt` date DEFAULT NULL,
+  `moneys` decimal(8,2) DEFAULT NULL,
+  `explain` varchar(500) DEFAULT NULL,
+  `sort` smallint(6) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rock_fininfos
+-- ----------------------------
+INSERT INTO `rock_fininfos` VALUES ('1', '1', '市内交通费', '2015-08-21', null, '12.00', '说明?1', '0');
 
 -- ----------------------------
 -- Table structure for `rock_flow_bill`
@@ -406,27 +419,40 @@ CREATE TABLE `rock_flow_bill` (
   `allcheckid` varchar(200) DEFAULT NULL COMMENT '@所有审核人',
   `isdel` tinyint(4) DEFAULT '0' COMMENT '是否删除',
   `nstatus` tinyint(1) DEFAULT '0',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
+  `nstatustext` varchar(100) DEFAULT NULL COMMENT '当前状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_bill
 -- ----------------------------
-INSERT INTO `rock_flow_bill` VALUES ('11', 'QJ-20150720-0001', 'kq_info', '33', '1', '请假条', '1', '2015-08-05 14:36:33', '管理员', '7,5', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('12', 'WO-20150720-0001', 'kq_info', '34', '2', '加班单', '1', '2015-07-20 10:31:17', '管理员', '3', '1', '0');
-INSERT INTO `rock_flow_bill` VALUES ('13', 'OT-20150720-0001', 'kq_out', '7', '3', '外出出差', '1', '2015-07-20 10:31:47', '管理员', '3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('14', 'FI-20150720-0001', 'docdeil', '8', '4', '文件传送', '1', '2015-07-30 20:11:27', '管理员', '3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('16', 'YP-20150723-0001', 'supplea', '4', '6', '申请办公用品', '1', '2015-07-23 17:03:32', '管理员', '5', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('17', 'YP-20150723-0002', 'supplea', '5', '6', '申请办公用品', '1', '2015-07-23 17:39:37', '管理员', '5', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('18', 'QJ-20150729-0001', 'kq_info', '35', '1', '请假条', '1', '2015-07-29 15:01:24', '管理员', '7,5', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('19', 'HR-20150801-0001', 'hrpositive', '1', '7', '转正申请', '1', '2015-08-01 11:52:54', '管理员', '7,3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('20', 'HE-20150802-0001', 'hrredund', '1', '9', '离职申请', '1', '2015-08-03 10:49:07', '管理员', '7,3', '1', '2');
-INSERT INTO `rock_flow_bill` VALUES ('21', 'HE-20150802-0002', 'hrredund', '2', '9', '离职申请', '1', '2015-08-03 10:47:55', '管理员', '7,3', '1', '0');
-INSERT INTO `rock_flow_bill` VALUES ('22', 'HT-20150803-0001', 'hrtransfer', '1', '8', '人事调动', '1', '2015-08-03 17:46:15', '管理员', '3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('23', 'HT-20150803-0002', 'hrtransfer', '2', '8', '人事调动', '1', '2015-08-03 17:49:34', '管理员', '3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('24', 'HT-20150803-0003', 'hrtransfer', '3', '8', '人事调动', '1', '2015-08-03 18:09:37', '管理员', '3', '0', '0');
-INSERT INTO `rock_flow_bill` VALUES ('25', 'HR-20150805-0001', 'hrpositive', '2', '7', '转正申请', '1', '2015-08-05 10:42:22', '管理员', '7,3', '1', '0');
-INSERT INTO `rock_flow_bill` VALUES ('26', 'KE-20150805-0001', 'kq_dkerr', '1', '10', '打卡异常', '1', '2015-08-05 12:08:41', '管理员', '7', '0', '0');
+INSERT INTO `rock_flow_bill` VALUES ('11', 'QJ-20150720-0001', 'kq_info', '33', '1', '请假条', '1', '2015-08-05 14:36:33', '管理员', '7,5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('12', 'WO-20150720-0001', 'kq_info', '34', '2', '加班单', '1', '2015-07-20 10:31:17', '管理员', '3', '1', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('13', 'OT-20150720-0001', 'kq_out', '7', '3', '外出出差', '1', '2015-07-20 10:31:47', '管理员', '3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('14', 'FI-20150720-0001', 'docdeil', '8', '4', '文件传送', '1', '2015-07-30 20:11:27', '管理员', '3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('16', 'YP-20150723-0001', 'supplea', '4', '6', '申请办公用品', '1', '2015-07-23 17:03:32', '管理员', '5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('17', 'YP-20150723-0002', 'supplea', '5', '6', '申请办公用品', '1', '2015-07-23 17:39:37', '管理员', '5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('18', 'QJ-20150729-0001', 'kq_info', '35', '1', '请假条', '1', '2015-07-29 15:01:24', '管理员', '7,5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('19', 'HR-20150801-0001', 'hrpositive', '1', '7', '转正申请', '1', '2015-08-01 11:52:54', '管理员', '7,3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('20', 'HE-20150802-0001', 'hrredund', '1', '9', '离职申请', '1', '2015-08-03 10:49:07', '管理员', '7,3', '1', '2', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('21', 'HE-20150802-0002', 'hrredund', '2', '9', '离职申请', '1', '2015-08-03 10:47:55', '管理员', '7,3', '1', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('22', 'HT-20150803-0001', 'hrtransfer', '1', '8', '人事调动', '1', '2015-08-03 17:46:15', '管理员', '3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('23', 'HT-20150803-0002', 'hrtransfer', '2', '8', '人事调动', '1', '2015-08-03 17:49:34', '管理员', '3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('24', 'HT-20150803-0003', 'hrtransfer', '3', '8', '人事调动', '1', '2015-08-03 18:09:37', '管理员', '3', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('25', 'HR-20150805-0001', 'hrpositive', '2', '7', '转正申请', '1', '2015-08-05 10:42:22', '管理员', '7,3', '1', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('26', 'KE-20150805-0001', 'kq_dkerr', '1', '10', '打卡异常', '1', '2015-08-05 12:08:41', '管理员', '7', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('27', 'FI-20150814-0001', 'docdeil', '9', '4', '文件传送', '1', '2015-08-14 10:40:21', '管理员', '1', '0', '1', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('28', 'FI-20150814-0002', 'docdeil', '10', '4', '文件传送', '1', '2015-08-14 11:01:45', '管理员', '1', '0', '1', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('29', 'KL-20150817-0001', 'kq_info', '36', '1', '请假条', '1', '2015-08-17 16:54:39', '管理员', '7,5', '1', '2', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('30', 'KL-20150819-0001', 'kq_info', '37', '1', '请假条', '1', '2015-08-19 10:59:43', '管理员', '7,5', '1', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('31', 'KW-20150819-0001', 'kq_out', '8', '3', '外出出差', '1', '2015-08-19 11:16:40', '管理员', '3', '0', '1', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('32', 'YP-20150819-0001', 'supplea', '7', '6', '申请办公用品', '1', '2015-08-19 12:14:03', '管理员', '5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('33', 'KL-20150820-0001', 'kq_info', '39', '1', '请假条', '1', '2015-08-20 10:57:03', '管理员', '7,5', '0', '0', null, null);
+INSERT INTO `rock_flow_bill` VALUES ('34', 'KE-20150820-0001', 'kq_dkerr', '2', '10', '打卡异常', '1', '2015-08-20 16:37:34', '管理员', '7', '0', '0', '2015-08-20', null);
+INSERT INTO `rock_flow_bill` VALUES ('35', 'FI-20150821-0001', 'docdeil', '11', '4', '文件传送', '1', '2015-08-21 11:25:09', '管理员', '1', '0', '0', '2015-08-21', null);
+INSERT INTO `rock_flow_bill` VALUES ('36', 'PA-20150821-0001', 'fininfom', '1', '11', '费用报销', '1', '2015-08-21 13:45:19', '管理员', '7,9,10', '0', '1', '2015-08-21', null);
+INSERT INTO `rock_flow_bill` VALUES ('37', 'YP-20150821-0001', 'supplea', '8', '6', '申请办公用品', '1', '2015-08-21 21:03:10', '管理员', '5', '0', '1', '2015-08-21', null);
 
 -- ----------------------------
 -- Table structure for `rock_flow_course`
@@ -449,7 +475,7 @@ CREATE TABLE `rock_flow_course` (
   `optdt` datetime DEFAULT NULL,
   `explain` varchar(100) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_course
@@ -470,6 +496,13 @@ INSERT INTO `rock_flow_course` VALUES ('29', '9', '领导审批', null, '0', '0'
 INSERT INTO `rock_flow_course` VALUES ('30', '9', '人事审批', null, '29', '0', null, null, null, 'rank', null, '人事经理', '0', '2015-08-02 15:08:07', null);
 INSERT INTO `rock_flow_course` VALUES ('31', '8', '人事经理审批', null, '0', '0', 'all', '所有人员', null, 'rank', null, '人事经理', '0', '2015-08-03 13:29:04', null);
 INSERT INTO `rock_flow_course` VALUES ('32', '10', '主管审核', null, '0', '0', 'all', '所有人员', null, 'super', null, null, '0', '2015-08-05 12:08:06', null);
+INSERT INTO `rock_flow_course` VALUES ('33', '11', '上级审批', null, '0', '0', 'all', '所有人员', null, 'super', null, null, '0', '2015-08-20 17:13:05', null);
+INSERT INTO `rock_flow_course` VALUES ('34', '11', '财务主管审批', null, '33', '0', null, null, null, 'rank', null, '财务经理', '0', '2015-08-20 17:15:36', null);
+INSERT INTO `rock_flow_course` VALUES ('35', '11', '财务付款', null, '34', '0', null, null, null, 'rank', null, '出纳', '0', '2015-08-20 17:15:00', null);
+INSERT INTO `rock_flow_course` VALUES ('36', '12', '上级审批', null, '0', '0', 'all', '所有人员', null, 'super', null, null, '0', '2015-08-25 11:17:18', null);
+INSERT INTO `rock_flow_course` VALUES ('37', '12', '财务主管审批', null, '36', '0', null, null, null, 'rank', null, '财务经理', '0', '2015-08-25 11:18:00', null);
+INSERT INTO `rock_flow_course` VALUES ('38', '12', '出纳付款', null, '37', '0', null, null, null, 'rank', null, '出纳', '0', '2015-08-25 11:18:19', null);
+INSERT INTO `rock_flow_course` VALUES ('39', '13', '上级审批', null, '0', '0', 'all', '所有人员', null, 'super', null, null, '0', '2015-08-25 11:22:06', null);
 
 -- ----------------------------
 -- Table structure for `rock_flow_courseact`
@@ -488,7 +521,7 @@ CREATE TABLE `rock_flow_courseact` (
   `explain` varchar(500) DEFAULT NULL COMMENT '说明',
   `color` varchar(20) DEFAULT NULL COMMENT '状态颜色',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_courseact
@@ -497,6 +530,8 @@ INSERT INTO `rock_flow_courseact` VALUES ('1', '4', '25', '签收', '已签收',
 INSERT INTO `rock_flow_courseact` VALUES ('2', '4', '25', '不签收', null, '2', '-1', '1', null, null, 'red');
 INSERT INTO `rock_flow_courseact` VALUES ('3', '6', '26', '发放', '已发放', '1', '0', '0', null, null, 'green');
 INSERT INTO `rock_flow_courseact` VALUES ('4', '6', '26', '驳回', null, '2', '-1', '1', null, null, 'red');
+INSERT INTO `rock_flow_courseact` VALUES ('5', '11', '35', '付款', '已付款', '1', '0', '0', null, null, 'green');
+INSERT INTO `rock_flow_courseact` VALUES ('6', '12', '38', '付款', '已付款', '1', '0', '0', null, null, 'green');
 
 -- ----------------------------
 -- Table structure for `rock_flow_input`
@@ -532,57 +567,89 @@ CREATE TABLE `rock_flow_log` (
   `checkname` varchar(20) DEFAULT NULL,
   `checkid` smallint(6) DEFAULT NULL,
   `modeid` smallint(6) DEFAULT NULL COMMENT '@模块Id',
+  `color` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=232 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_log
 -- ----------------------------
-INSERT INTO `rock_flow_log` VALUES ('187', 'kq_info', '33', '1', null, '提交', '0', '2015-07-20 10:27:15', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1');
-INSERT INTO `rock_flow_log` VALUES ('188', 'kq_info', '33', '1', null, '提交', '0', '2015-07-20 10:30:40', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1');
-INSERT INTO `rock_flow_log` VALUES ('189', 'kq_info', '34', '1', null, '提交', '0', '2015-07-20 10:31:17', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '2');
-INSERT INTO `rock_flow_log` VALUES ('190', 'kq_out', '7', '1', null, '提交', '0', '2015-07-20 10:31:47', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '3');
-INSERT INTO `rock_flow_log` VALUES ('191', 'docdeil', '8', '1', null, '提交', '0', '2015-07-20 11:03:49', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4');
-INSERT INTO `rock_flow_log` VALUES ('192', 'supplea', '3', '1', null, '提交', '0', '2015-07-23 16:58:27', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6');
-INSERT INTO `rock_flow_log` VALUES ('193', 'supplea', '4', '1', null, '提交', '0', '2015-07-23 17:03:32', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6');
-INSERT INTO `rock_flow_log` VALUES ('194', 'supplea', '4', '1', '通过', '行政发放', '26', '2015-07-23 17:14:28', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '6');
-INSERT INTO `rock_flow_log` VALUES ('195', 'supplea', '5', '1', null, '提交', '0', '2015-07-23 17:39:37', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6');
-INSERT INTO `rock_flow_log` VALUES ('196', 'supplea', '5', '2', '驳回', '行政发放', '26', '2015-07-23 17:40:51', '1211221', '127.0.0.1', 'MSIE 9', '小乔', '5', '6');
-INSERT INTO `rock_flow_log` VALUES ('197', 'supplea', '5', '1', '发放', '行政发放', '26', '2015-07-23 17:42:32', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '6');
-INSERT INTO `rock_flow_log` VALUES ('198', 'kq_info', '35', '1', null, '提交', '0', '2015-07-29 15:01:24', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1');
-INSERT INTO `rock_flow_log` VALUES ('199', 'docdeil', '8', '1', null, '提交', '0', '2015-07-29 16:58:51', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4');
-INSERT INTO `rock_flow_log` VALUES ('200', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:10:22', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4');
-INSERT INTO `rock_flow_log` VALUES ('201', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:10:57', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4');
-INSERT INTO `rock_flow_log` VALUES ('202', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:11:27', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4');
-INSERT INTO `rock_flow_log` VALUES ('203', 'hrpositive', '1', '1', null, '提交', '0', '2015-08-01 11:52:54', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '7');
-INSERT INTO `rock_flow_log` VALUES ('204', 'hrpositive', '1', '1', '通过', '领导审批', '27', '2015-08-01 12:09:50', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '7');
-INSERT INTO `rock_flow_log` VALUES ('205', 'hrpositive', '1', '1', '通过', '人事审批', '28', '2015-08-01 12:15:49', null, '127.0.0.1', 'MSIE 9', '貂蝉', '3', '7');
-INSERT INTO `rock_flow_log` VALUES ('206', 'hrredund', '1', '1', null, '提交', '0', '2015-08-02 14:58:31', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('207', 'hrredund', '1', '1', null, '提交', '0', '2015-08-02 15:04:25', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('208', 'hrredund', '2', '1', null, '提交', '0', '2015-08-02 15:05:33', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('209', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:43:26', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('210', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:46:40', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('211', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:47:55', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('212', 'hrredund', '1', '1', null, '提交', '0', '2015-08-03 10:49:07', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9');
-INSERT INTO `rock_flow_log` VALUES ('213', 'hrtransfer', '1', '1', null, '提交', '0', '2015-08-03 14:27:29', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8');
-INSERT INTO `rock_flow_log` VALUES ('214', 'hrtransfer', '1', '1', null, '提交', '0', '2015-08-03 17:46:15', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8');
-INSERT INTO `rock_flow_log` VALUES ('215', 'hrtransfer', '1', '1', '通过', '人事经理审批', '31', '2015-08-03 17:46:49', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8');
-INSERT INTO `rock_flow_log` VALUES ('216', 'hrtransfer', '2', '1', null, '提交', '0', '2015-08-03 17:49:34', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8');
-INSERT INTO `rock_flow_log` VALUES ('217', 'hrtransfer', '2', '1', '通过', '人事经理审批', '31', '2015-08-03 17:49:58', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8');
-INSERT INTO `rock_flow_log` VALUES ('218', 'hrtransfer', '3', '1', null, '提交', '0', '2015-08-03 18:09:37', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8');
-INSERT INTO `rock_flow_log` VALUES ('219', 'hrtransfer', '3', '1', '通过', '人事经理审批', '31', '2015-08-03 18:09:46', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8');
-INSERT INTO `rock_flow_log` VALUES ('220', 'hrpositive', '2', '1', null, '提交', '0', '2015-08-05 10:42:22', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '7');
-INSERT INTO `rock_flow_log` VALUES ('221', 'kq_dkerr', '1', '1', null, '提交', '0', '2015-08-05 12:08:41', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '10');
-INSERT INTO `rock_flow_log` VALUES ('222', 'kq_dkerr', '1', '1', '通过', '主管审核', '32', '2015-08-05 12:28:44', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '10');
-INSERT INTO `rock_flow_log` VALUES ('223', 'kq_info', '33', '1', null, '提交', '0', '2015-08-05 14:36:33', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1');
-INSERT INTO `rock_flow_log` VALUES ('224', 'kq_info', '33', '1', '通过', '主管审核', '1', '2015-08-05 15:56:27', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '1');
-INSERT INTO `rock_flow_log` VALUES ('225', 'kq_info', '35', '1', '通过', '主管审核', '1', '2015-08-05 15:56:32', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '1');
-INSERT INTO `rock_flow_log` VALUES ('226', 'kq_info', '33', '1', '通过', '人事确认', '2', '2015-08-05 15:57:11', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '1');
-INSERT INTO `rock_flow_log` VALUES ('227', 'kq_info', '35', '1', '通过', '人事确认', '2', '2015-08-05 15:57:16', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '1');
-INSERT INTO `rock_flow_log` VALUES ('228', 'kq_info', '34', '1', null, '删除', '0', '2015-08-07 12:20:46', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '2');
-INSERT INTO `rock_flow_log` VALUES ('229', 'docdeil', '8', '1', '签收', '接收人签收', '25', '2015-08-08 22:28:30', null, '192.168.1.103', 'IE', '貂蝉', '3', '4');
-INSERT INTO `rock_flow_log` VALUES ('230', 'hrredund', '1', '2', '不通过', '领导审批', '29', '2015-08-09 16:14:54', '不够', '192.168.1.150', 'IE', '刘备', '7', '9');
-INSERT INTO `rock_flow_log` VALUES ('231', 'hrredund', '1', '1', null, '删除', '0', '2015-08-09 18:05:17', null, '192.168.1.150', 'IE', null, '0', '9');
+INSERT INTO `rock_flow_log` VALUES ('187', 'kq_info', '33', '1', null, '提交', '0', '2015-07-20 10:27:15', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('188', 'kq_info', '33', '1', null, '提交', '0', '2015-07-20 10:30:40', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('189', 'kq_info', '34', '1', null, '提交', '0', '2015-07-20 10:31:17', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '2', null);
+INSERT INTO `rock_flow_log` VALUES ('190', 'kq_out', '7', '1', null, '提交', '0', '2015-07-20 10:31:47', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('191', 'docdeil', '8', '1', null, '提交', '0', '2015-07-20 11:03:49', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('192', 'supplea', '3', '1', null, '提交', '0', '2015-07-23 16:58:27', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('193', 'supplea', '4', '1', null, '提交', '0', '2015-07-23 17:03:32', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('194', 'supplea', '4', '1', '通过', '行政发放', '26', '2015-07-23 17:14:28', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('195', 'supplea', '5', '1', null, '提交', '0', '2015-07-23 17:39:37', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('196', 'supplea', '5', '2', '驳回', '行政发放', '26', '2015-07-23 17:40:51', '1211221', '127.0.0.1', 'MSIE 9', '小乔', '5', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('197', 'supplea', '5', '1', '发放', '行政发放', '26', '2015-07-23 17:42:32', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('198', 'kq_info', '35', '1', null, '提交', '0', '2015-07-29 15:01:24', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('199', 'docdeil', '8', '1', null, '提交', '0', '2015-07-29 16:58:51', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('200', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:10:22', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('201', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:10:57', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('202', 'docdeil', '8', '1', null, '提交', '0', '2015-07-30 20:11:27', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('203', 'hrpositive', '1', '1', null, '提交', '0', '2015-08-01 11:52:54', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '7', null);
+INSERT INTO `rock_flow_log` VALUES ('204', 'hrpositive', '1', '1', '通过', '领导审批', '27', '2015-08-01 12:09:50', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '7', null);
+INSERT INTO `rock_flow_log` VALUES ('205', 'hrpositive', '1', '1', '通过', '人事审批', '28', '2015-08-01 12:15:49', null, '127.0.0.1', 'MSIE 9', '貂蝉', '3', '7', null);
+INSERT INTO `rock_flow_log` VALUES ('206', 'hrredund', '1', '1', null, '提交', '0', '2015-08-02 14:58:31', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('207', 'hrredund', '1', '1', null, '提交', '0', '2015-08-02 15:04:25', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('208', 'hrredund', '2', '1', null, '提交', '0', '2015-08-02 15:05:33', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('209', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:43:26', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('210', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:46:40', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('211', 'hrredund', '2', '1', null, '提交', '0', '2015-08-03 10:47:55', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('212', 'hrredund', '1', '1', null, '提交', '0', '2015-08-03 10:49:07', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('213', 'hrtransfer', '1', '1', null, '提交', '0', '2015-08-03 14:27:29', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('214', 'hrtransfer', '1', '1', null, '提交', '0', '2015-08-03 17:46:15', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('215', 'hrtransfer', '1', '1', '通过', '人事经理审批', '31', '2015-08-03 17:46:49', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('216', 'hrtransfer', '2', '1', null, '提交', '0', '2015-08-03 17:49:34', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('217', 'hrtransfer', '2', '1', '通过', '人事经理审批', '31', '2015-08-03 17:49:58', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('218', 'hrtransfer', '3', '1', null, '提交', '0', '2015-08-03 18:09:37', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('219', 'hrtransfer', '3', '1', '通过', '人事经理审批', '31', '2015-08-03 18:09:46', null, '127.0.0.1', 'Firefox', '貂蝉', '3', '8', null);
+INSERT INTO `rock_flow_log` VALUES ('220', 'hrpositive', '2', '1', null, '提交', '0', '2015-08-05 10:42:22', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '7', null);
+INSERT INTO `rock_flow_log` VALUES ('221', 'kq_dkerr', '1', '1', null, '提交', '0', '2015-08-05 12:08:41', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '10', null);
+INSERT INTO `rock_flow_log` VALUES ('222', 'kq_dkerr', '1', '1', '通过', '主管审核', '32', '2015-08-05 12:28:44', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '10', null);
+INSERT INTO `rock_flow_log` VALUES ('223', 'kq_info', '33', '1', null, '提交', '0', '2015-08-05 14:36:33', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('224', 'kq_info', '33', '1', '通过', '主管审核', '1', '2015-08-05 15:56:27', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('225', 'kq_info', '35', '1', '通过', '主管审核', '1', '2015-08-05 15:56:32', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('226', 'kq_info', '33', '1', '通过', '人事确认', '2', '2015-08-05 15:57:11', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('227', 'kq_info', '35', '1', '通过', '人事确认', '2', '2015-08-05 15:57:16', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('228', 'kq_info', '34', '1', null, '删除', '0', '2015-08-07 12:20:46', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '2', null);
+INSERT INTO `rock_flow_log` VALUES ('229', 'docdeil', '8', '1', '签收', '接收人签收', '25', '2015-08-08 22:28:30', null, '192.168.1.103', 'IE', '貂蝉', '3', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('230', 'hrredund', '1', '2', '不通过', '领导审批', '29', '2015-08-09 16:14:54', '不够', '192.168.1.150', 'IE', '刘备', '7', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('231', 'hrredund', '1', '1', null, '删除', '0', '2015-08-09 18:05:17', null, '192.168.1.150', 'IE', null, '0', '9', null);
+INSERT INTO `rock_flow_log` VALUES ('232', 'docdeil', '9', '1', null, '提交', '0', '2015-08-14 10:40:21', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('233', 'docdeil', '9', '1', '签收', '接收人签收', '25', '2015-08-14 10:44:13', '好吧', '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('234', 'docdeil', '10', '1', null, '提交', '0', '2015-08-14 10:57:14', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('235', 'docdeil', '10', '1', null, '提交', '0', '2015-08-14 11:01:45', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('236', 'docdeil', '10', '1', '签收', '接收人签收', '25', '2015-08-15 21:43:27', null, '192.168.1.103', 'IE', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('237', 'kq_info', '36', '2', '不通过', '主管审核', '1', '2015-08-18 16:19:50', '不能通过啊', '127.0.0.1', 'Firefox', '刘备', '7', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('238', 'kq_info', '36', '1', null, '删除', '0', '2015-08-19 10:51:51', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('239', 'kq_info', '37', '1', null, '提交', '0', '2015-08-19 10:59:43', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('240', 'kq_info', '37', '1', null, '删除', '0', '2015-08-19 11:05:34', '不想请假了啦', '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('241', 'kq_out', '8', '1', null, '提交', '0', '2015-08-19 11:16:40', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('242', 'kq_out', '8', '1', null, '追加说明', '0', '2015-08-19 11:33:43', '哈啊哈哈', '127.0.0.1', 'MSIE 9', '管理员', '1', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('243', 'supplea', '7', '1', null, '提交', '0', '2015-08-19 12:14:03', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('244', 'supplea', '7', '1', null, '追加说明', '0', '2015-08-19 12:14:38', '哈哈', '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('245', 'kq_out', '8', '1', null, '追加说明', '0', '2015-08-19 13:20:02', '嗯', '127.0.0.1', 'MSIE 9', '管理员', '1', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('246', 'kq_out', '8', '2', '不通过', '主管审核', '24', '2015-08-19 14:41:50', '没事干嘛外出啊！', '127.0.0.1', 'MSIE 9', '貂蝉', '3', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('247', 'kq_out', '8', '1', null, '追加说明', '0', '2015-08-19 14:44:14', '就是想出去走走啊，哇', '127.0.0.1', 'MSIE 9', '管理员', '1', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('248', 'kq_out', '8', '1', '通过', '主管审核', '24', '2015-08-19 14:45:58', '好把，你去吧', '127.0.0.1', 'MSIE 9', '貂蝉', '3', '3', null);
+INSERT INTO `rock_flow_log` VALUES ('249', 'kq_info', '39', '1', null, '提交', '0', '2015-08-20 10:57:03', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '1', null);
+INSERT INTO `rock_flow_log` VALUES ('250', 'kq_dkerr', '2', '1', null, '提交', '0', '2015-08-20 16:35:08', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '10', null);
+INSERT INTO `rock_flow_log` VALUES ('251', 'kq_dkerr', '2', '1', null, '提交', '0', '2015-08-20 16:37:34', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '10', null);
+INSERT INTO `rock_flow_log` VALUES ('252', 'docdeil', '11', '1', null, '提交', '0', '2015-08-21 11:25:09', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '4', null);
+INSERT INTO `rock_flow_log` VALUES ('253', 'fininfom', '1', '1', null, '提交', '0', '2015-08-21 13:32:05', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('254', 'fininfom', '1', '1', null, '提交', '0', '2015-08-21 13:38:26', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('255', 'fininfom', '1', '1', null, '提交', '0', '2015-08-21 13:45:19', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('256', 'fininfom', '1', '1', '通过', '上级审批', '33', '2015-08-21 13:55:28', null, '127.0.0.1', 'MSIE 9', '刘备', '7', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('257', 'fininfom', '1', '2', '不通过', '财务主管审批', '34', '2015-08-21 20:39:20', 'hahaha', '127.0.0.1', 'MSIE 9', '赵子龙', '9', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('258', 'fininfom', '1', '1', '通过', '财务主管审批', '34', '2015-08-21 20:39:40', null, '127.0.0.1', 'MSIE 9', '赵子龙', '9', '11', null);
+INSERT INTO `rock_flow_log` VALUES ('259', 'fininfom', '1', '1', '付款', '财务付款', '35', '2015-08-21 20:42:13', null, '127.0.0.1', 'MSIE 9', '吕布', '10', '11', 'green');
+INSERT INTO `rock_flow_log` VALUES ('260', 'supplea', '8', '1', null, '提交', '0', '2015-08-21 21:03:10', null, '127.0.0.1', 'MSIE 9', '管理员', '1', '6', null);
+INSERT INTO `rock_flow_log` VALUES ('261', 'supplea', '8', '2', '驳回', '行政发放', '26', '2015-08-21 21:04:52', '挨饿', '127.0.0.1', 'MSIE 9', '小乔', '5', '6', 'red');
+INSERT INTO `rock_flow_log` VALUES ('262', 'supplea', '8', '1', '已发放', '行政发放', '26', '2015-08-21 21:05:01', null, '127.0.0.1', 'MSIE 9', '小乔', '5', '6', 'green');
 
 -- ----------------------------
 -- Table structure for `rock_flow_rule`
@@ -608,7 +675,7 @@ CREATE TABLE `rock_flow_rule` (
   `nstatus` tinyint(4) DEFAULT '0' COMMENT '当前状态',
   `allcheckid` varchar(300) DEFAULT NULL COMMENT '所有审核人id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13171 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13182 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_rule
@@ -617,6 +684,10 @@ INSERT INTO `rock_flow_rule` VALUES ('13157', '管理员', '外出出差', '3', 
 INSERT INTO `rock_flow_rule` VALUES ('13159', '管理员', '申请办公用品', '6', '26', '5', '小乔', '26', '0', '小乔', '5', '1', '1', '2015-07-23 16:58:27', 'supplea', '3', '0', '5');
 INSERT INTO `rock_flow_rule` VALUES ('13165', '管理员', '离职申请', '9', '29|30', '7|3', '刘备|貂蝉', '29', '30', '刘备', '7', '2', '1', '2015-08-03 10:47:55', 'hrredund', '2', '0', '7,3');
 INSERT INTO `rock_flow_rule` VALUES ('13169', '管理员', '转正申请', '7', '27|28', '7|3', '刘备|貂蝉', '27', '28', '刘备', '7', '2', '1', '2015-08-05 10:42:22', 'hrpositive', '2', '0', '7,3');
+INSERT INTO `rock_flow_rule` VALUES ('13177', '管理员', '请假条', '1', '1|2', '7|5', '刘备|小乔', '1', '2', '刘备', '7', '2', '1', '2015-08-20 10:57:03', 'kq_info', '39', '0', '7,5');
+INSERT INTO `rock_flow_rule` VALUES ('13176', '管理员', '申请办公用品', '6', '26', '5', '小乔', '26', '0', '小乔', '5', '1', '1', '2015-08-19 12:14:03', 'supplea', '7', '0', '5');
+INSERT INTO `rock_flow_rule` VALUES ('13178', '管理员', '打卡异常', '10', '32', '7', '刘备', '32', '0', '刘备', '7', '1', '1', '2015-08-20 16:37:34', 'kq_dkerr', '2', '0', '7');
+INSERT INTO `rock_flow_rule` VALUES ('13179', '管理员', '文件传送', '4', '25', '1', '管理员', '25', '0', '管理员', '1', '1', '1', '2015-08-21 11:25:09', 'docdeil', '11', '0', '1');
 
 -- ----------------------------
 -- Table structure for `rock_flow_set`
@@ -642,7 +713,7 @@ CREATE TABLE `rock_flow_set` (
   `isflow` tinyint(1) DEFAULT '1' COMMENT '是否有流程',
   `isapp` tinyint(1) DEFAULT '1' COMMENT '@是否app模块',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_flow_set
@@ -657,6 +728,9 @@ INSERT INTO `rock_flow_set` VALUES ('7', '转正申请', 'hrpositive', '30', '20
 INSERT INTO `rock_flow_set` VALUES ('8', '人事调动', 'hrtransfer', '32', '2015-08-04 16:08:53', 'hrtransfer', null, null, null, null, '[{tranname}]【{trantype}】:{olddeptname}→{newdeptname},{oldranking}→{newranking}', '人力资源', '1', '1', '0', 'HT-Ymd-', '1', '0');
 INSERT INTO `rock_flow_set` VALUES ('9', '离职申请', 'hrredund', '31', '2015-08-03 10:36:35', 'hrredund', null, null, null, null, '原因【{redundreson}】辞职日期[{quitdt}],类型[{redundtype}]', '人力资源', '1', '1', '0', 'HE-Ymd-', '1', '0');
 INSERT INTO `rock_flow_set` VALUES ('10', '打卡异常', 'dkerr', '3', '2015-08-05 12:09:30', 'kq_dkerr', null, null, null, null, '{dt}{errtype},应打卡{ytime}', '人事行政', '1', '1', '0', 'KE-Ymd-', '1', '0');
+INSERT INTO `rock_flow_set` VALUES ('11', '费用报销', 'finfybx', '40', '2015-08-20 17:33:46', 'fininfom', null, null, null, 'money', '报销金额:{money}', '财务', '1', '1', '0', 'PA-Ymd-', '1', '0');
+INSERT INTO `rock_flow_set` VALUES ('12', '出差报销', 'finccbx', '41', '2015-08-25 11:02:29', 'fininfom', null, null, null, null, null, '财务', '1', '0', '0', 'PB-Ymd-', '0', '0');
+INSERT INTO `rock_flow_set` VALUES ('13', '请款单', 'finqkd', '42', '2015-08-25 11:04:11', 'fininfom', null, null, null, null, null, '财务', '1', '0', '0', 'PC-Ymd-', '0', '0');
 
 -- ----------------------------
 -- Table structure for `rock_group`
@@ -698,13 +772,16 @@ CREATE TABLE `rock_hrpositive` (
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
   `isover` tinyint(1) DEFAULT '0',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_hrpositive
 -- ----------------------------
-INSERT INTO `rock_hrpositive` VALUES ('1', '1', 'OA项目经理', '2015-01-01', '2015-08-01', '2015-08-15', '2015-08-01 11:52:54', '哈哈哈哈', '1', '1', null, '7,3', '1', '貂蝉', null, '0');
+INSERT INTO `rock_hrpositive` VALUES ('1', '1', 'OA项目经理', '2015-01-01', '2015-08-01', '2015-08-15', '2015-08-01 11:52:54', '哈哈哈哈', '1', '1', null, '7,3', '1', '貂蝉', null, '1', null, null, null);
 
 -- ----------------------------
 -- Table structure for `rock_hrredund`
@@ -728,13 +805,16 @@ CREATE TABLE `rock_hrredund` (
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
   `isover` tinyint(1) DEFAULT '0',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_hrredund
 -- ----------------------------
-INSERT INTO `rock_hrredund` VALUES ('1', '1', 'OA项目经理', '2015-01-01', '2015-08-04', '自动离职', '无法胜任工作,另找到工作,年龄到期', '2015-08-03 10:49:07', 'hahaha', '5', '1', '7', '7,3', '2', '刘备', '刘备', '0');
+INSERT INTO `rock_hrredund` VALUES ('1', '1', 'OA项目经理', '2015-01-01', '2015-08-04', '自动离职', '无法胜任工作,另找到工作,年龄到期', '2015-08-03 10:49:07', 'hahaha', '5', '1', '7', '7,3', '2', '刘备', '刘备', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `rock_hrtransfer`
@@ -762,15 +842,18 @@ CREATE TABLE `rock_hrtransfer` (
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
   `isover` tinyint(1) DEFAULT '0',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_hrtransfer
 -- ----------------------------
-INSERT INTO `rock_hrtransfer` VALUES ('1', '1', '7', '刘备', '平调', '管理部', '董事长', '2015-08-03', '业务部', '2', 'CEO', '2015-08-03 17:46:15', 'hahahah', '1', '1', null, '3', '1', '貂蝉', null, '1');
-INSERT INTO `rock_hrtransfer` VALUES ('2', '1', '1', '管理员', '平调', '业务部', 'CEO', '2015-08-03', '开发部', '4', 'OA项目经理', '2015-08-03 17:49:34', 'hah', '1', '1', null, '3', '1', '貂蝉', null, '1');
-INSERT INTO `rock_hrtransfer` VALUES ('3', '1', '7', '刘备', '晋升', '业务部', 'CEO', '2015-08-03', '管理部', '1', '董事长', '2015-08-03 18:09:37', '董事长aa', '1', '1', null, '3', '1', '貂蝉', null, '1');
+INSERT INTO `rock_hrtransfer` VALUES ('1', '1', '7', '刘备', '平调', '管理部', '董事长', '2015-08-03', '业务部', '2', 'CEO', '2015-08-03 17:46:15', 'hahahah', '1', '1', null, '3', '1', '貂蝉', null, '1', null, null, null);
+INSERT INTO `rock_hrtransfer` VALUES ('2', '1', '1', '管理员', '平调', '业务部', 'CEO', '2015-08-03', '开发部', '4', 'OA项目经理', '2015-08-03 17:49:34', 'hah', '1', '1', null, '3', '1', '貂蝉', null, '1', null, null, null);
+INSERT INTO `rock_hrtransfer` VALUES ('3', '1', '7', '刘备', '晋升', '业务部', 'CEO', '2015-08-03', '管理部', '1', '董事长', '2015-08-03 18:09:37', '董事长aa', '1', '1', null, '3', '1', '貂蝉', null, '1', null, null, null);
 
 -- ----------------------------
 -- Table structure for `rock_im_group`
@@ -786,18 +869,21 @@ CREATE TABLE `rock_im_group` (
   `createdt` datetime DEFAULT NULL COMMENT '创建时间',
   `face` varchar(50) DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_im_group
 -- ----------------------------
 INSERT INTO `rock_im_group` VALUES ('1', '技术群', '0', '0', null, null, null, null);
 INSERT INTO `rock_im_group` VALUES ('2', '讨论区1', '1', '0', null, null, null, null);
-INSERT INTO `rock_im_group` VALUES ('3', 'OA通告', '2', '0', null, null, null, null);
-INSERT INTO `rock_im_group` VALUES ('4', '会议通知', '2', '0', null, null, null, null);
+INSERT INTO `rock_im_group` VALUES ('3', 'OA通告', '2', '0', null, null, null, 'images/im/laba.png');
+INSERT INTO `rock_im_group` VALUES ('4', '会议通知', '2', '0', null, null, null, 'images/im/meet.png');
 INSERT INTO `rock_im_group` VALUES ('5', '商务群', '0', '0', null, null, null, null);
-INSERT INTO `rock_im_group` VALUES ('7', '流程单据', '2', '0', null, null, '2015-06-25 16:03:34', null);
+INSERT INTO `rock_im_group` VALUES ('7', '流程单据', '2', '0', null, null, '2015-06-25 16:03:34', 'images/im/dai.jpg');
 INSERT INTO `rock_im_group` VALUES ('8', '哈哈哈', '1', '0', '1', '管理员', '2015-07-17 17:43:38', null);
+INSERT INTO `rock_im_group` VALUES ('9', 'OA项目讨论', '1', '0', '1', null, '2015-08-14 17:11:18', null);
+INSERT INTO `rock_im_group` VALUES ('10', '高管的', '1', '0', '1', null, '2015-08-14 17:13:24', null);
+INSERT INTO `rock_im_group` VALUES ('11', '人事招聘', '1', '0', '3', null, '2015-08-18 09:34:04', null);
 
 -- ----------------------------
 -- Table structure for `rock_im_groupuser`
@@ -809,7 +895,7 @@ CREATE TABLE `rock_im_groupuser` (
   `uid` int(11) DEFAULT '0',
   `adddt` datetime DEFAULT NULL COMMENT '时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_im_groupuser
@@ -823,6 +909,14 @@ INSERT INTO `rock_im_groupuser` VALUES ('17', '1', '5', '2015-07-21 10:54:01');
 INSERT INTO `rock_im_groupuser` VALUES ('11', '2', '5', '2015-06-16 12:04:08');
 INSERT INTO `rock_im_groupuser` VALUES ('14', '8', '1', '2015-07-17 17:43:38');
 INSERT INTO `rock_im_groupuser` VALUES ('15', '8', '4', '2015-07-17 17:44:53');
+INSERT INTO `rock_im_groupuser` VALUES ('20', '9', '1', '2015-08-14 17:11:18');
+INSERT INTO `rock_im_groupuser` VALUES ('27', '11', '3', '2015-08-18 09:34:04');
+INSERT INTO `rock_im_groupuser` VALUES ('22', '10', '7', '2015-08-14 17:13:50');
+INSERT INTO `rock_im_groupuser` VALUES ('23', '8', '7', '2015-08-17 11:31:44');
+INSERT INTO `rock_im_groupuser` VALUES ('24', '8', '9', '2015-08-17 11:32:40');
+INSERT INTO `rock_im_groupuser` VALUES ('25', '8', '10', '2015-08-17 11:32:40');
+INSERT INTO `rock_im_groupuser` VALUES ('26', '8', '8', '2015-08-17 11:32:40');
+INSERT INTO `rock_im_groupuser` VALUES ('28', '11', '4', '2015-08-18 09:36:42');
 
 -- ----------------------------
 -- Table structure for `rock_im_mess`
@@ -842,14 +936,119 @@ CREATE TABLE `rock_im_mess` (
   `table` varchar(50) DEFAULT NULL COMMENT '对应表',
   `mid` int(11) DEFAULT NULL COMMENT '主id',
   `url` varchar(1000) DEFAULT NULL COMMENT '相关地址',
+  `ftype` tinyint(1) DEFAULT '0' COMMENT '来源@0|pc端,1|APP',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=575 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=715 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_im_mess
 -- ----------------------------
-INSERT INTO `rock_im_mess` VALUES ('573', '2015-08-08 22:28:30', '0', 'nl0jjj0pn0jjj0nl0jjj0ll0qj0nl0po0jjl0jip0qp0ll0rp0qp0jim0ll0ql0nn0jjo0jjp0ql0no0jjj0pr0jir0on0jil0ql0jkk0jiq0jio0ri0qq0jiq0jio0nn0rr0nm0qk0jip0jip0jjo0pp0jio0on0jki0pq0qm0on0nj0pp0jio0on0jjo0pp0oq0on0jjr0pp0qo0nj0jiq0jjo0nn0po0jiq0jjk0pl0qm0jji0jip0pl0rq0jiq0jjm0jjj0jkk0jir0jin0pm0on0nq08', '0', '7', '1', 'system', '0', null, 'docdeil', '8', '?rocktoken=qp0pl0lq0ihq0qp0oi0mo0mi0ol0ihq0pi0mo0ihh0oi0oh0ijj0qo0mi0ol0lq0qp0ihm0qh0ihl0ph0pp0qh0iij0qh0pp0qq0ihq0pq0po0iij0ihl0ihi0oi0ol0iip0qp0mh0iiq0mo0qo0oj0pj0iin0qp0no0qh0lq0qo0po0pi0mo0oo0pk0qh0iin0qp0mh0pj0ihp0qp0iih0pn0iin0ph0po0pj0iip0pq0mh0pj0ihp0qo0po0iiq0ihq0ihh0oi0oh0ihm0qp0oi0pm0mo0qh0oi0mo0ihn0qh0oi0pn0iij0qp0no0qh0iin0qo0po0pi0mo0oq0nm0mp0mp07');
-INSERT INTO `rock_im_mess` VALUES ('574', '2015-08-09 16:14:54', '0', 'rp0nnn0tr0nnn0rp0nnn0pp0un0rp0ts0nnp0nmt0ut0pp0nmn0nmv0nnt0pp0nmr0ss0nms0tv0nmn0ur0nnr0pp0nmr0nnu0nns0non0noo0nmu0nms0vm0uu0nmu0nms0rr0vv0rq0up0sv0ur0nns0tt0nms0sr0nom0tu0uq0sr0ro0tt0su0tp0nns0tt0su0sr0nnv0tt0us0rn0nmu0nmr0tq0nms0nmu0nno0tp0nmo0nmu0nno0tp0uq0nnm0nmt0tp0vm0vu0rp0ts0nmr0tu0rq0uv0st0vt0rq0ts0pp0to0uu0nmn0pp0rs0nms0tv0ut0tv0nnm0pp0ut0vu0nnn0su0nno0vu0rp0ts0nmr0tu0rp0vt0up0nmo0uu0un0ru0ru012', '0', '7', '1', 'system', '0', null, 'hrredund', '1', '?rocktoken=wv0vr0rw0onw0wv0uo0su0so0ur0onw0vo0su0onn0uo0un0opp0wu0so0ur0rw0wv0ons0wn0onr0vn0vv0wn0oop0wn0vv0ww0onw0vw0vu0oop0onr0ono0uo0ur0oov0wv0sn0oow0su0wu0up0vp0oot0wv0tu0wn0rw0wu0vu0vo0su0uu0vq0wn0oot0wv0sn0vp0onv0wv0oon0vt0oot0vn0vu0onr0opo0ww0onw0vt0onu0onn0vu0sq0onu0ur0oon0vp0onr0vw0onw0opn0onv0vn0vu0onr0opo0ww0onw0vt0onu0onn0vu0sq0onu0ur0onw0rw0oop0wn0tv0rv0opn013');
+INSERT INTO `rock_im_mess` VALUES ('607', '2015-08-14 19:24:41', '0', 'qo0ul0su0so0qo0ul0su0so0qo0ul0su0so011', '1', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('608', '2015-08-14 19:25:28', '0', 'vu0rv0onv0uv0vp0rw0uv0onn0onn0vv0tt0oos0wv0sn0un0onu0ut0opp0uq0oow0uu0vr0vs0oot0uu0tv0onq0oov0uu0vr0vp0onp0uu0vr0onu0opo0uv0vr0uq0sn0uu0vr0ts0rv0uu0tu0sq0ooq0ww0uo0onn0wv0ut0rv0onv0uv0vp0rw0uv0onn013', '1', '4', '1,4', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('609', '2015-08-14 19:25:51', '0', 'kj0gk0dck0jk0ke0gl0jk0dcc0dcc0kk0ii0ddh0lk0hc0jc0dcj0ji0dee0jf0ddl0jj0kg0kh0ddi0jj0ik0dcf0ddk0jj0kg0ke0dce0jj0kg0dcj0ded0jk0kg0kd0hf0jk0kg0jj0he0jl0jc0hj0gk0lj0je0ki0ddi0kl0dci0il0gl0jj0je0dcf0he0jk0ij0he0hd0jj0ik0kh0he0jl0ik0jf0dee0jk0kg0jf0hf0jk0ik0il0ddj0lj0ddc0ii0ddc0kj0ded0hj0jg0kg0kh0dcc0kg0kk0kd0hk0hk02', '1', '4', '1,4', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('610', '2015-08-14 19:45:38', '1', 'om0np0iij0ijh0qq0pn0mn0mi0oo0np0iii0iij07', '3', '3', '3,3', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('611', '2015-08-14 22:28:42', '1', 'ji0fj0kb0if0jf0hk0jh0cbb0jg0cbi0jh0if0jf0jh0gi0je0jf0fj0ij0ih0ih0cbk0ccd0cck0kb0gc0cck0cdc0ii0cbh0hh0gh0ki0ccb0hh0ccb0ji0cdc0gi0ic0je0jg0cdb0ib0jj0je0hg0ccc0ii0cbg0gd0fk0ij0je0hh0ih0jc0cbg0cbi0gj01', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('612', '2015-08-14 22:31:12', '1', 'ts0pt0mlt0st0tn0pu0st0mll0mll0tt0rr0mmq0ut0ql0sl0mls0sr0mnn0so0mmu0ss0tp0tq0mmr0ss0rt0mlo0mmt0ss0tp0tn0mln0ss0mlr0so0mnn0ss0tp0rq0pt0su0tp0mlo0mmu0ss0mlt0qs0pt0us0sn0tr0mmr0tu0mlr0ru0pu0ss0sn0mlo0mnl0ss0tp0uu0mms0ss0mlr0tm0ql0su0rt0ss0pu0st0rt0tm0mnn0ss0rt0tm0mms0us0mml0rr0mml0ts0mnm0qs0sp0tp0tq0mll0tp0tt0tm0qt0qt011', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('613', '2015-08-14 22:31:30', '1', 'qp0mq0jiq0pq0qk0mr0pq0jii0jii0qq0oo0jjn0rq0ni0pi0jip0po0jkk0pl0jjr0pp0qm0qn0jjo0pp0oq0jil0jjq0pp0qm0qk0jik0pp0jio0pl0jkk0pp0qm0pl0jkj0pr0oq0on0ni0pp0mr0np0mq0rp0pk0qo0jjo0qr0jio0or0mr0pp0pk0jil0mr0pq0op0nk0mr0pq0oq0qn0mq0pq0qm0qj0mr0pq0oq0qn0mq0pq0qm0qn0jjp0rp0jji0oo0jji0qp0jkj0np0pm0qm0qn0jii0qm0qq0qo0jjo0pj0ql0qn0jki0pi0qq0qp0jiq0jio0rq0ni0nl0jir0rq0ni0nl0mq0po0qq0qk0jjk0jij0pj0jiq0jjp0ri0jkj0nl0jjr0rq0jir0jii0no0pp0jio0pl0jkk0jik0pk0oo0jjp0ri0mr0jjn0jjq0qk0jip0jiq0pp0qk0qo0mq0jil0pn0oq0pl0jjr0po0jio0or0mq0pl0or0jjo0op0pn0qj0nq0nq08', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('614', '2015-08-14 22:33:05', '1', 'on0ko0pg0nk0ok0mp0om0hgg0hgg0hgp0nn0lj0oo0lh0hgj0li0no0hgl0hgm0hgo0hho0li0oo0hhh0hhh0li0ol0hhi0nm0hgp0om0li0pg0oo0hhp0hih0nn0hgm0oi0lm0pg0oo0hgk0hgo0on0hih0ln0nh0oj0ol0hig0ng0oo0oj0ml0hhh0nn0hih0li0lj0no0mn0mm0no0oh0hgl0hgn0lo06', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('615', '2015-08-14 22:38:00', '1', 'ts0pt0ul0sp0tp0ru0tr0mll0qo0mmn0oo0mlt0qp0sq0oo0mlq0qo0tu0mlq0sm0qo0mmn0qp0tm0qo0ul0mlu0mmm0sr0mml0sp0mlp0uu0mml0mmu0mnm0ss0mlr0mll0qr0uu0mlu0sl0mnm0ts0mnm0qs0sm0to0tq0mnl0sl0tt0to0rq0mmm0ss0tp0tq0mms0su0tp0mls0mlo0tp0tq0so0mmn0rs0mlt0mmr0sp0tp0tq0mll0tp0tt0tt0tr0mmu0ut0sm0qs0mlp0ul0rs0qr0mnm0ss0rt0ru0pu0sr0tp0rq0qn0sr0mnn0ru0pt0tt0mnn0so0mnm0ss0mnn0uu0pu0ss0mnn0tm0qn0ss0rt0mlt0mln0mll0sm0mlp0pu0ut0ts0so0mnl0st0tp0rr0qn0ss0tp0ru0qm0sr0mlr0so0pt0st0mlr0mlo0mnn0st0tp0tm0pt0ss0mnn0rq0pt0sr0mlu0mmn0mmu0ul0pu0mmq0mmt0to0tq0pu0sn0tq0pu0pt0qt011', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('616', '2015-08-14 23:12:01', '1', 'ut0qu0nmu0tu0uo0qv0tu0nmm0nmm0uu0ss0nnr0vu0rm0tm0nmt0ts0noo0tp0nnv0tt0uq0ur0nns0tt0su0nmp0nnu0tt0uq0uo0nmo0tt0nms0tt0nom0tt0uq0ur0rn0tt0noo0vv0rp0tu0qv0rt0qu0vt0to0us0nns0uv0nms0sv0qv0tt0to0nmp0ro0tu0st0ro0rn0tt0su0ur0ro0tv0su0tp0noo0tu0uq0tp0rp0tu0su0sv0nnt0vt0nnm0ss0nnm0ut0non0rt0tq0uq0ur0nmm0uq0uu0un0ru0ru012', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('617', '2015-08-14 23:18:15', '0', 'on0ko0pg0nk0ok0mp0om0hgg0po0ni0om0lj0pn0on0lj0hgi0pp0lg0om0ko0hgg0oo0ml0hhn0pg0oo0hgk0hgo0hgi0mo0nj0hii0no0ni0hig0hgo0hgh0nh0om0po0nm0ko0pg0nk0ok0mp0om0hgg0nj0mn0hgj0hih0nm0hgm0pp0ko0nj0mp0kp0mn0nl0oh0lo0lo06', '5', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('618', '2015-08-14 23:30:07', '1', 'ts0pt0mlt0st0tn0pu0st0mll0mll0tt0rr0mmq0ut0ql0sl0mls0sr0mnn0so0mmu0ss0tp0tq0mmr0ss0rt0mlo0mmt0ss0tp0tn0mln0ss0mlr0ss0mnn0ss0rt0rq0pu0ss0mlr0ru0pt0st0to0qo0mmu0ut0mlu0mll0ut0sr0pt0mlt0st0tn0pu0st0mll011', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('619', '2015-08-14 23:33:29', '1', 'jii0ni0qo0nj0ri0qq0jii0jiq08', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('620', '2015-08-14 23:42:20', '0', 'on0ko0hgo0no0oi0kp0no0hgg0hgg0oo0mm0hhl0po0lg0ng0hgn0nm0hii0nj0hhp0nn0ok0ol0hhm0nn0mo0hgj0hho0nn0ok0oi0hgi0nn0hgm0nn0ko0nn0hgm0mp0kp0np0ok0oh0hii0no0oj0lj0hhp0po0hgp0hgg0po0nm0ko0hgo0no0oi0kp0no0hgg06', '5', '2', '5,2', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('621', '2015-08-14 23:43:54', '0', 'vu0rv0wn0ur0vr0tw0vt0onn0onn0onw0uu0sq0vv0so0onq0sp0uv0ons0ont0onv0oov0sp0vv0ooo0ooo0sp0vs0oop0ut0onw0vt0sp0wn0vv0oow0opo0uu0opp0onr0st0wn0vv0onr0onv0vu0opo0su0uo0vq0vs0opn0un0vv0vq0ts0ooo0uu0opo0sp0sq0uv0tu0tt0uv0vo0ons0onu0sv013', '5', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('622', '2015-08-14 23:44:14', '0', 'ts0pt0mlt0st0tn0pu0st0mll0mll0tt0rr0mmq0ut0ql0sl0mls0sr0mnn0so0mmu0ss0tp0tq0mmr0ss0rt0mlo0mmt0ss0tp0tn0mln0ss0mlr0ss0pt0st0rt0ru0mnm0st0mnn0tm0qm0su0tr0qs0pt0us0sn0tr0mmr0tu0mlr0ru0pu0ss0sn0mlo0mnl0ss0mlr0rq0mms0ss0mlr0tm0mnm0su0tp0ru0pt0su0tp0uu0qo0st0mnn0tu0mms0uu0sm0qo0mml0ts0mnm0qs0sp0tp0tq0mll0tp0tt0tm0qt0qt011', '5', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('623', '2015-08-14 23:53:46', '0', 'qo0pr0kkl0klj0ss0rp0op0kll0qr0kjp0kkk0kkl09', '5', '2', '2,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('624', '2015-08-15 10:29:00', '1', 'qo0pr0kkl0klj0ss0rp0op0oj0qr0rn0kkk0kkl09', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('625', '2015-08-15 16:37:55', '1', 'tr0xo0vx0vr014', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('626', '2015-08-15 16:38:21', '1', 'mk0qh0oi0lq0mk0qh0oi0lq07', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('627', '2015-08-15 16:42:22', '1', 'qo0ul0su0so011', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('628', '2015-08-15 16:42:40', '1', 'ge0kb0hi0ik0ge0gf0hi0fj0ge0kb0ik0cbk0ge0kb0ik0cbk01', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('629', '2015-08-15 16:42:56', '1', 'rp0nno0non0tq0rp0rq0st0qu0rp0nnn0nmv0ts0rp0nno0non0rq0rp0vm0tr0nnu0rp0vm0tv0nmv0rp0vm0tv0nmv0rp0vm0tv0nmv0rp0vm0tv0nmv0rp0vm0tv0nmv012', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('630', '2015-08-15 16:44:25', '1', 'sq0wn0uw0uq0sq0wn0uw0uq013', '3', '5', '3,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('631', '2015-08-15 16:44:59', '1', 'nl0ri0qp0pn0nm0rp0qp0mo0nm0rp0pn0jii0nl0rp0ql0qp08', '3', '5', '3,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('632', '2015-08-15 16:46:27', '1', 'nl0jjj0jin0qk0nl0jjj0ql0jik0nm0pn0jij0pm08', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('633', '2015-08-15 16:46:44', '1', 'om0on0pq0nr0om0kkk0kjs0qp0om0kkl0klk0on0om0sj0rq0qo0om0qp0oj0kjm0om0rs0on0oo0om0sj0pq0kkj09', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('634', '2015-08-15 16:47:37', '1', 'kj0mk0ii0kj0kj0mk0kj0ggo0ki0ml0kf0nf05', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('635', '2015-08-15 16:47:39', '1', 'ki0ki0gfg0on0kj0mi0ggm0gfo05', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('636', '2015-08-15 16:47:41', '1', 'sq0wn0tu0vo0sq0ut0ooq0uo013', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('637', '2015-08-15 16:47:47', '1', 'ig0ih0edm0ih0ig0ml0gg0md03', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('638', '2015-08-15 16:47:50', '1', 'hf0lc0jh0ddk0hg0kl0dcd0jj0hf0ji0ddf0jd0hf0ji0ddf0jd02', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('639', '2015-08-15 16:47:57', '1', 'qo0mmm0su0sl0qo0sr0qp0mlr0qo0qp0mlu0qp0qp0ul0mlm0pt011', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('640', '2015-08-15 16:53:02', '1', 'rp0vu0nmv0non0rp0vt0ut0rt0rp0vm0ut0nmv012', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('641', '2015-08-15 16:53:57', '1', 'ig0md0km0kg0ig0md0km0kg0ig0md0km0kg03', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('642', '2015-08-15 16:57:58', '1', 'mk0qh0oq0ok0mk0qh0oq0ok07', '2', '5', '2,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('643', '2015-08-15 16:58:14', '1', 'nl0po0ni0jil0nl0rp0qp0np08', '2', '5', '2,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('644', '2015-08-15 17:01:37', '1', 'nl0jjm0pn0jim0nl0jjm0qp0oo0nm0qr0jij0qi0nl0po0jjl0pj08', '2', '5', '2,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('645', '2015-08-15 17:01:51', '1', 'om0kkl0kjo0kkr0om0sj0pq0rr0oo0oo0klk0kjl09', '2', '5', '2,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('646', '2015-08-15 17:28:19', '1', 'hf0lc0jd0gl0hf0lc0jd0gl0hf0lc0jd0gl0hf0lc0jd0gl02', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('647', '2015-08-15 17:38:30', '1', 'jh0mn0ffh0feg0jh0nl0mh0ffi0ji0lh0fgf0je0ji0nl0nl0lf0ji0nm0fej0fei0ji0nm0fej0fei04', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('648', '2015-08-15 17:38:34', '1', 'lj0pn0oj0ko0lj0nm0hhn0on0lj0nm0hhj0nh06', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('649', '2015-08-15 17:38:37', '1', 'lk0nj0hgh0hhj0lj0po0hgh0hig0lj0op0lk0ll06', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('650', '2015-08-15 17:42:44', '1', 'ki0ml0kf0gfi0ki0ml0ghg0om05', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('651', '2015-08-15 17:45:03', '1', 'ge0ih0gb0cbe0ge0ki0ji0gi0ge0kb0ji0ig0ge0kb0ji0ig0gg0gg0cdc0ii0ge0kb0ik0ie0ge0kb0ik0ie0ge0kb0ji0ig0gd0gd0hi0hi0gd0gd0hi0hi0gd0gd0hi0hi01', '5', '5', '5,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('652', '2015-08-15 17:45:09', '1', 'tr0vu0to0por0tr0xv0wv0tv0tr0xo0wv0vt0tt0tt0pqp0vv0tr0xo0vx0vr0tr0xo0vx0vr0tr0xo0wv0vt0tr0xo0vx0vr014', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('653', '2015-08-15 17:45:14', '1', 'ki0ggg0mo0ghh0ki0ggg0gfk0nh0ki0of0lm0nn0kk0kk0ghg0gfh05', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('654', '2015-08-15 17:55:14', '1', 'mk0iij0ihq0qo0mk0on0ihm0om0mk0qo0po0mo07', '2', '5', '2,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('655', '2015-08-15 17:55:34', '1', 'sq0ut0sn0onq0sq0sq0ooq0tw0sq0wv0ono0onv0sq0ut0sn0ww0sq0wn0uo0ons0ss0ss0opo0onp013', '2', '5', '2,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('656', '2015-08-15 17:56:46', '1', 'rp0vm0tv0tp0rp0vm0tv0tp0rp0vm0vt0rt0rr0rr0non0tt0rp0nnn0st0tv0rp0ts0nmv0tp0rp0ts0nmr0tu0rq0tr0pp0qu0rq0tr0pp0nmm0rp0vm0ut0tr0rr0rr0non0nmo012', '2', '5', '2,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('657', '2015-08-15 18:00:39', '0', 'tr0xo0vx0vr0tr0xo0vx0vr0tt0tt0pqp0vv0ts0vt0rr0sw0tr0vu0ppv0ut0tr0vu0pox0vr0tr0xo0vp0pot0tt0tt0pqp0poq014', '5', '2', '5,2', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('658', '2015-08-15 19:35:28', '1', 'qo0sr0ql0mlo0qo0qo0mnm0mln0qo0mmp0mnm0rs0qo0sr0mmo0mms0qq0qq0mnm0mln011', '2', '5', '2,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('659', '2015-08-15 20:22:23', '1', 'lk0pn0hhj0pn0lj0hhh0hgp0hhp06', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('660', '2015-08-15 20:46:53', '1', 'ig0if0km0eej0ig0kj0eeg0kk0ig0eee0ke0id03', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('661', '2015-08-15 20:52:32', '1', 'hg0lc0dcd0ddj0hg0lc0dcd0ddj02', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('662', '2015-08-15 21:00:38', '1', 'rp0vm0tv0tp0rp0vm0tv0tp012', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('663', '2015-08-15 21:03:42', '1', 'hf0ji0dch0hg0hf0ji0ddj0ih0hf0ji0dcl0jf0hh0hh0ded0dce02', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('664', '2015-08-15 21:03:34', '1', 'lj0nm0lg0hgj0lj0pn0on0ln06', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('665', '2015-08-15 21:04:17', '1', 'qo0mmm0mlq0tn011', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('666', '2015-08-15 21:05:59', '1', 'tr0xo0vx0vr0tr0xo0vx0vr014', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('667', '2015-08-15 21:06:16', '1', 'hf0lc0dch0gi0hf0lc0dch0gi02', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('668', '2015-08-15 21:06:50', '1', 'hf0ji0ddf0kh0hf0hg0lj0kc0hf0lj0dch0ik02', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('669', '2015-08-15 21:08:45', '1', 'ig0eee0edi0lf03', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('670', '2015-08-15 21:09:19', '1', 'jh0ne0fej0ik0jh0ne0fej0ik04', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('671', '2015-08-15 21:09:13', '1', 'jh0fff0fej0mg0jh0lk0ffl0ffj0jh0mn0hh0ffm0jh0lk0ffl0fem0ji0lh0lf0lj0jh0nl0mh0ffg0jh0ne0ml0fen0jj0jj0fgf0feg04', '1', '5', '1,5', 'user', null, null, null, null, null, '1');
+INSERT INTO `rock_im_mess` VALUES ('672', '2015-08-15 21:09:50', '1', 'hf0dde0dch0ddk0hf0lc0kj0jh02', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('673', '2015-08-15 21:10:11', '1', 'ki0of0mo0mh0ki0om0mg0gfg05', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('674', '2015-08-15 21:13:18', '1', 'mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp0mk0iij0iji0op0mk0pq0iik0ihl0ml0ok0iji0np0mk0qh0iio0lp07', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('675', '2015-08-15 21:43:27', '0', 'sq0ooo0us0ooo0sq0ooo0qq0vo0sq0ut0ooq0onu0vu0qq0wu0vu0onr0qq0vq0ss0oot0oou0vq0st0ooo0uw0onw0ts0onq0vq0opp0onv0ont0wn0vv0onv0ont0ss0ww0sr0vp0onu0onu0oot0uu0ont0ts0opn0uv0vr0ts0sp0uu0vr0vo0oot0uu0tv0ts0oow0uu0onv0so0onv0oot0ss0ut0onv0oop0uq0vr0oon0onu0uq0wv0onv0oor0ooo0opp0onw0ons0ur0ts0sv013', '0', '7', '1', 'system', '0', null, 'docdeil', '10', '?rocktoken=nm0mi0in0fen0nm0lf0jl0jf0li0fen0mf0jl0fee0lf0le0fgg0nl0jf0li0in0nm0fej0ne0fei0me0mm0ne0ffg0ne0mm0nn0fen0mn0ml0ffg0fei0fef0lf0li0ffm0nm0je0ffn0jl0nl0lg0mg0ffk0nm0kl0ne0in0nl0ml0mf0jl0ll0mh0ne0ffk0nm0je0mg0fem0nm0ffe0mk0ffk0me0ml0mg0ffm0mn0je0mg0fem0nl0ml0ffn0fen0fee0lf0le0fej0nm0lf0mj0jl0ne0lf0jl0fek0ne0lf0mk0ffg0nm0kl0ne0ffk0nl0ml0mf0jl0ll0mi0kj0jm04', '0');
+INSERT INTO `rock_im_mess` VALUES ('676', '2015-08-15 21:58:31', '1', 'lj0pg0hgl0km0lj0pg0hgl0km06', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('677', '2015-08-15 22:01:33', '1', 'oo0ihn0oj0ihp0ihp0qo0pq0mp07', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('678', '2015-08-15 22:04:48', '1', 'ig0md0km0kg0ig0md0km0kg0ig0md0km0kg03', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('679', '2015-08-15 22:06:30', '1', 'om0qp0kjo0qr0om0sj0klk0kkk0oo0oo0klk0kjl09', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('680', '2015-08-15 22:08:15', '1', 'ki0of0gfk0mo0ki0of0gfk0mo05', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('681', '2015-08-15 22:08:42', '1', 'tr0xo0pqp0ppp0tr0xo0uv0ww0wo0ppx0tw0tw014', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('682', '2015-08-15 22:11:13', '1', 'sq0ooo0sr0ooo0sr0vw0tu0tt0sq0ut0ons0uv0sq0ut0ooq0uo0vn0oow0sv0sv013', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('683', '2015-08-15 22:12:43', '1', 'qp0ul0mlm0mms011', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('684', '2015-08-15 22:26:41', '1', 'sq0rt0mmn0mnl0uu0tr0qr0mnm0st0tp0mmm0mmn011', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('685', '2015-08-16 00:08:57', '1', 'tr0ppp0pot0wq0ts0xv0vt0poo0tr0xv0wr0wv0ts0xv0vt0poo014', '5', '1', '5,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('686', '2015-08-17 12:08:39', '0', 'rq0nr0sj0qn0rn0ps0rp0kjj0ss0kjs0rp0kkl0sr0rm0om0kkp0sj0qk0qn0op0qq0kjp0rk0klk0kjl0qk0ns0kjq0rs0kjr0kko0kkr0rl0kjq0kjr0qq0rl0rp0nr0kjm0qo0pr0qm0oj0qr0pq0ol0kks0qq0pq0pp0qp0rk0kjo0kjq0or09', '1', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('687', '2015-08-17 12:09:35', '0', 'ut0qu0vm0tq0uq0sv0us0nmm0vv0nmv0us0nno0vu0up0rp0nmu0nmn0tn0us0rs0tt0nms0un0noo0nmo0tn0us0ro0vm0us0nnr0nnu0uo0nmt0nmu0tt0uo0us0qu0nmp0tr0su0uv0non0ts0nms0ur0nnv0tp0sv0nns0st0tr0un0ru0ru012', '1', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('688', '2015-08-17 14:21:14', '1', 'po0lp0qh0ol0pl0nq0pn0ihh0pn0ijj0op0ijj0pq0mh0ihl0iip0qp0mh0iiq0iio0pq0mh0ihl0iin0ihj0np0ok0lp0op0iih0ijh0ihn0qo0oi0lq0qp0on0lp0qh0ol0pl0nq0pn0ihh0ok0no0ihk0ijh0oo0ihm0mj0mk0oo0iji0nn0op0pi0ihm0iho0mp07', '1', '1', '1,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('689', '2015-08-17 14:26:23', '1', 'ml0im0ne0li0mi0kn0mk0fee0mh0fen0mk0km0mn0mm0mf0ffk0mh0fen0le0fej0mn0fen0mk0fgf0lk0ffe0li0fei0nn0ffe0ffn0fgf0lm0km0fem0jk0nn0fen0le0fgf0ml0fgf0jl0lf0mh0mj0fge0le0mm0mh0kj0fff0ll0mi0nn0ffl0lm0fgg0fel0feh0mi0mj0lh0ffg04', '1', '1', '1,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('690', '2015-08-17 17:16:56', '0', 'mm0nj0mi0kn05', '1', '2', '1,2', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('691', '2015-08-17 17:17:05', '0', 'll0mi0lh0jm04', '1', '5', '1,5', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('692', '2015-08-18 09:33:18', '0', 'oo0pl0ok0mp07', '3', '1', '1,2,3,4,5', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('693', '2015-08-18 09:34:13', '0', 'nn0ok0nj0lo06', '3', '11', '3', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('694', '2015-08-18 09:35:41', '0', 'oo0pl0ok0mp07', '3', '11', '3', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('695', '2015-08-18 09:36:04', '0', 'qq0rn0qm0or09', '3', '11', '3', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('696', '2015-08-18 09:36:47', '0', 'qp0ul0mlm0mms011', '3', '11', '3,4', 'group', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('697', '2015-08-18 10:20:56', '1', 'sq0rt0mmn0mnl0uu0tr0qr0qm0st0mnn0mmm0mmn011', '1', '1', '1,1', 'user', null, null, null, null, null, '0');
+INSERT INTO `rock_im_mess` VALUES ('700', '2015-08-19 11:16:40', '0', 'rp0uv0rm0us0rp0nnn0rm0nnt0rp0vt0up0sv0rp0rp0st0tn0um0tn0tq0non0um0nnt0vt0nnn0nnn0nmn0ut0nmm0nmu0noo0nnq0nmu0nno0tq0vu0nmu0nmq0rr0nnq0nmu0nmq0rr0nnq0nmu0nns0rq0ro0rs0uv0nnm0tp0pp0rp0uv0rm0us0rp0uv0pp0rn0tv0nmt0nns0uu0ts0uq0tp0nnv0tt0uq0ur0nnv0tv0su0sv0rp0ts0uq0sr0nnv0tt0su0sv0rs0uv0nnm0tp0pp0rp0rp0up0noo0rq0tr0pp0rn0rp0ts0nnp0rq0tv0nnt0nmn0nnt0nnn0nmn0nmn0un0nmq0nnt0ut0uo0nmv0su0nom0nmr0vv0nms0rr0nno0nmp0rq0nms0nno0nmu0rq0nmp0rq0rp0vu0non0sr0rp0uv0pp0uo0rq0uv0tv0nnn012', '1', '7', '3', 'system', '1', null, 'kq_out', '8', '?rocktoken=lk0kg0gl0dcl0lk0jd0hj0hd0jg0dcl0kd0hj0dcc0jd0jc0dee0lj0hd0jg0gl0lk0dch0lc0dcg0kc0kk0lc0dde0lc0kk0ll0dcl0kl0kj0dde0dcg0dcd0jd0jg0ddk0lk0hc0ddl0hj0lj0je0ke0ddi0lk0ij0lc0gl0lj0kj0kd0hj0jj0ded0lc0ddi0lk0hc0ke0dck0lk0ddc0ki0ddi0kc0kk0dcc0dcg0lj0kj0jk0ddd0dcc0kf0lc0gk0kl0kj0jg0ddh0lc0kg0gl0ddg0ll0ki0hj0ddk0dcc0kk0kd0dcl0lk0kj0dck0dcj0kc0kg0dcf0hk02', '0');
+INSERT INTO `rock_im_mess` VALUES ('701', '2015-08-19 14:41:50', '0', 'mk0iii0om0iii0mk0iii0kk0pi0mk0on0iik0iho0po0kk0po0iho0ihp0iio0po0oj0iio0iio0po0oj0iio0iio0po0mi0iil0ihm0ijj0ihp0ihn0qh0pp0ihp0ihn0mm0qq0ml0pk0lq0qq0iin0oo0ihn0nm0ijh0op0pl0nm0mj0oo0pl0iho0iin0oo0np0nm0iiq0oo0pn0mi0iii0iim0iii0on0iii0iih0pq0iih0ihp0iij0ok0pl0iih0iho0ok0qh0qp0mk0on0ihm0op0ml0pq0no0qo0ml0on0kk0oj0pp0ihi0kk0mn0ihn0oq0po0oq0iih0kk0po0qp0iii0np0iij0qp0mk0iil0om0ihl0mk0on0iik0on0mk0qp0ihq0iji0mk0qh0ihm0qp0mk0qo0pk0po0mk0pq0ihi0ml0mk0qh0po0om0mm0mm0iji0nn0pp0pi0mp0mp07', '3', '7', '1', 'system', '3', null, 'kq_out', '8', '?rocktoken=po0ok0kp0hgp0po0nh0ln0lh0nk0hgp0oh0ln0hgg0nh0ng0hii0pn0lh0nk0kp0po0hgl0pg0hgk0og0oo0pg0hhi0pg0oo0pp0hgp0op0on0hhi0hgk0hgh0nh0nk0hho0po0lg0hhp0ln0pn0ni0oi0hhm0po0mn0pg0kp0pn0on0oh0ln0nn0oj0pg0hhm0po0lg0oi0hgo0po0hhg0om0hhm0og0oo0hgg0hgk0pn0on0no0hhh0hgg0oj0pg0ko0op0on0nk0hhl0pg0ok0kp0hhk0pp0om0ln0hho0hgg0oo0oh0hgp0po0on0hgo0hgn0og0ok0hgj0lo06', '0');
+INSERT INTO `rock_im_mess` VALUES ('702', '2015-08-19 14:44:14', '0', 'qo0tu0ql0tr0qo0mmm0ql0mms0qo0us0to0ru0qo0qo0rs0sm0tl0sm0sp0mnm0tl0mms0us0mmm0mmm0mlm0ts0mll0mlt0mnn0mmp0mlt0mmn0sp0ut0mlt0mlp0qq0mmp0mlt0mlp0qq0mmp0mlt0mmr0qp0qn0qr0tu0mml0so0oo0qo0tu0ql0tr0qo0tu0oo0qm0su0mls0mmr0tt0sr0tp0so0mmu0ss0tp0tq0mmu0su0rt0ru0qo0sr0tp0rq0mmu0ss0rt0ru0qr0tu0mml0so0oo0qo0qo0to0mnn0qp0sq0oo0qm0qo0sr0mmo0qp0su0mms0mlm0mms0mmm0mlm0mlm0tm0mlp0mms0ts0tn0mlu0rt0mnl0mlq0uu0mlr0qq0mmn0mlo0qp0mlr0mmn0mlt0qp0mlo0qp0qo0ut0mnm0rq0qo0tu0oo0tn0qp0tu0su0mmm0tl0sm0sp0mnm0tl0mms0mlq0mmt0mmr0su0us0tu0mlr0mlr0mmp0mlt0mmq0sr0sn0mlu0mlu0sq0pr0mlu0mlo0qq0tl0mlt0mlp0qq0mmp0mlt0mlr0mmp0mmt0mmm0mmr0ut0rt0mmm0mmr0ut0rt0mlt0mlt0tu0mmp0mmt0mmt0so0mnn0mlt0mls0qn0uu0qt011', '1', '7', '3', 'system', '1', null, 'kq_out', '8', '?rocktoken=ml0lh0hm0edm0ml0ke0ik0ie0kh0edm0le0ik0edd0ke0kd0eff0mk0ie0kh0hm0ml0edi0md0edh0ld0ll0md0eef0md0ll0mm0edm0lm0lk0eef0edh0ede0ke0kh0eel0ml0id0eem0ik0mk0kf0lf0eej0ml0jk0md0hm0mk0lk0le0ik0kk0efe0md0eej0ml0id0lf0edl0ml0eed0lj0eej0ld0ll0edd0edh0mk0lk0kl0eee0edd0lg0md0hl0lm0lk0kh0eei0md0lh0hm0eeh0mm0lj0ik0eel0edd0ll0le0edm0ml0lk0edl0edk0ld0lh0edg0il03', '0');
+INSERT INTO `rock_im_mess` VALUES ('703', '2015-08-19 14:45:58', '0', 'mk0iii0om0iii0mk0iii0kk0pi0mk0on0iik0iho0po0kk0po0iho0ihp0iio0po0oj0iio0iio0po0oj0iio0iio0po0mi0iil0ihm0ijj0ihp0ihn0qh0pp0ihp0ihn0mm0qq0ml0pk0lq0qq0iin0oo0ihn0nm0ijh0op0pl0nm0mj0oo0pl0iho0iin0oo0np0nm0iiq0oo0pn0mi0ihp0iin0mm0on0ihp0iij0ok0pl0iih0iho0ok0qp0ihp0iil0iii0ijj0ihq0ihm0ol0nm0mp07', '0', '7', '1', 'system', '0', null, 'kq_out', '8', '?rocktoken=po0ok0kp0hgp0po0nh0ln0lh0nk0hgp0oh0ln0hgg0nh0ng0hii0pn0lh0nk0kp0po0hgl0pg0hgk0og0oo0pg0hhi0pg0oo0pp0hgp0op0on0hhi0hgk0hgh0nh0nk0hho0po0lg0hhp0ln0pn0ni0oi0hhm0po0mn0pg0kp0pn0on0oh0ln0nn0oj0pg0hhm0po0lg0oi0hgo0po0hhg0om0hhm0og0oo0hgg0hgk0pn0on0no0hhh0hgg0oj0pg0ko0op0on0nk0hhl0pg0ok0kp0hhk0pp0om0ln0hho0hgg0oo0oh0hgp0po0on0hgo0hgn0og0ok0hgj0lo06', '0');
+INSERT INTO `rock_im_mess` VALUES ('704', '2015-08-20 10:57:03', '0', 'hf0kl0hc0ki0hf0ddd0hc0ddj0hf0lj0kf0il0hf0hf0ij0jd0kc0jd0jg0ded0kc0ddj0lj0ddd0ddd0dcd0kj0dcc0dck0dee0ddg0ddd0ddg0hh0dce0dck0dcf0kl0dce0dcl0ddc0lj0il0hi0kl0ddc0jf0ff0hf0kl0hc0ki0hf0kl0ff0hd0jl0dcj0ddi0jj0ji0kg0jf0ddl0jj0kg0kh0ddl0jl0ik0jf0ddl0ji0kg0ih0ddl0jj0ik0il0hi0kl0ddc0jf0ff0hf0hf0kf0dee0hg0jh0ff0hd0hf0ji0ddf0hg0jl0ddj0dcd0ddj0ddd0dcd0dcd0kd0dcg0ddj0kj0ke0dcl0ik0dec0dch0ll0dci0hh0dde0dcf0hg0dci0dde0dck0hg0dcf0hg0hf0lk0ded0ih0hf0kl0ff0ke0hg0kl0jl0ddd02', '1', '7', '7', 'system', '1', null, 'kq_info', '39', '?rocktoken=nm0mi0in0fen0nm0lf0jl0jf0li0fen0mf0jl0fee0lf0le0fgg0nl0jf0li0in0nm0fej0ne0fei0me0mm0ne0ffg0ne0mm0nn0fen0mn0ml0ffg0fei0fef0lf0li0ffm0nm0je0ffn0jl0nl0lg0mg0ffk0nm0kl0ne0in0nl0ml0mf0jl0lm0fgf0ne0ffk0nm0je0mg0fem0nm0ffe0mk0ffk0me0ml0fge0fem0mn0mm0ne0fem0li0ffe0mg0fei0mn0fen0fge0fem0me0ml0ffk0fge0mm0je0fem0ffl0ne0fen0jk0fen0nm0ml0fem0fel0me0mi0ll0jh04', '0');
+INSERT INTO `rock_im_mess` VALUES ('705', '2015-08-20 16:35:08', '0', 'tr0wx0to0wu0tr0ppp0to0ppv0tr0xv0wr0ux0tr0tr0uv0vp0wo0vp0vs0pqp0wo0ppv0xv0ppp0ppp0pop0wv0poo0pow0pqq0pps0pox0pot0xo0wo0pow0pou0xv0vq0pow0ppw0vr0vu0pow0ppv0vu0por0tu0wx0ppo0vr0rr0tr0wx0to0wu0tr0wx0rr0tp0vx0pov0ppu0vo0vu0ws0vr0ppx0vv0ws0wt0ppx0vx0uw0vr0ppx0vu0ws0ut0ppx0vv0uw0ux0tu0wx0ppo0vr0rr0tr0tr0wr0pqq0ts0vt0rr0tp0tr0vu0ppr0ts0vx0ppv0pop0ppv0ppp0pop0pop0wp0pos0ppv0wv0wq0pox0uw0pqo0pot0xx0pou0tt0ppq0por0ts0pou0ppq0pow0ts0por0ts0tr0xw0pqp0ut0tr0wx0rr0wq0ts0wx0vx0ppp014', '1', '7', '7', 'system', '1', null, 'kq_dkerr', '2', '?rocktoken=vu0uq0qv0nmv0vu0tn0rt0rn0tq0nmv0un0rt0nmm0tn0tm0noo0vt0rn0tq0qv0vu0nmr0vm0nmq0um0uu0vm0nno0vm0uu0vv0nmv0uv0ut0nno0nmq0nmn0tn0tq0nnu0vu0rm0nnv0rt0vt0to0uo0nns0vu0st0vm0qv0vt0ut0un0rt0tu0non0vm0nns0vu0rm0uo0nmu0vu0nnm0us0nns0um0ut0uo0nnq0vm0uu0tq0non0tq0nnm0uo0nmq0uv0nmv0nom0nmu0um0ut0nns0nom0uu0rm0uo0nnq0vm0uu0tq0non0tq0nmv0qv0nno0vm0su0qu0non012', '0');
+INSERT INTO `rock_im_mess` VALUES ('706', '2015-08-20 16:37:34', '0', 'lj0op0lg0om0lj0hhh0lg0hhn0lj0pn0oj0mp0lj0lj0mn0nh0og0nh0nk0hih0og0hhn0pn0hhh0hhh0hgh0on0hgg0hgo0hii0hhk0hgp0hgl0pg0og0hgo0hgm0pn0ni0hgo0hho0nj0nm0hgo0hhn0nm0hgj0lm0op0hhg0nj0jj0lj0op0lg0om0lj0op0jj0lh0np0hgn0hhm0ng0nm0ok0nj0hhp0nn0ok0ol0hhp0np0mo0nj0hhp0nm0ok0ml0hhp0nn0mo0mp0lm0op0hhg0nj0jj0lj0lj0oj0hii0lk0nl0jj0lh0lj0nm0hhj0lk0np0hhn0hgh0hhn0hhh0hgh0hgh0oh0hgk0hhn0on0oi0hgp0mo0hig0hgl0pp0hgm0ll0hhi0hgj0lk0hgm0hhi0hgo0lk0hgj0lk0lj0po0hih0ml0lj0op0jj0oi0lk0op0np0hhh06', '1', '7', '7', 'system', '1', null, 'kq_dkerr', '2', '?rocktoken=wv0vr0rw0onw0wv0uo0su0so0ur0onw0vo0su0onn0uo0un0opp0wu0so0ur0rw0wv0ons0wn0onr0vn0vv0wn0oop0wn0vv0ww0onw0vw0vu0oop0onr0ono0uo0ur0oov0wv0sn0oow0su0wu0up0vp0oot0wv0tu0wn0rw0wu0vu0vo0su0uv0opo0wn0oot0wv0sn0vp0onv0wv0oon0vt0oot0vn0vu0vp0oor0wn0vv0ur0opo0ur0oon0vp0onr0vw0onw0opn0onv0vn0vu0oot0opn0vv0sn0vp0oor0wn0vv0ur0opo0ur0onw0rw0oop0wn0tv0rv0opo013', '0');
+INSERT INTO `rock_im_mess` VALUES ('707', '2015-08-21 11:25:09', '0', 'tr0wx0to0wu0tr0ppp0to0ppv0tr0xv0wr0ux0tr0tr0uv0vp0wo0vp0vs0pqp0wo0ppv0xv0ppp0ppp0pop0wv0poo0pow0pqq0pps0pox0pow0ppp0poq0pov0ppv0tt0xw0pov0ppw0vt0uw0ppq0por0vr0ux0tu0wx0ppo0vr0rr0tr0wx0to0wu0tr0wx0rr0tp0vx0pov0xo0vs0vu0ws0vr0ppx0vv0ws0wt0ppx0vx0uw0vr0pqo0vu0ws0ut0ppx0vv0uw0ux0tu0wx0ppo0vr0rr0tr0tr0wr0pqq0ts0vt0rr0tp0tr0vu0ppr0ts0vx0ppv0pop0ppv0ppp0pop0pop0wp0pos0ppv0wv0wq0pox0uw0pqo0pot0xx0pou0tt0ppq0por0ts0pou0ppq0pow0ts0por0ts0tr0xw0pqp0ut0tr0wx0rr0wq0ts0wx0vx0ppp014', '1', '7', '1', 'system', '1', null, 'docdeil', '11', '?rocktoken=on0nj0jo0gfo0on0mg0km0kg0mj0gfo0ng0km0gff0mg0mf0ghh0om0kg0mj0jo0on0gfk0of0gfj0nf0nn0of0ggh0of0nn0oo0gfo0no0nm0ggh0gfj0gfg0mg0mj0ggn0on0kf0ggo0km0om0mh0nh0ggl0on0lm0of0jo0om0nm0ng0km0mm0ni0of0ggl0on0kf0nh0gfn0on0ggf0nl0ggl0nf0nm0nh0ggn0no0kf0nh0gfn0om0nm0ggo0gfo0gff0mg0mf0gfk0on0mg0nk0km0of0mg0km0gfl0of0mg0nl0ggh0on0lm0of0ggl0om0nm0ng0km0mm0nj0lo0kn05', '0');
+INSERT INTO `rock_im_mess` VALUES ('708', '2015-08-21 13:32:05', '0', 'lj0op0lg0om0lj0hhh0lg0hhn0lj0pn0oj0mp0lj0lj0mn0nh0og0nh0nk0hih0og0hhn0pn0hhh0hhh0hgh0on0hgg0hgo0hii0hhk0hhh0hhm0nm0hhg0hhg0hgo0nl0hgm0hgp0hgl0hhj0oo0hhi0hgo0nj0ml0lm0op0hhg0nj0jj0lj0op0lg0om0lj0op0jj0lh0np0hgo0mm0mm0nm0ok0nj0hhp0nn0ok0ol0hhp0np0mo0nj0hig0nm0ok0ml0hhp0nn0mo0mp0lm0op0hhg0nj0jj0lj0lj0oj0hii0lk0nl0jj0lh0lj0nm0hhj0lk0np0hhn0hgh0hhn0hhh0hgh0hgh0oh0hgk0hhn0on0oi0hgp0mo0hig0hgl0pp0hgm0ll0hhi0hgj0lk0hgm0hhi0hgo0lk0hgj0lk0lj0po0hih0ml0lj0op0jj0oi0lk0op0np0hhh06', '1', '7', '7', 'system', '1', null, 'fininfom', '1', '?rocktoken=ut0tp0pu0mlu0ut0sm0qs0qm0sp0mlu0tm0qs0mll0sm0sl0mnn0us0qm0sp0pu0ut0mlq0ul0mlp0tl0tt0ul0mmn0ul0tt0uu0mlu0tu0ts0mmn0mlp0mlm0sm0sp0mmt0ut0ql0mmu0qs0us0sn0tn0mmr0ut0rs0ul0pu0us0ts0tm0qs0st0mnm0ul0mmr0ut0ql0tn0mlt0ut0mml0tr0mmr0tl0ts0ul0mmn0ut0mlu0ul0qo0tu0mml0mlo0mlu0mll0sm0sl0mlq0ut0sm0tq0qs0ul0mlu0mlt0mms0us0ts0qo0mlu0ut0ql0pt0mlu0ut0ts0mlt0mls0tl0tp0ru0qt011', '0');
+INSERT INTO `rock_im_mess` VALUES ('709', '2015-08-21 13:38:26', '0', 'tr0wx0to0wu0tr0ppp0to0ppv0tr0xv0wr0ux0tr0tr0uv0vp0wo0vp0vs0pqp0wo0ppv0xv0ppp0ppp0pop0wv0poo0pow0pqq0pps0ppp0ppu0vu0ppo0ppo0pow0vt0pou0pox0pot0ppr0ww0ppq0pow0vr0ut0tu0wx0ppo0vr0rr0tr0wx0to0wu0tr0wx0rr0tp0vx0pow0uu0uu0vu0ws0vr0ppx0vv0ws0wt0ppx0vx0uw0vr0pqo0vu0ws0ut0ppx0vv0uw0ux0tu0wx0ppo0vr0rr0tr0tr0wr0pqq0ts0vt0rr0tp0tr0vu0ppr0ts0vx0ppv0pop0ppv0ppp0pop0pop0wp0pos0ppv0wv0wq0pox0uw0pqo0pot0xx0pou0tt0ppq0por0ts0pou0ppq0pow0ts0por0ts0tr0xw0pqp0ut0tr0wx0rr0wq0ts0wx0vx0ppp014', '1', '7', '7', 'system', '1', null, 'fininfom', '1', '?rocktoken=sr0rn0ns0kjs0sr0qk0oq0ok0qn0kjs0rk0oq0kjj0qk0qj0kll0sq0ok0qn0ns0sr0kjo0sj0kjn0rj0rr0sj0kkl0sj0rr0ss0kjs0rs0rq0kkl0kjn0kjk0qk0qn0kkr0sr0oj0kks0oq0sq0ql0rl0kkp0sr0pq0sj0ns0sq0rq0rk0oq0qr0klk0sj0kkp0sr0oj0rl0kjr0sr0kkj0rp0kkp0rj0rq0sj0kkl0sr0kjs0sj0om0rs0kkj0kjm0kjs0kjj0qk0qj0kjo0sr0qk0ro0oq0sj0kjs0kjr0kkq0sq0rq0om0kjs0sr0oj0nr0kjs0sr0rq0kjr0kjq0rj0rn0ps0or09', '0');
+INSERT INTO `rock_im_mess` VALUES ('710', '2015-08-21 13:45:19', '0', 'qo0tu0ql0tr0qo0mmm0ql0mms0qo0us0to0ru0qo0qo0rs0sm0tl0sm0sp0mnm0tl0mms0us0mmm0mmm0mlm0ts0mll0mlt0mnn0mmp0mmm0mmr0sr0mml0mml0mlt0sq0mlr0mlu0mlq0mmo0tt0mmn0mlt0so0rq0qr0tu0mml0so0oo0qo0tu0ql0tr0qo0tu0oo0qm0su0mlt0rr0rr0sr0tp0so0mmu0ss0tp0tq0mmu0su0rt0so0mnl0sr0tp0rq0mmu0ss0rt0ru0qr0tu0mml0so0oo0qo0qo0to0mnn0qp0sq0oo0qm0qo0sr0mmo0qp0su0mms0mlm0mms0mmm0mlm0mlm0tm0mlp0mms0ts0tn0mlu0rt0mnl0mlq0uu0mlr0qq0mmn0mlo0qp0mlr0mmn0mlt0qp0mlo0qp0qo0ut0mnm0rq0qo0tu0oo0tn0qp0tu0su0mmm011', '1', '7', '7', 'system', '1', null, 'fininfom', '1', '?rocktoken=vu0uq0qv0nmv0vu0tn0rt0rn0tq0nmv0un0rt0nmm0tn0tm0noo0vt0rn0tq0qv0vu0nmr0vm0nmq0um0uu0vm0nno0vm0uu0vv0nmv0uv0ut0nno0nmq0nmn0tn0tq0nnu0vu0rm0nnv0rt0vt0to0uo0nns0vu0st0vm0qv0vt0ut0un0rt0tu0non0vm0nns0vu0rm0uo0nmu0vu0nnm0us0nns0um0ut0vm0nno0vu0nmv0vm0rp0uv0nnm0nmp0nmv0nmm0tn0tm0nmr0vu0tn0ur0rt0vm0nmv0nmu0nnt0vt0ut0rp0nmv0vu0rm0qu0nmv0vu0ut0nmu0nmt0um0uq0sv0ru012', '0');
+INSERT INTO `rock_im_mess` VALUES ('711', '2015-08-21 13:55:28', '0', 'mk0pq0mh0pn0mk0iii0mh0iio0mk0qo0pk0nq0mk0mk0no0oi0ph0oi0ol0iji0ph0iio0qo0iii0iii0ihi0po0ihh0ihp0ijj0iil0iii0iin0on0iih0iih0ihp0om0ihn0ihq0ihm0iik0pp0iij0ihp0ok0nm0mn0pq0iih0ok0kk0mk0pq0mh0pn0mk0pq0kk0mi0oq0ihp0nn0nn0on0pl0ok0iiq0oo0pl0pm0iiq0oq0np0ok0ijh0on0pl0nm0iiq0oo0np0nq0mn0pq0iih0ok0kk0mk0mk0pk0ijj0ml0om0kk0mi0mk0on0iik0ml0oq0iio0ihi0iio0iii0ihi0ihi0pi0ihl0iio0po0pj0ihq0np0ijh0ihm0qq0ihn0mm0iij0ihk0ml0ihn0iij0ihp0ml0ihk0ml0mk0qp0iji0nm0mk0pq0kk0pj0ml0pq0oq0iii07', '7', '7', '9', 'system', '7', null, 'fininfom', '1', '?rocktoken=on0nj0jo0gfo0on0mg0km0kg0mj0gfo0ng0km0gff0mg0mf0ghh0om0kg0mj0jo0on0gfk0of0gfj0nf0nn0of0ggh0of0nn0oo0gfo0no0nm0ggh0gfj0gfg0mg0mj0ggn0on0kf0ggo0km0om0mh0nh0ggl0on0lm0of0jo0om0nm0ng0km0mo0ni0of0ggl0on0kf0nh0gfn0on0ggf0nl0ggl0nf0nm0of0ggh0on0gfo0of0ki0no0ggf0gfi0gfo0gff0mg0mf0gfk0on0mg0nk0km0of0gfo0gfn0ggm0om0nm0ki0gfo0on0kf0jn0gfo0on0nm0gfn0gfm0nf0nj0lo0kn05', '0');
+INSERT INTO `rock_im_mess` VALUES ('712', '2015-08-21 20:39:20', '0', 'qo0mmm0sq0mmm0qo0mmm0oo0tm0qo0sr0mmo0mls0ts0oo0mlq0pt0mms0mlm0mlm0tq0mmo0su0us0sq0mmn0mlm0mlu0tq0mlo0rs0mnn0mlt0mlr0ul0tt0mlt0mlr0qq0uu0qp0tq0ru0ru0mmr0ss0mlr0rq0mnl0st0tp0rq0qn0ss0mlr0ru0mmr0ss0rt0rq0mmu0ss0tr0qm0mmm0mmr0ut0tt0mlt0mmp0ul0rt0mmn0mmt0mmn0mml0mlt0mmn0so0tp0mml0mls0so0ul0ut0qo0sr0mlq0st0qp0tu0rs0us0qp0sr0oo0sn0tt0mlm0oo0qr0mlr0su0ts0su0mml0oo0ts0ut0mmm0rt0mmn0ut0us0sm0sl0mmm0tu0ts0mlp0mlp0tt0tm0qt0qt011', '9', '7', '1', 'system', '9', null, 'fininfom', '1', '?rocktoken=nm0mi0in0fen0nm0lf0jl0jf0li0fen0mf0jl0fee0lf0le0fgg0nl0jf0li0in0nm0fej0ne0fei0me0mm0ne0ffg0ne0mm0nn0fen0mn0ml0ffg0fei0fef0lf0li0ffm0nm0je0ffn0jl0nl0lg0mg0ffk0nm0kl0ne0in0nl0ml0mf0jl0ll0mh0ne0ffk0nm0je0mg0fem0nm0ffe0mk0ffk0me0ml0ne0ffg0nm0fen0ne0jh0mn0ffe0feh0fen0fee0lf0le0fej0nm0lf0mj0jl0ne0fen0fem0ffl0nl0ml0jh0fen0nm0je0im0fen0nm0ml0fem0fel0me0mi0kn0jm04', '0');
+INSERT INTO `rock_im_mess` VALUES ('713', '2015-08-21 20:39:40', '0', 'qo0tu0ql0tr0qo0mmm0ql0mms0qo0us0to0ru0qo0qo0rs0sm0tl0sm0sp0mnm0tl0mms0us0mmm0mmm0mlm0ts0mll0mlt0mnn0mmp0mmm0mmr0sr0mml0mml0mlt0sq0mlr0mlu0mlq0mmo0tt0mmn0mlt0so0rq0qr0tu0mml0so0oo0qo0tu0ql0tr0qo0tu0oo0qm0su0mlt0rr0rr0sr0tp0so0mmu0ss0tp0tq0mmu0su0rt0so0mnl0sr0tp0rq0mmu0ss0rt0ru0qr0tu0mml0so0oo0qo0qo0to0mnn0qp0sq0oo0qm0qo0sr0mmo0qp0su0mms0mlm0mms0mmm0mlm0mlm0tm0mlp0mms0ts0tn0mlu0rt0mnl0mlq0uu0mlr0qq0mmn0mlo0qp0mlr0mmn0mlt0qp0mlo0qp0qo0ut0mnm0rq0qo0tu0oo0tn0qp0tu0su0mmm011', '9', '7', '10', 'system', '9', null, 'fininfom', '1', '?rocktoken=po0ok0kp0hgp0po0nh0ln0lh0nk0hgp0oh0ln0hgg0nh0ng0hii0pn0lh0nk0kp0po0hgl0pg0hgk0og0oo0pg0hhi0pg0oo0pp0hgp0op0on0hhi0hgk0hgh0nh0nk0hho0po0lg0hhp0ln0pn0ni0oi0hhm0po0mn0pg0kp0pn0on0oh0ln0nn0ok0ml0hgp0po0on0ln0hgn0pg0on0lj0kp0po0ok0kp0hgp0pn0on0lj0hgp0hgh0on0nk0li0nk0hhg0oi0hgk0op0hgp0hig0hgo0og0on0pg0hhi0po0hgp0hgo0hhn0pg0hgp0ln0hhm0nk0hgp0kp0hhi0pg0mo0ko0hig06', '0');
+INSERT INTO `rock_im_mess` VALUES ('714', '2015-08-21 20:42:13', '0', 'ig0eee0ki0eee0ig0eee0gg0le0ig0kj0eeg0edk0lk0gg0edi0hl0eek0ede0ede0li0eeg0km0mk0ki0eef0ede0edm0li0edg0jk0eff0edl0edj0md0ll0edl0edj0ii0mm0ih0li0jm0jm0eej0kk0edj0ji0efd0kl0lh0ji0if0kk0edj0jm0eej0kk0jl0ji0eem0kk0lj0ie0edl0eej0ii0kj0edl0eef0kg0lh0eed0edk0kg0ml0edl0eeh0eee0eff0edm0edi0kh0ji0il03', '10', '7', '1', 'system', '10', null, 'fininfom', '1', '?rocktoken=vu0uq0qv0nmv0vu0tn0rt0rn0tq0nmv0un0rt0nmm0tn0tm0noo0vt0rn0tq0qv0vu0nmr0vm0nmq0um0uu0vm0nno0vm0uu0vv0nmv0uv0ut0nno0nmq0nmn0tn0tq0nnu0vu0rm0nnv0rt0vt0to0uo0nns0vu0st0vm0qv0vt0ut0un0rt0tt0up0vm0nns0vu0rm0uo0nmu0vu0nnm0us0nns0um0ut0vm0nno0vu0nmv0vm0rp0uv0nnm0nmp0nmv0nmm0tn0tm0nmr0vu0tn0ur0rt0vm0nmv0nmu0nnt0vt0ut0rp0nmv0vu0rm0qu0nmv0vu0ut0nmu0nmt0um0uq0sv0ru012', '0');
 
 -- ----------------------------
 -- Table structure for `rock_im_messzt`
@@ -860,13 +1059,44 @@ CREATE TABLE `rock_im_messzt` (
   `mid` int(11) DEFAULT NULL COMMENT '信息id',
   `uid` int(11) DEFAULT NULL COMMENT '人员id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=284 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=373 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_im_messzt
 -- ----------------------------
-INSERT INTO `rock_im_messzt` VALUES ('282', '573', '1');
-INSERT INTO `rock_im_messzt` VALUES ('283', '574', '1');
+INSERT INTO `rock_im_messzt` VALUES ('325', '607', '2');
+INSERT INTO `rock_im_messzt` VALUES ('357', '699', '7');
+INSERT INTO `rock_im_messzt` VALUES ('327', '607', '4');
+INSERT INTO `rock_im_messzt` VALUES ('345', '686', '4');
+INSERT INTO `rock_im_messzt` VALUES ('330', '617', '2');
+INSERT INTO `rock_im_messzt` VALUES ('355', '696', '4');
+INSERT INTO `rock_im_messzt` VALUES ('332', '617', '4');
+INSERT INTO `rock_im_messzt` VALUES ('354', '692', '5');
+INSERT INTO `rock_im_messzt` VALUES ('334', '621', '2');
+INSERT INTO `rock_im_messzt` VALUES ('353', '692', '4');
+INSERT INTO `rock_im_messzt` VALUES ('336', '621', '4');
+INSERT INTO `rock_im_messzt` VALUES ('343', '686', '2');
+INSERT INTO `rock_im_messzt` VALUES ('338', '622', '2');
+INSERT INTO `rock_im_messzt` VALUES ('352', '692', '2');
+INSERT INTO `rock_im_messzt` VALUES ('340', '622', '4');
+INSERT INTO `rock_im_messzt` VALUES ('341', '623', '2');
+INSERT INTO `rock_im_messzt` VALUES ('346', '686', '5');
+INSERT INTO `rock_im_messzt` VALUES ('347', '687', '2');
+INSERT INTO `rock_im_messzt` VALUES ('356', '698', '1');
+INSERT INTO `rock_im_messzt` VALUES ('349', '687', '4');
+INSERT INTO `rock_im_messzt` VALUES ('350', '687', '5');
+INSERT INTO `rock_im_messzt` VALUES ('361', '703', '1');
+INSERT INTO `rock_im_messzt` VALUES ('362', '704', '7');
+INSERT INTO `rock_im_messzt` VALUES ('363', '705', '7');
+INSERT INTO `rock_im_messzt` VALUES ('364', '706', '7');
+INSERT INTO `rock_im_messzt` VALUES ('365', '707', '1');
+INSERT INTO `rock_im_messzt` VALUES ('366', '708', '7');
+INSERT INTO `rock_im_messzt` VALUES ('367', '709', '7');
+INSERT INTO `rock_im_messzt` VALUES ('368', '710', '7');
+INSERT INTO `rock_im_messzt` VALUES ('369', '711', '9');
+INSERT INTO `rock_im_messzt` VALUES ('370', '712', '1');
+INSERT INTO `rock_im_messzt` VALUES ('371', '713', '10');
+INSERT INTO `rock_im_messzt` VALUES ('372', '714', '1');
 
 -- ----------------------------
 -- Table structure for `rock_infor`
@@ -895,19 +1125,20 @@ CREATE TABLE `rock_infor` (
   `faobjname` varchar(200) DEFAULT NULL COMMENT '发布给',
   `atype` tinyint(1) DEFAULT '0' COMMENT '@分类id@0内部,1部门',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_infor
 -- ----------------------------
-INSERT INTO `rock_infor` VALUES ('1', null, '关于OA上线通知公告', 'notice', '通知公告', '关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告', '53', null, null, '1', '管理员', '1', '1', null, '1', '2015-05-14 19:54:29', '行政部门', '2015-03-03 09:53:00', null, null, '0');
+INSERT INTO `rock_infor` VALUES ('1', null, '关于OA上线通知公告', 'notice', '通知公告', '关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告关于OA上线通知公告', '54', null, null, '1', '管理员', '1', '1', null, '1', '2015-05-14 19:54:29', '行政部门', '2015-03-03 09:53:00', null, null, '0');
 INSERT INTO `rock_infor` VALUES ('2', null, '工作日报制度', 'rules', '规章制度', null, '3', null, null, '1', '管理员', '0', '2', null, '1', '2014-12-16 16:04:46', null, null, null, null, '0');
 INSERT INTO `rock_infor` VALUES ('3', null, '考勤制度', 'rules', '规章制度', null, '5', null, null, '1', '管理员', '0', '2', null, '1', '2014-12-16 16:04:55', null, null, null, null, '0');
 INSERT INTO `rock_infor` VALUES ('4', null, '请假销假制度', 'rules', '规章制度', null, '10', null, null, '1', '管理员', '0', '2', null, '1', '2015-02-12 15:27:16', null, null, null, null, '0');
 INSERT INTO `rock_infor` VALUES ('5', null, '加班制度', 'rules', '规章制度', null, '5', null, null, '1', '管理员', '0', '2', null, '1', '2014-12-16 16:05:15', null, null, null, null, '0');
-INSERT INTO `rock_infor` VALUES ('6', null, '规章制度是一个神马东东呢？', null, '规章制度', null, '14', null, null, '1', '管理员', '0', '1', null, '1', '2015-02-12 15:28:53', null, null, null, null, '0');
+INSERT INTO `rock_infor` VALUES ('6', null, '规章制度是一个神马东东呢？', null, '规章制度', null, '15', null, null, '1', '管理员', '0', '1', null, '1', '2015-02-12 15:28:53', null, null, null, null, '0');
 INSERT INTO `rock_infor` VALUES ('7', null, '快去开发啊！', null, '通知公告', '快去开发啊！快去开发啊！', '26', null, null, '1', '管理员', '0', '0', null, '1', '2015-07-17 10:53:42', null, null, 'd4', '开发部', '0');
 INSERT INTO `rock_infor` VALUES ('8', null, '技术考核', null, '技术考核', '技术考核哈哈', '2', null, null, '1', '管理员', '0', '0', null, '1', '2015-07-20 14:17:34', null, null, 'd4', '开发部', '4');
+INSERT INTO `rock_infor` VALUES ('9', null, '欢迎使用ROCKOA，这里有说明文档', null, '通知公告', null, '4', null, null, '1', '管理员', '0', '0', null, '1', '2015-08-11 10:16:32', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `rock_kq_anay`
@@ -926,40 +1157,87 @@ CREATE TABLE `rock_kq_anay` (
   `optdt` datetime DEFAULT NULL COMMENT '操作时间',
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `iswork` tinyint(4) DEFAULT '1' COMMENT '是否工作日',
+  `emiao` varchar(20) DEFAULT NULL COMMENT '秒数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=950 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=996 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_anay
 -- ----------------------------
-INSERT INTO `rock_kq_anay` VALUES ('922', '2015-08-01', '1', '上班', '08:47:50', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('923', '2015-08-01', '1', '下班', '18:47:50', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('924', '2015-08-02', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-07 10:45:55', null, '0');
-INSERT INTO `rock_kq_anay` VALUES ('925', '2015-08-02', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-07 10:45:55', null, '0');
-INSERT INTO `rock_kq_anay` VALUES ('926', '2015-08-03', '1', '上班', '08:50:54', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('927', '2015-08-03', '1', '下班', '18:50:54', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('928', '2015-08-04', '1', '上班', '08:50:53', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('929', '2015-08-04', '1', '下班', '18:50:55', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('930', '2015-08-05', '1', '上班', '08:50:52', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('931', '2015-08-05', '1', '下班', '18:50:56', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('932', '2015-08-06', '1', '上班', '08:50:51', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('933', '2015-08-06', '1', '下班', '18:50:57', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('934', '2015-08-07', '1', '上班', '08:50:50', '正常', null, '0', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('935', '2015-08-07', '1', '下班', '18:50:58', '正常', null, '1', '管理员', '2015-08-07 10:45:55', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('936', '2015-08-01', '2', '上班', null, '未打卡', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('937', '2015-08-01', '2', '下班', null, '未打卡', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('938', '2015-08-02', '2', '上班', null, '未打卡', null, '0', '管理员', '2015-08-07 10:46:42', null, '0');
-INSERT INTO `rock_kq_anay` VALUES ('939', '2015-08-02', '2', '下班', null, '未打卡', null, '1', '管理员', '2015-08-07 10:46:42', null, '0');
-INSERT INTO `rock_kq_anay` VALUES ('940', '2015-08-03', '2', '上班', '08:50:54', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('941', '2015-08-03', '2', '下班', '18:50:54', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('942', '2015-08-04', '2', '上班', '08:50:53', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('943', '2015-08-04', '2', '下班', '18:50:55', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('944', '2015-08-05', '2', '上班', '08:50:52', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('945', '2015-08-05', '2', '下班', '18:50:56', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('946', '2015-08-06', '2', '上班', '08:50:51', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('947', '2015-08-06', '2', '下班', '18:50:57', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('948', '2015-08-07', '2', '上班', '08:50:50', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1');
-INSERT INTO `rock_kq_anay` VALUES ('949', '2015-08-07', '2', '下班', '18:50:58', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1');
+INSERT INTO `rock_kq_anay` VALUES ('922', '2015-08-01', '1', '上班', '08:47:50', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('923', '2015-08-01', '1', '下班', '18:47:50', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('924', '2015-08-02', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('925', '2015-08-02', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('926', '2015-08-03', '1', '上班', '08:50:54', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('927', '2015-08-03', '1', '下班', '18:50:54', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('928', '2015-08-04', '1', '上班', '08:50:53', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('929', '2015-08-04', '1', '下班', '18:50:55', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('930', '2015-08-05', '1', '上班', '08:50:52', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('931', '2015-08-05', '1', '下班', '18:50:56', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('932', '2015-08-06', '1', '上班', '08:50:51', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('933', '2015-08-06', '1', '下班', '18:50:57', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('934', '2015-08-07', '1', '上班', '08:50:50', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('935', '2015-08-07', '1', '下班', '18:50:58', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('936', '2015-08-01', '2', '上班', null, '未打卡', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('937', '2015-08-01', '2', '下班', null, '未打卡', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('938', '2015-08-02', '2', '上班', null, '未打卡', null, '0', '管理员', '2015-08-07 10:46:42', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('939', '2015-08-02', '2', '下班', null, '未打卡', null, '1', '管理员', '2015-08-07 10:46:42', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('940', '2015-08-03', '2', '上班', '08:50:54', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('941', '2015-08-03', '2', '下班', '18:50:54', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('942', '2015-08-04', '2', '上班', '08:50:53', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('943', '2015-08-04', '2', '下班', '18:50:55', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('944', '2015-08-05', '2', '上班', '08:50:52', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('945', '2015-08-05', '2', '下班', '18:50:56', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('946', '2015-08-06', '2', '上班', '08:50:51', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('947', '2015-08-06', '2', '下班', '18:50:57', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('948', '2015-08-07', '2', '上班', '08:50:50', '正常', null, '0', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('949', '2015-08-07', '2', '下班', '18:50:58', '正常', null, '1', '管理员', '2015-08-07 10:46:42', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('950', '2015-08-08', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('951', '2015-08-08', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('952', '2015-08-09', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('953', '2015-08-09', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('954', '2015-08-10', '1', '上班', '08:50:00', '正常', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('955', '2015-08-10', '1', '下班', '17:30:20', '早退', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', '1779');
+INSERT INTO `rock_kq_anay` VALUES ('956', '2015-08-11', '1', '上班', '09:50:01', '迟到', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', '3000');
+INSERT INTO `rock_kq_anay` VALUES ('957', '2015-08-11', '1', '下班', '18:00:02', '正常', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('958', '2015-08-12', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('959', '2015-08-12', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('960', '2015-08-12', '2', '上班', null, '未打卡', null, '0', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('961', '2015-08-12', '2', '下班', null, '未打卡', null, '1', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('962', '2015-08-12', '7', '上班', null, '未打卡', null, '0', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('963', '2015-08-12', '7', '下班', null, '未打卡', null, '1', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('964', '2015-08-13', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('965', '2015-08-13', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('966', '2015-08-13', '2', '上班', null, '未打卡', null, '0', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('967', '2015-08-13', '2', '下班', null, '未打卡', null, '1', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('968', '2015-08-13', '7', '上班', null, '未打卡', null, '0', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('969', '2015-08-13', '7', '下班', null, '未打卡', null, '1', null, '2015-08-15 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('970', '2015-08-14', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('971', '2015-08-14', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('972', '2015-08-14', '2', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('973', '2015-08-14', '2', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('974', '2015-08-14', '7', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('975', '2015-08-14', '7', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('976', '2015-08-15', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('977', '2015-08-15', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('978', '2015-08-15', '2', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('979', '2015-08-15', '2', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('980', '2015-08-15', '7', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('981', '2015-08-15', '7', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('982', '2015-08-16', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('983', '2015-08-16', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('984', '2015-08-16', '2', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('985', '2015-08-16', '2', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('986', '2015-08-16', '7', '上班', null, '未打卡', null, '0', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('987', '2015-08-16', '7', '下班', null, '未打卡', null, '1', null, '2015-08-17 10:05:00', null, '0', null);
+INSERT INTO `rock_kq_anay` VALUES ('988', '2015-08-17', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('989', '2015-08-17', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('990', '2015-08-18', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('991', '2015-08-18', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('992', '2015-08-19', '1', '上班', null, '未打卡', null, '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('993', '2015-08-19', '1', '下班', null, '未打卡', '外出', '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('994', '2015-08-20', '1', '上班', null, '未打卡', '外出', '0', '管理员', '2015-08-20 11:24:58', null, '1', null);
+INSERT INTO `rock_kq_anay` VALUES ('995', '2015-08-20', '1', '下班', null, '未打卡', null, '1', '管理员', '2015-08-20 11:24:58', null, '1', null);
 
 -- ----------------------------
 -- Table structure for `rock_kq_dkerr`
@@ -980,13 +1258,17 @@ CREATE TABLE `rock_kq_dkerr` (
   `nstatus` tinyint(1) DEFAULT '0' COMMENT '@当然状态',
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_dkerr
 -- ----------------------------
-INSERT INTO `rock_kq_dkerr` VALUES ('1', '1', '忘记打卡', '2015-07-29', '09:00:00', '2015-08-05 12:08:41', '哈哈哈', '1', '1', null, '7', '1', '刘备', null);
+INSERT INTO `rock_kq_dkerr` VALUES ('1', '1', '忘记打卡', '2015-07-29', '09:00:00', '2015-08-05 12:08:41', '哈哈哈', '1', '1', null, '7', '1', '刘备', null, null, null, null);
+INSERT INTO `rock_kq_dkerr` VALUES ('2', '1', '忘记打卡', '2015-08-20', '16:34:00', '2015-08-20 16:37:34', 'hahha', '0', '1', '7', '7', '0', null, '刘备', '1', '管理员', '2015-08-20');
 
 -- ----------------------------
 -- Table structure for `rock_kq_dkjl`
@@ -1000,7 +1282,7 @@ CREATE TABLE `rock_kq_dkjl` (
   `web` varchar(50) DEFAULT NULL,
   `type` tinyint(1) DEFAULT '0' COMMENT '来源@0|打卡机,1|异常登记,2|手动添加',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_dkjl
@@ -1032,6 +1314,10 @@ INSERT INTO `rock_kq_dkjl` VALUES ('65', '2', '陈稀糊', '2015-08-04 18:50:55'
 INSERT INTO `rock_kq_dkjl` VALUES ('66', '2', '陈稀糊', '2015-08-05 18:50:56', null, '0');
 INSERT INTO `rock_kq_dkjl` VALUES ('67', '2', '陈稀糊', '2015-08-06 18:50:57', null, '0');
 INSERT INTO `rock_kq_dkjl` VALUES ('68', '2', '陈稀糊', '2015-08-07 18:50:58', null, '0');
+INSERT INTO `rock_kq_dkjl` VALUES ('69', '1', '管理员', '2015-08-10 08:50:00', null, '0');
+INSERT INTO `rock_kq_dkjl` VALUES ('70', '1', '管理员', '2015-08-10 17:30:20', null, '0');
+INSERT INTO `rock_kq_dkjl` VALUES ('71', '1', '管理员', '2015-08-11 09:50:01', null, '0');
+INSERT INTO `rock_kq_dkjl` VALUES ('72', '1', '管理员', '2015-08-11 18:00:02', null, '0');
 
 -- ----------------------------
 -- Table structure for `rock_kq_info`
@@ -1045,6 +1331,7 @@ CREATE TABLE `rock_kq_info` (
   `stime` datetime DEFAULT NULL COMMENT '开始时间',
   `etime` datetime DEFAULT NULL COMMENT '截止时间',
   `totals` smallint(6) DEFAULT '0' COMMENT '时间(小时)',
+  `optid` smallint(6) DEFAULT '0',
   `optdt` datetime DEFAULT NULL COMMENT '操作时间',
   `explain` varchar(500) DEFAULT NULL COMMENT '说明',
   `status` tinyint(1) DEFAULT '0' COMMENT '@0|待审核,1|审核通过,2|审核不通过',
@@ -1054,15 +1341,21 @@ CREATE TABLE `rock_kq_info` (
   `nstatus` tinyint(1) DEFAULT '0' COMMENT '@当然状态',
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_info
 -- ----------------------------
-INSERT INTO `rock_kq_info` VALUES ('33', '1', '请假', '年假', '2015-08-04 09:00:00', '2015-08-04 18:00:00', '8', '2015-08-05 14:36:33', '12', '1', '1', null, '7,5', '1', '小乔', null);
-INSERT INTO `rock_kq_info` VALUES ('34', '1', '加班', null, '2015-07-20 10:31:00', '2015-07-20 20:31:00', '10', '2015-07-20 10:31:17', '12', '5', '1', '3', '3', '0', null, '貂蝉');
-INSERT INTO `rock_kq_info` VALUES ('35', '1', '请假', '事假', '2015-08-03 10:00:00', '2015-08-03 18:01:00', '8', '2015-08-03 15:01:24', '12', '1', '1', null, '7,5', '1', '小乔', null);
+INSERT INTO `rock_kq_info` VALUES ('33', '1', '请假', '年假', '2015-08-04 09:00:00', '2015-08-04 18:00:00', '8', '0', '2015-08-05 14:36:33', '12', '1', '1', null, '7,5', '1', '小乔', null, null, null);
+INSERT INTO `rock_kq_info` VALUES ('34', '1', '加班', null, '2015-07-20 10:31:00', '2015-07-20 20:31:00', '10', '0', '2015-07-20 10:31:17', '12', '5', '1', '3', '3', '0', null, '貂蝉', null, null);
+INSERT INTO `rock_kq_info` VALUES ('35', '1', '请假', '事假', '2015-08-03 10:00:00', '2015-08-03 18:01:00', '8', '0', '2015-08-03 15:01:24', '12', '1', '1', null, '7,5', '1', '小乔', null, null, null);
+INSERT INTO `rock_kq_info` VALUES ('36', '1', '请假', '事假', '2015-08-17 16:52:00', '2015-08-17 16:52:00', '1', '0', '2015-08-17 16:54:39', 'afwew', '5', '1', '7', '7,5', '2', '刘备', '刘备', null, null);
+INSERT INTO `rock_kq_info` VALUES ('37', '1', '请假', '事假', '2015-08-19 10:59:00', '2015-08-20 10:59:00', '8', '0', '2015-08-19 10:59:43', '12', '5', '1', '7', '7,5', '0', null, '刘备', null, null);
+INSERT INTO `rock_kq_info` VALUES ('38', '1', '增加年假', null, '2015-08-01 14:58:00', '2015-08-19 14:58:00', '40', '1', '2015-08-19 14:58:53', null, '1', '1', null, null, '0', '管理员', null, null, null);
+INSERT INTO `rock_kq_info` VALUES ('39', '1', '请假', '年假', '2015-08-20 10:47:00', '2015-08-21 10:47:00', '8', '0', '2015-08-20 10:57:03', '12', '0', '1', '7', '7,5', '0', null, '刘备', null, null);
 
 -- ----------------------------
 -- Table structure for `rock_kq_out`
@@ -1085,13 +1378,17 @@ CREATE TABLE `rock_kq_out` (
   `statusman` varchar(20) DEFAULT NULL COMMENT '@审核人',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
   `isturn` tinyint(1) DEFAULT '0' COMMENT '@0|未提交,1|提交',
+  `optid` int(11) DEFAULT NULL,
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_out
 -- ----------------------------
-INSERT INTO `rock_kq_out` VALUES ('7', '1', '2015-08-05 10:31:00', '2015-08-06 10:31:00', '美国', '调查', '出差', null, '2015-07-20 10:31:47', '1', '3', '3', '0', null, '貂蝉', '1');
+INSERT INTO `rock_kq_out` VALUES ('7', '1', '2015-08-05 10:31:00', '2015-08-06 10:31:00', '美国', '调查', '出差', null, '2015-07-20 10:31:47', '1', '3', '3', '0', null, '貂蝉', '1', null, null, null);
+INSERT INTO `rock_kq_out` VALUES ('8', '1', '2015-08-19 11:16:00', '2015-08-20 11:16:00', '新加坡', '玩啦', '外出', null, '2015-08-19 11:16:40', '1', null, '3', '1', '貂蝉', null, '1', null, null, null);
 
 -- ----------------------------
 -- Table structure for `rock_kq_set`
@@ -1189,7 +1486,7 @@ CREATE TABLE `rock_log` (
   `ip` varchar(30) DEFAULT NULL COMMENT 'IP地址',
   `web` varchar(100) DEFAULT NULL COMMENT '浏览器',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_log
@@ -1208,6 +1505,44 @@ INSERT INTO `rock_log` VALUES ('11', '登录', '1', '管理员', '[admin]登录�
 INSERT INTO `rock_log` VALUES ('12', '登录', '3', '貂蝉', '[diaochan]登录成功', '2015-08-08 18:39:14', '127.0.0.1', 'MSIE 9');
 INSERT INTO `rock_log` VALUES ('13', '登录', '3', '貂蝉', '[diaochan]登录成功', '2015-08-08 23:05:30', '127.0.0.1', 'MSIE 9');
 INSERT INTO `rock_log` VALUES ('14', '登录', '1', '管理员', '[admin]登录成功', '2015-08-09 14:11:53', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('15', '登录', '1', '管理员', '[admin]登录成功', '2015-08-10 10:01:59', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('16', '登录', '1', '管理员', '[admin]登录成功', '2015-08-11 09:57:50', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('17', '登录', '1', '管理员', '[admin]登录成功', '2015-08-12 15:46:46', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('18', '登录', '1', '管理员', '[admin]登录成功', '2015-08-14 09:34:28', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('19', '登录', '1', '管理员', '[admin]登录成功', '2015-08-15 10:56:41', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('20', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 14:23:44', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('21', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:14:14', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('22', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:14:23', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('23', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:15:15', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('24', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:37:40', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('25', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:46:33', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('26', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 15:53:03', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('27', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 16:48:16', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('28', '登录', '1', '管理员', '[admin]登录成功', '2015-08-17 16:51:26', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('29', '登录', '1', '管理员', '[admin]登录成功', '2015-08-18 10:47:36', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('30', '登录', '1', '管理员', '[admin]登录成功', '2015-08-18 14:29:52', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('31', '登录', null, null, '[liubei]密码不对', '2015-08-18 16:18:46', '127.0.0.1', 'Firefox');
+INSERT INTO `rock_log` VALUES ('32', '登录', '7', '刘备', '[liubei]登录成功', '2015-08-18 16:18:53', '127.0.0.1', 'Firefox');
+INSERT INTO `rock_log` VALUES ('33', '登录', '1', '管理员', '[admin]登录成功', '2015-08-19 10:08:13', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('34', '登录', '3', '貂蝉', '[diaochan]登录成功', '2015-08-19 14:41:15', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('35', '登录', '1', '管理员', '[admin]登录成功', '2015-08-19 14:42:20', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('36', '登录', '1', '管理员', '[admin]登录成功', '2015-08-19 15:05:06', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('37', '登录', '1', '管理员', '[admin]登录成功', '2015-08-20 09:28:58', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('38', '登录', '1', '管理员', '[admin]登录成功', '2015-08-21 09:15:14', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('39', '登录', '7', '刘备', '[liubei]登录成功', '2015-08-21 13:51:54', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('40', '登录', '1', '管理员', '[admin]登录成功', '2015-08-21 13:55:39', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('41', '登录', '1', '管理员', '[admin]登录成功', '2015-08-21 19:45:03', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('42', '登录', null, null, '[zhaozil]帐号不存在', '2015-08-21 20:38:56', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('43', '登录', '9', '赵子龙', '[zhaozl]登录成功', '2015-08-21 20:39:00', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('44', '登录', '10', '吕布', '[lvbu]登录成功', '2015-08-21 20:39:53', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('45', '登录', '1', '管理员', '[admin]登录成功', '2015-08-21 20:46:29', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('46', '登录', '5', '小乔', '[xiaoqiao]登录成功', '2015-08-21 21:03:20', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('47', '登录', '1', '管理员', '[admin]登录成功', '2015-08-21 21:05:09', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('48', '登录', '1', '管理员', '[admin]登录成功', '2015-08-23 19:09:02', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('49', '登录', '1', '管理员', '[admin]登录成功', '2015-08-24 19:31:03', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('50', '登录', '1', '管理员', '[admin]登录成功', '2015-08-25 09:26:54', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('51', '登录', '1', '管理员', '[admin]登录成功', '2015-08-25 12:12:17', '127.0.0.1', 'MSIE 9');
+INSERT INTO `rock_log` VALUES ('52', '登录', '1', '管理员', '[admin]登录成功', '2015-08-25 14:05:26', '127.0.0.1', 'MSIE 9');
 
 -- ----------------------------
 -- Table structure for `rock_meet`
@@ -1229,7 +1564,7 @@ CREATE TABLE `rock_meet` (
   `rate` varchar(100) DEFAULT NULL COMMENT '频率',
   `istz` tinyint(1) DEFAULT '0' COMMENT '是否通知',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_meet
@@ -1325,8 +1660,10 @@ INSERT INTO `rock_meet` VALUES ('88', '管理员', '会议室1', '测试', '2015
 INSERT INTO `rock_meet` VALUES ('89', '管理员', '会议室1', '测试', '2015-07-24 09:30:00', '2015-07-24 10:30:00', '2', '0', '2015-07-24 15:01:00', 'd4', '开发部', '1', null, '0');
 INSERT INTO `rock_meet` VALUES ('90', '管理员', '会议室1', '测试', '2015-07-28 09:30:00', '2015-07-28 10:30:00', '2', '0', '2015-07-28 17:01:00', 'd4', '开发部', '1', null, '0');
 INSERT INTO `rock_meet` VALUES ('91', '管理员', '会议室1', '测试', '2015-07-29 09:30:00', '2015-07-29 10:30:00', '2', '0', '2015-07-29 14:01:00', 'd4', '开发部', '1', null, '0');
-INSERT INTO `rock_meet` VALUES ('92', '貂蝉', '会议室1', '测试啦', '2015-08-08 23:30:00', '2015-08-08 23:59:00', '0', '0', '2015-08-08 23:22:35', 'u3,u1', '貂蝉,管理员', '0', null, '0');
-INSERT INTO `rock_meet` VALUES ('93', '管理员', '会议室1', '全体员工会议', '2015-08-09 15:00:00', '2015-08-09 18:00:00', '0', '0', '2015-08-09 14:38:29', 'd4', '开发部', '0', null, '0');
+INSERT INTO `rock_meet` VALUES ('92', '貂蝉', '会议室1', '测试啦', '2015-08-08 23:30:00', '2015-08-08 23:59:00', '2', '0', '2015-08-08 23:22:35', 'u3,u1', '貂蝉,管理员', '0', null, '0');
+INSERT INTO `rock_meet` VALUES ('93', '管理员', '会议室1', '全体员工会议', '2015-08-09 15:00:00', '2015-08-09 18:00:00', '2', '0', '2015-08-09 14:38:29', 'd4', '开发部', '0', null, '0');
+INSERT INTO `rock_meet` VALUES ('94', '管理员', '会议室1', '测试', '2015-08-14 09:30:00', '2015-08-14 10:30:00', '2', '0', '2015-08-14 16:01:00', 'd4', '开发部', '1', null, '0');
+INSERT INTO `rock_meet` VALUES ('95', '管理员', '会议室1', '测试', '2015-08-17 09:30:00', '2015-08-17 10:30:00', '2', '0', '2015-08-17 10:01:00', 'd4', '开发部', '1', null, '0');
 
 -- ----------------------------
 -- Table structure for `rock_menu`
@@ -1356,7 +1693,7 @@ CREATE TABLE `rock_menu` (
 INSERT INTO `rock_menu` VALUES ('1', null, '系统管理', '0', null, '1', '3', '2014-03-21 23:55:50', 'cog', '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('2', null, '菜单管理', '72', 'system,menu', '1', '2', '2014-01-02 20:16:50', 'table', '2', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('3', 'admin', '用户管理', '72', 'system,admin', '1', '3', '2014-01-02 19:33:39', 'user', '2', null, '1', '0', '0');
-INSERT INTO `rock_menu` VALUES ('6', null, '人力资源', '0', null, '1', '4', '2014-06-01 20:12:14', 'group_gear', '1', null, '1', '0', '0');
+INSERT INTO `rock_menu` VALUES ('6', null, '人事考勤', '0', null, '1', '4', '2014-06-01 20:12:14', 'group_gear', '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('40', null, '权限管理', '1', null, '1', '6', '2013-12-21 20:57:08', null, '2', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('41', null, '组→菜单', '40', 'system,extent,type=gm', '1', '1', '2013-12-22 13:33:40', null, '3', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('56', null, '人员→菜单', '40', 'system,extent,type=um', '1', '0', '2013-12-22 13:33:34', null, '3', null, '1', '0', '0');
@@ -1462,7 +1799,7 @@ INSERT INTO `rock_menu` VALUES ('194', null, '我的通讯录', '193', 'person,v
 INSERT INTO `rock_menu` VALUES ('195', null, '客户管理', '188', null, '1', '0', null, null, '1', null, '0', '1', '0');
 INSERT INTO `rock_menu` VALUES ('196', null, '单位管理', '195', 'crm,manage,unit', '1', '0', null, null, '1', null, '0', '0', '0');
 INSERT INTO `rock_menu` VALUES ('197', null, '联系人', '195', 'crm,manage,contact', '1', '1', null, null, '1', null, '0', '0', '0');
-INSERT INTO `rock_menu` VALUES ('198', null, 'REIM通信管理', '1', null, '1', '12', null, null, '1', null, '1', '1', '0');
+INSERT INTO `rock_menu` VALUES ('198', null, 'REIM通信管理', '1', null, '1', '12', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('199', null, '聊天记录', '198', 'webim,guan,record', '1', '1', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('200', null, '群/讨论组管理', '198', 'webim,guan,group', '1', '2', null, 'group', '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('201', null, '流程选项', '183', 'system,option,guan,num=flow,atype=1', '1', '0', null, null, '1', null, '1', '0', '0');
@@ -1490,7 +1827,7 @@ CREATE TABLE `rock_menucom` (
   `optdt` datetime DEFAULT NULL,
   `menuid` varchar(5) DEFAULT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_menucom
@@ -1501,6 +1838,7 @@ INSERT INTO `rock_menucom` VALUES ('7', '1', '[新增]请假条', 'leave_0', 'fl
 INSERT INTO `rock_menucom` VALUES ('8', '1', '日报列表', 'menunum_144', 'person,daily,list', null, '0', '2015-08-07 17:59:42', '144');
 INSERT INTO `rock_menucom` VALUES ('9', '1', '日程管理', 'scheduleguan', 'person,schedule,guan', 'mode/icons/calendar_edit.png', '0', '2015-08-07 19:26:36', null);
 INSERT INTO `rock_menucom` VALUES ('10', '1', '我所有的任务', 'workmwc', 'work,work,mwc,atype=0', null, '0', '2015-08-08 09:43:40', '139');
+INSERT INTO `rock_menucom` VALUES ('11', '1', '[新增]费用报销', 'finfybx_0', 'flow,apply,finfybx,flownum=finfybx,tablename=fininfom,opentype=0,mid=0,gridid=', null, '0', '2015-08-21 09:47:06', null);
 
 -- ----------------------------
 -- Table structure for `rock_option`
@@ -1519,7 +1857,7 @@ CREATE TABLE `rock_option` (
   `ism` tinyint(1) DEFAULT '0' COMMENT '是否主选项',
   `pid` int(11) DEFAULT '0' COMMENT '@上级ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=208 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_option
@@ -1528,13 +1866,13 @@ INSERT INTO `rock_option` VALUES ('1', 'rock', null, '系统选项', null, null,
 INSERT INTO `rock_option` VALUES ('2', 'ranking', 'userinfor', '职位', null, '3', '2015-08-01 12:28:43', '1', null, '0', '11');
 INSERT INTO `rock_option` VALUES ('3', null, 'ranking', '工程师', null, '4', '2015-01-13 16:33:39', '1', null, '0', '2');
 INSERT INTO `rock_option` VALUES ('4', null, 'ranking', 'OA项目经理', null, '5', '2015-01-13 16:33:39', '1', null, '0', '2');
-INSERT INTO `rock_option` VALUES ('5', 'infortype', 'rock', '信息类别', null, '0', '2015-05-08 15:29:42', '1', null, '1', '6');
-INSERT INTO `rock_option` VALUES ('6', 'humanres', 'rock', '行政人事', null, '0', '2015-04-29 11:10:45', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('5', 'infortype', 'rock', '信息类别', null, '0', '2015-08-21 10:25:55', '1', null, '1', '6');
+INSERT INTO `rock_option` VALUES ('6', 'humanres', 'rock', '人事考勤', null, '1', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('7', 'notice', 'infortype', '通知公告', null, '0', '2015-05-15 16:30:53', '1', null, '0', '5');
 INSERT INTO `rock_option` VALUES ('8', 'rules', 'infortype', '规章制度', null, '1', '2015-05-15 16:30:53', '1', null, '0', '5');
 INSERT INTO `rock_option` VALUES ('9', 'culture', 'infortype', '企业文化', null, '2', '2015-05-15 16:30:53', '1', null, '0', '5');
-INSERT INTO `rock_option` VALUES ('10', 'tasktype', 'rock', '定时任务类型', null, '3', '2015-04-29 11:10:45', '1', null, '1', '0');
-INSERT INTO `rock_option` VALUES ('11', 'userinfor', 'rock', '人员信息', null, '1', '2015-05-08 15:34:21', '1', null, '1', '6');
+INSERT INTO `rock_option` VALUES ('10', 'tasktype', 'rock', '定时任务类型', null, '6', '2015-08-21 10:25:55', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('11', 'userinfor', 'rock', '人员选项', null, '3', '2015-08-21 10:25:55', '1', null, '1', '6');
 INSERT INTO `rock_option` VALUES ('12', 'workstatus', 'userinfor', '人员状态', null, '0', '2015-08-01 12:28:43', '1', null, '0', '11');
 INSERT INTO `rock_option` VALUES ('13', 'xueli', 'userinfor', '学历', null, '1', '2015-08-01 12:28:43', '1', null, '0', '11');
 INSERT INTO `rock_option` VALUES ('18', null, 'xueli', '小学', null, '0', '2014-12-17 15:12:49', '1', null, '0', '13');
@@ -1555,10 +1893,10 @@ INSERT INTO `rock_option` VALUES ('34', null, 'ranking', '行政前台', null, '
 INSERT INTO `rock_option` VALUES ('35', null, 'xueli', '其他', null, '9', '2014-12-17 15:12:49', '1', null, '0', '13');
 INSERT INTO `rock_option` VALUES ('38', null, 'ranking', '董事长', null, '0', '2015-01-13 16:33:39', '1', null, '0', '2');
 INSERT INTO `rock_option` VALUES ('39', null, 'ranking', '程序员', null, '7', '2015-01-13 16:33:39', '1', null, '0', '2');
-INSERT INTO `rock_option` VALUES ('40', null, 'ranking', '网站编辑', null, '8', '2015-01-13 16:33:39', '1', null, '0', '2');
+INSERT INTO `rock_option` VALUES ('40', null, 'ranking', '出纳', null, '8', '2015-08-20 17:14:12', '1', null, '0', '2');
 INSERT INTO `rock_option` VALUES ('41', null, 'tasktype', '基础任务', null, '0', '2014-12-17 16:39:10', '1', null, '0', '10');
 INSERT INTO `rock_option` VALUES ('44', null, 'meeting', '会议室1', null, '0', '2014-12-22 12:34:54', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('45', 'flow', 'rock', '流程选项', null, '5', '2015-06-08 17:48:42', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('45', 'flow', 'rock', '流程选项', null, '8', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('46', 'flowatype', 'flow', '针对类型', null, '2', '2014-12-30 19:24:14', '1', null, '0', '45');
 INSERT INTO `rock_option` VALUES ('47', null, 'flowatype', '所有人员', 'all', '0', '2014-12-30 19:23:47', '1', null, '0', '46');
 INSERT INTO `rock_option` VALUES ('48', null, 'flowatype', '指定部门', 'dept', '2', '2014-12-30 19:23:47', '1', null, '0', '46');
@@ -1568,8 +1906,8 @@ INSERT INTO `rock_option` VALUES ('51', null, 'flowchecktype', '直属上级', '
 INSERT INTO `rock_option` VALUES ('52', null, 'flowchecktype', '部门负责人', 'dept', '3', '2015-01-13 16:36:31', '1', null, '0', '50');
 INSERT INTO `rock_option` VALUES ('53', null, 'flowchecktype', '指定人员', 'user', '5', '2015-01-13 16:36:31', '1', null, '0', '50');
 INSERT INTO `rock_option` VALUES ('54', null, 'flowchecktype', '职位', 'rank', '4', '2015-01-13 16:36:31', '1', null, '0', '50');
-INSERT INTO `rock_option` VALUES ('55', 'leavetypem', 'humanres', '请假类型', null, '0', '2015-08-05 12:05:36', '1', null, '1', '6');
-INSERT INTO `rock_option` VALUES ('56', 'leavetypes', 'humanres', '人事请假类型', null, '1', '2015-08-05 12:05:36', '1', null, '1', '6');
+INSERT INTO `rock_option` VALUES ('55', 'leavetypem', 'humanres', '请假类型', null, '0', '2015-08-21 10:24:11', '1', null, '0', '6');
+INSERT INTO `rock_option` VALUES ('56', 'leavetypes', 'humanres', '人事请假类型', null, '1', '2015-08-21 10:24:15', '1', null, '0', '6');
 INSERT INTO `rock_option` VALUES ('57', null, 'leavetypem', '事假', null, '0', '2015-01-04 21:07:10', '1', null, '0', '55');
 INSERT INTO `rock_option` VALUES ('58', null, 'leavetypem', '年假', null, '1', '2015-01-04 21:07:10', '1', null, '0', '55');
 INSERT INTO `rock_option` VALUES ('59', null, 'leavetypem', '婚假', null, '2', '2015-01-04 21:07:10', '1', null, '0', '55');
@@ -1581,19 +1919,19 @@ INSERT INTO `rock_option` VALUES ('64', null, 'ranking', '总经理', null, '2',
 INSERT INTO `rock_option` VALUES ('65', null, 'ranking', '人事经理', null, '3', '2015-01-13 16:33:39', '1', null, '0', '2');
 INSERT INTO `rock_option` VALUES ('66', null, 'flowchecktype', '开始', 'start', '0', '2015-01-13 16:36:31', '1', null, '0', '50');
 INSERT INTO `rock_option` VALUES ('67', null, 'flowchecktype', '结束', 'end', '1', '2015-01-13 16:36:31', '1', null, '0', '50');
-INSERT INTO `rock_option` VALUES ('68', 'rockmode', 'rock', '功能模块', null, '6', '2015-04-29 11:10:45', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('68', 'rockmode', 'rock', '功能模块', null, '9', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('69', 'leave', 'rockmode', '请假条', null, '0', '2015-03-19 15:44:07', '1', null, '0', '68');
 INSERT INTO `rock_option` VALUES ('70', 'jiaban', 'rockmode', '加班单', null, '1', '2015-03-19 15:44:07', '1', null, '0', '68');
 INSERT INTO `rock_option` VALUES ('71', null, 'flowcoursename_1', '主管审核', null, '0', '2015-01-29 11:17:54', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('72', null, 'flowcoursename_2', '上级主管审核', null, '0', '2015-01-29 11:10:41', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('73', null, 'flowcoursename_1', '人事确认', null, '1', '2015-01-29 11:17:54', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('74', null, 'flowcoursename_3', '主管审核', null, '0', '2015-01-30 15:35:42', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('75', 'kaoqintype', 'humanres', '考勤类型', null, '2', '2015-08-05 12:05:36', '1', null, '1', '6');
+INSERT INTO `rock_option` VALUES ('75', 'kaoqintype', 'humanres', '考勤类型', null, '2', '2015-08-21 10:24:24', '1', null, '0', '6');
 INSERT INTO `rock_option` VALUES ('76', null, 'kaoqintype', '正常', null, '0', '2015-02-06 13:35:00', '1', null, '0', '75');
 INSERT INTO `rock_option` VALUES ('77', null, 'kaoqintype', '迟到', null, '1', '2015-02-06 13:35:00', '1', null, '0', '75');
 INSERT INTO `rock_option` VALUES ('78', null, 'kaoqintype', '早退', null, '2', '2015-02-06 13:35:00', '1', null, '0', '75');
 INSERT INTO `rock_option` VALUES ('79', null, 'kaoqintype', '未打卡', null, '3', '2015-02-06 13:35:00', '1', null, '0', '75');
-INSERT INTO `rock_option` VALUES ('80', 'rockwork', 'rock', '工作任务', null, '7', '2015-04-29 11:10:45', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('80', 'rockwork', 'rock', '工作任务', null, '10', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('81', 'worktype', 'rockwork', '任务类型', null, '0', '2015-04-29 11:09:15', '1', null, '0', '80');
 INSERT INTO `rock_option` VALUES ('82', null, 'worktype', '基本任务', null, '0', '2015-02-07 22:22:31', '1', null, '0', '81');
 INSERT INTO `rock_option` VALUES ('83', null, 'worktype', '周任务', null, '1', '2015-02-07 22:22:31', '1', null, '0', '81');
@@ -1612,14 +1950,14 @@ INSERT INTO `rock_option` VALUES ('95', null, 'workstate', '无法完成', null,
 INSERT INTO `rock_option` VALUES ('96', null, 'workstate', '已取消', null, '6', '2015-02-07 22:20:41', '1', null, '0', '85');
 INSERT INTO `rock_option` VALUES ('97', null, 'workstate', '延后', null, '7', '2015-02-07 22:20:41', '1', null, '0', '85');
 INSERT INTO `rock_option` VALUES ('98', null, 'worktype', '月任务', null, '2', '2015-02-07 22:22:31', '1', null, '0', '81');
-INSERT INTO `rock_option` VALUES ('99', 'filetype', 'rock', '文档类别', null, '1', '2015-04-29 11:10:45', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('99', 'filetype', 'rock', '文档类别', null, '4', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('100', null, 'filetype', '基础文件', null, '0', '2015-05-15 15:20:22', '1', null, '0', '99');
 INSERT INTO `rock_option` VALUES ('101', null, 'filetype', '基础文档', null, '1', '2015-05-15 15:20:22', '1', null, '0', '99');
-INSERT INTO `rock_option` VALUES ('102', 'systemtitle', 'rock', '系统名称', 'ROCK协同办公OA在线演示系统', '4', '2015-08-06 16:56:01', '1', null, '1', '1');
+INSERT INTO `rock_option` VALUES ('102', 'systemtitle', 'rock', '系统名称', 'ROCK协同办公OA在线演示系统', '7', '2015-08-23 19:09:25', '1', null, '1', '1');
 INSERT INTO `rock_option` VALUES ('103', 'dailyset', null, null, '3,w', null, '2015-03-19 16:22:41', '0', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('104', 'systemlogo', null, null, 'images/icons40.png', null, '2015-08-06 16:56:01', '0', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('104', 'systemlogo', null, null, 'images/icons40.png', null, '2015-08-23 19:09:25', '0', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('106', 'assetstype', 'assets', '资产类别', null, '0', '2015-04-13 16:01:22', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('107', 'assets', 'rock', '资产选项', null, '2', '2015-07-13 13:43:45', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('107', 'assets', 'rock', '资产选项', null, '5', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('108', 'assetsbrand', 'assets', '品牌', null, '1', '2015-04-13 16:01:22', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('109', null, 'assetstype', '笔记本', 'BJB', '0', '2015-06-30 17:13:06', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('110', null, 'assetstype', '电脑', 'DN', '0', '2015-06-30 17:13:16', '1', null, '0', '0');
@@ -1635,7 +1973,7 @@ INSERT INTO `rock_option` VALUES ('119', 'assetsaddress', 'assets', '放置地�
 INSERT INTO `rock_option` VALUES ('120', null, 'assetsaddress', '仓库一', null, '0', '2015-04-13 16:02:03', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('121', null, 'assetsaddress', '仓库二', null, '0', '2015-04-13 16:02:08', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('122', null, 'assetsstate', '借出', null, '0', '2015-04-14 10:28:37', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('123', 'rockproject', 'rock', '项目管理', null, '8', '2015-04-29 11:11:20', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('123', 'rockproject', 'rock', '项目管理', null, '11', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('124', null, 'assetsbrand', '联想', null, '0', '2015-04-29 14:04:24', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('125', null, 'assetsbrand', '戴尔', null, '0', '2015-04-29 14:04:30', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('126', 'projecttype', 'rockproject', '项目类别', null, '0', '2015-05-08 17:40:51', '1', null, '0', '0');
@@ -1679,7 +2017,7 @@ INSERT INTO `rock_option` VALUES ('164', null, 'flowfenlei', '财务', null, '0'
 INSERT INTO `rock_option` VALUES ('165', null, 'flowfenlei', '协同办公', null, '1', '2015-06-17 16:38:06', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('166', null, 'flowcoursename_4', '接收人签收', null, '0', '2015-06-17 16:41:09', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('167', null, 'flowchecktype', '自定义', 'auto', '6', '2015-06-18 09:26:04', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('168', 'meet', 'rock', '会议选项', null, '0', '2015-07-13 13:44:06', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('168', 'meet', 'rock', '会议选项', null, '2', '2015-08-21 10:25:55', '1', null, '1', '0');
 INSERT INTO `rock_option` VALUES ('169', 'meeting', 'meet', '会议室列表', null, '0', '2015-07-13 13:50:43', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('170', 'meettongzhi', 'meet', '会议通知类型', null, '1', '2015-07-13 13:51:54', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('171', 'meettodo_zann', 'meettongzhi', '站内通知', '是', '0', '2015-07-13 13:54:12', '1', null, '0', '0');
@@ -1710,7 +2048,7 @@ INSERT INTO `rock_option` VALUES ('196', null, 'redundreson', '无法胜任工�
 INSERT INTO `rock_option` VALUES ('197', null, 'redundreson', '另找到工作', null, '0', '2015-08-01 12:26:44', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('198', null, 'redundreson', '身体原因', null, '0', '2015-08-01 12:26:53', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('199', null, 'redundreson', '年龄到期', null, '0', '2015-08-01 12:27:06', '1', null, '0', '0');
-INSERT INTO `rock_option` VALUES ('200', 'transfertype', 'userinfor', '调到类型', null, '10', '2015-08-01 12:28:43', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('200', 'transfertype', 'userinfor', '调动类型', null, '10', '2015-08-18 11:59:29', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('201', null, 'transfertype', '平调', null, '0', '2015-08-01 12:29:04', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('202', null, 'transfertype', '晋升', null, '0', '2015-08-01 12:29:14', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('203', null, 'transfertype', '降职', null, '0', '2015-08-01 12:29:21', '1', null, '0', '0');
@@ -1718,6 +2056,20 @@ INSERT INTO `rock_option` VALUES ('204', 'dakaerrtype', 'humanres', '打卡异�
 INSERT INTO `rock_option` VALUES ('205', null, 'dakaerrtype', '忘记打卡', null, '0', '2015-08-05 12:05:51', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('206', null, 'dakaerrtype', '打卡不成功', null, '1', '2015-08-05 12:06:23', '1', null, '0', '0');
 INSERT INTO `rock_option` VALUES ('207', null, 'flowcoursename_10', '主管审核', null, '0', '2015-08-05 12:07:49', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('208', null, 'leavetypem', '产假', null, '4', '2015-08-20 10:26:28', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('209', null, 'leavetypes', '增加产假', null, '2', '2015-08-20 10:27:54', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('210', null, 'flowcoursename_11', '上级审批', null, '0', '2015-08-20 17:12:47', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('211', null, 'flowcoursename_11', '财务主管审批', null, '1', '2015-08-20 17:12:47', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('212', null, 'flowcoursename_11', '财务付款', null, '2', '2015-08-20 17:12:47', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('213', null, 'ranking', '财务经理', null, '9', '2015-08-20 17:14:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('214', 'rockfina', 'rock', '财务选项', null, '12', '2015-08-21 10:25:55', '1', null, '1', '0');
+INSERT INTO `rock_option` VALUES ('215', 'finaitems', 'rockfina', '所属项目', null, '0', '2015-08-21 10:26:58', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('216', null, 'finaitems', '市内交通费', null, '0', '2015-08-21 10:29:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('217', null, 'finaitems', '办公用品', null, '1', '2015-08-21 10:29:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('218', null, 'finaitems', '快递费', null, '2', '2015-08-21 10:29:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('219', null, 'finaitems', '停车费', null, '3', '2015-08-21 10:29:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('220', null, 'finaitems', '电话费', null, '4', '2015-08-21 10:29:01', '1', null, '0', '0');
+INSERT INTO `rock_option` VALUES ('221', null, 'finaitems', '其它', null, '5', '2015-08-21 10:29:01', '1', null, '0', '0');
 
 -- ----------------------------
 -- Table structure for `rock_projectm`
@@ -1816,7 +2168,7 @@ CREATE TABLE `rock_sjoin` (
   `sid` int(11) DEFAULT NULL,
   `indate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_sjoin
@@ -1842,7 +2194,7 @@ INSERT INTO `rock_sjoin` VALUES ('152', 'um', '3', '66', '2014-12-12 11:29:30');
 INSERT INTO `rock_sjoin` VALUES ('153', 'ug', '0', '1', '2014-12-12 15:23:04');
 INSERT INTO `rock_sjoin` VALUES ('163', 'ug', '1', '1', '2015-08-01 17:09:27');
 INSERT INTO `rock_sjoin` VALUES ('160', 'ug', '5', '5', '2015-01-24 00:14:05');
-INSERT INTO `rock_sjoin` VALUES ('161', 'ug', '2', '1', '2015-01-24 00:14:37');
+INSERT INTO `rock_sjoin` VALUES ('164', 'ug', '2', '1', '2015-08-20 17:16:36');
 
 -- ----------------------------
 -- Table structure for `rock_sjoinv`
@@ -1909,17 +2261,21 @@ CREATE TABLE `rock_supplea` (
   `allcheckid` varchar(200) DEFAULT NULL COMMENT '@所以审核人',
   `nstatus` tinyint(1) DEFAULT '0' COMMENT '@当然状态',
   `nowcheckname` varchar(50) DEFAULT NULL COMMENT '@当前审核人',
+  `optname` varchar(20) DEFAULT NULL COMMENT '操作人',
+  `applydt` date DEFAULT NULL COMMENT '申请日期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_supplea
 -- ----------------------------
-INSERT INTO `rock_supplea` VALUES ('1', '1', null, '1', '0', '1', '3', null, '2015-07-23 16:26:03', '管理员', null, '0', null, null, '0', null);
-INSERT INTO `rock_supplea` VALUES ('2', '2', null, '3', '0', '1', '3', null, '2015-07-23 16:26:03', '管理员', null, '0', null, null, '0', null);
-INSERT INTO `rock_supplea` VALUES ('4', '1', '笔记本', '4', '1', null, '1', 'heheheh', '2015-07-23 17:03:32', '小乔', null, '1', null, '5', '1', null);
-INSERT INTO `rock_supplea` VALUES ('5', '2', '铅笔', '1', '1', null, '1', '12', '2015-07-23 17:39:37', '小乔', null, '1', null, '5', '1', null);
-INSERT INTO `rock_supplea` VALUES ('6', '1', null, '3', '0', '1', '4', null, '2015-07-24 17:50:07', '管理员', null, '0', null, null, '0', null);
+INSERT INTO `rock_supplea` VALUES ('1', '1', null, '1', '0', '1', '3', null, '2015-07-23 16:26:03', '管理员', null, '0', null, null, '0', null, null, null);
+INSERT INTO `rock_supplea` VALUES ('2', '2', null, '3', '0', '1', '3', null, '2015-07-23 16:26:03', '管理员', null, '0', null, null, '0', null, null, null);
+INSERT INTO `rock_supplea` VALUES ('4', '1', '笔记本', '4', '1', null, '1', 'heheheh', '2015-07-23 17:03:32', '小乔', null, '1', null, '5', '1', null, null, null);
+INSERT INTO `rock_supplea` VALUES ('5', '2', '铅笔', '1', '1', null, '1', '12', '2015-07-23 17:39:37', '小乔', null, '1', null, '5', '1', null, null, null);
+INSERT INTO `rock_supplea` VALUES ('6', '1', null, '3', '0', '1', '4', null, '2015-07-24 17:50:07', '管理员', null, '0', null, null, '0', null, null, null);
+INSERT INTO `rock_supplea` VALUES ('7', '1', '笔记本', '1', '1', null, '0', '23', '2015-08-19 12:14:03', null, null, '1', '5', '5', '0', '小乔', null, null);
+INSERT INTO `rock_supplea` VALUES ('8', '2', '铅笔', '1', '1', '1', '1', '23', '2015-08-21 21:03:10', '小乔', null, '1', null, '5', '1', null, '管理员', '2015-08-21');
 
 -- ----------------------------
 -- Table structure for `rock_task`
@@ -1945,13 +2301,13 @@ CREATE TABLE `rock_task` (
 -- ----------------------------
 -- Records of rock_task
 -- ----------------------------
-INSERT INTO `rock_task` VALUES ('8', '工作流匹配', '基础任务', 'flow,repipei', '1', '2015-02-09 11:12:18', '管理员', '1', null, '0', '每天的01时05分00秒\r\n每天的12时50分00秒\r\n', '2015-08-08 20:27:12', '1');
-INSERT INTO `rock_task` VALUES ('9', '读取固定会议', '基础任务', 'meet,fixed', '1', '2015-01-30 10:17:41', '管理员', '1', null, '0', '每小时的01分00秒 每天从08:00开始至19:00结束\r\n', '2015-08-09 14:37:27', '1');
-INSERT INTO `rock_task` VALUES ('10', '5分钟运行', '基础任务', 'minute5,runtask', '1', '2015-02-09 11:07:29', '管理员', '1', '会议,工作任务的通知', '0', '每5分钟的00秒 每天从09:00开始至18:00结束\r\n', '2015-07-29 15:40:00', '1');
-INSERT INTO `rock_task` VALUES ('11', '读取工作任务', '基础任务', 'work,getlist', '1', '2015-03-05 10:03:41', '管理员', '1', null, '0', '每天的00时00分10秒\r\n每天的09时05分00秒\r\n', '2015-07-17 09:52:10', '1');
-INSERT INTO `rock_task` VALUES ('12', '日报分析', '基础任务', 'kaoqin,dailyfx', '1', '2015-03-20 09:22:26', '管理员', '1', null, '0', '每工作日的12时01分00秒\r\n每工作日的09时00分00秒\r\n', '2015-07-20 12:01:00', '1');
-INSERT INTO `rock_task` VALUES ('13', '每日考勤分析', '基础任务', 'kaoqin,fenxi', '1', '2015-06-17 09:29:40', '管理员', '1', '考勤分析前3天的', '0', '每天的10时05分00秒\n', '2015-07-20 10:05:00', '1');
-INSERT INTO `rock_task` VALUES ('14', '人力资源更新', '基础任务', 'hr,update', '1', '2015-08-03 17:50:51', '管理员', '1', '转正,离职,变动', '0', '每天的00时20分00秒\n', '2015-08-03 18:10:17', '1');
+INSERT INTO `rock_task` VALUES ('8', '工作流匹配', '基础任务', 'flow,repipei', '1', '2015-02-09 11:12:18', '管理员', '1', null, '0', '每天的01时05分00秒\r\n每天的12时50分00秒\r\n', '2015-08-17 12:50:00', '1');
+INSERT INTO `rock_task` VALUES ('9', '读取固定会议', '基础任务', 'meet,fixed', '1', '2015-01-30 10:17:41', '管理员', '1', null, '0', '每小时的01分00秒 每天从08:00开始至19:00结束\r\n', '2015-08-17 18:01:00', '1');
+INSERT INTO `rock_task` VALUES ('10', '5分钟运行', '基础任务', 'minute5,runtask', '1', '2015-02-09 11:07:29', '管理员', '1', '会议,工作任务的通知', '0', '每5分钟的00秒 每天从09:00开始至18:00结束\r\n', '2015-08-17 17:55:00', '1');
+INSERT INTO `rock_task` VALUES ('11', '读取工作任务', '基础任务', 'work,getlist', '1', '2015-03-05 10:03:41', '管理员', '1', null, '0', '每天的00时00分10秒\r\n每天的09时05分00秒\r\n', '2015-08-16 00:00:10', '1');
+INSERT INTO `rock_task` VALUES ('12', '日报分析', '基础任务', 'kaoqin,dailyfx', '1', '2015-08-11 10:00:01', '管理员', '1', null, '0', '每天的01时05分20秒\n', '2015-07-20 12:01:00', '1');
+INSERT INTO `rock_task` VALUES ('13', '每日考勤分析', '基础任务', 'kaoqin,fenxi', '1', '2015-08-11 09:58:46', '管理员', '1', '考勤分析前3天的', '0', '每天的10时05分00秒\n每天的01时05分00秒\n', '2015-08-17 10:05:00', '1');
+INSERT INTO `rock_task` VALUES ('14', '人力资源更新', '基础任务', 'hr,update', '1', '2015-08-03 17:50:51', '管理员', '1', '转正,离职,变动', '0', '每天的00时20分00秒\n', '2015-08-16 00:20:00', '1');
 
 -- ----------------------------
 -- Table structure for `rock_tasktime`
@@ -1970,7 +2326,7 @@ CREATE TABLE `rock_tasktime` (
   `stime` varchar(20) DEFAULT NULL COMMENT '每天从几点开始',
   `etime` varchar(20) DEFAULT NULL COMMENT '截止',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_tasktime
@@ -2000,14 +2356,14 @@ INSERT INTO `rock_tasktime` VALUES ('80', '11', 'task', '天', '09时05分00秒'
 INSERT INTO `rock_tasktime` VALUES ('81', '55', 'work', '工作日', '10时30分00秒', null, null, '2015-03-13 10:07:56', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('82', '57', 'work', '工作日', '10时45分00秒', null, null, '2015-03-13 10:33:05', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('83', '59', 'work', '工作日', '11时00分00秒', null, null, '2015-03-13 10:44:38', '1', null, null);
-INSERT INTO `rock_tasktime` VALUES ('84', '12', 'task', '工作日', '09时00分00秒', null, null, '2015-03-20 09:22:23', '1', null, null);
-INSERT INTO `rock_tasktime` VALUES ('85', '12', 'task', '工作日', '12时01分00秒', null, null, '2015-03-17 17:19:11', '1', null, null);
+INSERT INTO `rock_tasktime` VALUES ('84', '12', 'task', '天', '01时05分20秒', null, null, '2015-08-11 09:59:58', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('86', '71', 'work', '仅一次', '2015-05-17 18:26:32', null, null, '2015-05-17 18:26:35', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('87', '13', 'task', '天', '10时05分00秒', null, null, '2015-06-17 09:29:38', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('95', '73', 'work', '工作日', '10时18分20秒', null, null, '2015-07-15 13:18:29', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('96', '75', 'work', '仅一次', '2015-07-15 18:00:18', null, null, '2015-07-15 14:51:26', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('97', '14', 'task', '天', '00时20分00秒', null, null, '2015-08-03 17:50:49', '1', null, null);
 INSERT INTO `rock_tasktime` VALUES ('98', '79', 'work', '天', '18时00分00秒', null, null, '2015-08-05 09:35:24', '1', null, null);
+INSERT INTO `rock_tasktime` VALUES ('99', '13', 'task', '天', '01时05分00秒', null, null, '2015-08-11 09:58:41', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `rock_todo`
@@ -2024,27 +2380,27 @@ CREATE TABLE `rock_todo` (
   `mid` smallint(6) DEFAULT NULL,
   `url` varchar(1000) DEFAULT NULL COMMENT '相关地址',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=326 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=350 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_todo
 -- ----------------------------
-INSERT INTO `rock_todo` VALUES ('270', '2', '文件传送', '您有[管理员]的[文件传送,单号:FI-20150625-0002]需要处理', '0', '2015-07-13 15:04:02', 'docdeil', '7', '?rocktoken=xw0ws0sx0pox0xw0vp0tv0tp0vs0pox0wp0tv0poo0vp0vo0pqq0xv0tp0vs0sx0xw0pot0xo0pos0wo0ww0xo0ppq0xo0ww0xx0pox0wx0wv0ppq0pos0pop0vp0vs0ppw0xw0to0ppx0tv0xv0vq0wq0ppu0xw0uv0xo0sx0xv0wv0wp0tv0vv0pot0xo0ppu0xw0to0wq0pow0xw0ppo0wu0ppu0wo0wv0wq0ppw0wx0to0wq0pow0xv0wv0ppx0pox0poo0vp0vo0pot0xw0vp0wt0tv0xo0vp0tv0pou0xo0vp0wu0ppq0xw0uv0xo0ppu0xv0wv0wp0tv0vw0ppx0tw0tw014');
+INSERT INTO `rock_todo` VALUES ('270', '2', '文件传送', '您有[管理员]的[文件传送,单号:FI-20150625-0002]需要处理', '1', '2015-07-13 15:04:02', 'docdeil', '7', '?rocktoken=xw0ws0sx0pox0xw0vp0tv0tp0vs0pox0wp0tv0poo0vp0vo0pqq0xv0tp0vs0sx0xw0pot0xo0pos0wo0ww0xo0ppq0xo0ww0xx0pox0wx0wv0ppq0pos0pop0vp0vs0ppw0xw0to0ppx0tv0xv0vq0wq0ppu0xw0uv0xo0sx0xv0wv0wp0tv0vv0pot0xo0ppu0xw0to0wq0pow0xw0ppo0wu0ppu0wo0wv0wq0ppw0wx0to0wq0pow0xv0wv0ppx0pox0poo0vp0vo0pot0xw0vp0wt0tv0xo0vp0tv0pou0xo0vp0wu0ppq0xw0uv0xo0ppu0xv0wv0wp0tv0vw0ppx0tw0tw014');
 INSERT INTO `rock_todo` VALUES ('277', '8', '会议通知', '[会议测试啦]会议将在5分钟后15:40:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:35:00', null, null, null);
-INSERT INTO `rock_todo` VALUES ('260', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后开始，请做好准备', '0', '2015-07-13 13:55:00', null, null, null);
+INSERT INTO `rock_todo` VALUES ('260', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后开始，请做好准备', '1', '2015-07-13 13:55:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('261', '8', '会议通知', '[潍坊我问问问问]会议将在5分钟后开始，请做好准备', '0', '2015-07-13 13:55:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('262', '9', '会议通知', '[潍坊我问问问问]会议将在5分钟后开始，请做好准备', '0', '2015-07-13 13:55:00', null, null, null);
-INSERT INTO `rock_todo` VALUES ('276', '2', '会议通知', '[会议测试啦]会议将在5分钟后15:40:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:35:00', null, null, null);
-INSERT INTO `rock_todo` VALUES ('264', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后14:20:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 14:15:00', null, null, null);
+INSERT INTO `rock_todo` VALUES ('276', '2', '会议通知', '[会议测试啦]会议将在5分钟后15:40:00开始，请做好准备,会议室[会议室1]', '1', '2015-07-13 15:35:00', null, null, null);
+INSERT INTO `rock_todo` VALUES ('264', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后14:20:00开始，请做好准备,会议室[会议室1]', '1', '2015-07-13 14:15:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('265', '8', '会议通知', '[潍坊我问问问问]会议将在5分钟后14:20:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 14:15:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('266', '9', '会议通知', '[潍坊我问问问问]会议将在5分钟后14:20:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 14:15:00', null, null, null);
-INSERT INTO `rock_todo` VALUES ('272', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后15:10:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:06:33', null, null, null);
+INSERT INTO `rock_todo` VALUES ('272', '2', '会议通知', '[潍坊我问问问问]会议将在5分钟后15:10:00开始，请做好准备,会议室[会议室1]', '1', '2015-07-13 15:06:33', null, null, null);
 INSERT INTO `rock_todo` VALUES ('273', '8', '会议通知', '[潍坊我问问问问]会议将在5分钟后15:10:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:06:33', null, null, null);
 INSERT INTO `rock_todo` VALUES ('274', '9', '会议通知', '[潍坊我问问问问]会议将在5分钟后15:10:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:06:33', null, null, null);
 INSERT INTO `rock_todo` VALUES ('278', '9', '会议通知', '[会议测试啦]会议将在5分钟后15:40:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-13 15:35:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('324', '1', '文件传送', '您提交的[文件传送,单号:FI-20150720-0001]已处理完成', '1', '2015-08-08 22:28:30', 'docdeil', '8', '?rocktoken=qp0pl0lq0ihq0qp0oi0mo0mi0ol0ihq0pi0mo0ihh0oi0oh0ijj0qo0mi0ol0lq0qp0ihm0qh0ihl0ph0pp0qh0iij0qh0pp0qq0ihq0pq0po0iij0ihl0ihi0oi0ol0iip0qp0mh0iiq0mo0qo0oj0pj0iin0qp0no0qh0lq0qo0po0pi0mo0oo0pk0qh0iin0qp0mh0pj0ihp0qp0iih0pn0iin0ph0po0pj0iip0pq0mh0pj0ihp0qo0po0iiq0ihq0ihh0oi0oh0ihm0qp0oi0pm0mo0qh0oi0mo0ihn0qh0oi0pn0iij0qp0no0qh0iin0qo0po0pi0mo0oq0nm0mp0mp07');
 INSERT INTO `rock_todo` VALUES ('295', '5', '申请办公用品', '您有[管理员]的[申请办公用品,单号:YP-20150723-序号0001]需要处理', '0', '2015-07-23 16:58:27', 'supplea', '3', '?rocktoken=xw0ws0sx0pox0xw0vp0tv0tp0vs0pox0wp0tv0poo0vp0vo0pqq0xv0tp0vs0sx0xw0pot0xo0pos0wo0ww0xo0ppq0xo0ww0xx0pox0wx0wv0ppq0pos0pop0vp0vs0ppw0xw0to0ppx0tv0xv0vq0wq0ppu0xw0uv0xo0sx0xv0wv0wp0tv0vw0wr0xo0ppu0xw0to0wq0pow0xw0ppo0wu0ppu0wo0ww0vw0sx0xx0vq0uu0ppt0xo0wv0ux0pox0poo0vp0vo0pot0xw0vp0wt0tv0xx0tp0wu0ppx0xx0vp0pqo0pow0wx0wr0xo0ppu0xv0wv0wp0tv0vv0ppx0tw0tw014');
-INSERT INTO `rock_todo` VALUES ('289', '2', '会议通知', '[测试]会议将在5分钟后09:30:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-16 09:25:00', null, null, null);
+INSERT INTO `rock_todo` VALUES ('289', '2', '会议通知', '[测试]会议将在5分钟后09:30:00开始，请做好准备,会议室[会议室1]', '1', '2015-07-16 09:25:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('290', '8', '会议通知', '[测试]会议将在5分钟后09:30:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-16 09:25:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('291', '9', '会议通知', '[测试]会议将在5分钟后09:30:00开始，请做好准备,会议室[会议室1]', '0', '2015-07-16 09:25:00', null, null, null);
 INSERT INTO `rock_todo` VALUES ('293', '3', '外出出差', '您有[管理员]的[外出出差,单号:OT-20150720-0001]需要处理', '1', '2015-07-20 10:31:47', 'kq_out', '7', '?rocktoken=vu0uq0qv0nmv0vu0tn0rt0rn0tq0nmv0un0rt0nmm0tn0tm0noo0vt0rn0tq0qv0vu0nmr0vm0nmq0um0uu0vm0nno0vm0uu0vv0nmv0uv0ut0nno0nmq0nmn0tn0tq0nnu0vu0rm0nnv0rt0vt0to0uo0nns0vu0st0vm0qv0vt0ut0un0rt0tt0non0vm0nns0vu0rm0uo0nmu0vu0nnm0us0nns0um0uu0nmm0nmq0vt0ut0tu0nnn0nmm0up0vm0qu0uv0ut0tq0nnr0vm0uq0qv0nnq0vv0us0rt0nnu0nmm0uu0un0nmv0vu0ut0nmu0nmt0um0uq0vv0ru012');
@@ -2054,6 +2410,14 @@ INSERT INTO `rock_todo` VALUES ('323', '1', '请假条', '您提交的[请假条
 INSERT INTO `rock_todo` VALUES ('321', '1', '打卡异常', '您提交的[打卡异常,单号:KE-20150805-0001]已处理完成', '1', '2015-08-05 12:28:44', 'kq_dkerr', '1', '?rocktoken=xw0ws0sx0pox0xw0vp0tv0tp0vs0pox0wp0tv0poo0vp0vo0pqq0xv0tp0vs0sx0xw0pot0xo0pos0wo0ww0xo0ppq0xo0ww0xx0pox0wx0wv0ppq0pos0pop0vp0vs0ppw0xw0to0ppx0tv0xv0vq0wq0ppu0xw0uv0xo0sx0xv0wv0wp0tv0vv0wr0xo0ppu0xw0to0wq0pow0xw0ppo0wu0ppu0wo0wv0wq0pps0xo0ww0vs0pqp0vs0ppo0wq0pos0wx0pox0pqo0pow0wo0wv0ppu0pqo0ww0to0wq0pps0xo0ww0vs0pqp0vs0pox0sx0ppq0xo0uw0sw0pqo014');
 INSERT INTO `rock_todo` VALUES ('322', '1', '请假条', '您提交的[请假条,单号:QJ-20150720-0001]已处理完成', '1', '2015-08-05 15:57:11', 'kq_info', '33', '?rocktoken=qp0pl0lq0ihq0qp0oi0mo0mi0ol0ihq0pi0mo0ihh0oi0oh0ijj0qo0mi0ol0lq0qp0ihm0qh0ihl0ph0pp0qh0iij0qh0pp0qq0ihq0pq0po0iij0ihl0ihi0oi0ol0iip0qp0mh0iiq0mo0qo0oj0pj0iin0qp0no0qh0lq0qo0po0pi0mo0oo0pk0qh0iin0qp0mh0pj0ihp0qp0iih0pn0iin0ph0po0ijh0ihp0pq0pp0qh0ihp0ol0iih0pj0ihl0pq0ihq0ijh0ihp0ph0po0iin0ijh0pp0mh0ihp0iio0qh0ihq0mn0ihq0qp0po0ihp0iho0ph0pl0oo0ijj07');
 INSERT INTO `rock_todo` VALUES ('319', '7', '转正申请', '您有[管理员]的[转正申请,单号:HR-20150805-0001]需要处理', '1', '2015-08-05 10:42:22', 'hrpositive', '2', '?rocktoken=sr0rn0ns0kjs0sr0qk0oq0ok0qn0kjs0rk0oq0kjj0qk0qj0kll0sq0ok0qn0ns0sr0kjo0sj0kjn0rj0rr0sj0kkl0sj0rr0ss0kjs0rs0rq0kkl0kjn0kjk0qk0qn0kkr0sr0oj0kks0oq0sq0ql0rl0kkp0sr0pq0sj0ns0sq0rq0rk0oq0qr0klk0sj0kkp0sr0oj0rl0kjr0sr0kkj0rp0kkp0rj0rq0kjn0klk0ss0qk0oq0kll0sq0rr0rl0kkl0kjj0kjs0ro0kjs0kjj0qk0qj0kjo0sr0qk0ro0oq0sq0ql0qn0kks0sr0ok0qr0kkl0kjj0qk0kjr0oj0sj0rm0sj0kkp0sq0rq0rk0oq0qq0kjm0or0or09');
+INSERT INTO `rock_todo` VALUES ('327', '1', '文件传送', '您提交的[文件传送,单号:FI-20150814-0001]已处理完成', '1', '2015-08-14 10:44:13', 'docdeil', '9', '?rocktoken=qp0pl0lq0ihq0qp0oi0mo0mi0ol0ihq0pi0mo0ihh0oi0oh0ijj0qo0mi0ol0lq0qp0ihm0qh0ihl0ph0pp0qh0iij0qh0pp0qq0ihq0pq0po0iij0ihl0ihi0oi0ol0iip0qp0mh0iiq0mo0qo0oj0pj0iin0qp0no0qh0lq0qo0po0pi0mo0oo0pk0qh0iin0qp0mh0pj0ihp0qp0iih0pn0iin0ph0po0pj0iip0pq0mh0pj0ihp0qo0po0iiq0ihq0ihh0oi0oh0ihm0qp0oi0pm0mo0qh0oi0mo0ihn0qh0oi0pn0iij0qp0no0qh0iin0qo0po0pi0mo0oq0pi0mp0mp07');
+INSERT INTO `rock_todo` VALUES ('330', '1', '文件传送', '您提交的[文件传送,单号:FI-20150814-0002]已处理完成', '1', '2015-08-15 21:43:27', 'docdeil', '10', '?rocktoken=nm0mi0in0fen0nm0lf0jl0jf0li0fen0mf0jl0fee0lf0le0fgg0nl0jf0li0in0nm0fej0ne0fei0me0mm0ne0ffg0ne0mm0nn0fen0mn0ml0ffg0fei0fef0lf0li0ffm0nm0je0ffn0jl0nl0lg0mg0ffk0nm0kl0ne0in0nl0ml0mf0jl0ll0mh0ne0ffk0nm0je0mg0fem0nm0ffe0mk0ffk0me0ml0mg0ffm0mn0je0mg0fem0nl0ml0ffn0fen0fee0lf0le0fej0nm0lf0mj0jl0ne0lf0jl0fek0ne0lf0mk0ffg0nm0kl0ne0ffk0nl0ml0mf0jl0ll0mi0kj0jm04');
+INSERT INTO `rock_todo` VALUES ('338', '7', '打卡异常', '您有[管理员]的[打卡异常,单号:KE-20150820-0001]需要处理', '0', '2015-08-20 16:37:34', 'kq_dkerr', '2', '?rocktoken=wv0vr0rw0onw0wv0uo0su0so0ur0onw0vo0su0onn0uo0un0opp0wu0so0ur0rw0wv0ons0wn0onr0vn0vv0wn0oop0wn0vv0ww0onw0vw0vu0oop0onr0ono0uo0ur0oov0wv0sn0oow0su0wu0up0vp0oot0wv0tu0wn0rw0wu0vu0vo0su0uv0opo0wn0oot0wv0sn0vp0onv0wv0oon0vt0oot0vn0vu0vp0oor0wn0vv0ur0opo0ur0oon0vp0onr0vw0onw0opn0onv0vn0vu0oot0opn0vv0sn0vp0oor0wn0vv0ur0opo0ur0onw0rw0oop0wn0tv0rv0opo013');
+INSERT INTO `rock_todo` VALUES ('333', '5', '申请办公用品', '您有[管理员]的[申请办公用品,单号:YP-20150819-0001]需要处理', '0', '2015-08-19 12:14:03', 'supplea', '7', '?rocktoken=sr0rn0ns0kjs0sr0qk0oq0ok0qn0kjs0rk0oq0kjj0qk0qj0kll0sq0ok0qn0ns0sr0kjo0sj0kjn0rj0rr0sj0kkl0sj0rr0ss0kjs0rs0rq0kkl0kjn0kjk0qk0qn0kkr0sr0oj0kks0oq0sq0ql0rl0kkp0sr0pq0sj0ns0sq0rq0rk0oq0qr0rm0sj0kkp0sr0oj0rl0kjr0sr0kkj0rp0kkp0rj0rr0qr0ns0ss0ql0pp0kko0sj0rq0ps0kjs0kjj0qk0qj0kjo0sr0qk0ro0oq0ss0ok0rp0kks0ss0qk0klj0kjr0rs0rm0sj0kkp0sq0rq0rk0oq0qr0kks0or0or09');
+INSERT INTO `rock_todo` VALUES ('339', '1', '文件传送', '您有[管理员]的[文件传送,单号:FI-20150821-0001]需要处理', '1', '2015-08-21 11:25:09', 'docdeil', '11', '?rocktoken=on0nj0jo0gfo0on0mg0km0kg0mj0gfo0ng0km0gff0mg0mf0ghh0om0kg0mj0jo0on0gfk0of0gfj0nf0nn0of0ggh0of0nn0oo0gfo0no0nm0ggh0gfj0gfg0mg0mj0ggn0on0kf0ggo0km0om0mh0nh0ggl0on0lm0of0jo0om0nm0ng0km0mm0ni0of0ggl0on0kf0nh0gfn0on0ggf0nl0ggl0nf0nm0nh0ggn0no0kf0nh0gfn0om0nm0ggo0gfo0gff0mg0mf0gfk0on0mg0nk0km0of0mg0km0gfl0of0mg0nl0ggh0on0lm0of0ggl0om0nm0ng0km0mm0nj0lo0kn05');
+INSERT INTO `rock_todo` VALUES ('336', '1', '外出出差', '您提交的[外出出差,单号:KW-20150819-0001]已处理完成', '1', '2015-08-19 14:45:58', 'kq_out', '8', '?rocktoken=po0ok0kp0hgp0po0nh0ln0lh0nk0hgp0oh0ln0hgg0nh0ng0hii0pn0lh0nk0kp0po0hgl0pg0hgk0og0oo0pg0hhi0pg0oo0pp0hgp0op0on0hhi0hgk0hgh0nh0nk0hho0po0lg0hhp0ln0pn0ni0oi0hhm0po0mn0pg0kp0pn0on0oh0ln0nn0oj0pg0hhm0po0lg0oi0hgo0po0hhg0om0hhm0og0oo0hgg0hgk0pn0on0no0hhh0hgg0oj0pg0ko0op0on0nk0hhl0pg0ok0kp0hhk0pp0om0ln0hho0hgg0oo0oh0hgp0po0on0hgo0hgn0og0ok0hgj0lo06');
+INSERT INTO `rock_todo` VALUES ('346', '1', '费用报销', '您提交的[费用报销,单号:PA-20150821-0001]已处理完成', '1', '2015-08-21 20:42:13', 'fininfom', '1', '?rocktoken=vu0uq0qv0nmv0vu0tn0rt0rn0tq0nmv0un0rt0nmm0tn0tm0noo0vt0rn0tq0qv0vu0nmr0vm0nmq0um0uu0vm0nno0vm0uu0vv0nmv0uv0ut0nno0nmq0nmn0tn0tq0nnu0vu0rm0nnv0rt0vt0to0uo0nns0vu0st0vm0qv0vt0ut0un0rt0tt0up0vm0nns0vu0rm0uo0nmu0vu0nnm0us0nns0um0ut0vm0nno0vu0nmv0vm0rp0uv0nnm0nmp0nmv0nmm0tn0tm0nmr0vu0tn0ur0rt0vm0nmv0nmu0nnt0vt0ut0rp0nmv0vu0rm0qu0nmv0vu0ut0nmu0nmt0um0uq0sv0ru012');
+INSERT INTO `rock_todo` VALUES ('349', '1', '申请办公用品', '您提交的[申请办公用品,单号:YP-20150821-0001]已处理完成', '1', '2015-08-21 21:05:01', 'supplea', '8', '?rocktoken=kj0jf0fk0cbk0kj0ic0gi0gc0if0cbk0jc0gi0cbb0ic0ib0cdd0ki0gc0if0fk0kj0cbg0kb0cbf0jb0jj0kb0ccd0kb0jj0kk0cbk0jk0ji0ccd0cbf0cbc0ic0if0ccj0kj0gb0cck0gi0ki0id0jd0cch0kj0hi0kb0fk0ki0ji0jc0gi0ii0je0kb0cch0kj0gb0jd0cbj0kj0ccb0jh0cch0jb0jj0ij0fk0kk0id0hh0ccg0kb0ji0hk0cbk0cbb0ic0ib0cbg0kj0ic0jg0gi0kk0gc0jh0cck0kk0ic0cdb0cbj0jk0je0kb0cch0ki0ji0jc0gi0ik0hg0gj0gj01');
 
 -- ----------------------------
 -- Table structure for `rock_userjl`
@@ -2129,7 +2493,7 @@ CREATE TABLE `rock_where` (
   `sort` smallint(6) DEFAULT '0',
   `explain` varchar(50) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_where
@@ -2150,6 +2514,9 @@ INSERT INTO `rock_where` VALUES ('15', 'flowset_leave', null, 'kind', '类型', 
 INSERT INTO `rock_where` VALUES ('16', 'flowset_jiaban', null, 'kind', '类型', '=', '加班', '加班', '1', '2015-01-10 19:54:30', '0', null);
 INSERT INTO `rock_where` VALUES ('17', 'flowcourse_21', null, 'totals', '时间(小时)', '>', '24', null, '1', '2015-01-13 16:45:26', '0', null);
 INSERT INTO `rock_where` VALUES ('20', 'flowcourse_20', null, 'totals', '时间(小时)', '>', '8', null, '1', '2015-01-13 17:20:43', '0', null);
+INSERT INTO `rock_where` VALUES ('21', 'flowset_finfybx', null, 'type', '单据类型', '=', '报销单', '0', '1', '2015-08-20 17:35:33', '0', null);
+INSERT INTO `rock_where` VALUES ('22', 'flowset_finccbx', null, 'type', '单据类型', '=', '出差报销', '1', '1', '2015-08-25 11:02:51', '0', null);
+INSERT INTO `rock_where` VALUES ('23', 'flowset_finqkd', null, 'type', '单据类型', '=', '请款单', '2', '1', '2015-08-25 11:04:24', '0', null);
 
 -- ----------------------------
 -- Table structure for `rock_word`
@@ -2212,7 +2579,7 @@ CREATE TABLE `rock_work` (
   `state` varchar(20) DEFAULT NULL COMMENT '状态',
   `istx` tinyint(1) DEFAULT '1' COMMENT '是否提醒@0|否,1|是',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_work
@@ -2226,6 +2593,7 @@ INSERT INTO `rock_work` VALUES ('80', '每天汇报情况', '基本任务', '低
 INSERT INTO `rock_work` VALUES ('76', '下班打卡吧？', '基本任务', '低', '1', '管理员', null, null, null, null, '2015-07-15 14:51:35', '1', '管理员', null, '0', '2015-07-15 18:00:18', null, '0', null, null, '75', '2015-07-15', '已完成', '1');
 INSERT INTO `rock_work` VALUES ('79', '每天汇报情况', '基本任务', '低', '1,8', '管理员,张飞', '每天任务总结说明情况', null, null, null, '2015-08-05 09:35:30', '1', '管理员', '每天的18时00分00秒\n', '1', null, null, '1', '小时', null, '0', null, null, '1');
 INSERT INTO `rock_work` VALUES ('78', '基本任务啦', '基本任务', '低', '1', '管理员', '呵呵呵', null, null, null, '2015-07-17 09:52:10', '1', '管理员', null, '0', '2015-07-17 10:18:20', null, '0', null, null, '73', '2015-07-17', '已完成', '1');
+INSERT INTO `rock_work` VALUES ('81', '每天汇报情况', '基本任务', '低', '1,8', '管理员,张飞', '每天任务总结说明情况', null, null, null, '2015-08-16 00:00:10', '1', '管理员', null, '0', '2015-08-16 18:00:00', '2015-08-16 19:00:00', '0', null, null, '79', '2015-08-16', '待执行', '1');
 
 -- ----------------------------
 -- Table structure for `rock_workbg`

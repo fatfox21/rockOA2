@@ -1,5 +1,9 @@
-var connectbool = false,readfilebo = false,readfilebotime;
+var connectbool = false,readfilebo = false,readfilebotime,righthistroboj;
 function initbody(){
+	$('body').click(function(e){
+		js.downbody(this, e);
+		return false;
+	});
 	resetw();
 	$(window).resize(function(){
 		resetw();
@@ -7,12 +11,28 @@ function initbody(){
 	im.init();
 	js.msg('wait','连接中...');
 	setTimeout('connectserver()', 1000);
+	righthistroboj = $.rockmenu({
+		data:[{
+			name:'清除此最近联系',lx:0
+		},{
+			name:'清除所有最近联系',lx:1
+		}],
+		itemsclick:function(d){
+			im.removehistory(d.lx);
+		}
+	});
 }
+
+function righthistorh(e){
+	righthistroboj.showAt(e.clientX-3,e.clientY-3);
+	return false;
+}
+
 function resetw(){
 	var h = winHb();
 	if(h<50)return;
 	$('#webimindex').css({width:winWb()+'px',height:''+h+'px'});
-	$('#headercenter').css({height:''+(h-140-1)+'px'});
+	$('#headercenter').css({height:''+(h-180-1)+'px'});
 }
 function tabchagne(oi,o1){
 	var ia = ['user','group','dengdai'];
@@ -55,7 +75,7 @@ function connectclose(mgss){
 function connectchange(su){
 	if(su=='success'){
 		su = '连接成功';
-		js.msg('success',su, 1);
+		js.msg('none');
 		connectbool = true;
 	}else{
 		connectbool = false;
@@ -71,6 +91,13 @@ function send(reid, a){
 }
 function sendstr(reid, s){
 	return connectsend('send@@@'+adminid+'@@@'+reid+'@@@'+s+'');
+}
+
+function moveform(){
+	try{
+		window.external.moveform();
+	}catch(e){
+	}
 }
 
 function objecttostr(a){
@@ -153,18 +180,36 @@ function connectcloseexit(){
 	}	
 }
 
+
 function openrecord(lx, lxid){
 	im.openrecord(lx, lxid);
 }
-
 function loadgroup(){
 	im.loadgroup();
 }
+function changehistory(type, sid){
+	im.changehistory(type, sid);
+}
 
+//运行子窗口上js
+function runwinscript(num, fins, can1, can2){
+	var ops = false;
+	if(!can1)can1='';
+	if(!can2)can2='';
+	try{
+		ops = window.external.runwinopen(num, fins, can1,can2);
+	}catch(e){}
+	return ops;
+}
+
+//组织结构回传
+function backdeptchange(num, str){
+	runwinscript(num,'backyaoqing', str);
+}
 
 
 var userarr = {},deptarr={},
-	grouparr= {};
+	grouparr= {},maindata;
 var im = {
 	wdarr:[],
 	init:function(){
@@ -180,13 +225,16 @@ var im = {
 		setTimeout('im.dingshila()', 10*60*1000);
 	},
 	loadinit:function(){
-		var url = js.getajaxurl('loadinit','index','webim');
+		var url = js.getajaxurl('loadinit','index','webim',{aid:adminid});
 		$.get(url, function(da){
 			var a = js.decode(da);
+			maindata = a;
 			im.showuser(a.uarr, true);
 			im.showgroup(a.garr)
 			im.showweidu(a.wdarr);
-			im.showdept(a.darr);
+			//im.showdept(a.darr);
+			im.showhistory();
+			im.initsearchinput();
 		});
 	},
 	setwd:function(type, aid, oi){
@@ -232,7 +280,10 @@ var im = {
 			}
 		}
 		this.wdarr = d;
+		var inos = 0;
+		if(to>0)inos=1;
 		$('#tixingtotal').html(to);
+		try{window.external.changeicon(inos);}catch(e){}
 		if(this.showwemenu){
 			this.showwemenu.setData(d);
 			return;
@@ -261,7 +312,7 @@ var im = {
 		for(i=0; i<a.length; i++){
 			ol = a[i].imonline;
 			if(!clab)$('#user_'+a[i].id+'').remove();
-			s  = this.getusers(a[i]);
+			s  = this.getusers(a[i], 0);
 			userarr[a[i].id] = a[i];
 			o2 = $('#userlist'+this.onlinearr[ol]+'');
 			o1 = this.getsort(a[i].name, ol);
@@ -278,7 +329,7 @@ var im = {
 	},
 	//加载组
 	loadgroup:function(){
-		var url = js.getajaxurl('loadgroup','index','webim');
+		var url = js.getajaxurl('loadgroup','index','webim',{aid:adminid});
 		$.get(url, function(da){
 			var a = js.decode(da);
 			im.showgroup(a.garr)
@@ -287,7 +338,6 @@ var im = {
 	},
 	showgroup:function(a){
 		var s = '',i,lx,
-			aimg = ['groups','duihua','shezhi'],
 			toa  = [0,0,0];
 		for(i=0; i<3; i++){	
 			$('#grouplist'+i+'').html('');	
@@ -296,8 +346,7 @@ var im = {
 		for(i=0; i<a.length; i++){
 			lx	= a[i].type;
 			$('#group_'+a[i].id+'').remove();
-			s	= '<div id="group_'+a[i].id+'"  onclick="im.opengroup('+a[i].id+')"><img src="images/im/'+aimg[lx]+'.png" align="absmiddle">'+a[i].name+'</div>';
-			a[i].face = 'images/im/'+aimg[lx]+'_blue.png';
+			s	= '<div id="group_'+a[i].id+'"  onclick="im.opengroup('+a[i].id+')"><img src="'+a[i].face+'" align="absmiddle">'+a[i].name+'</div>';
 			grouparr[a[i].id] = a[i];
 			toa[lx]++;
 			$('#grouptotal'+lx+'').html('('+toa[lx]+')');
@@ -309,12 +358,20 @@ var im = {
 		var src = 'xiangyou';
 		if(get('grouplist'+oi+'').style.display != 'none')src = 'xiangyou1';
 		$(o1).find('img').attr('src','images/im/'+src+'.png');
+		if(oi==3)this.showdept(maindata.darr,'fist');
 	},
-	getusers:function(a){
-		var s,st;
+	getusers:function(a,lx, attr){
+		var s,st,sid;
 		st = '';
 		if(a.imonline !=1 )st='offline';
-		s = '<div class="'+st+'" id="user_'+a.id+'" onclick="im.openuser('+a.id+')"><img src="'+a.face+'" align="absmiddle">'+a.name+' <span style="font-size:12px">('+a.ranking+')</span></div>';
+		sid= 'user_'+a.id+'';
+		if(!attr)attr='';
+		if(lx==1){
+			sid= 'userhistory_'+a.id+'';
+			$('#'+sid+'').remove();
+		}
+		if(lx==2)sid='';
+		s = '<div class="'+st+'" id="'+sid+'" '+attr+' userid="'+a.id+'" onclick="im.openuser('+a.id+')"><img width="20" height="20" src="'+a.face+'" align="absmiddle">'+a.name+' <span style="font-size:12px">('+a.ranking+')</span></div>';
 		return s;
 	},
 	onlinearr:['offline','online'],
@@ -322,7 +379,7 @@ var im = {
 		var bo = false,
 		winobj = 'windowuser'+uid+'',
 			a  = userarr[uid];;
-		var url = URL+js.getajaxurl('@','user','webim',{uid:uid,aid:adminid,winobj:winobj});
+		var url = URL+js.getajaxurl('$','user','webim',{uid:uid,aid:adminid,winobj:winobj});
 		bo = windowopen(a.name, winobj, url, 550, 500);
 		if(bo){
 			this.setwd('user', uid, 0);
@@ -333,10 +390,10 @@ var im = {
 			a  = grouparr[gid],
 			na = a.name;
 		var winobj = 'windowgroup'+gid+'';
-		var url = URL+js.getajaxurl('@','group','webim',{gid:gid,aid:adminid,winobj:winobj});
+		var url = URL+js.getajaxurl('$','group','webim',{gid:gid,aid:adminid,winobj:winobj});
 			
 		if(a.type=='2'){
-			url = URL+js.getajaxurl('@system','group','webim',{gid:gid,aid:adminid,winobj:winobj});
+			url = URL+js.getajaxurl('$system','group','webim',{gid:gid,aid:adminid,winobj:winobj});
 			width = 400;
 			types = 'system';
 		}
@@ -356,7 +413,7 @@ var im = {
 			}
 		//不存在	
 		}else{
-			$.get(js.getajaxurl('getuserone','index','webim',{sholauid:uid}), function(da){
+			$.get(js.getajaxurl('getuserone','index','webim',{sholauid:uid,aid:adminid}), function(da){
 				var a = js.decode(da);
 				im.showuser(a, false);
 			});
@@ -391,9 +448,7 @@ var im = {
 			d.sendid   	= sendid;
 			d.sendname 	= a.name;
 			d.face		= a.face;
-			try{
-				ops = window.external.runwinopen(num, "connectreceive", objecttostr(d),'');
-			}catch(e){}
+			ops 		= runwinscript(num, 'connectreceive', objecttostr(d));
 			if(ops){
 				window.external.winfocus(num);
 			}else{
@@ -404,32 +459,30 @@ var im = {
 		
 		//群讨论组
 		if(lx == 'group'){
+			var garr= grouparr[d.gid];
+			if(!garr)this.loadgroup();
 			num			= 'windowgroup'+d.gid+'';
 			d.sendid   	= sendid;
 			d.sendname 	= a.name;
 			d.face		= a.face;
-			try{
-				ops = window.external.runwinopen(num, "connectreceive", objecttostr(d),'');
-			}catch(e){}
-			var garr= grouparr[d.gid];
+			ops 		= runwinscript(num, 'connectreceive', objecttostr(d));
 			if(ops){
 				window.external.winfocus(num);
 			}else{
-				showapopup('人员['+a.name+']，发来一条信息，来自['+garr.name+']', 'group_'+d.gid+'');
+				showapopup('人员['+a.name+']，发来一条信息，来自['+d.gname+']', 'group_'+d.gid+'');
 				this.setwd('group', d.gid, 1);
 			}
 		}
 		//发送格式{cont:'',gid:'1',gname:'名称',type:'system', now:'',url:'}
 		if(lx == 'system'){
+			var garr= grouparr[d.gid];
+			if(!garr)this.loadgroup();
+			
 			num			= 'windowgroup'+d.gid+'';
 			d.sendid   	= d.gid;
 			d.sendname 	= d.gname;
 			d.face		= 'images/im/shezhi_blue.png';
-			try{
-				ops = window.external.runwinopen(num, "connectreceive", objecttostr(d),'');
-			}catch(e){}
-			var garr= grouparr[d.gid];
-			if(!garr)this.loadgroup();
+			ops 		= runwinscript(num, 'connectreceive', objecttostr(d));
 			if(ops){
 				window.external.winfocus(num);
 			}else{
@@ -437,28 +490,34 @@ var im = {
 				this.setwd('system', d.gid, 1);
 			}
 		}
+		
+		//添加到历史记录
+		try{
+			window.external.addhistory(d.sendname, d.sendid, lx, d.now);
+		}catch(e){}
+		this.changehistory(lx, d.sendid);
 	},
 	openrecord:function(lx, lxid){
 		if(!lx)lx='';
 		if(!lxid)lxid='';
 		var num			= 'openrecord';
-		var url = URL+js.getajaxurl('@','record','webim',{aid:adminid,stype:lx,sid:lxid});
+		var url = URL+js.getajaxurl('$','record','webim',{aid:adminid,stype:lx,sid:lxid});
 		var bo 	= windowopen('信息记录管理', num, url, 750, 450);
 		var sid = ''+lx+'_'+lxid+'';
 		if(lx=='')return;
 		if(!lxid)lxid='';
-		try{
-			window.external.runwinopen(num, "openrecord", lx, lxid);
-		}catch(e){}
+		runwinscript(num, "openrecord", lx, lxid);
 	},
 	
-	showdept:function(a){
+	showdept:function(a, lxs){
+		var o = $('#grouplist3');
+		if(o.html()!='')return;
 		var s = this.showdept1(a,0);
-		$('#grouplist3').html(s);
+		o.html(s);
 	},
 	showdept1:function(a, oi){
 		var i,s='',s1='',st,j=0,facea;
-		if(a){
+		if(!a)return s;
 		for(i=0; i<a.length; i++){
 			s1 = this.showdept1(a[i].children, oi+1);
 			st = '';
@@ -486,7 +545,7 @@ var im = {
 			if(s1!=''){
 				s+='<span style="display:none" id="downdept_'+a[i].id+'">'+s1+'</span>';
 			}
-		}}
+		}
 		return s;
 	},
 	opendept:function(sid){
@@ -537,5 +596,101 @@ var im = {
 		});
 		get('keylasou').focus();
 		return false;
+	},
+	
+	showhistory:function(){
+		var s = '[]';
+		try{
+			s = window.external.gethistory(adminid);
+		}catch(e){}
+		var da = js.decode(s);
+		this.showhistorys(da, 0);
+	},
+	showhistorys:function(da,lxa){
+		var o  = $('#recoredlist'),i,a,d,s1,attr;
+		if(lxa==0)o.html('');
+		for(i=0; i<da.length;i++){
+			a = da[i];s1= '';
+			attr = 'oncontextmenu="im.rightobjla=this" divtype="'+a.type+'" divtypeid="'+a.nameid+'"';
+			if(a.type=='user'){
+				d = userarr[a.nameid];
+				if(d){
+					s1 = this.getusers(d, 1, attr);
+				}
+			}else if(a.type=='group' || a.type=='system'){
+				d 	= grouparr[a.nameid];
+				$('#grouphistory_'+d.id+'').remove();
+				s1	= '<div id="grouphistory_'+d.id+'" '+attr+' onclick="im.opengroup('+d.id+')"><img src="'+d.face+'" align="absmiddle">'+d.name+'</div>';
+			}
+			if(s1!=''){
+				if(lxa==0)o.append(s1);
+				if(lxa==1)o.prepend(s1);
+			}
+		}
+	},
+	changehistory:function(type, sid){
+		this.showhistorys([{type:type,nameid:sid}], 1);
+	},
+	removehistory:function(lx){
+		var o = $(this.rightobjla);
+		var type = o.attr('divtype'),
+			typeid = o.attr('divtypeid');
+		o.remove();
+		if(lx==1)type='all';
+		try{
+			s = window.external.delhistory(type,typeid);
+		}catch(e){}
+		if(type=='all'){
+			$('#recoredlist').html('');
+		}
+	},
+	
+	initsearchinput:function(){
+		var o = $('#searchinput');
+		o.focus(function(){
+			this.select();
+			im.initsearchinputkeyup();
+		});
+		o.blur(function(){
+			im.initsearchinputblue();
+		});
+		o.keyup(function(){
+			im.initsearchinputkeyup();
+		});
+		this.initsearchinputmenu = $.rockmenu({
+			data:[],donghua:false,
+			resultbody:function(d1, o, oi){
+				return im.getusers(d1,2);
+			},autohide:false
+		});
+	},
+	initsearchinputblue:function(o){
+		var o = $('#searchinput');
+		if(isempt(o.val()))o.val('搜索联系人');
+	},
+	initsearchinputkeyup:function(){
+		clearTimeout(this.initsearchinputtime);
+		this.initsearchinputtime = setTimeout('im.initsearchinputkeyups()', 300);
+	},
+	initsearchinputkeyups:function(){
+		var o = $('#searchinput');
+		var val = o.val();
+		if(val.indexOf('搜索')>-1)val='';
+		var d = [],i,a,oi=0;
+		if(val){for(i in userarr){
+			a = userarr[i];
+			if(a.name.indexOf(val)>-1 || a.ranking.indexOf(val)>-1){
+				d.push(a);
+				oi++;
+			}
+			if(oi>=15)break;
+		}}
+		if(oi==0){
+			this.initsearchinputmenu.remove();
+			return;
+		}
+		this.initsearchinputmenu.setData(d);
+		var off = o.offset();
+		this.initsearchinputmenu.showAt(4, off.top+36, winWb()-6);
 	}
 }

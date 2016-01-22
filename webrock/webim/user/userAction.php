@@ -32,19 +32,39 @@ class userClassAction extends Action{
 
 	public function saveAjax()
 	{
+		$receid	= $this->post('receid');
+		$admdb 	= m('admin');
+		$recers = $admdb->getone($receid, '`name`,`imonline`,`applastdt`');
 		$arr = array(
 			'cont'		=> $this->post('cont'),
 			'sendid'	=> $this->post('sendid'),
-			'receid'	=> $this->post('receid'),
+			'receid'	=> $receid,
 			'type'		=> $this->post('type'),
 			'optdt'		=> $this->post('optdt'),
-			'zt'		=> 0
+			'zt'		=> '0',
+			'ftype'		=> '0'
 		);
+		$sendname 		= $admdb->getmou('name', $arr['sendid']);
 		$arr['receuid'] = $arr['sendid'].','.$arr['receid'];
 		$bo = m('im_mess')->insert($arr);
 		$arr['id'] 		= $this->db->insert_id();
 		$arr['nuid'] 	= $this->post('nuid');
 		
+		//推送的(PC端不在线,同时今天app在线)
+		if($recers){
+			$lstime = strtotime($recers['applastdt']);
+			if($recers['imonline']==0 && $lstime>time()-3600*20){
+				$api = c('apiCloud', true);
+				$api->send($arr['receid'], array(
+					'type' 		=> 'user',
+					'receid' 	=> $arr['receid'],
+					'sendid' 	=> $arr['sendid'],
+					'optdt' 	=> $arr['optdt'],
+					'messid' 	=> $arr['id'],
+					'sendname'	=> $sendname
+				),'REIM有一条未读信息');
+			}
+		}
 		echo json_encode($arr);
 	}
 	

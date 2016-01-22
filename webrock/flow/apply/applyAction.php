@@ -37,24 +37,6 @@ class applyClassAction extends Action
 	}
 
 	
-	private function getstatus($ztarr, $rs1)
-	{
-		$nzt	= $rs1['status'];
-		$ztname = '';
-		if($nzt==5){
-			$ztname = '<font color=#888888>已删除</font>';
-			return $ztname;
-		}	
-		if(isset($ztarr[$rs1['nstatus']]) && !$this->isempt($rs1['statusman'])){
-			$ztname = ''.$rs1['statusman'].'<font color="'.$ztarr[$rs1['nstatus']][1].'">'.$ztarr[$rs1['nstatus']][0].'</font><br>';
-		}
-		if(!$this->isempt($rs1['nowcheckname'])){
-			$ztname    .= '<font color=blue>待'.$rs1['nowcheckname'].'处理</font>';
-		}
-		return $ztname;
-	}
-	
-	
 	public function checkmybefore($table)
 	{
 		$s 			= '';
@@ -104,11 +86,9 @@ class applyClassAction extends Action
 
 		$marr 	= m('flow_set')->getall("id in($mid)", '`num`,`summary`,`table`,`id`');
 		$_marr	= array();
-		$ztarrs = array();
 		foreach($marr as $k=>$rs){
 			$_marr[$rs['id']] 		= $rs;
-			$ztarrs[$rs['table']] 	= $rudb->getcourseact($rs['num']);
-		}	
+		}
 
 		foreach($rows as $k=>$rs){
 			if(isset($_uarr[$rs['uid']])){
@@ -121,11 +101,13 @@ class applyClassAction extends Action
 			$summary= '';
 			$modenum= '';
 			if($rs1){
-				$zt 	= $this->getstatus($ztarrs[$rs['table']], $rs1);
+				$zt 	= $rudb->getstatuss($rs['table'], $rs1,'<br>');
 				$moders = $_marr[$rs['modeid']];
 				$summary= $moders['summary'];
 				$summary= $this->rock->reparr($summary, $rs1);
 				$modenum= $moders['num'];
+				$rows[$k]['status'] 	= $rs1['status'];	
+				$rows[$k]['nstatus'] 	= $rs1['nstatus'];	
 			}
 			$rows[$k]['statustext'] = $zt;	
 			$rows[$k]['modenum'] 	= $modenum;	

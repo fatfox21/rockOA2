@@ -14,6 +14,7 @@ Ext.define('Ext.rock.flowform',{
 	gridid:'',
 	isedit:0,
 	border:false,
+	autoclosetab:false,
 	layout: {
 		type: 'hbox',
 		align: 'stretch',
@@ -42,7 +43,7 @@ Ext.define('Ext.rock.flowform',{
 				js.msg('success', ''+ssa+'保存成功');
 				a1.setBtnhidden(true);
 				me._setpreoad();
-				//closetabs(nowtab.num);
+				if(me.autoclosetab)closetabs(nowtab.num);
 			},
 			width:me.formwidth,
 			border:false,
@@ -155,9 +156,7 @@ Ext.define('Ext.rock.flowform',{
 			zt = '待提交';
 		}else{
 			zt = a.data.checkstatustext;
-			//是否可以审核
-			var nochid = ','+a.data.nowcheckid+',';
-			if(nochid.indexOf(','+adminid+',')>-1 && a.data.status !=1){
+			if(a.ischeck==1){
 				getcmp('checkbtn_'+me.rand+'').show();
 				me.form.getField('checkstatus').show();
 				me.form.getField('checkexplain').show();
@@ -165,12 +164,15 @@ Ext.define('Ext.rock.flowform',{
 			if(a.data.status !=1)me.form.getField('checnshowjloew').show();
 		}
 		me.form.setVal('checkstatustext', zt);
-		if(a.data.nstatus!=1 && a.data.uid == adminid){//可编辑的条件
+		me.isedit = a.isedit;
+		if(me.isedit==1){
 			me.form.setBtnhidden(false);
 			me.form.setBitian();
-			me.isedit = 1;
 		}
 		if(!me.isEdit())me.form.setReadOnly(true, 'checkexplainPost,checkstatusPost');
+		if(me.form.getField('fileid')){
+			me.form.getField('fileid').loadfile(me.tablename, me.mid, !me.isEdit());
+		}
 		me.showdata(me.form, a, me);
 	},
 	_loadinforshow:function(a){

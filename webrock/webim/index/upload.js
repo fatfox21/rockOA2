@@ -12,66 +12,55 @@ var upload = {
 		return rand;
 	},
 	reset:function(){
-		document.fileform.reset();
+		//document.fileform.reset();
 	},
-	change:function(o){
-		if(!o.value)return;
+	changefile:function(lx){
 		if(this.bool){
 			js.msg('msg','太快了?请稍后在试!');
 			return;
 		}
-		var val 		= o.value;
-		var filename	= val.substr(val.lastIndexOf('\\')+1);
-		var fileext		= filename.substr(filename.lastIndexOf('.')+1).toLowerCase();
-		
-		this.uparr		= {filename:filename,filesize:0,filesizecn:'',filetype:'',fileext:fileext,newfile:this.rand(),xu:0};
-		this.progress('['+filename+']读取中...', 0);
-		
-		if(this.uptype=='image'){
-			var tstype=',jpg,png,gif,bmp,jpeg,';
-			if(tstype.indexOf(','+fileext+',')<0){
-				this.errorprogress('['+filename+']不是图片类型的文件');
-				return;
-			}
-		}
-		var bo = false;
+		this.uptype = lx;
 		try{
-			var file	= o.files[0];
-			if(file.size > this.maxsize){
-				this.errorprogress('文件太大超过了'+js.formatsize(this.maxsize)+'，当前'+js.formatsize(file.size)+'');
-				return;
-			}
-			var reader	= new FileReader();
-			reader.readAsDataURL(file);
-			this.bool 	= true;
-			reader.onload=function(){
-				var cont= this.result;
-				cont	= cont.substr(cont.indexOf(',')+1);	
-				upload.uploadback(cont, file.size);
-			}
-			bo = true;
-		}catch(e){
-			bo = connectreadfile(val);
-		}
-		if(!bo){
-			this.errorprogress('无法上传,可能有文件在上传,请稍后在试!');
-		}
+			window.external.selectfile(lx);
+		}catch(e){}
 	},
-	uploadclip:function(str, fsize){
-		if(!str)return;
-		this.uparr		= {filename:'截屏.jpg',filesize:0,filesizecn:'',fileext:'jpg',newfile:this.rand(),xu:0};
-		this.uptype		= 'image';
-		this.uploadback(str, fsize);
+	readinit:function(path, lxs, fsize){
+		var filename	= path.substr(path.lastIndexOf('\\')+1);
+		var fileext		= filename.substr(filename.lastIndexOf('.')+1).toLowerCase();
+		this.uparr		= {filename:filename,filesize:0,filesizecn:'',filetype:'',fileext:fileext,newfile:this.rand(),xu:0};
+		var as = [filename, fileext];
+		if(lxs=='read'){
+			fsize		= parseInt(fsize);
+			var bo 		= true;
+			if(fsize > this.maxsize){
+				this.errorprogress('文件太大超过了'+js.formatsize(this.maxsize)+'，当前'+js.formatsize(fsize)+'');
+				bo = false;
+			}
+			if(bo && this.uptype=='image'){
+				var tstype=',jpg,png,gif,bmp,jpeg,';
+				if(tstype.indexOf(','+fileext+',')<0){
+					this.errorprogress('['+filename+']不是图片类型的文件');
+					bo = false;
+				}
+			}
+			if(bo){
+				this.progress('['+filename+']读取中...', 0);
+				try{window.external.getfilebase64jixu();}catch(e){}
+			}
+		}
+		return as;
 	},
-	uploadback:function(str, fsize){
+	uploadback:function(str, fsize, path){
 		if(str==''){
 			this.errorprogress('无法读取文件,无法上传');
 			return;
 		}
+		fsize		= parseInt(fsize);
+		this.readinit(path, 'aa',0);
 		var len		= str.length;
 		this.maxsend= Math.ceil(len/this.upsize);
 		this.uparr.filecout 	= str;
-		this.uparr.filesize 	= parseInt(fsize);
+		this.uparr.filesize 	= fsize;
 		this.uparr.filesizecn 	= js.formatsize(this.uparr.filesize);
 		this.starts(0);
 	},
@@ -93,6 +82,7 @@ var upload = {
 			this.bool = false;
 			return false;
 		}
+		this.bool	= true;
 		var bil		= js.float(((oj+1)/this.maxsend)*100);
 		var arr		= this.uparr;
 		this.progress('['+arr.filename+','+arr.filesizecn+']上传中('+bil+'%)...', bil);
@@ -139,7 +129,7 @@ var upload = {
 	},
 	errorprogress :function(txt){
 		this.bool = false;
-		this.progress('<font color=red>'+txt+'</font>&nbsp;<a href="javascript:" onclick="$(\'#progress_show\').remove()">[取消]</a>', 0);
+		this.progress('<font color=red>'+txt+'</font>&nbsp;<a href="javascript:" onclick="$(\'#progress_show\').remove();return false;">[取消]</a>', 0);
 		this.reset();
 	},
 	uploaderror:function(){
@@ -238,6 +228,11 @@ var strformat = {
 		
 		str	= str.replace(/\n/gi, '<br>');//换行的
 		return str;
+	},
+	downshow:function(sid){
+		var url = 'mode/upload/uploadshow.php?id='+sid+'&p='+PROJECT+'';
+		openurlla(url, 400, 300);
+		return false;
 	},
 	strcontss:function(str,bq,rstr){
 		var patt1	= new RegExp("\\["+bq+"\\](.*?)\\[\\/"+bq+"\\]", "gi");
@@ -361,31 +356,43 @@ function send(reid, a){
 		s = s.substr(1);
 	}
 	s = jm.encrypt('{'+s+'}');
+	addhistory(a);
 	return sendstr(reid, s);
 }
 function sendstr(reid, s){
 	return connectsend('send@@@'+adminid+'@@@'+reid+'@@@'+s+'');
 }
 
-//获取剪切板图片
-function connectgetclipback(basestr, fsize){
-	upload.uploadclip(basestr, fsize);
+function addhistory(a){
+	try{
+		window.external.addhistory(receivename, receiveid, infortype, a.now);
+	}catch(e){}
+	openerrunscript('changehistory',infortype,receiveid);
 }
+
+//获取剪切板图片
 function connectreadclip(){
 	var bo = false;
+	if(upload.bool){
+		js.msg('msg','有文件在上传,请稍后在试!');
+		return;
+	}
+	upload.uptype='image';
 	try{
 		window.external.getClipoption();
 		bo = true;
 	}catch(e){}
 	return bo;
 }
-
+//初始化读取
+function connectreadfileinit(path, fsize){
+	upload.readinit(path,'read', fsize);
+}
 //上传读取文件
-//读取文件回传
 var readfilebo = false;
-function connectreadfileback(basestr, fsize){
+function connectreadfileback(basestr, fsize, path){
 	readfilebo = false;
-	upload.uploadback(basestr, fsize);
+	upload.uploadback(basestr, fsize, path);
 }
 function connectreadfile(path){
 	try{
@@ -400,6 +407,22 @@ function connectreceive(str){
 	var a = js.decode(s);
 	guser.receivemess(a);
 }
+
+//截屏
+function cropScreen(){
+	var bo = false;
+	try{
+		window.external.cropScreen();
+		bo = true;
+	}catch(e){}
+	return bo;
+}
+
+
+
+
+
+
 //退出关闭
 function connectclose(){
 	try{
@@ -407,16 +430,6 @@ function connectclose(){
 	}catch(e){
 		window.close();
 	}	
-}
-//截屏
-function cropScreen(){
-	var bo = false;
-	try{
-		window.external.cropScreen();
-		bo = true;
-	}catch(e){	
-	}
-	return bo;
 }
 
 //运行父窗口代码
@@ -430,4 +443,23 @@ function openerrunscript(fun, csn1,csn2){
 	}catch(e){	
 	}
 	return bo;
+}
+
+//打开新窗口
+function windowopen(title, num, url, w, h){
+	var bo = false;
+	try{
+		window.external.open(title, num, url, w, h);
+		bo = true;
+	}catch(e){}
+	return bo;
+}
+
+function openurlla(url, w, h){
+	if(url.indexOf('http')<0)url=URL+url;
+	if(!w)w=850;
+	if(!h)h=500;
+	var bo = windowopen('新窗口','', url, w,h);
+	if(!bo)js.open(url, w,h);
+	return false;
 }

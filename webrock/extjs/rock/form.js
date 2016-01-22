@@ -85,7 +85,7 @@ Ext.define('Ext.rock.form',{
 			return;
 		}
 		s=this.submitcheck(me, this.form);
-		if(s!=''){
+		if(typeof(s)=='string' && s){
 			this.setmsg(s,'red');
 			return;
 		}
@@ -99,6 +99,7 @@ Ext.define('Ext.rock.form',{
 		if(me.addjudgewhere!='')me.addjudgewhere=me.addjudgewhere.replace(/\'/g, '[F]');
 		params={submitfields_postabc:this.submitfields,tablename_postabc:this.tablename,flownum_postabc:this.flownum,editjudgewhere:me.editjudgewhere,addjudgewhere:me.addjudgewhere,msgerrortpl:me.msgerrortpl,aftersaveaction:me.aftersaveaction,beforesaveaction:me.beforesaveaction};
 		Ext.apply(params, this.params, me.submitparams(me, form));
+		if(typeof(s)=='object')Ext.apply(params, s);
 		var url = this.url;
 		if(url=='')url=publicsave();
 		this.form.submit({

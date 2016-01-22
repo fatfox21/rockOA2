@@ -5,8 +5,7 @@ class flowlogClassModel extends Model
 	{
 		$this->settable('flow_set');
 	}	
-		
-	
+
 	public function getdatalog($flownum, $table, $mid, $uids='')
 	{
 		$where		= "`table`='$table' and `mid`='$mid'";
@@ -24,7 +23,6 @@ class flowlogClassModel extends Model
 			array('2','不通过', -1)
 		);
 		$flars 		= m('flow_rule')->getone($where);
-		$ztarr		= m('flow_course')->getcourseact($flownum);
 		if($flars && $status !=1){
 			$fowsetr	= $this->db->getkeyall('[Q]flow_course','`id`,`name`',"`setid`='".$setrs['id']."'");
 			$nowuserid	= $flars['nowuserid'];
@@ -52,20 +50,20 @@ class flowlogClassModel extends Model
 				}
 			}
 		}
-		if($rs){
-			$ztname = '';
-			if(isset($ztarr[$rs['nstatus']]) && !$this->isempt($rs['statusman'])){
-				$ztname = ''.$rs['statusman'].'<font color="'.$ztarr[$rs['nstatus']][1].'">'.$ztarr[$rs['nstatus']][0].'</font>';
-			}
-			if(!$this->isempt($rs['nowcheckname']) && $status!=1){
-				if($ztname!='')$ztname.=',';
-				$ztname .= '<font color=blue>待'.$rs['nowcheckname'].'处理</font>';
-			}
-			if($status==1 && $ztname=='')$ztname='<font color=green>已处理完成</font>';
-			$rs['checkstatustext']	= $ztname;
-		}
-		$ischeck	= $isedit = 0;
 		if($uids == '')$uids = ''.$this->adminid;
+		$ischeck = $isdel = $isedit = 0;
+		if($rs){
+			$rs['checkstatustext']	= m('flow_course')->getstatuss($table, $rs);
+			$bos1	= $this->contain(','.$uids.',', ','.$rs['uid'].',');
+			$nstatus= $rs['nstatus'];
+			if($status != 1 && $bos1){
+				if($nstatus == 0)$isedit = 1;
+				if($nstatus == 0 || $nstatus==2)$isdel	= 1;
+				if($nstatus==2){
+					if(m('flow_log')->rows("$where and `courseid`>0 and `status`=1")==0)$isedit = 1;//第一步未通过可以编辑
+				}
+			}
+		}
 		$nowcheckid = $rs['nowcheckid'];
 		if(!$this->isempt($nowcheckid)){
 			$_usra 		= explode(',', $uids);
@@ -78,10 +76,15 @@ class flowlogClassModel extends Model
 			}
 		}
 		foreach($logarr as $k=>$logs){
-			$s = '';$col='';
-			if(isset($ztarr[$logs['status']]))$col = $ztarr[$logs['status']][1];
-			if($logs['status']==1)$s='通过';
-			if($logs['status']==2)$s='不通过';
+			$s = '';$col=$logs['color'];
+			if($logs['status']==1){
+				$s='通过';
+				$col = 'green';
+			}
+			if($logs['status']==2){
+				$s='不通过';
+				$col='red';
+			}
 			if(!$this->isempt($logs['statusname']))$s = $logs['statusname'];
 			$logarr[$k]['statusname'] = $s;
 			$logarr[$k]['statuscolor'] = $col;
@@ -93,6 +96,8 @@ class flowlogClassModel extends Model
 			'logstr'=> $this->getlogstr($log),
 			'logarr' => $logarr,
 			'ischeck' => $ischeck,
+			'isdel' => $isdel,
+			'isedit' => $isedit,
 			'actarr' => $actarr,
 			'flownum'=> $flownum,
 			'flowname'=> $setrs['name'],

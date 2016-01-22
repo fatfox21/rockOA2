@@ -239,7 +239,7 @@ function createindex(){
 			root:{children:[],expanded: true}
 		});
 		var tritem = {
-			xtype:'treepanel',rootVisible: false,autoScroll: true,store:stoee,border:false,columns:[{xtype: 'treecolumn',text:'名称',flex:1,align:'left',dataIndex:'name'}],hideHeaders:true,listeners:{itemclick:menuclick}
+			xtype:'treepanel',rootVisible: false,autoScroll: true,store:stoee,border:false,columns:[{xtype: 'treecolumn',text:'名称',flex:1,align:'left',dataIndex:'name'}],hideHeaders:true,animate:false,listeners:{itemclick:menuclick}
 		};
 		menuarrs.push({
 			text:topmenu[i].name,icon:gicons(topmenu[i].icons)

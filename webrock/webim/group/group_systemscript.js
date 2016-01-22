@@ -30,7 +30,9 @@ var guser = {
 			fase= ''+receiveface;
 			if(wdarr[i].zt=='0')ids+=','+wdarr[i].id;
 			cont 	= jm.uncrypt(wdarr[i].cont);
-			if(!isempt(wdarr[i].url))cont+='<br>[A]打开地址&gt;&gt;|'+wdarr[i].url+'[/A]';
+			if(!isempt(wdarr[i].url)){
+				cont+='<br><a href="javascript:" onclick="return openurlla(\''+wdarr[i].url+'\')">打开地址&gt;&gt;</a>';
+			}	
 			cont	= strformat.showqp(lex,nas,wdarr[i].optdt, cont, '', fase);
 			this.addcont(cont);
 		}

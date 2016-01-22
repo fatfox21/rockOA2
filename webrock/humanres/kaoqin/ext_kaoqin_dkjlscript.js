@@ -1,6 +1,7 @@
 var form;
 function opendown(){
-	var url = js.getajaxurl('downexcel','where','public',{fields:escape('姓名,时间(用[]扩起来)'),title:escape('打卡记录格式'),content:escape('管理员,[2015-01-18 08:50:50]')});
+	//var url = js.getajaxurl('downexcel','where','public',{fields:escape('姓名,时间(用[]扩起来)'),title:escape('打卡记录格式'),content:escape('管理员,[2015-01-18 08:50:50]')});
+	var url ='upload/base/导入打卡格式.xls';
 	js.open(url);
 }
 function importdown(){
@@ -35,6 +36,10 @@ var panel={
 			text:'导入Excel文件',handler:importdown
 		}]
 	},'-','打卡记录导入格式需要定制开发','->',{
+		text:'新增',disabled:true,icon:gicons('add'),handler:function(){
+			rock[index]._add();
+		}
+	},'-',{
 		text:'删除',icon:gicons('delete'),handler:function(){
 			rock[index].del(false,true);
 		}
@@ -54,7 +59,10 @@ var panel={
 		text:'星期',dataIndex:'cnweek',width:100
 	},{
 		text:'ID',align:'center',dataIndex:'id',width:60
-	}]
+	}],
+	_add:function(){
+		
+	}
 }
 return {
 	panel:panel

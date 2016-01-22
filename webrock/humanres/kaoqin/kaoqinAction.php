@@ -60,7 +60,8 @@ class kaoqinClassAction extends Action
 				'name'		=> $name,
 				'finge'		=> $finge,
 				'type'		=> '0',
-				'checktime'	=> substr($rs['B'],1,-1)
+				//'checktime'	=> substr($rs['B'],1,-1)
+				'checktime'	=> $rs['B']
 			);
 			if($cdt->isdate($arr['checktime'])){
 				$db->insert($arr);

@@ -62,6 +62,7 @@ if($xhrock->display && ($ajaxbool == 'html' || $ajaxbool == 'false')){
 	$xhrock->smartydata['rand']	= $rand;
 	$xhrock->smartydata['qom']	= QOM;
 	$xhrock->smartydata['path']	= PATH;
+	$xhrock->smartydata['sysurl']= SYSURL;
 	$temppath					= ''.ROOT_PATH.'/'.$p.'/';
 	$tplpaths					= ''.$temppath.''.$d.''.$m.'/';
 	$tplname					= 'tpl_'.$m.'';
@@ -79,10 +80,11 @@ if($xhrock->display && ($ajaxbool == 'html' || $ajaxbool == 'false')){
 		$_showbool = true;
 	}
 }
-if($xhrock->display && $ajaxbool == 'html' && $_showbool){
+if($xhrock->display && ($ajaxbool == 'html' || $xhrock->tpltype=='html') && $_showbool){
 	$xhrock->setHtmlData();
 	$da = $xhrock->smartydata;
 	include_once($mpathname);
+	$_showbool = false;
 }
 if($xhrock->display && $ajaxbool == 'false' && $_showbool){
 	$xhrock->setSmartyData();

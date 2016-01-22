@@ -14,35 +14,22 @@ var rockmenuobj	= null;
 		var json	= can.data;
 		var rand	= js.getrand(); 
 		var me		= this;
-		var hidebo	= false;
-		var timeas	= null;
 		this.obj	= obj;
+		
 		//初始化
 		this.init	= function(){
+			if(!obj)return;
 			obj[can.trigger](function(){
 				me.setcontent();
+				return false;
 			});
-			obj.mouseout(function(){
-				me.hidetime();
-			});
-			obj.mouseover(function(){
-				me.clearhide();
-			});
-		};
-		this.clearhide	= function(){
-			hidebo	= false;
-		};
-		this.hidetime	= function(){
-			clearTimeout(timeas);
-			hidebo	= true;
-			timeas	= setTimeout(function(){
-				if(hidebo)me.hide();
-			},100);
 		};
 		this.hide	= function(){
-			$('#rockmenu_'+rand+'').hide();
+			var o = this.mdivobj;
+			if(!o)return;
+			o.hide();
 			if(can.bgcolor!='')obj.css('background','');
-			if(can.autoremove)$('#rockmenu_'+rand+'').remove();
+			if(can.autoremove)o.remove();
 		};
 		this.setcontent	= function(){
 			rockmenuobj	= this;
@@ -57,8 +44,7 @@ var rockmenuobj	= null;
 			var len	= json.length;
 			var str	= '<div class="rockmenu" id="rockmenu_'+rand+'">';
 			if(can.arrowup)str+='<div class="arrow-up"></div>';
-			str+='<div style="background:'+can.background+'"  id="rockmenuli_'+rand+'" class="rockmenuli">'+
-			'<ul>';
+			str+='<div style="background:'+can.background+';"  id="rockmenuli_'+rand+'" class="rockmenuli '+can.maincls+'"><ul>';
 			var s	= '',ys='',col,va;
 			for(var i=0; i<len; i++){
 				ys= '',
@@ -80,43 +66,49 @@ var rockmenuobj	= null;
 				s+='</li>';
 				str+=s;
 			}
-			str+='</ul>'+
-			'</div>'+
-			'</div>';
-			
+			str+='</ul></div></div>';
 			$('body').prepend(str);
 			var oac	= $('#rockmenu_'+rand+'');
 			can.aftershow(this);
-			
 			oac.find('li').mouseover(function(){this.className=can.overcls;});
 			oac.find('li').mouseout(function(){this.className='';});
 			oac.find('li').click(function(){me.itemsclick(this);});
 			if(can.width!=0){
 				$('#rockmenuli_'+rand+'').css('width',''+can.width+'px');
 			};
-			oac.mouseover(function(){
-				hidebo = false;
-			});
-			oac.mouseout(function(){
-				me.hidetime();
-			});
-			
+			js.addbody(rand, 'remove', 'rockmenu_'+rand+''); 
+			this.mdivobj = oac;
 			this.setweizhi();
+		};
+		this.showAt		= function(l, t, w){
+			this.setcontent();
+			var oac	= this.mdivobj;
+			if(!oac)return;
+			if(w)this.setWidth(w);
+			var jg	= (l+oac.width()+5 - winWb());
+			if(jg>0)l=l-jg;
+			oac.css({'left':''+l+'px','top':''+t+'px'});
 		};
 		this.setValue	= function(v){
 			can.value	= v;
 		};
-		this.remove		= function(oi){
+		this.removeItems		= function(oi){
 			$('#rockmenu_'+rand+'').find("li[temp='"+oi+"']").remove();
+		};
+		this.setWidth	= function(w){
+			var oac	= this.mdivobj;
+			if(!oac)return;
+			oac.css({'width':''+w+'px'});
 		};
 		this.setweizhi = function(){
 			var oac		= $('#rockmenu_'+rand+'');
 			if(can.donghua)oac.slideDown(100);
 			oac.show();
+			if(!obj)return;
 			var off		= obj.offset(),
 				l		= off.left,
-				jg		= (l+oac.width()+20 - winWb()),jg1=0,
 				t		= off.top+can.top;
+			var jg	= (l+oac.width()+20 - winWb()),jg1=0;	
 			if(jg>0)l=l-jg;
 			l 	= l + can.left;
 			jg1	= t+get('rockmenu_'+rand+'').scrollHeight+10-winHb();
@@ -140,12 +132,13 @@ var rockmenuobj	= null;
 		}
 	};
 	
-	$.fn.rockmenu = function(options){
+	$.rockmenu	  = function(options, dxo){
 		var defaultVal = {
 			data:[],
 			display:'name',//显示的名称
 			left:0,
 			overcls:'li01',
+			maincls:'',
 			top:0,
 			width:0,value:'',
 			iconswh:16,
@@ -163,10 +156,13 @@ var rockmenuobj	= null;
 			},
 			donghua:true
 		};
-		
 		var can = $.extend({}, defaultVal, options);
-		var menu = new rockmenu($(this), can);
+		var menu = new rockmenu(dxo, can);
 		menu.init();
 		return menu;
+	}
+	
+	$.fn.rockmenu = function(options){
+		return $.rockmenu(options, $(this));
 	};
 })(jQuery); 

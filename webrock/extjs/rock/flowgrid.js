@@ -127,7 +127,21 @@ Ext.define('Ext.rock.flowgrid',{
 		this._opentals('编辑',this.changedata.id);
 	},
 	_del:function(){
-		this.del();
+		//this.del();
+		var me = this;
+		Ext.MessageBox.prompt('系统提示', ''+bitian+'请输入删除的原因:',function(a,b){
+			if(a=='ok' && b){
+				js.msg('wait','删除中...');
+				$.post(js.getajaxurl('flowdel','flow',''),{flownum:me.flownum,id:me.changedata.mid,sm:b}, function(da){
+					if(da=='success'){
+						js.msg('success','删除成功');
+						me.storereload();
+					}else{
+						js.msg('msg', da);
+					}
+				});
+			}
+		});
 	},
 	_show:function(){
 		var me = this;

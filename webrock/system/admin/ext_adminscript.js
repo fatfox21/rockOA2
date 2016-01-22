@@ -1,5 +1,6 @@
 function opendown(){
-	var url = js.getajaxurl('downexcel','where','public',{fields:escape('帐号,姓名,性别,职位,部门(必须在组织结构中),手机,邮箱,入职日期(用[]扩起来)'),title:escape('用户导入格式'),content:escape('admin,管理员,男,OA项目经理,开发部,158***,rockoa@xh829.com,[2015-08-01]')});
+	//var url = js.getajaxurl('downexcel','where','public',{fields:jm.encrypt('帐号,姓名,性别,职位,部门(必须在组织结构中),手机,邮箱,入职日期(用[]扩起来)'),title:jm.encrypt('用户导入格式'),content:jm.encrypt('admin,管理员,男,OA项目经理,开发部,158***,rockoa@xh829.com,[2015-08-01]')});
+	var url ='upload/base/用户导入格式.xls';
 	js.open(url);
 }
 function importdown(){

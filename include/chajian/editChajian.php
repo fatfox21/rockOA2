@@ -75,13 +75,14 @@ class editChajian extends Chajian{
 	
 	/**
 		获取对应表上字段信息
+		$glx 0基本字段，1流程上
 		return {字段名:对应信息}
 	*/
-	public function getfield($table)
+	public function getfield($table, $glx=0)
 	{
 		$farr	= $this->db->gettablefields($this->rock->T($table));
 		$rows 	= array();
-		$arrar	= c('array', true);
+		$arrar	= c('array');
 		foreach($farr as $k=>$rs){
 			$va = $rs['explain'];
 			$vn = $rs['name'];
@@ -89,7 +90,9 @@ class editChajian extends Chajian{
 			if(!$this->rock->isempt($va)){
 				$vas = explode('@', $va);
 				$va	 = $vas[0];
-				if(count($vas)>1)$sel = $arrar->strtoobject($vas[1]);
+				$len = count($vas);
+				if($len>1)$sel = $arrar->strtoobject($vas[1]);
+				if($len>2&&$glx==1&&$vas[2]=='not')$va='';
 			}
 			if(!$this->rock->isempt($va)){
 				$rows[$vn] = array(

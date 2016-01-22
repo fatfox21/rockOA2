@@ -1,6 +1,6 @@
 var panel= {
-	xtype:'rockgrid',url:publiccheckstore(),searchtools:true,exceltitle:'考勤.外出登记',
-	tablename:'kq_out',defaultorder:'outtime desc',opentype:3,
+	xtype:'rockgrid',url:publiccheckstore(),searchtools:true,exceltitle:'考勤.外出出差',
+	tablename:'kq_out',defaultorder:'outtime desc',opentype:3,keywhere:'[A][K]a.status<>5',
 	tbar:['->',{
 		icon:gicons('delete'),text:'删除',handler:function(){
 			this.up('rockgrid').del();
@@ -23,8 +23,9 @@ var panel= {
 	},{
 		text:'状态',width:150,dataIndex:'status',renderer:function(v,a,b){
 			var s = '<font color="blue">待'+b.raw.nowcheckname+'审核</font>';
-			if(v=='2')s = b.raw.statusman+'<font color="red">审核不通过</font>';
-			if(v=='1')s = b.raw.statusman+'<font color="green">审核通过</font>';
+			var ns = b.raw.statusman;if(isempt(ns))ns='';
+			if(v=='2')s = ns+'<font color="red">审核不通过</font>';
+			if(v=='1')s = ns+'<font color="green">审核通过</font>';
 			return s;
 		}
 	},{

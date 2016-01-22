@@ -35,17 +35,52 @@ class htmlChajian extends Chajian{
 	public function createtable($fields, $arr, $title='')
 	{
 		$bordercolor = '#C9ECFF';
-		$s 	= '<table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">';
+		$s 	= '<table border="0" class="createtable" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">';
 		if($title != ''){
 			$s .= '<tr><td colspan="3" align="center" style="border:1px '.$bordercolor.' solid;padding:10px;font-size:16px;background:#2CB2F9;color:white">'.$title.'</td></tr>';
 		}
 		foreach($fields as $fid=>$na){
 			$val = '';
+			$sty = 'padding:8px;';
 			if(isset($arr[$fid]))$val = $arr[$fid];
-			$s .= '<tr><td align="right" width="120" style="border:1px '.$bordercolor.' solid;padding:5px 8px">'.$na.'</td><td  style="border:1px '.$bordercolor.' solid;padding:8px" align="left">'.$val.'</td></tr>';
+			if(isset($arr[$fid.'_style']))$sty = $arr[$fid.'_style'];
+			$s .= '<tr><td align="right" width="120" style="border:1px '.$bordercolor.' solid;padding:5px 8px">'.$na.'</td><td  style="border:1px '.$bordercolor.' solid;'.$sty.'" align="left">'.$val.'</td></tr>';
 		}
 		$s .='</table>';
 		
 		return $s;
+	}
+	
+	/**
+		创建table表格数据
+		@param	string  $rows  	 下载导出数据
+		@param	string  $headstr 表格表头(如：lie1,列1,left@lie2,列2,center)
+		@return	string
+	*/
+	public function createrows($rows, $headstr='')
+	{
+		if($headstr == '')$headstr	= $this->request('header');
+		if($headstr	== '')return '';
+		$arrh		= explode('@', $headstr);
+		$thead		= count($arrh);
+		for($i=0; $i<$thead; $i++){
+			$te_str	= $arrh[$i];
+			if(count(explode(',', $te_str)) < 3)$te_str.=',center';
+			$head[]	= explode(',', $te_str);
+		}
+		$txt	 = '';	//DBE6E3
+		$style	 = "style='padding:5px;border:1px #C9ECFF solid'";
+		$cola	 = '#C9ECFF';
+		$txt	.= '<table width="100%" class="createrows" border="0" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;" >';
+		$txt	.= '<tr>';
+		for($h=0; $h<$thead; $h++)$txt.= '<td '.$style.' bgcolor="#eeeeee" align="'.$head[$h][2].'"><b>'.$head[$h][1].'</b></td>';
+		$txt	.= '</tr>';
+		foreach($rows as $rs){
+			$txt	.= '<tr>';
+			for($h=0; $h<$thead; $h++)$txt	.= '<td '.$style.' align="'.$head[$h][2].'">'.$rs[$head[$h][0]].'</td>';
+			$txt	.= '</tr>';
+		}
+		$txt	.= '</table>';
+		return $txt;
 	}
 }                                                                                                                                                            

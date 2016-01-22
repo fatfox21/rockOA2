@@ -1,5 +1,8 @@
 .rockmenu{ position:absolute;display:none; z-index:99}
-.rockmenuli{border:1px #eeeeee solid; background-color:#ffffff; left:0px; top:0px; background:rgba(255,255,255,0.9);box-shadow:0px 0px 5px rgba(0,0,0,0.3);}
+.rockmenuli{border:1px #eeeeee solid;
+ background-color:#ffffff; left:0px; top:0px; background:rgba(255,255,255,0.9);
+ box-shadow:0px 0px 5px rgba(0,0,0,0.3);
+}
 .rockmenulijt{ padding:0px; text-align:center}
 .rockmenu ul{padding:0px;margin:0px}
 .rockmenu li{ list-style-type:none; padding:8px 12px; cursor:pointer; text-align:left; border-bottom:1px #eeeeee dotted;}

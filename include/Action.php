@@ -17,7 +17,6 @@ abstract class mainAction{
 	public $db;
 	public $smarty;
 	public $smartydata	= array();	//模版数据
-	public $seldata		= array();
 	public $display		= true;		//是否显示模板	
 	public $bodytitle	= '';		//副标题
 	public $keywords	= '';		//关键词
@@ -39,6 +38,7 @@ abstract class mainAction{
 	public $perfix		= '';
 	public $tplname		= '';		//模板文件
 	public $tplpath		= '';		//模板文件路径
+	public $tpltype		= 'tpl';
 	
 	public function __construct()
 	{
@@ -81,7 +81,7 @@ abstract class mainAction{
 
 	private function initMysqllink()
 	{
-		$this->db		= import('mysql');
+		$this->db		= import(DB_DRIVE);
 		$GLOBALS['db']	= $this->db;
 		include_once(''.ROOT_PATH.'/include/Model.php');
 		$this->option	= m('option');

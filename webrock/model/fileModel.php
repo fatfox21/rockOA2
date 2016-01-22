@@ -3,7 +3,7 @@ class fileClassModel extends Model
 {
 	public function getfile($mtype, $mid)
 	{
-		$rows	= $this->getall("`mtype`='$mtype' and `mid`='$mid' order by `id`",'id,filename,filesizecn,filesize');
+		$rows	= $this->getall("`mtype`='$mtype' and `mid`='$mid' order by `id`",'id,filename,filesizecn,filesize,fileext');
 		return $rows;
 	}
 	

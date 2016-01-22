@@ -35,7 +35,6 @@ var panelss = {
 	showdata:function(fo, da, o){
 		fo.setVal('name', da.user.name);
 		fo.setVal('deptname', da.user.deptname);
-		fo.getField('fileid').loadfile(params.tablename, da.data.id, !o.isEdit());
 	}
 }
 
