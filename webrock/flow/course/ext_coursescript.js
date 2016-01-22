@@ -354,7 +354,7 @@ var c = {
 		var s = '<img src="images/loading.gif" align="absmiddle"> 加载中...';
 		$('#raphael_'+rand+'').html(s);
 		bool = true;
-		$.post(url,{tablename_abc:'flow_course',keywhere:'and setid='+setid+'',fistwhere:'and id='+lid+''},function(da){
+		$.post(url,{tablename_abc:jm.encrypt(flow_course),keywhere:'and setid='+setid+'',fistwhere:'and id='+lid+''},function(da){
 			var a = js.decode(da);
 			c.jsondata = da;
 			c.movedata = {};

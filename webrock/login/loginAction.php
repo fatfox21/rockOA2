@@ -12,7 +12,7 @@ class loginClassAction extends Action{
 	
 	public function checkAjax()
 	{
-		$adminuser	= $this->post('adminuser');
+		$adminuser	= str_replace(' ','',$this->post('adminuser'));
 		$adminpass	= $this->post('adminpass');
 		$rempass	= $this->post('rempass');
 		$jmpass		= $this->post('jmpass');

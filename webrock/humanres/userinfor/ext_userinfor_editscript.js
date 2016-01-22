@@ -204,7 +204,7 @@ var panel= {
 				}]
 			}]
 		},{
-			xtype:'displayfield',value:'<div style="padding-top:20px" align="center"><img id="view_face_'+rand+'-inputEl" style="border:1px #cccccc solid" src="images/noface.gif" height="100" width="100"><br><a onclick="return js.cropimg(\'face_'+rand+'-inputEl\',\'ki0on0kf0gfk0kj0ml0mg0gfj0ki0kh0nm0ggf0ki0kh0gfo0mh05\',100,100)" href="javascript:" class="a">形象照片</a></div>',width:'24%'
+			xtype:'displayfield',value:'<div style="padding-top:20px" align="center"><img id="view_face_'+rand+'-inputEl" style="border:1px #cccccc solid" src="images/noface.gif" height="100" width="100"><br><a onclick="return js.cropimg(\'face_'+rand+'-inputEl\',\''+jm.encrypt('形象照片')+'\',100,100)" href="javascript:" class="a">形象照片</a></div>',width:'24%'
 		}]
 	},{
 		name:'facePost',id:'face_'+rand+'',hidden:true

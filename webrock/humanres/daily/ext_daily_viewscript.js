@@ -9,6 +9,9 @@ var panel = {
 		if(typ!='')s='and a.`type`='+typ+'';
 		return s;
 	},
+	dblclick:function(o,d){
+		mopenview('daily',d.data.id);
+	},
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40

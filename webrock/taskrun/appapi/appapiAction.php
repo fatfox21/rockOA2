@@ -8,13 +8,13 @@ class appapiAction extends Action{
 	{
 		$msg 		= '';
 		$time 		= time();
-		$appapikey	= $this->get('appapikey','', 1);
+		$appapikey	= $this->rock->jm->base64decode($this->get('appapikey'));
 		$timekey	= floatval($this->get('timekey','0'))/1000;
 		$this->splittime = (int)($time - $timekey);
 		if(md5($appapikey) != $this->appapikey)$msg = 'apikey invalid';
 		if($msg == '' && A!='checklogin'){
-			$time1 = $time - 10;
-			$time2 = $time + 10;
+			$time1 = $time - 3;
+			$time2 = $time + 3;
 			if($timekey>$time2 || $timekey<$time1)$msg = 'timekey invalid';
 		}
 		if($msg != ''){

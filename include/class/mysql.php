@@ -225,10 +225,12 @@ abstract class mysql{
 		$sfh1 = '';
 		for($i=0; $i<$len; $i++){
 			$sfh	= func_get_arg($i);
-			if($sfh!='AND' && $sfh!='OR' && $sfh!='and' && $sfh!='or'){
-				$arr[]  = $this->_getwhere($sfh);
+			if(is_numeric($sfh)){
+				$arr[] 	= "`id`='$sfh'";
+			}else if($sfh=='AND' || $sfh=='OR' || $sfh=='and' || $sfh=='or'){
+				$sfh1 	= $sfh;
 			}else{
-				$sfh1 = $sfh;
+				$arr[]  = $this->_getwhere($sfh);
 			}				
 		}
 		$joins = ') AND (';

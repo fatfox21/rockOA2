@@ -109,7 +109,7 @@ class applyClassAction extends Action
 				$summary= $this->rock->reparr($summary, $rs1);
 				$modenum= $moders['num'];
 				$rows[$k]['status'] 	= $rs1['status'];	
-				$rows[$k]['nstatus'] 	= $rs1['nstatus'];	
+				$rows[$k]['nstatus'] 	= $rs1['nstatus'];
 			}
 			$rows[$k]['statustext'] = $zt;	
 			$rows[$k]['modenum'] 	= $modenum;	

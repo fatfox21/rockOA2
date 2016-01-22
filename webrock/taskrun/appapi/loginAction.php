@@ -10,7 +10,7 @@ class loginClassAction extends appapiAction{
 		$deviceid	= $this->get('deviceid');
 		if($adminuser=='')$msg='用户名不能为空';
 		if($msg=='')if($adminpass=='')$msg='密码不能为空';
-
+		if($msg=='')if($deviceid=='')$msg='sorry!';
 		if($msg==''){
 			$us	= $this->db->getone('[Q]admin', "`user`='$adminuser' and `status`=1 and `type`=1 and `state`<>5",'`pass`,`id`,`name`,`user`,`deptname`,`ranking`,`face`');
 			if(!$us){

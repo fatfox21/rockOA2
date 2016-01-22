@@ -33,6 +33,9 @@ var panel = {
 			getcmp('delbtn_'+rand+'').setDisabled(bo);
 		}
 	},
+	dblclick:function(o,d){
+		mopenview('daily',d.data.id);
+	},
 	beforeload:function(){
 		if(atype == 5){
 			getcmp('editbtn_'+rand+'').setDisabled(true);

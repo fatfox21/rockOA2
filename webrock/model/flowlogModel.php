@@ -8,15 +8,18 @@ class flowlogClassModel extends Model
 
 	public function getdatalog($flownum, $table, $mid, $uids='')
 	{
+		$setrs 		= $this->getone("`num`='$flownum'", "`id`,`name`,`table`");
+		$table 		= $setrs['table'];
 		$where		= "`table`='$table' and `mid`='$mid'";
 		$rs			= m($table)->getone($mid);
-		$urs		= $aurs	= $log	= $setrs = $logarr = $coursers	= array();
+		$urs		= $aurs	= $log	= $logarr = $coursers	= array();
 		$status 	= $isflow = 1;
 		if($rs){
 			if(!isset($rs['uid']))$rs['uid']=0;
 			if(!isset($rs['isturn']))$rs['isturn']=0;
 			if(!isset($rs['nstatus']))$rs['nstatus']=0;
 			if(!isset($rs['status']))$rs['status']=0;
+			if(!isset($rs['applydt']))$rs['applydt']='';
 			if(!isset($rs['nowcheckid'])){
 				$rs['nowcheckid']='';
 				$isflow=0;
@@ -26,7 +29,7 @@ class flowlogClassModel extends Model
 			$urs 	= m('admin')->getone($rs['uid'], 'name,deptname');
 			$aurs 	= m('admin')->getone($optid, 'name,deptname');
 			$logarr	= m('flow_log')->getall("$where order by `id`");
-			$setrs 	= $this->getone("`num`='$flownum'", "`id`,`name`");
+			
 			$status = $rs['status'];
 		}
 		$actarr		= array(

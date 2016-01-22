@@ -5,8 +5,8 @@ class setClassAction extends Action
 	public function setsaveAjax()
 	{
 		$msg = '';
-		if($this->contain(URL, '211.149.234.93')){
-			$msg = '请不要修改，谢谢';
+		if($this->contain(URL, '211.149.234.93') || $this->contain(URL, 'demo') ){
+			$msg = '别瞎改，谢谢';
 		}else{
 			$this->option->setval('systemtitle', $this->post('titlePost'));
 			$this->option->setval('systemlogo', $this->post('logoPost'));
