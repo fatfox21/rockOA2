@@ -1,0 +1,14 @@
+<script >
+$(document).ready(function(){
+	
+});
+</script>
+
+
+<div class="mobilerock-header">
+	<div><a onclick="return closetabs('{num}')" class="topbtn" href="javascript:"><i class="icon-chevron-left"></i> 返回</a></div>
+	<div style="width:40%" align="center">审核单据</div>
+	<div align="right"><a class="topbtn" onclick="changetabs('home')" href="javascript:"><i class="icon-cog"></i> 主页</a></div>
+</div>
+<div  temp="cont" style="overflow:auto">
+</div>

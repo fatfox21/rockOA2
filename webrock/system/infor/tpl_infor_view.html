@@ -1,0 +1,31 @@
+{include file="../../public/header.htm"}
+<body style="padding:10px;color:#000000">
+<center>
+<div style="width:750px">
+	<div class="blank10"></div>
+	<div style="font-size:20px">{$da.rs.title}</div>
+	{if $da.rs.content}
+	<div class="blank20"></div>
+	<div align="left" style="line-height:24px;">{$da.rs.content}</div>
+	{/if}
+	
+	{if $da.filers}
+	<div class="blank20"></div>
+	<div align="left" style="line-height:24px;">
+		<b>相关文件：</b><br>
+		{foreach from=$da.filers item=rs1 name=s}
+		{$smarty.foreach.s.index+1}、<a href="javascript:" onclick="return js.downshow('{$rs1.id}')" class="blue">{$rs1.filename}</a> ({$rs1.filesizecn})<br>
+		{/foreach}
+	</div>
+	{/if}
+	
+	<div class="blank20"></div>
+	<div align="right" style="line-height:24px;">
+		
+		{$da.rs.zuozhe}<br>
+		{$da.rs.indate}
+	</div>
+</div>
+</center>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>信息记录管理</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="email=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="{$da.p}/css/webimcss.css" />
+<link rel="stylesheet" href="{$da.p}/css/webimcssa.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="js/base64-min.js"></script>
+<script type="text/javascript" src="{$da.p}/{$da.d}{$da.m}/{$da.m}script.js"></script>
+<script type="text/javascript" src="{$da.p}/{$da.d}index/upload.js"></script>
+<script>
+js.path = '{$da.path}';
+js.servernow = '{$da.now}';
+PROJECT		 = '{$da.p}';
+var adminid 	= '{$da.ars.id}',
+	adminname 	= '{$da.ars.name}',
+	adminface	= '{$da.aface}';
+</script>
+</head>
+<body style="overflow:hidden" scroll="no">
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+<tr>
+	<td colspan="2">
+		<div class="gusertop gradient" style="height:40px;overflow:hidden;">
+			<div style="height:20px;overflow:hidden;margin-top:9px;margin-left:10px">
+			<a href="javascript:" class="white" onclick="return changeshow(-1)"><img src="images/im/user.png" align="absmiddle" height="16" width="16"> 所有人员(<span id="userzong">0</span>)</a> &nbsp;  &nbsp; 
+			<a href="javascript:" class="white" onclick="return changeshow(0)"><img src="images/im/group.png" align="absmiddle" height="16" width="16"> 群(<span id="groupzong0">0</span>)</a>  &nbsp;  &nbsp; 
+			<a href="javascript:" class="white" onclick="return changeshow(1)"><img src="images/im/duihua.png" align="absmiddle" height="16" width="16"> 讨论组(<span id="groupzong1">0</span>)</a>  &nbsp;  &nbsp; 
+			<a href="javascript:" class="white" onclick="return changeshow(2)"><img src="images/im/shezhi.png" align="absmiddle" height="16" width="16"> 系统信息(<span id="groupzong2">0</span>)</a>
+			</div>
+		</div>
+	</td>
+</tr>
+<tr valign="top">
+	<td  height="100%" bgcolor="#f1f1f1">
+		<div style="width:150px;overflow:auto" id="userlist" class="userlist">
+		</div>
+	</td>
+	<td width="100%">
+		<div style="width:100%">
+			<div id="listcontent" style="height:200px;overflow:auto"></div>
+			<div style="height:30px;overflow:hidden;background-color:#eeeeee;line-height:28px;color:#555555">
+				&nbsp; <span id="shownamea"></span>
+				<span id="pageshow"></span>
+			</div>
+		</div>
+	</td>
+</tr>
+</table>
+</body>
+</html>

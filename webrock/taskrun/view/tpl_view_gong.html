@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript">
+js.path = '<?=PATH?>';
+PROJECT = '<?=P?>';
+</script>
+<style>
+</style>
+</head>
+<body style="padding:15px">
+
+<div align="center">
+	<div style="width:750px">
+		<div class="blank10"></div>
+		<div style="font-size:20px"><?=$da['rs']['title']?></div>
+		<?php if($da['rs']['content']) {?>
+		<div class="blank20"></div>
+		<div align="left" style="line-height:24px;"><?=$da['rs']['content']?></div>
+		<?php }?>
+		
+		
+		<?php if($da['filers']) {?>
+		<div class="blank20"></div>
+		<div align="left" style="line-height:24px;">
+			<b>相关文件：</b><br>
+			<?php foreach($da['filers'] as $k=>$rs) {?>
+			<?=$k+1?>、<a href="javascript:" onclick="return js.downshow('<?=$rs['id']?>')" class="blue"><?=$rs['filename']?></a> (<?=$rs['filesizecn']?>)<br>
+			<?php }?>
+		</div>
+		<?php }?>
+		
+		<div class="blank20"></div>
+		<div align="right" style="line-height:24px;">
+			<?=$da['rs']['zuozhe']?><br><?=$da['rs']['indate']?>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

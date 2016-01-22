@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{$da.grs.name}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="email=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="{$da.p}/css/webimcss.css" />
+<link rel="stylesheet" href="{$da.p}/css/webimcssa.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="js/base64-min.js"></script>
+<script type="text/javascript" src="{$da.p}/{$da.d}{$da.m}/{$da.m}script.js"></script>
+<script type="text/javascript" src="{$da.p}/{$da.d}index/upload.js"></script>
+<script>
+js.path = '{$da.path}';
+js.servernow = '{$da.now}';
+var adminid 	= '{$da.ars.id}',
+	adminname 	= '{$da.ars.name}',
+	adminface	= '{$da.aface}',
+	receiveid 	= '{$da.grs.id}',
+	receivename = '{$da.grs.name}',
+	receiveface	= '{$da.gface}',
+	receivetype	= '{$da.grs.type}',
+	infortype 	= '{$da.types}',
+	wdarr		= {$da.wdarr};
+</script>
+</head>
+<body style="overflow:hidden" scroll="no">
+<form style="display:none" name="fileform"><input type="file" id="fileid"></form>
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+<tr>
+	<td colspan="3">
+		<div class="gusertop gradient" style="height:40px;overflow:hidden">
+			<div class="div01"><img style="background-color:#ffffff;border-radius:2px" src="{$da.gface}" height=24 width=24></div>
+			<div class="div02">{$da.grs.name}</div>
+			<div class="div03" {if $da.grs.type neq 1}style="display:none"{/if}><a href="javascript:" class="white"  onclick="return guser.yaoqing()">＋邀请</a> &nbsp; <a class="white" href="javascript:" onclick="return guser.exit()">退出</a>&nbsp;</div>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td height="100%" width="100%">
+		
+		<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="100%">
+				<div id="listcontent" style="height:100%;width:100%;overflow:auto;"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="height:30px; background-color:#eeeeee;overflow:hidden">
+					<div class="toolsliao">
+						<a href="javascript:" onclick="return false" tools="emts" id="aemts" title="添加表情"><img src="images/im/emts.png"></a>
+						<a href="javascript:" onclick="return false" tools="image" title="发送图片"><img src="images/im/photo.png"></a>
+						<a href="javascript:" onclick="return false" tools="file" title="发送文件"><img src="images/im/file.png"></a>
+						<a href="javascript:" onclick="return false" tools="crop" title="截屏"><img src="images/im/crop.png"></a>
+						<a href="javascript:" onclick="return false" tools="cropput" title="粘贴截屏图片"><img src="images/im/crop1.png"></a>
+						<a href="javascript:" onclick="return false" tools="clear" title="清屏"><img src="images/im/clear.png"></a>
+						<a href="javascript:" onclick="return false" tools="jilu" style="float:right;"><img src="images/im/notpia.png" align="absmiddle">信息记录</a>
+					</div>
+				</div>
+			</td>
+		</tr>	
+		<tr>
+			<td valign="top">
+				<div style="height:100px;overflow:hidden;position:relative" id="contentdiv"><textarea  ondblclick="upload.readclip()" id="content"></textarea></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="height:36px; background-color:#eeeeee">
+					<div align="right" style="padding:9px">
+						<span id="msgview"></span>
+						<a class="webbtn" onclick="return false" id="AltC" href="javascript:">关闭(C)</a>&nbsp; &nbsp; 
+						<a class="webbtn" onclick="return false" style="border-radius:3px 0px 0px 3px" id="AltS" href="javascript:">发送(S)</a><a class="webbtn" style="padding-left:5px;padding-right:5px;border-radius:0px 3px 3px 0px;border-left:1px #2D85C4 solid" href="javascript:">↓</a>
+					</div>
+				</div>
+			</td>
+		</tr>
+		</table>
+		
+	
+	
+	</td>
+	<td width="6" style="background:#eeeeee;" nowrap><div style="width:6px;overflow:hidden;background-color:#eeeeee;height:100%">&nbsp;</div></td>
+	<td width="150" valign="top">
+		<div style="width:150px;overflow:hidden">
+			<div align="left">
+				<div style="font-size:12px;height:150px;overflow:hidden">
+					<div style="padding:10px;">
+						
+					</div>
+				</div>
+				<div style="background-color:#eeeeee;overflow:hidden;height:30px;line-height:30px">&nbsp; 成员({$da.total.1}/{$da.total.0})</div>
+				<div class="userlist" id="grouplistview" style="overflow:auto">
+					{foreach from=$da.uarr item=rs}
+					<div {if $rs.imonline neq 1}class="offline"{/if}><img src="{$rs.face}" align="absmiddle">{$rs.name}</div>
+					{/foreach}
+				</div>
+			</div>
+		</div>
+	</td>
+</tr>
+</table>
+</body>
+</html>

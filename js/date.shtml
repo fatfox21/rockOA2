@@ -1,0 +1,394 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选择时间</title>
+<script language="javascript">
+var g=function(id){return document.getElementById(id);}
+var cale={
+	marr:new Array(31,28,31,30,31,30,31,31,30,31,30,31),
+	weekarr:new Array('日','一','二','三','四','五','六'),
+	maxyear:'1950-2020',
+	toadycls:'toadycls',
+	nowcls:'nowcls',
+	now:'',//选中时间
+	today:'',//今天时间
+	clicktd:null,
+	readid:'',
+	parent:'false',
+	showinput:'',
+	formdt:function(type,sj){//获取时间
+		if(!type)type='Y-m-d';
+		var dt;
+		if(/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/.test(sj)&&sj){
+			sj=sj.split(' ');
+			ymd=sj[0];
+			his=sj[1];if(!his)his='00:00:00';
+			ymd=ymd.split('-');
+			his=his.split(':');;
+			dt=new Date(ymd[0],ymd[1]-1,ymd[2],his[0],his[1],his[2]);
+		}else{
+			dt=new Date();
+		}
+		Y=dt.getFullYear();//年
+		m=dt.getMonth()+1;if(m<10)m='0'+m;//月
+		d=dt.getDate();if(d<10)d='0'+d;//天
+		w=dt.getDay();//星期
+		H=dt.getHours();if(H<10)H='0'+H;//小时
+		i=dt.getMinutes();if(i<10)i='0'+i;//分钟
+		s=dt.getSeconds();if(s<10)s='0'+s;//秒
+		return type.replace('Y',Y).replace('m',m).replace('d',d).replace('H',H).replace('i',i).replace('s',s).replace('w',w);
+	},
+	addcale:function(toda){//从新加载
+		var now=''+g('dtkj_year').value+'-'+g('dtkj_month').value+'-1';
+		var stuat=this.formdt('Y-m-w',now);
+		stuat=stuat.split('-');
+		var year=parseFloat(stuat[0]);
+		var month=parseFloat(stuat[1]);
+		var maxday=this.marr[month-1];//这个月最大天数
+		if(year%4==0&&month==2)maxday=29;//判断是不是轮年
+		if(month<10)month='0'+month;
+		var ic=parseFloat(stuat[2]);
+		for(var i=1;i<=42;i++){
+			g('dtkj_day_'+i+'').innerHTML='&nbsp;';
+			g('dtkj_day_'+i+'').className='';
+			g('dtkj_day_'+i+'').title='';
+		}
+		this.clicktd=null;
+		var maic=1;
+		for(var i=1;i<=maxday;i++){
+			maic=i+ic;
+			var cad=g('dtkj_day_'+maic+'');
+			if(i<10)i='0'+i;
+			cad.innerHTML=i;
+			if(this.now==''+year+'-'+month+'-'+i+''){
+				cad.className=this.nowcls;
+				this.clicktd=cad;
+			}
+			if(this.today==''+year+'-'+month+'-'+i+''){
+				cad.className=this.toadycls;
+				cad.title='今天日期';
+				if(toda)cad.onclick();
+			}
+		}	
+/*		for(var j=maic+1;j<=42;j++){
+			var noaa=j-maic;
+			if(noaa<10)noaa='0'+noaa;
+			g('dtkj_day_'+j+'').innerHTML='<font color="#dddddd">'+noaa+'</font>';
+		}*/
+	},
+	initcale:function(ad){
+		this.today=this.formdt('Y-m-d');
+		this.readid=this.request('id');
+		this.parent=this.request('parent');
+		this.showinput=this.request('showinput');
+		var sj='';
+		try{sj=this.request('sj');}catch(e){}
+		if(ad)sj='';
+		if(sj)sj=sj.replace(/\./gi,'-');
+		sj=this.formdt('Y-m-d H:i:s',sj);
+		sj=sj.split(' ');
+		ymd=sj[0].split('-');
+		if(!ad)this.now=sj[0];
+		var selyear=g('dtkj_year');
+		var selmonth=g('dtkj_month');
+		this.maxyear=''+this.request('minyear','1990')+'-'+this.request('maxyear','2100')+'';
+		yy=this.maxyear.split('-');
+		mi=parseFloat(yy[0]);ma=parseFloat(yy[1]);
+		ysel=0;ysel1=0;msel=0;msel1=0;
+		selyear.length=0;selmonth.length=0;
+		for(var i=mi;i<=ma;i++){
+			ysel++;
+			if(parseFloat(ymd[0])==i)ysel1=ysel-1;
+			selyear.options.add(new Option(i,i));
+		}
+		selyear.options[ysel1].selected=true;
+		for(var i=1;i<=12;i++){
+			msel++;
+			if(parseFloat(ymd[1])==i)msel1=msel
+			oi=i;
+			if(oi<10)oi='0'+oi;
+			selmonth.options.add(new Option(i,oi));
+		}
+		selmonth.options[msel1-1].selected=true;
+		his=sj[1].split(':');
+		g('dtkj_hour').value=his[0];
+		g('dtkj_minutes').value=his[1];
+		g('dtkj_seconds').value=his[2];
+		g('dtkj_now').innerHTML=this.now;
+		this.addcale(ad);
+		g('nowdate').title=this.formdt('Y-m-d H:i:s',false);
+	},
+	focusval:0,
+	num:function(obj,mi,ma){
+		var val=obj.value;
+		if(isNaN(val)||!val)val=this.focusval;
+		val=parseInt(val);
+		if(val<mi)val=mi;
+		if(val>ma)val=ma;
+		if(val<10)val='0'+val+'';
+		obj.value=val;
+		this.setoutshow=setTimeout("g('spanpost').innerHTML=''",200);
+	},
+	focusanum:function(obj,mi,ma){
+		clearTimeout(this.setoutshow);
+		g('spanpost').innerHTML='';
+		var s='<div class="showdiv" style="bottom:25px;">';
+		this.inputhis=obj;
+		for(var a=mi;a<=ma;a++){
+			var ai=a;
+			if(ai<10)ai='0'+ai;
+			if(ai==obj.value)ai='<span style="color:#ff0000">'+ai+'</span>';
+			s+='<a onclick="return cale.clickhis('+a+')">'+ai+'</a>';
+			if((a+1)%10==0)s+='<br>';
+		}
+		s+='</div>';
+		g('spanpost').innerHTML=s;
+	},
+	clickhis:function(ai){
+		if(ai<10)ai='0'+ai;
+		this.inputhis.value=ai;
+		g('spanpost').innerHTML='';
+		return false;
+	},
+	request:function(name,deval){
+		if(!deval)deval='';
+		if(!name)return deval;
+		var url=location.href;
+		if(url.indexOf('\?')<0)return deval;
+		neurl=url.split('\?')[1];
+		neurl=neurl.split('&');
+		var value='';
+		for(i=0;i<neurl.length;i++){
+			val=neurl[i].split('=');
+			if(val[0].toLowerCase()==name.toLowerCase()){
+				value=val[1];
+				break;
+			}
+		}
+		value=value.replace('%20',' ');
+		if(!value)value=deval;
+		return value;
+	},
+	close:function(){
+		if(this.parent=='true'){
+			parent.get('right'+this.showinput+'').style.display='none';
+		}else{
+			window.close()
+		}
+	},
+	selyear:function(num){
+		year=parseFloat(g('dtkj_year').value);
+		yy=this.maxyear.split('-');
+		mi=parseFloat(yy[0]);ma=parseFloat(yy[1]);
+		year=year+num;
+		if(year<mi)return;
+		if(year>ma)return;
+		g('dtkj_year').value=year;
+		this.addcale();
+	},
+	selmonth:function(num){
+		month=parseFloat(g('dtkj_month').value);
+		month=month+num;
+		n=0;
+		if(month<1||month>12)n=num;
+		if(month<1)month=12;
+		if(month>12)month=1;
+		if(month<10)month='0'+month;
+		g('dtkj_month').value=month;
+		this.selyear(n);
+	}
+	,
+	dblclick:function(obj){
+		if(obj.innerHTML=='&nbsp;')return;
+		this.returndt();
+	},
+	onclick:function(obj){
+		var val=obj.innerHTML
+		if(val=='&nbsp;')return;
+		if(this.clicktd!=null)this.clicktd.className='';
+		this.overys=this.nowcls;
+		obj.className=this.nowcls;
+		this.clicktd=obj;
+		g('dtkj_now').innerHTML=''+g('dtkj_year').value+'-'+g('dtkj_month').value+'-'+val+'';
+	},
+	onmover:function(obj){
+		if(obj.innerHTML=='&nbsp;')return;
+		this.overys=obj.className;
+		obj.className='overcls'
+	}
+	,onmout:function(obj){
+		if(obj.innerHTML=='&nbsp;')return;
+		obj.className=this.overys
+	},
+	changetoday:function(){
+		this.initcale(true);
+		this.returndt();
+	},
+	returndt:function(){
+		var sj=g('dtkj_now').innerHTML;
+		sj+=' '+g('dtkj_hour').value+':'+g('dtkj_minutes').value+':'+g('dtkj_seconds').value+'';
+		try{
+			var type=this.request('type');
+			if(!type)type='Y-m-d H:i:s';
+			var val=this.formdt(type,sj);
+			if(this.parent=='true'){
+				parent.get(this.showinput).value=val;
+				parent.get('right'+this.showinput+'').style.display='none';
+			}else{
+				window.returnValue=val;
+				window.close()
+			}
+		}catch(e){}
+	}
+}
+</script>
+<style type="text/css">
+*{ font-size:14px; margin:0; padding:0; font-family:Verdana, Geneva, sans-serif;}
+div.dtkj_zongys{width:280px; cursor:default; background-color:#ffffff; height:220px; border:0px #19a132 solid}
+input.dtky_hisys {width:24px; text-align:center; height:20px; line-height:14px; background-color:#FFFfff; border:1px #aaaaaa solid}
+input.dtky_focus{border:1px #000000 solid}
+td.toadycls{background-color:#4a833f;color:ffffff}
+td.nowcls{ color:#ff0000; background-color:#FC9}
+td.overcls{color:#335104; background-color:#c3e38f}
+button{ cursor:pointer; width:50px; line-height:14px; height:22px; text-align:center; line-height:16px; font-size:12px}
+button.closebutton{ border:none; background:none; width:14px}
+.imgdiv{ border:1px #7f9db9 solid; border-width:1px 1px 1px 0px; padding:2px 2px 2px 0px}
+
+.img{width:16px;height:16px;background:url(htm.gif)}
+.shangyiye{background-position:-64px 0px}
+.xiayiye{background-position:-96px 0px}
+a{ cursor:pointer}
+a:link,a:visited {TEXT-DECORATION:none;color:#555555}
+a:hover{TEXT-DECORATION:underline;color:#ff0000;}
+div.showdiv{ position:absolute; padding:2px;border:1px #000000 solid;background-color:#ffffff; text-align:left}
+div.showdiv a{ margin:2px}
+.tdys1,.trys1 td{ border:1px #cdebc7 solid;height:26px;}
+</style>
+</head>
+<!--<div class="imgdiv1"><img src="../images/white.gif" onMouseOver="this.className='selimg selup_over'" onMouseOut="this.className='selimg'" class="selimg selup"><br><img src="../images/white" class="selimg seldown" onMouseOver="this.className='selimg seldown_over'" onMouseOut="this.className='selimg seldown'"></div>-->
+<body onLoad="cale.initcale()" style="border:none; padding:2px">
+<center>
+    <div class="dtkj_zongys">
+    <table width="100%" border="0" style="border-collapse:collapse;" bordercolor="#cdebc7" cellspacing="0" cellpadding="0" id="dtkj_content">
+    <tr>
+    	<td colspan="7">
+        
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+    <table border="0" cellspacing="0" cellpadding="0"><tr><td width="3"></td>
+    <td width="15" align="center"><a style="font-size:14px;" onClick="cale.selyear(-1);return false" title="上一年">&lt;</a></td>
+    <td height="25"><select id="dtkj_year" onChange="cale.addcale()"></select></td>
+    <td width="15" align="center"><a style="font-size:14px;" onClick="cale.selyear(1);return false" title="下一年">&gt;</a></td>
+    <td style="color:#aaaaaa">年&nbsp;</td>
+    <td width="15" align="center"><a style="font-size:14px;" onClick="cale.selmonth(-1);return false" title="上一月">&lt;</a></td>
+    <td><select id="dtkj_month" onChange="cale.addcale()"></select></td>
+    <td width="15" align="center"><a style="font-size:14px;" onClick="cale.selmonth(1);return false" title="下一月">&gt;</a></td>
+    <td style="color:#aaaaaa">月</td></tr>
+    </table> 
+    </td>
+    <td align="right"><a href="javascript:void(0)" id="nowdate" onClick="cale.changetoday();return false" style="color:#F60"><u>现在</u></a>&nbsp;<a href="javascript:void(0)" onClick="cale.close();return false">×</a>&nbsp;</td>
+  </tr>
+</table>
+
+        
+     
+          
+        </td>
+    </tr>
+    
+      <tr bgcolor="#e7fae3" style="color:#363">
+        <td align="center" class="tdys1" height="24">日</td>
+        <td align="center" class="tdys1" >一</td><td align="center" class="tdys1">二</td><td align="center" class="tdys1" >三</td><td align="center" class="tdys1" >四</td><td align="center" class="tdys1" >五</td><td align="center" class="tdys1" >六</td>
+      </tr>
+      <tr class="trys1">
+      	<td align="center" id="dtkj_day_1">&nbsp;</td>
+        <td align="center" id="dtkj_day_2">&nbsp;</td>
+        <td align="center" id="dtkj_day_3">&nbsp;</td>
+        <td align="center" id="dtkj_day_4">&nbsp;</td>
+        <td align="center" id="dtkj_day_5">&nbsp;</td>
+        <td align="center" id="dtkj_day_6">&nbsp;</td>
+        <td align="center" id="dtkj_day_7">&nbsp;</td>
+      </tr>
+      <tr class="trys1" bgcolor="#fbfffa">
+      	<td align="center" id="dtkj_day_8">&nbsp;</td>
+        <td align="center" id="dtkj_day_9">&nbsp;</td>
+        <td align="center" id="dtkj_day_10">&nbsp;</td>
+        <td align="center" id="dtkj_day_11">&nbsp;</td>
+        <td align="center" id="dtkj_day_12">&nbsp;</td>
+        <td align="center" id="dtkj_day_13">&nbsp;</td>
+        <td align="center" id="dtkj_day_14">&nbsp;</td>
+      </tr> 
+      <tr class="trys1">
+      	<td align="center" id="dtkj_day_15">&nbsp;</td>
+        <td align="center" id="dtkj_day_16">&nbsp;</td>
+        <td align="center" id="dtkj_day_17">&nbsp;</td>
+        <td align="center" id="dtkj_day_18">&nbsp;</td>
+        <td align="center" id="dtkj_day_19">&nbsp;</td>
+        <td align="center" id="dtkj_day_20">&nbsp;</td>
+        <td align="center" id="dtkj_day_21">&nbsp;</td>
+      </tr> 
+      <tr class="trys1" bgcolor="#fbfffa">
+      	<td align="center" id="dtkj_day_22">&nbsp;</td>
+        <td align="center" id="dtkj_day_23">&nbsp;</td>
+        <td align="center" id="dtkj_day_24">&nbsp;</td>
+        <td align="center" id="dtkj_day_25">&nbsp;</td>
+        <td align="center" id="dtkj_day_26">&nbsp;</td>
+        <td align="center" id="dtkj_day_27">&nbsp;</td>
+        <td align="center" id="dtkj_day_28">&nbsp;</td>
+      </tr>
+      <tr class="trys1">
+      	<td align="center" id="dtkj_day_29">&nbsp;</td>
+        <td align="center" id="dtkj_day_30">&nbsp;</td>
+        <td align="center" id="dtkj_day_31">&nbsp;</td>
+        <td align="center" id="dtkj_day_32">&nbsp;</td>
+        <td align="center" id="dtkj_day_33">&nbsp;</td>
+        <td align="center" id="dtkj_day_34">&nbsp;</td>
+        <td align="center" id="dtkj_day_35">&nbsp;</td>
+      </tr>
+      <tr class="trys1" bgcolor="#fbfffa">
+      	<td align="center" id="dtkj_day_36">&nbsp;</td>
+        <td align="center" id="dtkj_day_37">&nbsp;</td>
+        <td align="center" id="dtkj_day_38">&nbsp;</td>
+        <td align="center" id="dtkj_day_39">&nbsp;</td>
+        <td align="center" id="dtkj_day_40">&nbsp;</td>
+        <td align="center" id="dtkj_day_41">&nbsp;</td>
+        <td align="center" id="dtkj_day_42">&nbsp;</td>
+      </tr>                           
+    
+    
+   <tr>
+    	<td colspan="7"> 
+ <table width="99%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+    
+ <table border="0" cellspacing="0" cellpadding="0"><tr><td ><span id="spanpost" style="position:relative;"></span>&nbsp;</td><td style="color:#888888" id="dtkj_now"></td><td align="left">&nbsp;</td><td height="30"><input class="dtky_hisys" onFocus="cale.focusval=this.value;this.className='dtky_hisys dtky_focus';cale.focusanum(this,0,23)" onBlur="this.className='dtky_hisys';cale.num(this,0,23)" id="dtkj_hour" maxlength="2"></td><td >:</td><td><input class="dtky_hisys" onFocus="cale.focusval=this.value;this.className='dtky_hisys dtky_focus';cale.focusanum(this,0,59)" onBlur="this.className='dtky_hisys';cale.num(this,0,59)" id="dtkj_minutes" maxlength="2"></td><td>:</td><td><input class="dtky_hisys" onFocus="cale.focusval=this.value;this.className='dtky_hisys dtky_focus';cale.focusanum(this,0,59)" onBlur="this.className='dtky_hisys';cale.num(this,0,59)" id="dtkj_seconds" maxlength="2"></td><td>&nbsp;&nbsp;<button onClick="cale.returndt()" style="width:50px;height:20px">确定</button></td>
+ 
+ </tr></table>   
+    
+    </td>
+  </tr>
+</table>       
+        
+           
+        </td>
+    </tr>    
+
+
+</table>
+	</div>
+<script type="text/javascript">
+for(i=1;i<=42;i++){
+	var cad=g('dtkj_day_'+i+'');
+	cad.ondblclick=function(){cale.dblclick(this)}
+	cad.onclick=function(){cale.onclick(this)}
+	cad.onmouseout=function(){cale.onmout(this)}
+	cad.onmouseover=function(){cale.onmover(this)}
+}
+document.title=unescape(cale.request('btitle',''+escape('选择时间')+''));
+document.oncontextmenu=document.onselectstart=function(){return false}
+</script>    
+</center>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.x-btn-default-toolbar-small .x-btn-inner,
+.x-grid-cell-inner,
+.x-column-header-text,
+.x-panel-header-text,
+.x-tree-node-text,
+.x-btn-default-small .x-btn-inner,
+.x-window-header-text-container-default,
+.x-menu-item-text,
+.x-tip-anchor,
+.x-toolbar-text{font-size:12px}
+
+.topbg{background:#2D60A2;font-size:12px;color:white}
+.topzhu,a.topzhu:link,a.topzhu:visited{font-size:12px;color:white}
+a.topzhu:hover{TEXT-DECORATION:underline;}

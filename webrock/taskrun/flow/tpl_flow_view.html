@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript">
+js.path	= '<?=PATH?>';
+PROJECT = '<?=P?>';
+function check(o1){var da = {sm:form('check_explain').value,id:'<?=$da['arr']['mid']?>',flownum:'<?=$da['arr']['flownum']?>',zt:_getaolvw('check_status'),cid:_getaolvw('check_name')};if(da.zt==''){js.setmsg('请选择处理动作');return;}if(da.zt=='2'&&isempt(da.sm)){js.setmsg('此动作必须填写说明');return;}
+	js.setmsg('处理中...');
+	o1.disabled = true;
+	var url = js.getajaxurl('check','flow','taskrun');
+	$.ajax({type:'post',url:url,data:da,success:function(das){if(das.indexOf('成功')>-1){js.setmsg(das,'green');}else{js.setmsg(das);o1.disabled = false;}},error:function(){js.setmsg('处理失败请重试');o1.disabled = false;}});
+}
+function _getaolvw(na){
+	var v = '',i,o=$("input[name='"+na+"']");
+	for(i=0;i<o.length;i++)if(o[i].checked)v=o[i].value;
+	return v;
+}
+</script>
+<style>
+.table{font-size:14px;}
+.table .tdys1{padding:5px 5px;border:1px #888888 solid;text-align:right;width:100px}
+.table .tdys2{padding:5px 5px;border:1px #888888 solid;text-align:left}
+.tabled2 td{padding:8px;border:1px #dddddd solid;text-align:center}
+.tabled2 tr:hover,.tdcont tr:hover{background:#f1f1f1}
+.tabled2 td.pandys{padding:5px;text-align:center}
+.tdcont table{width:80%}
+</style>
+</head>
+<body style="padding:15px">
+<div align="center">
+
+
+<div style="width:750px">		
+	<div class="tdcont">
+		<?=$da['content']?>
+	</div>
+	<div align="left" style="padding-top:10px;padding-bottom:5px"><b>操作记录</b></div>
+	<div>
+		<table border="0"  class="tabled2" style="border-collapse:collapse;" width="100%" cellspacing="0" cellpadding="0">
+		<tr bgcolor="#D2E9FF">
+			<td align="center" width="50">序号</td>
+			<td align="center">名称</td>
+			<td align="center">处理人</td>
+			<td align="center">状态</td>
+			<td align="center">时间</td>
+			<td align="center">说明</td>
+		</tr>
+		<?php foreach($da['arr']['logarr'] as $k=>$rs){?>
+		<tr >
+			<td class="pandys"><?=$k+1?></td>
+			<td class="pandys"><?=$rs['name']?></td>
+			<td class="pandys"><?=$rs['checkname']?></td>
+			<td class="pandys"><?php
+				echo '<font color="'.$rs['statuscolor'].'">'.$rs['statusname'].'</font>';
+			?></td>
+			<td class="pandys"><?=$rs['optdt']?></td>
+			<td class="pandys"><?=$rs['explain']?></td>
+		</tr>
+		<?php }?>
+		</table>
+	</div>
+	
+	<div align="center" style="padding-top:15px;padding-bottom:5px"><b>审核处理</b></div>
+	<div align="center">
+		<form name="myform">
+		<table border="0" width="600" class="tabled2" style="border-collapse:collapse;" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="130"><div align="right" style="color:#555555">状态:</div></td>
+			<td><div align="left"><?=$da['arr']['data']['checkstatustext']?></div></td>
+		</tr>
+		<tr>
+			<td><div align="right" style="color:#555555">处理流程:</div></td>
+			<td><div align="left"><?=$da['arr']['logstr']?></div></td>
+		</tr>
+		<?php if($da['arr']['ischeck']==1){?>
+		<tr>
+			<td width="100"><div align="right" style="color:#555555">处理人:</div></td>
+			<td><div align="left">
+			<?php 
+			foreach($da['urs'] as $k=>$us){
+				$chek = '';
+				if($k==0)$chek='checked';
+				echo '<label><input name="check_name" '.$chek.' type="radio" value="'.$us['id'].'">'.$us['name'].'</label>&nbsp; ';
+			}
+			?>
+			</div></td>
+		</tr>
+		<tr>
+			<td ><div align="right" style="color:#555555">处理动作:</div></td>
+			<td><div align="left">
+			<?php 
+			foreach($da['arr']['actarr'] as $k=>$act){
+				echo '<label><input name="check_status" type="radio" value="'.$act[0].'">'.$act[1].'</label>&nbsp; ';
+			}
+			?>
+			</div></td>
+		</tr>
+		<tr>
+			<td ><div  align="right" style="color:#555555">说明:</div></td>
+			<td><div align="left"><textarea class="textarea" name="check_explain" style="width:350px;height:80px"></textarea></div></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><div align="left"><input onclick="check(this)" style="height:35px;cursor:pointer;padding:0px 10px" value="提交处理" type="button">&nbsp;<span id="msgview"></span></div></td>
+		</tr>
+		<?php }?>
+		</table>
+		</form>
+	</div>
+	
+	
+</div>	
+</div>
+
+</body>
+</html>

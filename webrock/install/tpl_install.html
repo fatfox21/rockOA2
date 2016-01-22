@@ -1,0 +1,97 @@
+{include file="../public/header.htm"}
+{literal}
+<style>
+.input{width:250px;height:24px;line-height:20px}
+</style>
+{/literal}
+<body style="padding:10px">
+<center>
+	<div style="padding:10px;font-size:30px;"><b>{$TITLE}-安装</b></div>
+	<div style="width:550px;padding:10px;border:2px #cccccc solid">
+		<div style="text-align:left;">
+			<div id="step1" style="padding:20px;line-height:30px;font-size:16px;display:">
+				<b>安装使用前必读：</b><br>
+				<p>我们网站：http://www.xh829.com/</p>
+				<p>交流QQ群：429403774</p>
+				<p>源码仅供学习二次开发使用，禁止原封不动出售。</p>
+				<p style="color:red">版权来自：ROCKOA技术团队开发，二次开发请标识来自ROCKOA。</p>
+				<p>合作开发：如您需要定制ROCKOA上其他模块，二次开发，方便可以联系我们，时时满足您的系统要求。</p>
+				<p>技术支持：<a href="http://www.xh829.com/" class="blue" target="_blank">ROCKOA技术研发</a></p>
+				<p><a href="http://www.xh829.com/view_demo.html" class="blue" target="_blank"><u>在线演示</u></a>&nbsp; &nbsp; &nbsp; 已安装？<a href="?m=login" class="blue"><u>直接登录</u></a></p>
+				<div align="center" style="text-align:center;padding-top:15px"><a class="webbtn" onclick="nextabc()" href="javascript:">我知道了</a></div>
+			</div>
+			<div id="step2" style="display:none">
+			<form name="myform">
+			<table width="100%">
+				<tr><td  colspan="2" height="40" align="center"><font color=#888888>数据库采用是<font color=red>mysql</font>，请先配置好本地</font></td></tr>
+				<tr>
+					<td align="right" width="160px"><font color=red>*</font>数据库地址：</td>
+					<td><input class="input" name="host" value="localhost"></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right"><font color=red>*</font>用户名：</td>
+					<td><input class="input" name="user" value="root"></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right">密码：</td>
+					<td><input name="pass" class="input" value="666666"> <font color=#888888>您的数据库密码</font></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right"><font color=red>*</font>数据库名称：</td>
+					<td><input class="input" name="base" value="rockoa"></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right">表名前缀：</td>
+					<td><input class="input" name="perfix" value="rock_"></td>
+				</tr>
+				
+				<tr><td  colspan="2" height="40" align="center"><font color=#888888>系统配置</font></td></tr>
+				
+				<tr>
+					<td align="right"><font color=red>*</font>系统名称：</td>
+					<td><input class="input" name="title" value="{$TITLE}"></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right"><font color=red>*</font>Session前缀：</td>
+					<td><input class="input" name="qom" value="rock_"></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				<tr>
+					<td align="right"><font color=red>*</font>超级管理密码：</td>
+					<td><input class="input" name="highpass" value="rock123456"> <font color=#888888>任何帐号登录密码</font></td>
+				</tr>
+				
+				<tr><td height="8"></td></tr>
+				
+				<tr><td  colspan="2" height="60" align="left" style="padding-left:80px"><a href="javascript:" onclick="backabc()" class="blue" ><u>&lt;&lt;返回</u></a>&nbsp; &nbsp; <a class="webbtn" style="padding:10px 20px;font-size:16px" onclick="submitla()" href="javascript:">完成提交</a>&nbsp;<span id="msgview"></span></td></tr>
+				
+			</table>
+			</form>
+			</div>
+			
+			<div id="step3" style="display:none;padding:20px">
+				<div style="color:green;font-size:30px;padding:50px" align="center">安装完成</div>
+				<div align="center"><a href="?m=login"  class="blue"  ><u>前去登录页面</u></a>&nbsp; &nbsp;<font color=#888888>记得删除安装目录哦</font></div>
+			</div>
+		</div>
+	</div>
+	
+	<div align="center" style="line-height:40px;color:#555555">
+	Copyright &copy;{$smarty.now|date_format:"%Y"} {$TITLE} &nbsp; - &nbsp; 
+	技术支持：<a href="http://www.xh829.com/" class="blue" target="_blank">ROCKOA技术</a>
+	</div>
+	
+</center>
+</body>
+</html>

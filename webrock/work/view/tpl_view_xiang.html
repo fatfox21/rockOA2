@@ -1,0 +1,76 @@
+{include file="../../public/header.htm"}
+<body>
+{literal}
+<style>
+.tdys1,.tdys2{padding:2px 5px;border:1px #000000 solid;line-height:24px}
+.tdys1{color:#555555;text-align:right}
+.tdys2{text-align:left}
+.tdys3{padding:2px 5px;border-top:1px #000000 solid;border-right:1px #000000 solid;text-align:center}
+</style>
+{/literal}
+<center>
+<div style="width:720px">
+	
+	<div class="blank10"></div>
+	<div style="font-size:20px">{$da.rs.title}</div>
+	<div class="blank20"></div>
+	
+	<table  border="0" width="100%" style="border-collapse:collapse" cellspacing="0" bordercolor="#000" cellpadding="0" align="center">
+	<tr><td class="tdys1">标题</td><td class="tdys2" colspan="3">{$da.rs.title}</td></tr>
+	<tr>
+		<td class="tdys1" width="17%">任务类型</td><td width="33%" class="tdys2">{$da.rs.type}</td>
+		<td class="tdys1" width="17%">任务等级</td><td width="33%" class="tdys2">{$da.rs.grade}</td>
+	</tr>
+	<tr>
+		<td class="tdys1">创建者</td><td class="tdys2">{$da.rs.optname}</td>
+		<td class="tdys1">创建时间</td><td class="tdys2">{$da.rs.optdt}</td>
+	</tr>
+	<tr>
+		<td class="tdys1">开始时间</td><td class="tdys2">{$da.rs.startdt}</td>
+		<td class="tdys1">截止时间</td><td class="tdys2">{$da.rs.enddt}</td>
+	</tr>
+	<tr><td class="tdys1">状态</td><td class="tdys2" colspan="3">{$da.rs.state}</td></tr>
+	<tr><td class="tdys1">说明</td><td class="tdys2" colspan="3">{$da.rs.explain}</td></tr>
+	<tr><td class="tdys1">相关文件</td><td class="tdys2" colspan="3">
+		{foreach from=$da.filers item=rs name=s}
+		{$smarty.foreach.s.index+1}、<a href="javascript:" onclick="return js.downshow('{$rs.id}')" class="blue">{$rs.filename}</a> ({$rs.filesizecn})<br>
+		{/foreach}
+	</td></tr>
+	
+	<tr><td class="tdys1">任务报告</td><td colspan="3" style="padding:0" class="tdys2">
+		
+		<table  border="0" width="100%" style="border-collapse:collapse" cellspacing="0" bordercolor="#000" cellpadding="0" align="center">
+		<tr>
+			<td align="center">状态</td>
+			<td align="center">操作人</td>
+			<td align="center">操作时间</td>
+			<td align="center">说明</td>
+		</tr>
+		{foreach from=$da.rsbg item=rs}
+		<tr>
+			<td class="tdys3">{$rs.state}</td>
+			<td class="tdys3">{$rs.optname}</td>
+			<td class="tdys3">{$rs.optdt}</td>
+			<td class="tdys3">{$rs.explain}</td>
+		</tr>
+		{if $rs.filers}
+		<tr>
+			<td class="tdys3"  colspan="4"><div align="left">
+				相关文件：<br>
+				{foreach from=$rs.filers item=rs1 name=s}
+				{$smarty.foreach.s.index+1}、<a href="javascript:" onclick="return js.downshow('{$rs1.id}')" class="blue">{$rs1.filename}</a> ({$rs1.filesizecn})<br>
+				{/foreach}
+			</div></td>
+		</tr>
+		{/if}
+		{/foreach}
+		</table>
+		
+	
+	</td></tr>
+	</table>
+	
+</div>
+</center>
+</body>
+</html>
