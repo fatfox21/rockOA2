@@ -1,3 +1,15 @@
+function adddkjl(o){
+	var o1 = getcmp('dkjlmsg_'+rand);
+	o1.setText(js.getmsg('添加打卡记录...'));
+	$.get(js.getajaxurl('adddkjl', 'kaoqin', 'person'), function(su){
+		if(su == 'success'){
+			o.up('rockgrid').storereload();
+			o1.setText(js.getmsg('添加成功','green'));
+		}else{
+			o1.setText(js.getmsg(su));
+		}
+	});
+}
 var panel={
 	xtype:'rockgrid',url:js.getajaxurl('dkjl', 'kaoqin', 'person'),highsearchbool:false,
 	tablename:'kq_dkjl',searchtools:true,exceltitle:'打卡记录',keywhere:'and b.id='+adminid+'',
@@ -5,6 +17,11 @@ var panel={
 		xtype:'datefield',editable:false,format:'Y-m-d',width:100,id:'startdt_'+rand+''
 	},'至',{
 		xtype:'datefield',editable:false,format:'Y-m-d',width:100,id:'enddt_'+rand+''
+	}],
+	tbar:['->',{
+		xtype:'tbtext',id:'dkjlmsg_'+rand
+	},{
+		text:'添加打卡记录',icon:gicons('clock_add'),handler:function(o){adddkjl(o)}
 	}],
 	outsearch:function(){
 		var s = '',s3,

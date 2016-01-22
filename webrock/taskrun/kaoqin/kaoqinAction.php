@@ -199,6 +199,7 @@ class kaoqinClassAction extends Action{
 	
 	public function testAjax()
 	{
+		/*
 		$api = c('apiCloud', true);
 		echo $api->send('1', array(
 			'type' 		=> 'user',
@@ -207,6 +208,7 @@ class kaoqinClassAction extends Action{
 			'cont'		=> '哈哈哈哈哈哈哈哈'.time().'fewe',
 			'optdt' 	=> $this->now
 		),'REIM有一条未读信息');
+		*/
 	}
 	
 	

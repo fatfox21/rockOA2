@@ -14,7 +14,10 @@ var panel = [{
 			return s;
 		}
 	},{
-		text:'图标',dataIndex:'face'
+		text:'图标',dataIndex:'face',renderer:function(v){
+			if(!isempt(v))v='<img width=20 height=20 src='+v+'>';
+			return v;
+		}
 	},{
 		text:'创建人',dataIndex:'createname',width:100
 	},{

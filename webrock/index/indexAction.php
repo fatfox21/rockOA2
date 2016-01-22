@@ -5,6 +5,7 @@ class indexClassAction extends Action{
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
 		$this->rock->savesession(array(QOM.'adminallmenuid'	=> $this->getuserext($this->adminid)));
 		$this->allmenuid			= $this->getsession('adminallmenuid');
 		

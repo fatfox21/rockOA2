@@ -11,6 +11,14 @@ var panel={
 			},{
 				name:'logoPost',id:'logo_'+rand+'',hidden:true
 			}]
+		},{
+			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
+				fieldLabel:'&nbsp;',xtype:'displayfield',value:'系统数据初始化(限使用一次)&nbsp;',labelSeparator:''
+			},{
+				xtype:'button',text:'初始化',id:'btunls_'+rand+'',disabled:true,handler:function(){
+					sysinitla();
+				}
+			}]
 		}]
 	}
 }
@@ -24,6 +32,25 @@ function ainit(){
 		form.setVal('title', a.title);
 		form.setVal('logo', a.logo);
 		get('view_logo_'+rand+'-inputEl').src = a.logo;
+		if(a.isinits==0){
+			getcmp('btunls_'+rand+'').setDisabled(false);
+		}else{
+			getcmp('btunls_'+rand+'').setText('已初始化过');
+		}			
+	});
+}
+function sysinitla(){
+	Ext.MessageBox.confirm('系统提示', '确定要清空系统数据记录吗？慎用！！', function(a){
+		if(a=='yes'){
+			sysinitlas();
+		}
+	});
+}
+function sysinitlas(){
+	js.msg('wait','处理中...');
+	getcmp('btunls_'+rand+'').setDisabled(true);
+	$.get(js.getajaxurl('sysinit',mode, dir), function(da){
+		js.msg('success',da);
 	});
 }
 return {

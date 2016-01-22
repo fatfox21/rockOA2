@@ -486,7 +486,9 @@ var im = {
 			if(ops){
 				window.external.winfocus(num);
 			}else{
-				showapopup('系统发来一条信息，来自['+d.gname+']', 'group_'+d.gid+'', d.url);
+				var nr = d.cont;
+				nr = nr.replace(/\<br\>/gi, ';');
+				showapopup(''+nr+'[来自.'+d.gname+']', 'group_'+d.gid+'', d.url);
 				this.setwd('system', d.gid, 1);
 			}
 		}

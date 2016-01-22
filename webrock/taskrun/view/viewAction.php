@@ -14,6 +14,7 @@ class viewClassAction extends Action{
 		$this->smartydata['rs'] = $rs;
 		
 		$this->smartydata['filers'] = m('file')->getfile('infor', $id);
+		m('log')->addread('infor', $id);
 	}
 
 	

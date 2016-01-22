@@ -71,3 +71,11 @@ function import($name, $inbo=true)
 	}
 	return $cls;
 }
+
+/**
+	调用其他控制器
+*/
+function a($m, $d)
+{
+	
+}

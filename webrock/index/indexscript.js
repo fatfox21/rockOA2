@@ -316,7 +316,7 @@ function createindex(){
 			id:'index_bottom',region:'south',xtype:'toolbar',
 			items:[{
 				icon:gicons('user'),text:'用户：'+adminuser+'',showSeparator:false
-			},'-','登录次数:'+adminloginci+'','->','-','技术支持：<a href="http://www.xh829.com" target="_blank" class="a">ROCKOA技术</a>','-',{
+			},'-','登录次数:'+adminloginci+'','->','-','基于<a href="http://www.xh829.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
 				text:'首页项',id:'index_btn_homeitems',icon:gicons('application_view_tile')
 			},'-',{
 				text:'重新加载',icon:gicons('arrow_refresh'),handler:benreload

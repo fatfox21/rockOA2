@@ -110,7 +110,24 @@ class kaoqinClassAction extends Action{
 	public function adddkjlAjax()
 	{
 		$ip = $this->ip;
-		if($this->contain($ip,'127.0.0') || $this->contain($ip,'192.168.')){
+		$bo	= false;
+		$rows = $this->option->getmnum('kaoqinonlineip');
+		foreach($rows as $k=>$rs){
+			$ips = $rs['name'];
+			if($this->contain($ips,'*')){
+				$ips = str_replace('*', '', $ips);
+				if($this->contain($ip, $ips)){
+					$bo = true;
+					break;
+				}
+			}else{
+				if($ips==$ip){
+					$bo = true;
+					break;
+				}
+			}
+		}
+		if($bo){
 			$finge	= m('admin')->getmou('finge', "`id`='$this->adminid'");
 			m('kq_dkjl')->insert(array(
 				'finge'	=> $finge,
@@ -120,7 +137,7 @@ class kaoqinClassAction extends Action{
 			));
 			echo 'success';
 		}else{
-			echo '仅限内网使用';
+			echo '不能添加，请联系管理员';
 		}
 	}
 }

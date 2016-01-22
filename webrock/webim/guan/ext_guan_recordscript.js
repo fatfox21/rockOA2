@@ -13,8 +13,6 @@ var panel = {
 		text:'类型',dataIndex:'type'
 	},{
 		text:'时间',dataIndex:'optdt',search:true,width:160,type:'date'
-	},{
-		text:'内容',dataIndex:'cont',flex:1
 	}]
 };
 

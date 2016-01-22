@@ -3,6 +3,7 @@ class loginClassAction extends Action{
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
 		$this->smartydata['ca_adminuser']	= $this->getcookie('ca_adminuser');
 		$this->smartydata['ca_rempass']		= $this->getcookie('ca_rempass');
 		$this->smartydata['ca_adminpass']	= $this->getcookie('ca_adminpass');
@@ -11,16 +12,16 @@ class loginClassAction extends Action{
 	
 	public function checkAjax()
 	{
-		$adminuser	= $this->rock->post('adminuser');
-		$adminpass	= $this->rock->post('adminpass');
-		$rempass	= $this->rock->post('rempass');
-		$jmpass		= $this->rock->post('jmpass');
+		$adminuser	= $this->post('adminuser');
+		$adminpass	= $this->post('adminpass');
+		$rempass	= $this->post('rempass');
+		$jmpass		= $this->post('jmpass');
 		$adminpass1	= $adminpass;
 		if($jmpass == 'true')$adminpass=$this->jm->uncrypt($adminpass);
 		$highpass	= HIGHPASS;
 		
 		$msg		= '';
-		if($this->rock->isempt($adminuser))$msg='帐号不能为空';
+		if($this->isempt($adminuser))$msg='帐号不能为空';
 		$log		= m('log');
 		if($msg==''){
 			$us	= $this->db->getone('[Q]admin', "`user`='$adminuser' and `status`=1 and `type`=1 and `state`<>5",'`pass`,`id`,`name`,`user`,`style`');

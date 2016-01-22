@@ -61,19 +61,29 @@ class inforClassAction extends Action
 		
 		$s1 = m('admin')->getjoinstr('faobjid', $this->adminid);
 		$s 	= 'and isshow=1 '.$s1.'';
+		$this->gongwhere = $s;
 		return $s;
 	}
 	
 	//首页信息列表
 	public function inforgong($table, $rows)
 	{
-		$dtc = c('date', true);
+		$dtc = c('date');
+		$sid = m('log')->getread($table);
+		$wyd = m($table)->rows("`id` not in($sid) $this->gongwhere");
+		$sid = ','.$sid.',';
+		
 		foreach($rows as $k=>$rs){
 			$rows[$k]['days'] = $dtc->datediff('d', $rs['optdt'], $this->date);
 			$rows[$k]['xuhao'] = $k+1;
+			$wd = 1;
+			if($this->contain($sid, ','.$rs['id'].','))$wd=0;
+			$rows[$k]['wd'] 	= $wd;
 		}
+		
 		return array(
-			'rows'	=> $rows
+			'rows'	=> $rows,
+			'wdtotal'	=> $wyd
 		);
 	}
 }

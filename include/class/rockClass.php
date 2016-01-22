@@ -191,7 +191,7 @@ final class rockClass
 		$val	= 'IE';
 		$parr	= array(
 			array('MSIE 5'),array('MSIE 6'),array('MSIE 7'),array('MSIE 8'),array('MSIE 9'),array('MSIE 10'),array('MSIE 11'),array('rv:11','MSIE 11'),array('MSIE 12'),
-			array('MSIE 13'),array('Firefox'),array('OPR/','Opera'),array('Chrome'),array('Safari')
+			array('MSIE 13'),array('Firefox'),array('OPR/','Opera'),array('Chrome'),array('Safari'),array('Android'),array('iPhone')
 		);
 		foreach($parr as $wp){
 			if($this->contain($web, $wp[0])){

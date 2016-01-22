@@ -75,6 +75,7 @@ return array(
 	'install'	=> true			//已安装，不要去掉啊
 );";
 		$this->rock->createtxt('webrock/webrockConfig.php', $txt);
+		@file_get_contents('http://www.xh829.com/index.php?m=index&a=install&version='.VERSION.'&ajaxbool=true');//我们用来统计安装数量而已
 		echo 'success';
 	}
 }
