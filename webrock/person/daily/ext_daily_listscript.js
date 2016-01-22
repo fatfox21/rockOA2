@@ -27,8 +27,8 @@ var panel = {
 			this.up('grid')._clickedit();
 		}
 	}],
-	click:function(){
-		getcmp('editbtn_'+rand+'').setDisabled(false);
+	click:function(o,d){
+		getcmp('editbtn_'+rand+'').setDisabled(d.data.uid!=adminid);
 	},
 	beforeload:function(){
 		getcmp('editbtn_'+rand+'').setDisabled(true);
@@ -60,7 +60,7 @@ var panel = {
 	},{
 		text:'操作时间',dataIndex:'optdt',width:170,search:true,sortable:true
 	}],
-	fields:['content','plan'],
+	fields:['content','plan','uid'],
 	features: [{
 		ftype: 'rowbody',
 		getAdditionalData: function(v, index) {

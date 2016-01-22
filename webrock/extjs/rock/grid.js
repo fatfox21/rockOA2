@@ -12,6 +12,7 @@ Ext.define('Ext.rock.grid',{
 	region:'center',
 	logicarr:[['LIKE', '包含'],['NOT LIKE', '不包含'],['=', '等于'],['>', '大于'],['>=', '大于等于'],['<', '小于'],['<=', '小于等于'],['<>', '不等于'],['NULL', '为空'],['', '为空值']],
 	pageSize:20,
+	resizepageSize:true,
 	stripeRows:true,
 	fields:[],
 	plugins:[],
@@ -350,6 +351,8 @@ Ext.define('Ext.rock.grid',{
 		var store	= Ext.create('Ext.data.Store', storeopt);	
 		store.on({
 			beforeload:function(a,b,c,d,e,f){
+				var o1 = Ext.getCmp('pagesizela_'+me.rand+'');
+				if(o1)o1.setDisabled(true);
 				me.loadbool = true;
 				me.setparams({loadcount:me.loadcount});
 				me.beforeload(a,b,c,d,e,f);
@@ -357,8 +360,11 @@ Ext.define('Ext.rock.grid',{
 			load:function(a,b,c,d,e,f){
 				me.loadbool = false;
 				me.loadcount++;
+				var to = a.getCount();
+				if(to>0)me._resetgridwidth(me.headerCt.getGridColumns());
+				var o1 = Ext.getCmp('pagesizela_'+me.rand+'');
+				if(o1)o1.setDisabled(to<=0);
 				me.load(me,a,b,c,d,e,f);
-				if(a.getCount()>0)me._resetgridwidth(me.headerCt.getGridColumns());
 			},
 			datachanged:function(a, b){
 				me.datachanged(a, b);
@@ -370,13 +376,24 @@ Ext.define('Ext.rock.grid',{
 		Ext.apply(this.store.proxy.extraParams, can);
 		if(bo)this.storereload();
 	},
+	setpageSize:function(sz){
+		sz = parseFloat(sz);
+		this.pageSize		= sz;
+		this.store.pageSize = sz;
+		this.store.reload({limit:sz});
+	},
 	_createbbar:function(){
+		var baris = [],me=this;
+		if(this.resizepageSize)baris=['-','每页/',{
+			xtype:'combo',editable:false,width:70,store:[['10','10条'],['20','20条'],['50','50条'],['100','100条'],['200','200条'],['500','500条'],['1000','1000条']],value:this.pageSize+'',listeners:{change:function(){me.setpageSize(this.value)}},id:'pagesizela_'+this.rand+'',disabled:true
+		}];
+		baris = baris.concat(this.bbaritems);
 		this.paging = Ext.create('Ext.PagingToolbar', {
 			store:this.store,
 			displayInfo: true,
 			displayMsg: '显示第{0} - {1}条记录 / 共{2}记录',
 			emptyMsg: "没有记录",
-			items:this.bbaritems
+			items:baris
 		});
 		return this.paging;
 	},

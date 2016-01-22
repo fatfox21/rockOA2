@@ -7,7 +7,7 @@
 header('Content-Type:text/html;charset=utf-8');
 define('ROOT_PATH',str_replace('\\','/',dirname(dirname(__FILE__))));
 define('HOST', $_SERVER['HTTP_HOST']);
-define('DEBUG', false);
+define('DEBUG', true);
 include_once(''.ROOT_PATH.'/include/rockFun.php');
 include_once(''.ROOT_PATH.'/include/Chajian.php');
 include_once(''.ROOT_PATH.'/include/class/rockClass.php');

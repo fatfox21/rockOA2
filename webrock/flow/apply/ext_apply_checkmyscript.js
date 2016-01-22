@@ -1,39 +1,46 @@
-var grid;
+var grid,atype = params.atype;
+if(!atype)atype=0;
 function opentablss(a, gsid){
 	if(isempt(a.modenum)){
 		js.msg('msg','记录不存在了');
 		return;
 	}
 	addtabs('[查看]'+a.modename,'flow,apply,'+a.modenum+',flownum='+a.modenum+',tablename='+a.table+',opentype=0,mid='+a.mid+',gridid='+gsid+'', ''+a.modenum+'_'+a.mid+'',{menutype:'cy'});
-}
+};
 
-
-var panel = {
-	xtype:'rockgrid',tablename:'flow_bill',searchtools:true,defaultorder:'optdt desc',
+var panel = [{
+	width:180,split:true,region:'west',xtype:'treepanel',hideHeaders:true,title:'模块列表',collapsible:true,
+	id:'treemode_'+rand+'',useArrows:false,
+	columns:[{
+		text:'',dataIndex:'name',flex:1,xtype: 'treecolumn'
+	}],
+	rootVisible:false,rowLines:false,
+	store:{
+		fields:['id','name','table','num'],
+		root:{expanded: true,children: []}
+	},
+	listeners:{
+		itemclick:function(a,node){
+			var sid = node.data.id;
+			if(sid)grid.setparams({modeid:sid}, true);
+		}
+	}
+},{
+	xtype:'rockgrid',tablename:'flow_bill',searchtools:true,defaultorder:'optdt desc',paramsbase:{protype:atype},
 	url:publicstore(mode,dir),storeafteraction:'checkmychange',storebeforeaction:'checkmybefore',
 	fields:['uid','status','nstatus','optid'],
-	tbarleft:[{
-		xtype:'combo',store:[['0','所有模块']],width:130,editable:false,id:'mode_'+rand+'',value:'0'
-	}],
 	tbar:['->',{
-		text:'我申请的',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){grid._qiehuanzt(0);}
-	},'-',{
-		text:'经我处理的',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){grid._qiehuanzt(1);}
-	},'-',{
-		text:'我下属申请',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){grid._qiehuanzt(2);}
-	},'-',{
-		text:'授权查看的',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){grid._qiehuanzt(3);}
-	},'->',{
 		text:'新窗口打开',icon:gicons('application'),disabled:true,itemId:'new',handler:function(){
 			var a = this.up('grid')._openurl();
 		}
 	}],
 	_qiehuanzt:function(oi){
 		if(this.loadbool)return;
+		atype = oi;
 		this.setparams({protype:oi}, true);
 	},
 	outsearch:function(){
-		this.setparams({modeid:getcmp('mode_'+rand+'').getValue()});
+		//this.setparams({modeid:});
 		return '';
 	},
 	_openurl:function(){
@@ -66,11 +73,11 @@ var panel = {
 		this._btuons(true);
 	},
 	bbaritems:['->',{
-		text:'追加说明',icon:gicons('edit'),tooltip:'单据未处理完成都可以追加说明，上传相关文件等',disabled:true,itemId:'zj',handler:function(){this.up('grid')._zhuijia()}
+		text:'追加说明',icon:gicons('edit'),tooltip:'单据未处理完成都可以追加说明，上传相关文件等',disabled:true,itemId:'zj',handler:function(){this.up('grid')._zhuijia()},hidden:atype!=0
 	},{
 		text:'催办',icon:gicons('sound'),disabled:true,itemId:'cb',handler:function(){this.up('grid')._cuiban()},hidden:true
 	},{
-		text:'删除',icon:gicons('delete'),disabled:true,itemId:'del',handler:function(){this.up('grid')._delback()}
+		text:'删除',icon:gicons('delete'),disabled:true,itemId:'del',handler:function(){this.up('grid')._delback()},hidden:atype!=0
 	}],
 	_zhuijia:function(){
 		var me = this;
@@ -124,11 +131,7 @@ var panel = {
 	load:function(){
 		if(this.loadcount>1)return;
 		var a = this.getData('modearr');
-		var d = [['0','所有模块']];
-		for(var i=0; i<a.length; i++){
-			d.push([a[i].id, a[i].name]);
-		}
-		getcmp('mode_'+rand+'').getStore().loadData(d);
+		getcmp('treemode_'+rand+'').getStore().setRootNode(a);
 	},
 	columns:[{
 		xtype: 'rownumberer',
@@ -142,16 +145,16 @@ var panel = {
 	},{
 		text:'姓名',width:80,dataIndex:'name',sortable:false,search:true,qz:'b.'
 	},{
-		text:'申请日期',width:100,dataIndex:'applydt',sortable:true,atype:'date',search:true,qz:'a.'
+		text:'申请日期',width:90,dataIndex:'applydt',sortable:true,atype:'date',search:true,qz:'a.'
 	},{
-		text:'状态',width:150,dataIndex:'statustext'
+		text:'状态',width:150,dataIndex:'statustext',autowidth:true
 	},{
 		text:'提交人',width:80,dataIndex:'optname',sortable:true,search:true,qz:'a.'
 	},{
 		text:'摘要',flex:1,dataIndex:'summary',sortable:false,renderer:rendercont,align:'left'
 	},{
 		xtype:'actioncolumn',
-		width:70,text:'查看',
+		width:60,text:'查看',
 		items: [{
 			icon: gicons('page_go'),tooltip: '打开详情',
 			handler: function(gridv, rowIndex, colIndex) {
@@ -160,7 +163,7 @@ var panel = {
 			}
 		}]
 	}]
-};
+}];
 return {
 	panel:panel,
 	init:function(){
@@ -168,7 +171,7 @@ return {
 	},
 	tabson:{
 		show:function(){
-			rock[index].isReload();
+			grid.isReload();
 		}
 	}
 };

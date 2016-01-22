@@ -133,7 +133,8 @@ class kaoqinClassAction extends Action{
 				'finge'	=> $finge,
 				'name'	=> $this->adminname,
 				'checktime'	=> $this->now,
-				'web'	=> $this->rock->web
+				'web'	=> $this->rock->web,
+				'type'  => '2'
 			));
 			echo 'success';
 		}else{

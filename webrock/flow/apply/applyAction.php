@@ -73,6 +73,7 @@ class applyClassAction extends Action
 	//我申请的列表
 	public function checkmychange($table, $rows)
 	{
+		$protype	= (int)$this->post('protype');
 		$uid	= '0';
 		$mid	= '0';
 		$rudb 	= m('flow_course');
@@ -114,9 +115,35 @@ class applyClassAction extends Action
 			$rows[$k]['modenum'] 	= $modenum;	
 			$rows[$k]['summary'] 	= $summary;	
 		}
-		
-		$mrs = m('flow_set')->getall("isflow=1 order by `sort`", '`id`,`num`,`name`,`table`');
-		return array('rows'=>$rows, 'modearr'=>$mrs);
+		$carr = array();
+		if($this->loadcount==1){
+			$where= '';$snum='';
+			if($protype == 3){
+				$where = 'and 1=2';
+				$nrsts= m('sjoinv')->getall("`uid`='$this->adminid'",'mode');
+				foreach($nrsts as $k=>$rs)$snum.=','.$rs['mode'].'';
+				if($snum!=''){
+					$snum .= ',';
+					$where = " and instr('$snum', concat(',',`num`,','))>0";
+				}
+			}
+			$mrss = m('flow_set')->getall("isflow=1 $where order by `sort`", '`id`,`num`,`name`,`table`,`type`');
+			foreach($mrss as $k=>$rs){
+				$rs['leaf'] = true;
+				$carr[$rs['type']][] = $rs;
+			}
+			$mrss = array();
+			foreach($carr as $typ=>$msr){
+				$to = count($msr);
+				$mrss[] = array(
+					'name' 		=> $typ,
+					'expanded' 	=> true,
+					'children' 	=> $msr
+				);
+			}
+			$carr = array('root'=>'.', 'children'=>$mrss);
+		}
+		return array('rows'=>$rows, 'modearr'=>$carr);
 	}
 	
 	

@@ -253,7 +253,7 @@ js.upload=function(call,can){
 	js.uploadrand	= js.now('YmdHis')+parseInt(Math.random()*999999);
 	var url = 'mode/upload/upload.php?callback='+call+'&upkey='+js.uploadrand+'&p='+PROJECT+'';
 	for(var a in can)url+='&'+a+'='+can[a]+'';
-	js.open(url,500,300,'uploadopenla');
+	js.open(url,500,300);
 	return false;
 }
 js.downshow=function(id){

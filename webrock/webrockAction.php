@@ -13,6 +13,7 @@ class Action extends mainAction
 	public $adminname	= '';
 	public $adminstyle	= '';
 	public $adminobj;
+	public $loadcount	= 0;
 
 	private function getlogin()
 	{
@@ -164,8 +165,8 @@ class Action extends mainAction
 		$fields		= $this->request('storefields','*');
 		$order		= $this->request('defaultorder');
 		$aftera		= $this->request('storeafteraction', 'publicstoreAfter');
-		$loadci		= $this->request('loadcount');
 		$execldown	= $this->request('execldown');
+		$this->loadcount	= (int)$this->request('loadcount', 0)+1;
 		
 		$where		= '1=1 ';
 		$beforea	= $this->request('storebeforeaction', 'publicstoreBefore');

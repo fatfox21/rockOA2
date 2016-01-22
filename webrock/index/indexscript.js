@@ -312,7 +312,7 @@ function createindex(){
 				icon:gicons('user'),text:'用户：'+adminuser+'',showSeparator:false
 			},'-','登录次数:'+adminloginci+'',{
 				text:'选择卡信息',hidden:admintype=='0',handler:function(){js.getarr(nowtab)}
-			},'->','-','基于<a href="http://www.xh829.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
+			},'->','-','基于<a href="http://www.rockoa.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
 				text:'重新加载',icon:gicons('arrow_refresh'),handler:benreload
 			},'-',{
 				text:'全屏',icon:gicons('arrow_out'),handler:fullscreen
@@ -378,7 +378,7 @@ function createindex(){
 		},{
 			name:'刷新',icons:gicons('arrow_refresh'),url:'return location.reload();'
 		},{
-			name:'帮助',icons:gicons('help'),url:'http://www.xh829.com/help.html',attr:'target="_blank"'
+			name:'帮助',icons:gicons('help'),url:'http://www.rockoa.com/help.html',attr:'target="_blank"'
 		},{
 			name:'退出',icons:gicons('report_go'),url:'?m=login&a=exit'
 		}];

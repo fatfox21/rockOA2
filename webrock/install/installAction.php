@@ -53,7 +53,8 @@ class installClassAction extends Action{
 		if(!file_exists($dburl))exit('数据库sql文件不存在');
 		
 		$sqlss 	= file_get_contents($dburl);
-		$a 		= explode(";", $sqlss);
+		$a 		= explode(";
+", $sqlss);
 		for($i=0; $i<count($a)-1; $i++){
 			$sql 	= $a[$i];
 			$sql	= str_replace('`rock_', '`'.$perfix.'', $sql); //前缀替换

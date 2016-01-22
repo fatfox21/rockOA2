@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2015-11-04 09:32:02
+Date: 2015-11-10 17:03:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,7 +101,7 @@ CREATE TABLE `rock_admin` (
 -- ----------------------------
 -- Records of rock_admin
 -- ----------------------------
-INSERT INTO `rock_admin` VALUES ('1', 'admin', '雨中磐石', '管理员', 'e10adc3949ba59abbe56e057f20f883e', null, '45', '2014-09-11 09:32:20', '2015-11-04 09:16:15', 0x3132372E302E302E31, '127.0.0.1', '1', '男', '1582233', 'qqqq2900@126.com', '2015-10-21 16:55:42', '管理员', '1', 'upload/2015-08/1440578146698_4091.jpg', '1', '1', '我的英文名是？', 'rainrock', '511', 'OA项目经理', '4', '[4]', '开发部', '刘备', '7', '[7]', '0', null, '1988-12-02', null, null, null, null, null, '厦门', '厦门', null, null, '管理员', '10086', '汉族', '中专', null, '15800000', '厦门', '2015-01-01', '2015-08-15', '2015-08-01', '计算机', null, null, null, null, null, '1', '1', null, '系统管理员', null, '1', '1', null, null, '2015-01-01', 'B型', '党员', '0', '2015-10-20 10:32:46', '867112020521204', '2015-10-23 16:43:11');
+INSERT INTO `rock_admin` VALUES ('1', 'admin', '雨中磐石', '管理员', 'e10adc3949ba59abbe56e057f20f883e', null, '51', '2014-09-11 09:32:20', '2015-11-10 17:00:12', 0x3132372E302E302E31, '127.0.0.1', '1', '男', '1582233', 'qqqq2900@126.com', '2015-10-21 16:55:42', '管理员', '1', 'upload/2015-08/1440578146698_4091.jpg', '1', '1', '我的英文名是？', 'rainrock', '511', 'OA项目经理', '4', '[4]', '开发部', '刘备', '7', '[7]', '0', null, '1988-12-02', null, null, null, null, null, '厦门', '厦门', null, null, '管理员', '10086', '汉族', '中专', null, '15800000', '厦门', '2015-01-01', '2015-08-15', '2015-08-01', '计算机', null, null, null, null, null, '1', '1', null, '系统管理员', null, '1', '1', null, null, '2015-01-01', 'B型', '党员', '0', '2015-10-20 10:32:46', '867112020521204', '2015-10-23 16:43:11');
 INSERT INTO `rock_admin` VALUES ('2', 'chenxihu', '风雨中小草', '陈稀糊', 'e10adc3949ba59abbe56e057f20f883e', null, '2', '2014-09-11 09:25:21', '2015-10-28 13:40:36', 0x3132372E302E302E31, '127.0.0.1', '1', '男', null, '290802026@qq.com', '2015-08-20 17:16:36', '管理员', '1', null, null, '1', null, null, '51', '程序员', '4', '[4]', '开发部', '管理员', '1', '[7],[1]', '21', null, '1993-12-16', null, null, null, null, null, null, null, null, null, null, null, '汉族', '大专', null, null, null, '2014-12-09', null, null, null, null, null, null, null, null, '2', '1', null, '系统管理员', null, '1', '1', null, null, null, null, null, '0', '2015-08-14 09:53:23', '867112020521204', '2015-10-23 09:32:28');
 INSERT INTO `rock_admin` VALUES ('3', 'diaochan', null, '貂蝉', 'e10adc3949ba59abbe56e057f20f883e', null, '2', null, '2015-11-03 13:39:26', null, '127.0.0.1', '1', '女', '0592-222', null, '2015-10-21 17:11:35', '管理员', '1', 'upload/2015-08/02_2246506417_crop8455.jpg', null, '1', null, null, '0', '人事经理', '3', '[3]', '行政人事', '大乔', '4', '[7],[4]', '11', null, '1987-11-22', '36555', null, '0595-', null, null, '三国', '三国时期', null, null, '吕布', '10085', '回民', '博士后', '未婚', '1580000', '三国户口', '2014-12-02', null, null, null, null, null, null, null, '222', null, '2', null, null, null, '1', '1', null, null, '2015-04-28', 'A型', '群众', '1', '2015-10-22 17:54:54', '867112020521204', '2015-10-22 16:36:39');
 INSERT INTO `rock_admin` VALUES ('4', 'daqiao', null, '大乔', 'e10adc3949ba59abbe56e057f20f883e', null, '0', null, '2015-06-18 17:15:27', null, '127.0.0.1', '1', '女', null, null, '2015-01-19 13:34:23', '管理员', '1', null, null, '1', null, null, '0', '行政总监', '3', '[3]', '行政人事', '刘备', '7', '[7]', '10', null, '1968-01-01', null, null, null, null, null, null, null, null, null, null, null, '汉族', '初中', null, null, null, '2015-01-19', null, null, null, null, null, null, null, null, null, '1', null, null, null, '1', '1', null, null, null, null, null, '0', '2015-08-14 16:15:27', '867112020521204', '2015-10-22 16:46:40');
@@ -467,6 +467,84 @@ CREATE TABLE `rock_email` (
 -- ----------------------------
 INSERT INTO `rock_email` VALUES ('1', 'smtp.126.com', '25', 'qqqq2900@126.com', 'op0hgm0mp0hig0nn0ok0mp0hig0nn0oh0lo0lo06', '2015-08-02 14:29:22', '自己帐号', '1', null);
 
+-- ----------------------------
+-- Table structure for `rock_emailm`
+-- ----------------------------
+DROP TABLE IF EXISTS `rock_emailm`;
+CREATE TABLE `rock_emailm` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) DEFAULT NULL COMMENT '主题',
+  `content` text,
+  `sendid` smallint(6) DEFAULT NULL,
+  `sendname` varchar(20) DEFAULT NULL COMMENT '发送人',
+  `senddt` datetime DEFAULT NULL,
+  `receid` varchar(200) DEFAULT NULL,
+  `recename` varchar(200) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '0|草稿,1已发送',
+  `optdt` datetime DEFAULT NULL,
+  `hid` int(11) DEFAULT '0' COMMENT '@回复id',
+  `isfile` tinyint(1) DEFAULT '0' COMMENT '是否有附件',
+  `ishui` tinyint(1) DEFAULT '0' COMMENT '是否已回复',
+  `isdel` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rock_emailm
+-- ----------------------------
+INSERT INTO `rock_emailm` VALUES ('1', '测试邮件啦', null, '1', '管理员', '2015-10-27 17:06:42', 'u1', '管理员', '1', '2015-10-27 17:06:42', '0', '0', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('2', '收一下啊', null, '1', '管理员', '2015-10-27 17:11:13', 'd4', '开发部', '1', '2015-10-27 17:11:13', '0', '1', '1', '0');
+INSERT INTO `rock_emailm` VALUES ('3', '你的邮件？', '是啊', '1', '管理员', '2015-10-28 09:50:46', 'u1', '管理员', '1', '2015-10-28 09:50:46', '0', '0', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('4', '这是个预览草稿2', '嘿嘿1', '1', '管理员', '2015-10-28 14:33:59', 'd4', '开发部', '1', '2015-10-28 14:33:59', '0', '0', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('5', '回复：收一下啊', '嘿嘿，收到了<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>管理员<br />\n<b>发送时间：</b>2015-10-27(星期二) 17:11:13<br />\n<b>收件人：</b>开发部<br />\n<b>主题：</b>收一下啊\n</div>\nnull', '2', '陈稀糊', '2015-10-28 13:41:10', 'u1', '管理员', '1', '2015-10-28 13:41:10', '2', '0', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('6', '谢谢你对我的好', '谢谢你对我的好，等三国统一了我就跟着给你。', '5', '小乔', '2015-10-28 14:04:21', 'u1', '管理员', '1', '2015-10-28 14:04:21', '0', '0', '1', '0');
+INSERT INTO `rock_emailm` VALUES ('7', '回复：谢谢你对我的好', '嘿嘿，好啊<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>小乔<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:04:21<br />\n<b>收件人：</b>管理员<br />\n<b>主题：</b>谢谢你对我的好\n</div>\n谢谢你对我的好，等三国统一了我就跟着给你。', '1', '管理员', '2015-10-28 14:06:33', 'u5', '小乔', '1', '2015-10-28 14:06:33', '6', '0', '1', '0');
+INSERT INTO `rock_emailm` VALUES ('8', '回复：回复：谢谢你对我的好', '哈哈哈啊哈哈哈<br />\n<br />\n<hr />\n<div style=\"padding:5px;background:#f1f1f1;\">\n	<b>发件人：</b>管理员<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:06:33<br />\n<b>收件人：</b>小乔<br />\n<b>主题：</b>回复：谢谢你对我的好\n</div>\n嘿嘿，好啊<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>小乔<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:04:21<br />\n<b>收件人：</b>管理员<br />\n<b>主题：</b>谢谢你对我的好\n</div>\n谢谢你对我的好，等三国统一了我就跟着给你。', '5', '小乔', '2015-10-28 14:10:32', 'u1', '管理员', '1', '2015-10-28 14:10:32', '7', '0', '1', '0');
+INSERT INTO `rock_emailm` VALUES ('9', '回复：回复：回复：谢谢你对我的好', '哇<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>小乔<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:10:32<br />\n<b>收件人：</b>管理员<br />\n<b>主题：</b>回复：回复：谢谢你对我的好\n</div>\n哈哈哈啊哈哈哈<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>管理员<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:06:33<br />\n<b>收件人：</b>小乔<br />\n<b>主题：</b>回复：谢谢你对我的好\n</div>\n嘿嘿，好啊<br />\n<br />\n<hr />\n<div style=\"background:#F1F1F1;padding:5px;\">\n	<b>发件人：</b>小乔<br />\n<b>发送时间：</b>2015-10-28(星期三) 14:04:21<br />\n<b>收件人：</b>管理员<br />\n<b>主题：</b>谢谢你对我的好\n</div>\n谢谢你对我的好，等三国统一了我就跟着给你。', '1', '管理员', '2015-10-28 14:11:35', 'u5', '小乔', '1', '2015-10-28 14:11:35', '8', '0', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('10', '写个管理员的信', '<p>\n	你们看看，这都写了啥代码啊，好多bug\n</p>', '1', '管理员', '2015-10-29 10:11:32', 'u1,u2', '管理员,陈稀糊', '1', '2015-10-29 10:11:32', '0', '1', '0', '0');
+INSERT INTO `rock_emailm` VALUES ('11', '群发啦', '群发啦', '1', '管理员', '2015-10-29 11:55:41', 'd1,d3,d4,d5,d6,d2', '管理部,行政人事,开发部,商务部,财务部,业务部', '1', '2015-10-29 11:55:41', '0', '0', '0', '0');
+
+-- ----------------------------
+-- Table structure for `rock_emails`
+-- ----------------------------
+DROP TABLE IF EXISTS `rock_emails`;
+CREATE TABLE `rock_emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int(11) DEFAULT NULL,
+  `uid` smallint(6) DEFAULT NULL,
+  `zt` tinyint(4) DEFAULT '0' COMMENT '0未读,1已读',
+  `isdel` tinyint(4) DEFAULT '0' COMMENT '0未删,1已删',
+  `optdt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rock_emails
+-- ----------------------------
+INSERT INTO `rock_emails` VALUES ('1', '1', '1', '1', '0', '2015-10-27 17:06:42');
+INSERT INTO `rock_emails` VALUES ('2', '2', '1', '1', '0', '2015-10-27 17:11:13');
+INSERT INTO `rock_emails` VALUES ('3', '2', '2', '1', '0', '2015-10-27 17:11:13');
+INSERT INTO `rock_emails` VALUES ('4', '2', '8', '0', '0', '2015-10-27 17:11:13');
+INSERT INTO `rock_emails` VALUES ('5', '3', '1', '1', '0', '2015-10-28 09:50:46');
+INSERT INTO `rock_emails` VALUES ('6', '5', '1', '1', '0', '2015-10-28 13:41:10');
+INSERT INTO `rock_emails` VALUES ('7', '6', '1', '1', '0', '2015-10-28 14:04:21');
+INSERT INTO `rock_emails` VALUES ('8', '7', '5', '1', '0', '2015-10-28 14:06:33');
+INSERT INTO `rock_emails` VALUES ('9', '8', '1', '1', '0', '2015-10-28 14:10:32');
+INSERT INTO `rock_emails` VALUES ('10', '9', '5', '1', '0', '2015-10-28 14:11:35');
+INSERT INTO `rock_emails` VALUES ('11', '4', '1', '1', '0', '2015-10-28 14:33:59');
+INSERT INTO `rock_emails` VALUES ('12', '4', '2', '0', '0', '2015-10-28 14:33:59');
+INSERT INTO `rock_emails` VALUES ('13', '4', '8', '0', '0', '2015-10-28 14:33:59');
+INSERT INTO `rock_emails` VALUES ('14', '10', '1', '1', '0', '2015-10-29 10:11:32');
+INSERT INTO `rock_emails` VALUES ('15', '10', '2', '0', '0', '2015-10-29 10:11:32');
+INSERT INTO `rock_emails` VALUES ('16', '11', '1', '1', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('17', '11', '2', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('18', '11', '3', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('19', '11', '4', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('20', '11', '5', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('21', '11', '7', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('22', '11', '8', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('23', '11', '9', '0', '0', '2015-10-29 11:55:41');
+INSERT INTO `rock_emails` VALUES ('24', '11', '10', '0', '0', '2015-10-29 11:55:41');
 
 -- ----------------------------
 -- Table structure for `rock_email_tpl`
@@ -514,11 +592,16 @@ CREATE TABLE `rock_file` (
   `mid` int(11) DEFAULT '0' COMMENT '管理id',
   `downci` int(11) DEFAULT '0' COMMENT '下载次数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_file
 -- ----------------------------
+INSERT INTO `rock_file` VALUES ('42', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-11/09_0934599224.jpg', '1', null, '2015-11-09 09:35:00', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('43', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-11/09_0936226269.jpg', '1', null, '2015-11-09 09:36:26', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('44', '1', 'kaoqin.exe', null, 'exe', '10752', '10.50 KB', 'upload/2015-11/09_093626752.temp', '1', null, '2015-11-09 09:36:27', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('45', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-11/09_0938094267.jpg', '1', null, '2015-11-09 09:38:10', '127.0.0.1', 'MSIE 9', null, '0', '0');
+INSERT INTO `rock_file` VALUES ('46', '1', 'face.jpg', null, 'jpg', '42225', '41.24 KB', 'upload/2015-11/09_0949503865.jpg', '1', null, '2015-11-09 09:49:51', '127.0.0.1', 'MSIE 9', null, '0', '0');
 
 -- ----------------------------
 -- Table structure for `rock_fininfom`
@@ -1331,7 +1414,7 @@ INSERT INTO `rock_infor` VALUES ('7', null, '快去开发啊！', null, '通知�
 INSERT INTO `rock_infor` VALUES ('8', null, '技术考核', null, '技术考核', '技术考核哈哈', '6', null, null, '1', '管理员', '0', '0', null, '1', '2015-07-20 14:17:34', null, null, 'd4', '开发部', '4');
 INSERT INTO `rock_infor` VALUES ('9', null, '欢迎使用ROCKOA，这里有说明文档', null, '通知公告', null, '9', null, null, '1', '管理员', '0', '0', null, '1', '2015-08-11 10:16:32', null, null, null, null, '0');
 INSERT INTO `rock_infor` VALUES ('10', null, '关于REIM使用通知', null, '通知公告', null, '1', null, null, '1', '管理员', '0', '0', null, '1', '2015-10-29 09:49:37', null, null, 'd3', '行政人事', '0');
-INSERT INTO `rock_infor` VALUES ('11', null, '关于对【管理员】奖励通告', null, '奖惩通告', '关于对【管理员】奖励通告，工作认真，奖励1W人民币！如下头像', '8', null, null, '1', '管理员', '0', '0', null, '1', '2015-10-21 14:10:24', null, null, null, null, '0');
+INSERT INTO `rock_infor` VALUES ('11', null, '关于对【管理员】奖励通告', null, '奖惩通告', '<p>\n	关于对【管理员】奖励通告，工作认真，奖励1W人民币！如下头像\n</p>\n<p>\n	<img alt=\"\" src=\"upload/2015-10/21_1410222684.jpg\" />\n</p>\n<p>\n	&nbsp;\n</p>', '8', null, null, '1', '管理员', '0', '0', null, '1', '2015-10-21 14:10:24', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `rock_kq_anay`
@@ -1465,12 +1548,12 @@ CREATE TABLE `rock_kq_dkjl` (
   `web` varchar(50) DEFAULT NULL,
   `type` tinyint(1) DEFAULT '0' COMMENT '来源@0|打卡机,1|异常登记,2|手动添加',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_kq_dkjl
 -- ----------------------------
-INSERT INTO `rock_kq_dkjl` VALUES ('1', '1', '管理员', '2015-10-22 14:17:11', 'MSIE 9', '0');
+INSERT INTO `rock_kq_dkjl` VALUES ('3', '1', '管理员', '2015-11-04 14:41:37', 'MSIE 9', '2');
 
 -- ----------------------------
 -- Table structure for `rock_kq_info`
@@ -1680,14 +1763,11 @@ CREATE TABLE `rock_log` (
   `ip` varchar(30) DEFAULT NULL COMMENT 'IP地址',
   `web` varchar(100) DEFAULT NULL COMMENT '浏览器',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_log
 -- ----------------------------
-INSERT INTO `rock_log` VALUES ('83', '登录', '1', '管理员', '[admin]登录成功', '2015-11-03 09:50:58', '127.0.0.1', 'MSIE 9');
-INSERT INTO `rock_log` VALUES ('84', '登录', '3', '貂蝉', '[diaochan]登录成功', '2015-11-03 13:39:27', '127.0.0.1', 'MSIE 9');
-INSERT INTO `rock_log` VALUES ('85', '登录', '1', '管理员', '[admin]登录成功', '2015-11-04 09:16:16', '127.0.0.1', 'MSIE 9');
 
 -- ----------------------------
 -- Table structure for `rock_meet`
@@ -1843,7 +1923,7 @@ CREATE TABLE `rock_menu` (
   `isopen` tinyint(1) DEFAULT '0' COMMENT '是否展开',
   `ischeck` tinyint(1) DEFAULT '0' COMMENT '是否审核菜单',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=219 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_menu
@@ -1920,7 +2000,7 @@ INSERT INTO `rock_menu` VALUES ('147', null, '工作日报', '6', null, '1', '5'
 INSERT INTO `rock_menu` VALUES ('148', null, '日报设置', '147', 'humanres,daily,set', '0', '0', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('149', null, '日报分析', '147', 'humanres,daily,fx', '1', '0', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('150', 'gong', '信息中心', '95', 'system,infor,gong', '1', '0', null, null, '1', null, '0', '0', '0');
-INSERT INTO `rock_menu` VALUES ('151', 'daicheck', '待办/处理', '202', 'flow,apply,check', '1', '6', null, null, '1', null, '0', '0', '0');
+INSERT INTO `rock_menu` VALUES ('151', 'daicheck', '待办/处理', '202', 'flow,apply,check', '1', '0', null, 'time', '1', null, '0', '0', '0');
 INSERT INTO `rock_menu` VALUES ('152', null, '系统设置', '72', 'system,set', '1', '0', null, 'edit', '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('153', null, '人员管理', '6', null, '1', '1', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('155', null, '项目管理', '189', null, '1', '2', null, 'brick', '1', null, '1', '0', '0');
@@ -1963,7 +2043,7 @@ INSERT INTO `rock_menu` VALUES ('200', null, '群/讨论组管理', '198', 'webi
 INSERT INTO `rock_menu` VALUES ('201', null, '流程选项', '183', 'system,option,guan,num=flow,atype=1', '1', '0', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('202', null, '工作流程', '63', null, '1', '12', null, 'report', '1', null, '0', '0', '0');
 INSERT INTO `rock_menu` VALUES ('203', null, '流程申请', '202', 'flow,apply', '1', '1', null, 'page_add', '1', null, '0', '0', '0');
-INSERT INTO `rock_menu` VALUES ('204', null, '流程单据', '202', 'flow,apply,checkmy', '1', '2', null, null, '1', null, '0', '0', '0');
+INSERT INTO `rock_menu` VALUES ('204', null, '我的申请', '202', 'flow,apply,checkmy,atype=0', '1', '2', null, null, '1', null, '0', '0', '0');
 INSERT INTO `rock_menu` VALUES ('205', null, '会议选项', '71', 'system,option,guan,num=meet,atype=1', '1', '0', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('206', null, '部门信息资料', '95', 'system,infor,list,atype=1', '1', '5', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('209', null, '推送服务器设置', '198', 'webim,guan,set', '1', '0', null, null, '1', null, '1', '0', '0');
@@ -1985,6 +2065,9 @@ INSERT INTO `rock_menu` VALUES ('100', null, '定时任务选项', '67', 'system
 INSERT INTO `rock_menu` VALUES ('13', 'emailin', '内部邮件', '63', 'person,email', '1', '13', null, 'email', '1', null, '0', '0', '0');
 INSERT INTO `rock_menu` VALUES ('14', null, '在线升级', '192', 'system,upgrade', '1', '5', null, null, '1', null, '1', '0', '0');
 INSERT INTO `rock_menu` VALUES ('15', 'homeperson', '个人首页项', '7', '@index,home,indextd,mid=-1,padding=0', '1', '6', null, 'application_view_tile', '1', null, '0', '0', '0');
+INSERT INTO `rock_menu` VALUES ('219', null, '经我处理', '202', 'flow,apply,checkmy,atype=1', '1', '3', null, null, '1', null, '0', '0', '0');
+INSERT INTO `rock_menu` VALUES ('220', null, '我下属申请', '202', 'flow,apply,checkmy,atype=2', '1', '4', null, null, '1', null, '0', '0', '0');
+INSERT INTO `rock_menu` VALUES ('221', null, '授权查看', '202', 'flow,apply,checkmy,atype=3', '1', '5', null, null, '1', null, '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `rock_menucom`
@@ -2872,6 +2955,7 @@ DROP TABLE IF EXISTS `rock_word`;
 CREATE TABLE `rock_word` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `typename` varchar(20) DEFAULT NULL COMMENT '类别',
+  `typeid` smallint(6) DEFAULT '0',
   `adddt` datetime DEFAULT NULL,
   `fileid` int(11) DEFAULT NULL,
   `sort` int(11) DEFAULT '0' COMMENT '排序号',
@@ -2884,17 +2968,19 @@ CREATE TABLE `rock_word` (
   `atype` tinyint(4) DEFAULT '0' COMMENT '@0|内部,1|个人',
   `optid` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rock_word
 -- ----------------------------
-INSERT INTO `rock_word` VALUES ('5', '基础文件', '2015-05-15 15:29:40', '52', '0', '20060905025434921[1].gif', '355.00 Byte', 'gif', '管理员', null, null, '0', '1');
-INSERT INTO `rock_word` VALUES ('6', '基础文件', '2015-05-15 15:29:42', '53', '0', '20060905025435380[1].gif', '111.00 Byte', 'gif', '管理员', null, null, '0', '1');
-INSERT INTO `rock_word` VALUES ('7', '基础文件', '2015-05-15 15:29:43', '54', '0', '20060905025512830[1].gif', '914.00 Byte', 'gif', '管理员', null, null, '0', '1');
-INSERT INTO `rock_word` VALUES ('8', '基础文件', '2015-05-15 15:29:45', '55', '0', '20060905025513169[1].gif', '341.00 Byte', 'gif', '管理员', null, null, '0', '1');
-INSERT INTO `rock_word` VALUES ('9', '技术文档', '2015-05-15 15:31:25', '56', '0', '20060905025435519[1].gif', '125.00 Byte', 'gif', '管理员', '本部门', 'dept', '1', '1');
-INSERT INTO `rock_word` VALUES ('10', '技术文档', '2015-05-15 16:35:20', '57', '0', '20060905025432709[1].gif', '170.00 Byte', 'gif', '管理员', null, null, '1', '1');
+INSERT INTO `rock_word` VALUES ('5', '基础文件', '0', '2015-05-15 15:29:40', '52', '0', '20060905025434921[1].gif', '355.00 Byte', 'gif', '管理员', null, null, '0', '1');
+INSERT INTO `rock_word` VALUES ('6', '基础文件', '0', '2015-05-15 15:29:42', '53', '0', '20060905025435380[1].gif', '111.00 Byte', 'gif', '管理员', null, null, '0', '1');
+INSERT INTO `rock_word` VALUES ('7', '基础文件', '0', '2015-05-15 15:29:43', '54', '0', '20060905025512830[1].gif', '914.00 Byte', 'gif', '管理员', null, null, '0', '1');
+INSERT INTO `rock_word` VALUES ('8', '基础文件', '0', '2015-05-15 15:29:45', '55', '0', '20060905025513169[1].gif', '341.00 Byte', 'gif', '管理员', null, null, '0', '1');
+INSERT INTO `rock_word` VALUES ('9', '技术文档', '0', '2015-05-15 15:31:25', '56', '0', '20060905025435519[1].gif', '125.00 Byte', 'gif', '管理员', '本部门', 'dept', '1', '1');
+INSERT INTO `rock_word` VALUES ('10', '技术文档', '0', '2015-05-15 16:35:20', '57', '0', '20060905025432709[1].gif', '170.00 Byte', 'gif', '管理员', null, null, '1', '1');
+INSERT INTO `rock_word` VALUES ('11', '基础文档', '0', '2015-11-09 09:38:10', '45', '0', 'face.jpg', '41.24 KB', 'jpg', '管理员', null, null, '0', '1');
+INSERT INTO `rock_word` VALUES ('12', '技术文档', '140', '2015-11-09 09:49:51', '46', '0', 'face.jpg', '41.24 KB', 'jpg', '管理员', null, null, '1', '1');
 
 -- ----------------------------
 -- Table structure for `rock_work`

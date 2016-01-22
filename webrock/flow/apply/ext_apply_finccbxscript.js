@@ -105,10 +105,10 @@ if(params.mid==0){
 	$.get(js.getajaxurl('getlast','finsave','finasys'),function(da){
 		if(da){
 			var d = js.decode(da);
-			form.setVal('paytype', d.paytype);
-			form.setVal('cardid', d.cardid);
-			form.setVal('openbank', d.openbank);
-			form.setVal('fullname', d.fullname);
+			if(!isempt(d.paytype))form.setVal('paytype', d.paytype);
+			if(!isempt(d.cardid))form.setVal('cardid', d.cardid);
+			if(!isempt(d.openbank))form.setVal('openbank', d.openbank);
+			if(!isempt(d.fullname))form.setVal('fullname', d.fullname);
 		}
 	});
 }

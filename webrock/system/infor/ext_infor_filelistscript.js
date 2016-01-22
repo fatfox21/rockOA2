@@ -9,11 +9,10 @@ if(atype==1){
 function savecalblc(){
 	tree.storereload();
 }
-function callbacku(a, o, sid){
-	if(sid=='')return;
+rock['up'+rand+''] = function(a, typen, typenid, sid){
 	js.msg('wait','保存文件中...');
 	bool = true;
-	$.post(js.getajaxurl('savedoc',mode,dir),{fileid:sid, typename:tree.changedata.name,atype:atype}, function(da){
+	$.post(js.getajaxurl('savedoc',mode,dir),{fileid:sid, typename:decodeURI(typen),atype:atype,typeid:typenid}, function(da){
 		js.msg('success', '保存成功');
 		grid.storereload();
 		bool = false;
@@ -25,7 +24,8 @@ function uploadfield(){
 		js.msg('msg','请选择选择左边的类别，没有类别请先管理类别');
 		return;
 	}
-	uploadwindows.show({title:'上传['+tree.changedata.name+']类别文件',callback:callbacku,oktype:'clear'});
+	var ti = encodeURI(tree.changedata.name);
+	js.upload('rock.up'+rand+'',{title:ti,params1:ti,params2:tree.changedata.id});
 }
 
 var panel= [{
@@ -70,6 +70,8 @@ var panel= [{
 		text:'共享给',dataIndex:'shatename',flex:0.7,search:true
 	},{
 		text:'序号',dataIndex:'sort',width:50,search:true,editor:{xtype:'numberfield',minValue:0}
+	},{
+		text:'上传者',dataIndex:'optname',width:70,search:true,sortable:true,atype:'optname'
 	},{
 		text:'添加时间',dataIndex:'adddt',width:150,search:true,sortable:true,atype:'date'
 	},{

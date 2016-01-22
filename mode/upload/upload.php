@@ -224,11 +224,6 @@ var up={
 			get('startbtn').disabled=false;
 			get('quebtn').disabled=false;
 			this.bool	= false;
-			<?php 
-				if($callback!=''){
-			?>try{opener.<?=$callback?>(this.wcarr,js.request('params1'), js.request('params2'))}catch(e){}
-			<?php }?>
-			if(callback.indexOf('autoclose')>0)window.close();
 			return false;
 		}
 		this.suarr	= this.uparr[oi];
@@ -307,9 +302,20 @@ var up={
 			o[i].innerHTML=''+(i+1)+'. ';
 		}
 	},
+	getsid:function(a){
+		var sid = '',i;
+		for(i=0;i<a.length;i++){
+			sid+=','+a[i].id+'';
+		}
+		if(sid!='')sid = sid.substr(1);
+		return sid;
+	},
 	okla:function(){
-		if(showid=='')return;
-		opener.js.downupshow(this.wcarr, showid);
+		var sid = this.getsid(this.wcarr);
+		<?php if($callback!=''){?>try{opener.<?=$callback?>(this.wcarr,js.request('params1'), js.request('params2'), sid)}catch(e){}<?php }?>
+		if(showid!=''){
+			opener.js.downupshow(this.wcarr, showid, sid);
+		}
 		window.close();
 	}
 }
@@ -355,7 +361,7 @@ button{ cursor:pointer}
 <div id="upfile"></div>
 <div id="footmsg"></div>
 
-<div <?php if($showid=='')echo 'style="display:none"'; ?> class="quebntha"><button type="button" disabled id="quebtn" onClick="up.okla()">确定</button></div>
+<div class="quebntha"><button type="button" disabled id="quebtn" onClick="up.okla()">确定</button></div>
 </center>
 </body>
 </html>

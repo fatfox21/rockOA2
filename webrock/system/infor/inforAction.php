@@ -5,9 +5,10 @@ class inforClassAction extends Action
 	public function savedocAjax()
 	{
 		$fileid		= $this->post('fileid');
+		$typeid		= (int)$this->post('typeid','0');
 		$typename	= $this->post('typename');
 		$atype		= $this->post('atype');
-		$this->db->insert('[Q]word', 'typename,adddt,fileid,sort,filename,filesizecn,fileext,optname,atype,optid', "select '$typename',adddt,id,0,filename,filesizecn,fileext,'$this->adminname','$atype','$this->adminid' from [Q]file where id in($fileid)", true);
+		$this->db->insert('[Q]word', 'typename,`typeid`,`adddt`,`fileid`,`sort`,filename,filesizecn,fileext,optname,atype,optid', "select '$typename','$typeid',adddt,id,0,filename,filesizecn,fileext,'$this->adminname','$atype','$this->adminid' from [Q]file where id in($fileid)", true);
 	}
 	
 	
