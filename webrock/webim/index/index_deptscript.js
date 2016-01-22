@@ -1,9 +1,14 @@
+var changetype = '';
 function initbody(){
+	if(changetype=='')changetype='changeusercheck';
 	resetw();
 	$(window).resize(function(){
 		resetw();
 	});
 	im.init();
+	$('#AltClose').click(function(){
+		connectclose();
+	});
 }
 
 function resetw(){
@@ -79,6 +84,7 @@ var im = {
 		$('#downdept_'+sid+'').toggle();
 	},
 	additems:function(a){
+		if(changetype=='changeuser')this.clearla();
 		var s = '',
 		ids = 'yitian_'+a.id+'';
 		if(get(ids))return; 
@@ -86,7 +92,7 @@ var im = {
 		if(a.imonline !=1){
 			st='class="offline"';
 		}
-		s='<div ondblclick="$(this).remove()" id="'+ids+'" '+st+' userid="'+a.uid+'"><img src="'+a.face+'" align="absmiddle">'+a.name+'</div>';
+		s='<div ondblclick="$(this).remove()" id="'+ids+'" '+st+' userid="'+a.uid+'" userna="'+a.name+'"><img src="'+a.face+'" align="absmiddle">'+a.name+'</div>';
 		$('#changeuserlist').append(s);
 	},
 	clearla:function(){
@@ -94,14 +100,23 @@ var im = {
 	},
 	
 	okque:function(){
-		var o = $('#changeuserlist').find('div'),sid,s='';
+		var o = $('#changeuserlist').find('div'),sid,s='',s1='';
 		for(var i=0;i<o.length;i++){
 			sid = $(o[i]).attr('userid');
 			s+=','+sid+'';
+			s1+=','+$(o[i]).attr('userna')+'';
 		}
-		if(s!='')s=s.substr(1);
-		
-		openerrunscript('backdeptchange',groupnum, s);
+		if(s!=''){
+			s=s.substr(1);
+			s1=s1.substr(1);
+		}
+		if(groupidsss!=''){
+			openerrunscript('backdeptchange',groupnum, s);
+		}else{
+			try{
+				opener[js.request('callback')](s1,s);
+			}catch(e){}
+		}
 		connectclose();
 	}
 }

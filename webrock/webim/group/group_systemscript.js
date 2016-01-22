@@ -23,15 +23,16 @@ var guser = {
 	bool:false,
 	
 	init:function(){
-		var i,len = wdarr.length,cont,lex,nas,ids='0',fase;
+		var i,len = wdarr.length,cont,lex,nas,ids='0',fase,url;
 		for(i= len-1; i>=0; i--){
 			lex='left';
 			nas= receivename;
 			fase= ''+receiveface;
 			if(wdarr[i].zt=='0')ids+=','+wdarr[i].id;
-			cont 	= jm.uncrypt(wdarr[i].cont);
-			if(!isempt(wdarr[i].url)){
-				cont+='<br><a href="javascript:" onclick="return openurlla(\''+wdarr[i].url+'\')">打开地址&gt;&gt;</a>';
+			cont 	= jm.base64decode(wdarr[i].cont);
+			url 	= strformat.geturl(wdarr[i]);
+			if(!isempt(url)){
+				cont+='<br><a href="javascript:" onclick="return openurlla(\''+url+'\')">打开地址&gt;&gt;</a>';
 			}	
 			cont	= strformat.showqp(lex,nas,wdarr[i].optdt, cont, '', fase);
 			this.addcont(cont);

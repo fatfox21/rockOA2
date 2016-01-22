@@ -44,6 +44,7 @@ Ext.define('Ext.rock.form',{
 		me.fieldDefaults.padding = this.defaultPadding;
 		me.destroypanel	= [];
 		if(this.rand=='')this.rand = js.getrand();
+		me.tablename = jm.encrypt(me.tablename);
 		if(me.buttonsbool){
 			me.buttons=[{id:'formmsg_'+me.rand+'',xtype:'tbtext'}];
 			me.buttons = me.buttons.concat(me.buttonsitems);
@@ -108,15 +109,13 @@ Ext.define('Ext.rock.form',{
 		if(me.editrecord)params.editrecord_postabc='true';
 		var url = this.url;
 		if(url=='')url=publicsave();
-		var btno = getcmp('formsave_'+this.rand+'');
-		btno.setDisabled(true);
+		me.setBtnhidden(true);
 		this.form.submit({
 			url: url,
 			method:'POST',
 			params:params,
 			success:function(f,o){
 				me.bool = false;
-				btno.setDisabled(false);
 				try{
 					me.setmsg(o.result.msg,'green');
 					me.success(o.result, me, lx);
@@ -131,8 +130,8 @@ Ext.define('Ext.rock.form',{
 					js.getarr(o.response);
 					me.setmsg('处理失败,返回出错','red');
 				}
+				me.setBtnhidden(false);
 				me.bool = false;
-				btno.setDisabled(false);
 				me.failure();
 			}
 		});
@@ -160,6 +159,7 @@ Ext.define('Ext.rock.form',{
 	reset:function(){
 		this.getForm().reset();
 		this.setmsg('');
+		this.setBtnhidden(false);
 	},
 	getValuess:function(){
 		var da = this.getValues(),

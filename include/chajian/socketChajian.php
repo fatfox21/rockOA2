@@ -95,7 +95,7 @@ class socketChajian extends Chajian
 				$s .= ','.$k.':"'.$v.'"';
 			}
 			$s = substr($s, 1);
-			$s = $this->rock->jm->encrypt('{'.$s.'}');
+			$s = $this->rock->jm->base64encode('{'.$s.'}');
 			$senar[] 	= $rs['sendid'];
 			$recear[] 	= $rs['receid'];
 			$strar[] 	= $s;

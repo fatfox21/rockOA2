@@ -7,7 +7,7 @@
 	* 邮  箱： qqqq2900@126.com										*
 	* 网  址： http://www.xh829.com/								*
 	* 说  明: 基础操作类方法										*
-	* 备  注: 未经允许不得商业出售，代码欢迎参考纠正			*
+	* 备  注: 未经允许不得商业出售，代码欢迎参考纠正				*
 	*****************************************************************
 */ 
 final class rockClass
@@ -43,7 +43,7 @@ final class rockClass
 	
 	public function initRock()
 	{
-		$this->jm = c('jm', true);
+		$this->jm 		= c('jm', true);
 		$this->adminid	= (int)$this->session(QOM.'adminid',0);
 		$this->adminname= $this->session(QOM.'adminname');
 		$this->adminuser= $this->session(QOM.'adminuser');
@@ -90,13 +90,24 @@ final class rockClass
 		if(substr($s, 0, 7)=='rockjm_' || $lx == 1){
 			$s = str_replace('rockjm_', '', $s);
 			$s = $this->jm->uncrypt($s);
-		}	
+			if($lx == 1){
+				$a = explode('0', $s);$len=count($a);
+				if($len>1){$ls=(int)$a[$len-1];if($ls>=1&&$ls<=14)$s=$this->jm->uncrypt($s);}
+			}
+		}
+		$s=str_replace("'", '&#39', $s);
+		if($lx==2)$s=str_replace(array('{','}'), array('[H1]','[H2]'), $s);
 		return $s;
 	}
 	
 	public function savesession($arr)
 	{
-		foreach($arr as $kv=>$vv)$_SESSION[$kv]=$vv;
+		foreach($arr as $kv=>$vv)$this->setsession($kv,$vv);
+	}
+	
+	public function setsession($kv,$vv)
+	{
+		$_SESSION[$kv]=$vv;
 	}
 	
 	public function session($name,$dev='')
@@ -208,34 +219,6 @@ final class rockClass
 		return $val;
 	}
 	
-	//值
-	public function seldata($arr,$alst='')
-	{
-		$s=$alst;
-		foreach($arr as $da){
-			$key = array_keys($da);
-			$s.=','.$da[$key[0]].'';
-			if(count($key)>1){
-				$s.='|'.$da[$key[1]].'';
-			}
-		}
-		if($s!=''&&$alst=='')$s=substr($s,1);
-		return $s;
-	}
-	
-	public function arraydata($arr,$alst='')
-	{
-		$s=$alst;
-		foreach($arr as $da){
-			$key = array_keys($da);
-			$s1='';
-			for($i=0;$i<count($key);$i++)$s1.=",'".$da[$key[$i]]."'";
-			$s.=',['.substr($s1,1).']';
-		}
-		if($s!=''&&$alst=='')$s=substr($s,1);
-		return '['.$s.']';
-	}
-	
 	public function script($daima)
 	{
 		echo '<script type="text/javascript">
@@ -243,7 +226,9 @@ final class rockClass
 		</script>';
 	}
 	
-	//全角半角转换
+	/**
+		全角半角转换
+	*/
 	public function replace($str,$type='ban')
 	{
 		$search=array('0','1','2','3','4','5','6','7','8','9',',','.','?','\'','(',')',';','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
@@ -272,9 +257,7 @@ final class rockClass
 	*/
 	public function htmlescape($str)
 	{
-		$search=array('<','>',' ');
-		$replace=array('&lt;','&gt;','&nbsp;');
-		$str=str_replace($search,$replace,$str);
+		$str = htmlspecialchars($str);
 		return $str;
 	}
 	
@@ -307,62 +290,11 @@ final class rockClass
 	{
 		$dt  = date('Y-m-d');
 		$str = str_replace(
-			array('&#39;', '&#39','[F]', '[X]', '[K]', '[A]', '[D]', '[adminid]', '[date]', '{adminid}', '{date}'), 
-			array('\'', '\'', '\'', '\\', ' ', 'and', '=', $this->adminid, $dt, $this->adminid, $dt),
+			array('&#39;', '&#39','[F]', '[X]', '[K]', '[A]', '[D]', '[adminid]', '[date]', '{adminid}', '{date}','[H1]','[H2]'), 
+			array('\'', '\'', '\'', '\\', ' ', 'and', '=', $this->adminid, $dt, $this->adminid, $dt,'{','}'),
 			$str
 		);
 		return $str;
-	}
-	
-	//获取ip地区
-	public function getipinfo($ip='')
-	{
-		if($ip=='')$ip=$this->ip;
-		$guojia='';$sheng='';$city='';$type='';$cont='';
-		$url	= 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=data&ip='.$ip.'';
-		$cont 	= @file_get_contents($url);
-		if($cont!=''){
-			$cont	= iconv('GB2312','UTF-8',$cont);
-			$aarr	= explode('	',$cont);
-			if(isset($aarr[3]))$guojia = $aarr[3];
-			if(isset($aarr[4]))$sheng  = $aarr[4];
-			if(isset($aarr[5]))$city   = $aarr[5];
-			if(isset($aarr[7]))$type   = $aarr[7];
-			$sheng  = str_replace('省','',$sheng);
-			$city   = str_replace('市','',$city);
-		}
-		return array('ip'=>$ip,'guojia'=>$guojia,'sheng'=>$sheng,'shi'=>$city,'type'=>$type);
-	}
-	
-	//显示图片
-	public function writeimg($path,$mw,$mh,$otina='')
-	{
-		$arr = $this->imgwh($path,$mw,$mh);
-		return '<img src="'.$arr[3].'" width="'.$arr[0].'" height="'.$arr[1].'" '.$otina.'>';	
-	}
-	
-	//图片显示宽高
-	public function imgwh($path, $mw, $mh)
-	{
-		$arr	= array(0,0,0,'');
-		if(file_exists($path)){
-			$img	= getimagesize($path);
-			$w 		= $img[0];
-			$h 		= $img[1];
-			$bili	= 1;
-			if($w > $mw && $mw != 0){
-				$bili	= ($mw/$w);
-				$h		= $bili*$h;
-				$w		= $mw;
-			}
-			if($h > $mh && $mh != 0){
-				$bili	= ($mh/$h);
-				$w		= $bili*$w;
-				$h		= $mh;
-			}
-			$arr	=  array($w,$h,$bili,$path);
-		}
-		return $arr;
 	}
 	
 	//判断是否为空
@@ -372,7 +304,6 @@ final class rockClass
 		if( ($str==''||$str==NULL||empty($str)) && (!is_numeric($str)) )$bool=true;
 		return $bool;
 	}
-	
 	
 	/**
 		地址

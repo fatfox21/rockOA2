@@ -1,6 +1,6 @@
 <?php
 /**
-	系统总配置文件，不可删除(否则只能呵呵)，可改$config 参数
+	系统总配置文件，不可删除(否则只能呵呵)，请到webrock/webrockConfig.php下修改参数配置
 */
 @session_start();
 //date_default_timezone_set("PRC");
@@ -20,9 +20,9 @@ if(!defined('PROJECT'))define('PROJECT', $rock->get('p', 'webrock'));
 $config		= array(
 	'title'		=> 'ROCKOA',
 	'url'		=> 'http://'.HOST.'/rock/',
-	'urly'		=> 'http://127.0.0.1:90/rock/', //远程在线升级URL地址
-	'db_host'	=> 'localhost',
-	'db_user'	=> 'root',
+	'urly'		=> 'http://demo.rockoa.com/',
+	'db_host'	=> 'sr0qk0oq0kjp0rs0rq0klj0kkk0sr0ok0qr0nr09',
+	'db_user'	=> '',
 	'db_pass'	=> '',
 	'db_base'	=> '',
 	'perfix'	=> 'rock_',
@@ -31,7 +31,8 @@ $config		= array(
 	'install'	=> false,
 	'version'	=> require('version.php'),
 	'path'		=> 'rock',
-	'db_drive'	=> 'mysqli'
+	'db_drive'	=> 'mysqli',
+	'randkey'	=> ''	
 );
 
 $_confpath		= $rock->strformat('?0/?1/?1Config.php', ROOT_PATH, PROJECT);

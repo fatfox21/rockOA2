@@ -18,10 +18,11 @@ function opentablss(a, gsid){
 }
 
 var flowrand = js.getrand();
-var flow = Ext.create('Ext.rock.flow',{opentype:1,flownum:'',rand:flowrand});
+var gridid 	 = 'checkapply_'+flowrand+'';
+var flow = Ext.create('Ext.rock.flow',{opentype:1,flownum:'',gridid:gridid,rand:flowrand});
 
 var panel = {
-	bbarbool:false,xtype:'rockgrid',
+	bbarbool:false,xtype:'rockgrid',id:gridid,
 	url:js.getajaxurl('daicl',mode,dir),
 	tbar:[{
 		text:'刷新',icon:gicons('reload'),handler:function(){
@@ -34,8 +35,7 @@ var panel = {
 	}],
 	_openurl:function(){
 		var a = this.changedata;
-		var url = js.getajaxurl('$view','flow','taskrun',{uid:adminid,mid:a.mid,modenum:a.modenum,table:a.tablename,jmbool:true});
-		js.open(url, 800);
+		mopenview(a.modenum,a.mid,this.getId());
 	},
 	storeconfig:{groupField: 'modename'},
 	features: [{ftype:'grouping',groupHeaderTpl: '{name} ({rows.length}条)'}],
@@ -55,8 +55,9 @@ var panel = {
 			a = c.raw;
 			var btn = a.notbtnarr,dz;
 			for(dz in btn){
-				s1 += '<input value="'+btn[dz][0]+'" recezt="'+btn[dz][1]+'" nidzt="'+btn[dz][3]+'" temp="flowbtn_'+flowrand+'_'+a.modenum+''+a.mid+'" receid="'+a.mid+'" flownum="'+a.modenum+'" type="button">';
+				//s1 += '<input value="'+btn[dz][0]+'" recezt="'+btn[dz][1]+'" nidzt="'+btn[dz][3]+'" temp="flowbtn_'+flowrand+'_'+a.modenum+''+a.mid+'" receid="'+a.mid+'" flownum="'+a.modenum+'" type="button">';
 			}
+			s1= '<input value="去处理..." style="cursor:pointer" temp="flowbtn_'+flowrand+'_'+a.modenum+''+a.mid+'" receid="'+a.mid+'" flownum="'+a.modenum+'" type="button">';
 			s+='<br>'+s1;
 			return s;
 		}

@@ -1,11 +1,8 @@
 <?php 
-if(isset($_GET['p']))define('PROJECT', $_GET['p']);
 include_once('../../config/config.php');
 $id	= (int)$rock->get('id','0');
 if($id==0)exit('Sorry!');
-
-$db	= import('mysql');
-
+$db	= import(DB_DRIVE);
 $rs	= $db->getone('[Q]file', "`id`='$id'");
 if(!$rs)exit('Not find files');
 $db->update('[Q]file', "`downci`=`downci`+1" ,"`id`='$id'");

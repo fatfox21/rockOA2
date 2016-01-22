@@ -33,4 +33,21 @@ class courseClassAction extends Action
 		return $arr;
 	}
 	
+	
+	public function inputshoaafter($table, $rows)
+	{
+		$inputarr 	= m('option')->getmnum('flowinputtype');
+		$inputss	= array();
+		foreach($inputarr as $k=>$rs){
+			$inputss[$rs['value']] = $rs['name'];
+		}
+		return array('inputtype'=>$inputss);
+	}
+	
+	public function getflowinputAjax()
+	{
+		$rows 	= m('flow_courseinput')->getall('mid=0 order by sort','`id`,`name`');
+		echo json_encode($rows);
+	}
+	
 }

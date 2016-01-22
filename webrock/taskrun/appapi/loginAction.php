@@ -5,8 +5,8 @@ class loginClassAction extends appapiAction{
 	{
 		$uid	= 0;
 		$msg 	= $name	= $deptname	= $face	= $ranking = '';
-		$adminuser	= $this->get('user','',1);
-		$adminpass	= $this->get('pass','',1);
+		$adminuser	= $this->rock->jm->base64decode($this->get('user'));
+		$adminpass	= $this->rock->jm->base64decode($this->get('pass'));
 		$deviceid	= $this->get('deviceid');
 		if($adminuser=='')$msg='用户名不能为空';
 		if($msg=='')if($adminpass=='')$msg='密码不能为空';

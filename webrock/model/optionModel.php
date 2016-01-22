@@ -18,7 +18,7 @@ class optionClassModel extends Model
 	
 	public function getmnum($mnum)
 	{
-		return $this->getall("`mnum`='$mnum' order by `xu`,`id`");
+		return $this->getall("`mnum`='$mnum' order by `xu`,`id`", '`id`,`name`,`value`,`num`,`mnum`,`xu`');
 	}
 	
 	public function setval($num, $val='')

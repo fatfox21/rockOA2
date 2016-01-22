@@ -55,7 +55,7 @@ class flowClassAction extends Action
 	
 	public function publicgetdataAjax()
 	{
-		$table		= $this->request('tablename');
+		$table		= $this->request('tablename','',1);
 		$flownum	= $this->request('flownum');
 		$mid		= (int)$this->request('mid');
 		$arr		= m('flowlog')->getdatalog($flownum, $table, $mid);

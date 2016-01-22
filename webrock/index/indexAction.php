@@ -16,13 +16,14 @@ class indexClassAction extends Action{
 			$admintype	= '0';
 			$mewhere	= ' and `id` in('.str_replace(array('[',']'), array('',''), $myext).')';
 		}
-		$menu							= $this->db->getall("select `name`,`id`,`icons` from `[Q]menu` where `pid`=0 and `status`=1 $mewhere order by `sort`");
-		$my								= $this->db->getone('[Q]admin', "`id`='$this->adminid'", '`id`,`name`,`deptname`,`ranking`,`face`,`style`,`loginci`,`deptid`,`user`');
-		$dept							= $this->db->getone('[Q]dept', "`id`='".$my['deptid']."'");
+		$menu							= $this->db->getrows('[Q]menu',"`pid`=0 and `status`=1 $mewhere",'`id`,`name`,`icons`','`sort`');
+		$my								= $this->db->getone('[Q]admin', $this->adminid, '`id`,`name`,`deptname`,`ranking`,`face`,`style`,`loginci`,`deptid`,`user`');
+		if(!$my)exit('sorry!');
+		$dept							= $this->db->getone('[Q]dept', $my['deptid']);
 		
 		$menu[] = array(
-			'id' => 0,
-			'name' => '个人常用菜单',
+			'id' 	=> 0,
+			'name' 	=> '个人常用菜单',
 			'icons' => 'computer'
 		);
 		
@@ -52,7 +53,7 @@ class indexClassAction extends Action{
 	*/
 	public function getmenuAjax()
 	{
-		$pid	= (int)$this->rock->get('pid');
+		$pid				= (int)$this->get('pid');
 		$this->allmenuid	= $this->getsession('adminallmenuid');
 		if($pid == 0){
 			$menu = $this->getmenuchang();
@@ -64,7 +65,8 @@ class indexClassAction extends Action{
 	}
 	public function getmenu($whe)
 	{
-		$menu	= $this->db->getall("select `name`,`id`,`icons`,`url`,`num`,`isopen`,`ischeck`,(select count(1) from `[Q]menu` where `pid`=a.`id` and `status`=1)as `stotal` from `[Q]menu` a where $whe and `status`=1 order by `sort`");
+		$stotal	= $this->db->getsql(array('table'	=> '[Q]menu',	'fields'=> 'count(1)',	'where'	=> '`pid`=a.`id` and `status`=1'));
+		$menu	= $this->db->getrows('`[Q]menu` a', "$whe and `status`=1", '`name`,`id`,`icons`,`url`,`num`,`isopen`,`ischeck`,('.$stotal.')as `stotal`', '`sort`');
 		$rows	= array();
 		foreach($menu as $k=>$rs){
 			$id	= $rs['id'];
@@ -72,10 +74,10 @@ class indexClassAction extends Action{
 			$sd	= '['.$id.']';
 			$num= $rs['num'];
 			$rs['text'] = $rs['name'];
-			if($this->rock->isempt($num))$num = 'menunum_'.$id.'';
+			if($this->isempt($num))$num = 'menunum_'.$id.'';
 			$bo	= true;
 			$rs['leaf'] = true;
-			if(!$this->rock->isempt($rs['icons']))$rs['icon']='mode/icons/'.$rs['icons'].'.png';
+			if(!$this->isempt($rs['icons']))$rs['icon']='mode/icons/'.$rs['icons'].'.png';
 			if($rs['isopen']==1)$rs['expanded'] = true;
 			if($st>0){
 				$rs['leaf'] 	= false;
@@ -83,10 +85,10 @@ class indexClassAction extends Action{
 				$rs['children']	= $children;
 				if(count($children)<=0)$bo=false;
 			}else{
-				if(!$this->rock->contain($this->allmenuid,$sd))$bo = false;
+				if(!$this->contain($this->allmenuid,$sd))$bo = false;
 			}
 			$rs['stotal']	= $st;
-			if($this->allmenuid == '-1')$bo = true;//管理员
+			if($this->allmenuid == '-1')$bo = true;
 			$rs['num']		= $num;
 			$rs['menutype']	= 'sys';
 			if($bo)$rows[]	= $rs;

@@ -8,7 +8,6 @@
 Ext.define('Ext.rock.flowform',{
 	extend: 'Ext.panel.Panel',
     alias: 'widget.rockflowform',
-	
 	flownum:'',
 	tablename:'',
 	gridid:'',
@@ -20,11 +19,8 @@ Ext.define('Ext.rock.flowform',{
 		align: 'stretch',
 		pack: 'center'
 	},
-	
 	formparams:{},
-	formsuccess:function(){
-		
-	},
+	formsuccess:function(){},
 	formwidth:550,
 	initComponent: function(){
 		var me	= this;
@@ -43,12 +39,12 @@ Ext.define('Ext.rock.flowform',{
 				js.msg('success', ''+ssa+'保存成功');
 				a1.setBtnhidden(true);
 				me._setpreoad();
-				if(me.autoclosetab)closetabs(nowtab.num);
+				if(me.autoclosetab)closetabsnow();
 			},
 			width:me.formwidth,
 			border:false,
 			buttonsitems:[{
-				text:'提交处理',icon:gicons('check'),id:'checkbtn_'+me.rand+'',hidden:true,handler:function(){me._checkflow()}
+				text:'去处理...',icon:gicons('check'),id:'checkbtn_'+me.rand+'',hidden:true,handler:function(){me._checkflow()}
 			}]
 		};
 		me._createitmes();
@@ -57,60 +53,6 @@ Ext.define('Ext.rock.flowform',{
 	_createitmes:function(){
 		var me = this;
 		Ext.apply(me._formparams, me.formparams);
-		var shenpl = {
-			xtype:'fieldset',title: '处理进程',bodyPadding:5,hidden:me.mid==0,collapsible: true,layout:'anchor',items:[{
-				xtype: 'fieldcontainer',defaultType: 'displayfield',layout:'hbox',items:[{
-					fieldLabel:'状态',name:'checkstatustextPost',readOnly:true,value:'待提交',width:'49%',labelWidth:80
-				},{
-					fieldLabel:'当前处理人',name:'nowchecknamePost',readOnly:true,value:'',width:'49%',labelWidth:80
-				}]
-			},{
-				xtype: 'combo',fieldLabel: ''+bitian+'动作',editable:false,name: 'checkstatusPost',labelWidth:80,hidden:true,value:'',store:[['','']],anchor:'49%'
-			},{
-				fieldLabel:'说明',name:'checkexplainPost',xtype:'textareafield',height:50,labelWidth:80,hidden:true
-			},{
-				fieldLabel:'处理流程',hidden:true,name:'checnshowjloewPost',xtype:'displayfield',height:55,value:'<div id="flowlog_'+me.rand+'" class="x-form-text" style="height:50px;overflow:auto;padding:0px;line-height:22px"></div>',labelWidth:80
-			},{
-				xtype:'grid',id:'checklog_'+me.rand+'',margin:5,store:Ext.create('Ext.data.Store',{
-					fields:['id','name','checkname','status','statusname','statuscolor','explain','optdt'],
-					data:[]
-				}),
-				columns:[{
-					xtype: 'rownumberer',width:40	
-				},{
-					text:'名称',dataIndex:'name',align:'center',flex:0.7,sortable:false,menuDisabled:true
-				},{
-					text:'处理人',dataIndex:'checkname',align:'center',flex:0.7,sortable:false,menuDisabled:true
-				},{
-					text:'状态',dataIndex:'status',align:'center',flex:0.7,sortable:false,menuDisabled:true,renderer:function(v, m,a){
-						return '<font color='+a.get('statuscolor')+'>'+a.get('statusname')+'</font>';
-					}
-				},{
-					text:'时间',dataIndex:'optdt',align:'center',flex:1,sortable:false,menuDisabled:true
-				}],
-				viewConfig: {
-					enableTextSelection: true
-				},
-				features: [{
-					ftype: 'rowbody',
-					getAdditionalData: function(v, index) {
-						var cont = v.explain,
-							s	= '';
-						var cls = 'x-grid-row-body-hidden';
-						if(!isempt(cont)){
-							cls = '';
-							s	= '<div style="padding:2px;padding-left:5px;line-height:20px">【说明】：'+cont+'</div>';
-						}
-						return {
-							rowBody: s,
-							rowBodyCls:cls
-						};
-					}
-				}, {
-					ftype: 'rowwrap'
-				}]
-			}]
-		};
 		me._formparams.items.push({
 			xtype: 'fieldcontainer',defaultType: 'textfield',layout:'hbox',items:[{
 				fieldLabel:'申请人',readOnly:true,value:adminname,name:'applynamePost',width:'49%'
@@ -118,7 +60,6 @@ Ext.define('Ext.rock.flowform',{
 				fieldLabel:'申请人部门',readOnly:true,value:admindeptname,name:'applydeptnamePost',width:'50%'
 			}]
 		});
-		me._formparams.items.push(shenpl);
 		me.items = me._formparams;
 	},
 	showdata:function(){},
@@ -128,7 +69,6 @@ Ext.define('Ext.rock.flowform',{
 		this.form 	= this.down('rockform');
 		this.loadData();
 	},
-	//加载数据
 	loadData:function(){
 		var me		= this;
 		me.isedit	= 0;
@@ -153,30 +93,24 @@ Ext.define('Ext.rock.flowform',{
 		var a = js.decode(da);
 		me.backdata = a;
 		me.form.adddata(a.data,'id');
-		me.form.setVal('nowcheckname', js.repempt(a.data.nowcheckname,''));
-		me._loadinforshow(a);
-		getcmp('checklog_'+me.rand+'').getStore().loadData(a.logarr);
-		getcmp('checklog_'+me.rand+'').setHeight(150);
-		me.form.getField('checkstatus').getStore().loadData(a.actarr);;
-		var zt = '',zt1='';
+		
+		var zt = '';
 		if(a.data.isturn!=1){
 			zt = '待提交';
 		}else{
 			zt = a.data.checkstatustext;
 			if(a.ischeck==1){
 				getcmp('checkbtn_'+me.rand+'').show();
-				me.form.getField('checkstatus').show();
-				me.form.getField('checkexplain').show();
 			}
-			if(a.data.status !=1)me.form.getField('checnshowjloew').show();
 		}
-		me.form.setVal('checkstatustext', zt);
 		me.isedit = a.isedit;
 		if(me.isedit==1){
 			me.form.setBtnhidden(false);
 			me.form.setBitian();
+		}else{
+			me.form.setReadOnly(true);
+			me.form.setBtnhidden(true);
 		}
-		if(!me.isEdit())me.form.setReadOnly(true, 'checkexplainPost,checkstatusPost');
 		if(me.form.getField('fileid')){
 			me.form.getField('fileid').loadfile(me.tablename, me.mid, !me.isEdit());
 		}
@@ -189,40 +123,9 @@ Ext.define('Ext.rock.flowform',{
 	},
 	_checkflow:function(){
 		var me = this;
-		if(me.form.bool)return;
-		var zt = me.form.getVal('checkstatus'),
-			sm = me.form.getVal('checkexplain');
-		var das = {zt:zt,sm:sm,flownum:me.flownum,id:me.mid};
-		if(isempt(zt)){
-			me.form.setmsg('请选择处理动作');
-			return;
-		}
-		if(zt=='2' && isempt(sm)){
-			me.form.setmsg('此动作必须填写说明');
-			return;
-		}
-		me.form.setmsg('处理中...', '#ff6600');
-		me.form.bool = true;
-		$.ajax({
-			type:'post',url:js.getajaxurl('check','flow'),data:das,
-			success:function(da){
-				me._setpreoad();
-				if(da.indexOf('成功')){
-					me.form.setmsg(da, 'green');
-					getcmp('checkbtn_'+me.rand+'').setDisabled(true);
-					try{reloaddaiban()}catch(e){}
-					js.msg('success', da);
-					closetabsnow();
-				}else{
-					me.form.bool = false;
-					me.form.setmsg(da);
-				}
-			},
-			error:function(){
-				me.form.bool = false;
-				me.form.setmsg('处理失败请重试');
-			}
-		});
+		var url = js.getajaxurl('$view','flow','taskrun',{uid:adminid,mid:me.mid,modenum:me.flownum,table:this.tablename,jmbool:true});
+		url+='&gridid='+me.gridid+'';
+		js.open(url, 800);
 	},
 	getForm:function(){
 		return this.down('rockform');
@@ -230,8 +133,9 @@ Ext.define('Ext.rock.flowform',{
 	isEdit:function(){
 		return this.isedit == 1;
 	},
-	//可以刷新
 	_setpreoad:function(){
+		getparent(''+this.flownum+'list_0','setReload', true);
+		getparent(''+this.flownum+'list_1','setReload', true);
 		if(!this.gridid)return;
 		if(!getcmp(this.gridid))return;
 		getcmp(this.gridid).setReload(true);

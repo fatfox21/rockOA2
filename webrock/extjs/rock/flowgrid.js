@@ -12,6 +12,9 @@ Ext.define('Ext.rock.flowgrid',{
 	flownum:'',
 	columns:[],
 	reloadbool:false,
+	dblclick:function(){
+		this._view();
+	},
 	initComponent: function(){
 		var me	= this;
 		Ext.applyIf(me, {
@@ -69,7 +72,7 @@ Ext.define('Ext.rock.flowgrid',{
 		me.datachanged = function(){
 			me.flow.loadshow(me);
 		}
-		me.flow = Ext.create('Ext.rock.flow',{opentype:me.opentype,flownum:me.flownum,rand:me.rand});
+		me.flow = Ext.create('Ext.rock.flow',{opentype:me.opentype,flownum:me.flownum,rand:me.rand,gridid:me.getId()});
 		var viewbtn = {text:'新窗口查看',icon:gicons('application'),disabled:true,handler:function(){me._view()},id:'view_'+me.rand+''};
 		
 		if(me.opentype!=0){
@@ -106,6 +109,7 @@ Ext.define('Ext.rock.flowgrid',{
 	_view:function(){
 		var a = this.changedata;
 		var url = js.getajaxurl('$view','flow','taskrun',{uid:adminid,mid:a.id,modenum:this.flownum,table:this.tablename,jmbool:true});
+		url+='&gridid='+this.getId()+'';
 		js.open(url, 800);
 	},
 	_zhuijiagrid:function(){
@@ -161,7 +165,9 @@ Ext.define('Ext.rock.flowgrid',{
 		this._opentals('新增',0);
 	},
 	_opentals:function(tit, sid){
-		addtabs('['+tit+']'+this.formtitle,'flow,apply,'+this.flownum+',flownum='+this.flownum+',tablename='+this.tablename+',opentype='+this.opentype+',mid='+sid+',gridid='+this.getId()+'', ''+this.flownum+'_'+sid+'',{menutype:'cy'});
+		var tabss = ''+this.tablename+'';
+		//tabss = jm.uncrypt(tabss);
+		addtabs('['+tit+']'+this.formtitle,'flow,apply,'+this.flownum+',flownum='+this.flownum+',tablename='+tabss+',opentype='+this.opentype+',mid='+sid+',gridid='+this.getId()+'', ''+this.flownum+'_'+sid+'',{menutype:'cy'});
 	},
 	_edit:function(){
 		this._opentals('编辑',this.changedata.id);

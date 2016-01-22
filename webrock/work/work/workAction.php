@@ -53,6 +53,16 @@ class workClassAction extends Action
 		return array('rows'=>$rows);
 	}
 	
+	public function workbeforeact($table)
+	{
+		$atype	= (int)$this->post('atype',0,'');
+		$s 		= "and mid>0 and instr(concat(',', distid, ','), ',$this->adminid,')>0";
+		if($atype==1){
+			$s 		= "and mid>0 and instr(concat(',', baoid, ','), ',$this->adminid,')>0";
+		}
+		return $s;
+	}
+	
 	//我的任务
 	public function getwcslistbefore($table)
 	{

@@ -1,5 +1,6 @@
+var atype = params.atype;
 var panel = {
-	xtype:'rockgrid',tablename:'daily',formtitle:'工作日报',exceltitle:'工作日报',url:publiccheckstore(mode,dir),opentype:5,
+	xtype:'rockgrid',tablename:'daily',itemId:'dailylist',formtitle:'工作日报',exceltitle:'工作日报',url:publiccheckstore(mode,dir),opentype:atype,
 	defaultorder:'a.`dt` desc',searchtools:true,
 	_qiehuanzt:function(lx){
 		this.setparams({opentype:lx},true);
@@ -13,12 +14,6 @@ var panel = {
 		return s;
 	},
 	tbar:['->',{
-		text:'我的日报',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(5);}
-	},'-',{
-		text:'下属人员日报',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(4);}
-	},,{
-		text:'授权查看',enableToggle:true,toggleGroup:'tools_'+rand+'',handler:function(){rock[index]._qiehuanzt(6);}
-	},'->',{
 		text:'新增',icon:gicons('add'),handler:function(){
 			this.up('grid')._clickeadd();
 		}
@@ -26,12 +21,23 @@ var panel = {
 		text:'编辑',icon:gicons('edit'),id:'editbtn_'+rand+'',disabled:true,handler:function(){
 			this.up('grid')._clickedit();
 		}
+	},'-',{
+		text:'删除',icon:gicons('delete'),id:'delbtn_'+rand+'',disabled:true,handler:function(){
+			this.up('grid').del();
+		}
 	}],
 	click:function(o,d){
-		getcmp('editbtn_'+rand+'').setDisabled(d.data.uid!=adminid);
+		if(atype == 5){
+			var bo = d.data.uid!=adminid;
+			getcmp('editbtn_'+rand+'').setDisabled(bo);
+			getcmp('delbtn_'+rand+'').setDisabled(bo);
+		}
 	},
 	beforeload:function(){
-		getcmp('editbtn_'+rand+'').setDisabled(true);
+		if(atype == 5){
+			getcmp('editbtn_'+rand+'').setDisabled(true);
+			getcmp('delbtn_'+rand+'').setDisabled(true);
+		}
 	},
 	_clickedit:function(){
 		var sid = this.changedata.id;
@@ -82,15 +88,12 @@ var panel = {
 		ftype: 'rowwrap'
 	}]
 };
-
+if(atype!=5)panel.tbar = [];
 return {
 	panel:panel,
 	tabson:{
 		show:function(){
-			if(rock[index].isreadload){
-				rock[index].storereload();
-				rock[index].isreadload=false;
-			}	
+			rock[index].isReload();	
 		}
 	}
 };

@@ -17,6 +17,14 @@ function wancla(){
 	$('#step3').show();
 }
 
+function delinstall(){
+	var url = js.getajaxurl('delinstall','install');
+	$.get(url,function(){
+		js.msg('success','删除成功');
+	});
+	return false;
+}
+
 function submitla(){
 	if(bool)return;
 	var a = js.getformdata();
@@ -38,6 +46,10 @@ function submitla(){
 	}
 	if(isempt(a.highpass)){
 		js.setmsg('超级管理密码');
+		return;
+	}
+	if(!form('opendbq').checked){
+		js.setmsg('请先确认开启PHP短标签');
 		return;
 	}
 	var url = location.href;

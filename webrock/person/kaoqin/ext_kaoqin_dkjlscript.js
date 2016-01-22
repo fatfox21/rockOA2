@@ -35,13 +35,13 @@ var panel={
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'部门',dataIndex:'deptname',width:220,search:true,qz:'b.'
+		text:'部门',dataIndex:'deptname',flex:1,search:true,qz:'b.'
 	},{
-		text:'姓名',dataIndex:'name',width:120,search:true,qz:'b.'
+		text:'姓名',dataIndex:'name',width:'20%',search:true,qz:'b.'
 	},{
-		text:'时间',dataIndex:'checktime',width:250,search:true
+		text:'时间',dataIndex:'checktime',width:'24%',search:true
 	},{
-		text:'星期',dataIndex:'cnweek',width:100
+		text:'星期',dataIndex:'cnweek',width:'20%'
 	}]
 }
 return {

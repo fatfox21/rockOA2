@@ -430,11 +430,11 @@ js.tanbody=function(act,title,w,h,can1){
 	s+='	<div id="'+act+'_bbar" style="padding:5px 10px;background:#eeeeee;line-height:30px" align="right"><span id="msgview_'+act+'"></span>&nbsp;';
 	for(var i=0; i<can.btn.length; i++){
 		var a	= can.btn[i];
-		s+='<a class="btn btn-success" id="'+act+'_btn'+i+'" onclick="return false" href="javascript:">';
+		s+='<a class="webbtn btn-success" id="'+act+'_btn'+i+'" onclick="return false" href="javascript:">';
 		if(!isempt(a.icons))s+='<i class="icon-'+a.icons+'"></i>&nbsp; ';
 		s+=''+a.text+'</a>&nbsp; ';
 	}
-	s+='		<a class="btn btn-default" id="'+act+'_cancel" onclick="return js.tanclose(\''+act+'\',\''+can.guanact+'\')" href="javascript:"><i class="icon-remove"></i>&nbsp;取消</a>';
+	s+='		<a class="webbtn" id="'+act+'_cancel" onclick="return js.tanclose(\''+act+'\',\''+can.guanact+'\')" href="javascript:"><i class="icon-remove"></i>&nbsp;取消</a>';
 	s+='	</div>';
 	s+='</div>';
 	js.xpbody(act,can.mode);

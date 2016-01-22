@@ -31,6 +31,7 @@ Ext.define('Ext.ux.calendar', {
 	defaultMonth:'',
 	rightBtn:[],
 	leftBtn:[],
+	showType:'',
 	initComponent: function(){
 		var me	= this,i;
 		me.rand	= js.getrand();
@@ -257,13 +258,6 @@ Ext.define('Ext.ux.calendar', {
 			me.dayvalue[maic] 	= sar;
 			o.title=day;
 		}
-		/*
-		var qoi	= 1;
-		for(var i=maxday+ic;i<42;i++){
-			var o	= me.objtd[i];
-			o.innerHTML='<div style="color:#cccccc;line-height:26px">'+qoi+'</div><div style="line-height:20px">&nbsp;</div>';
-			qoi++
-		}*/
 		getcmp('calenow_'+me.rand+'').setText(''+year+'年'+month+'月');
 		me.changemonth(me,Y, month);
 	},
@@ -273,9 +267,17 @@ Ext.define('Ext.ux.calendar', {
 	addneiroshow:function(o, sar){
 		var s= '<div style="font-size:14px;line-height:20px">'+sar.d+'</div>';
 		s+='<div style="font-size:11px;color:'+sar.color+';line-height:20px">'+sar.jieri+'</div>';
+		if(this.showType=='data'){
+			s= '<div style="line-height:20px;text-align:left">&nbsp;'+sar.d+' <span style="font-size:11px;color:#888888">'+sar.jieri+'</span> </div>';
+			s+='<div style="font-size:12px;padding-left:3px" align="left" id="calendarday_'+this.rand+'_'+sar.d+'"></div>';
+		}
 		var s1 = this.renderer(o,sar,this.Y,xy10(this.m));
 		if(s1)s=s1;
 		o.innerHTML = s;
+	},
+	getdayObj:function(d){
+		var o = $('#calendarday_'+this.rand+'_'+d+'');
+		return o;
 	},
 	clickday:function(o, e)
 	{

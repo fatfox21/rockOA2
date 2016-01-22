@@ -1,0 +1,102 @@
+<?php
+$btianarr=array();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="stylesheet" href="mode/kindeditor/themes/default/default.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="mode/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript">
+js.path	= '<?=PATH?>';
+PROJECT = '<?=P?>';
+var id  = '<?=$da['rs']['id']?>';
+var modenum = '<?=$da['rs']['num']?>',editor;
+function initbody(){
+	resizes();
+	
+	$(window).resize(resizes);
+	
+	var cans  = {
+		resizeType : 0,
+		allowPreviewEmoticons : false,
+		allowImageUpload : true,
+		formatUploadUrl:false,
+		uploadJson:'mode/kindeditor/kindeditor_upload.php',
+		allowFileManager:true,
+		items : [
+			'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+			'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+			'insertunorderedlist', '|','table', 'link','unlink','|','source','clearhtml','fullscreen'],
+		blur:function(){
+		}
+	};
+	editor = KindEditor.create('#content', cans);
+}
+function resizes(){
+	var s = winHb();
+	$('#page_left').css('height',''+(s-80)+'px');
+	$('#page_conent').css('height',''+s+'px');
+	$('#content').css('height',''+(s-30)+'px');
+}
+var c = {
+	insert1:function(o1,lx){
+		var o  = $(o1).parent();
+		var fid = o.attr('fields'),fss = o.attr('fname');
+		if(lx==0)editor.insertHtml(fss);
+		if(lx==1)editor.insertHtml('{'+fid+'}');
+	},
+	save:function(){
+		js.msg('wait','保存中...');
+		var nr= editor.html();
+		nr = nr.replace(/\n/gi,'');
+		nr = nr.replace(/[	]/gi,'');
+		var d = {content:nr,num:modenum};
+		$.post(js.getajaxurl('pagesave','set','flow'),d,function(da){
+			js.msg('success','保存成功');
+		});
+		return false;
+	}
+};
+</script>
+
+<style>
+.yangss{height:40px;line-height:40px;background:#e1e1e1;overflow:hidden}
+#page_left div{text-align:left;padding:5px 10px;cursor:pointer}
+#page_left div:hover{ background-color:#f1f1f1;color:#225DE8}
+</style>
+</head>
+<body>
+<div align="center">
+<table width="100%">
+<tr>
+	<td  bgcolor="#f5f5f5">
+		<div style="width:210px;">
+			<div class="yangss"><h1><?=$da['rs']['name']?>(元素)</h1></div>
+			<div id="page_left" style="overflow:auto">
+				<?php
+				foreach($da['fleft'] as $k=>$rs){
+					echo '<div  fields="'.$rs[0].'" fname="'.$rs[1].'">'.($k+1).'. '.$rs[1].' <a href="javascript:" onclick="c.insert1(this,0)">＋</a> <a href="javascript:" onclick="c.insert1(this,1)">⊥</a></div>';
+				}
+				?>
+			</div>
+			<div class="yangss" align="left">&nbsp; &nbsp;<a href="javascript:" onclick="return c.save()" class="webbtn">保存</a></div>
+		</div>
+	</td>
+	<td width="100%">
+		<div style="overflow:auto" id="page_conent">
+			<div style="padding:10px"><textarea style="width:98%;" id="content"><?=$da['content']?></textarea></div>
+		</div>
+	</td>
+</tr>
+</table>
+	
+</div>
+</body>
+</html>

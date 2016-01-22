@@ -1,6 +1,12 @@
 <?php 
 class todoClassAction extends Action{
 	
+	public function byiduAjax()
+	{
+		$sid		= $this->post('sid');
+		m('todo')->update('`status`=1', "`id` in($sid) and `status`=0 and `uid`='$this->adminid'");
+	}
+	
 	public function jisanstatela($table, $rows)
 	{
 		$dta = c('date', true);

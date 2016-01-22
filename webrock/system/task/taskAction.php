@@ -36,8 +36,8 @@ class taskClassAction extends Action
 	
 	public function gettaketimeAjax()
 	{
-		$mid	= $this->rock->get('mid');
-		$table	= $this->rock->get('table');
+		$mid	= $this->get('mid');
+		$table	= $this->get('table');
 		$rows	= m('tasktime')->getall("`table`='$table' and mid='$mid' order by id asc");
 		echo  json_encode($rows);
 	}
@@ -46,9 +46,8 @@ class taskClassAction extends Action
 	{
 		$rate	= c('rate', true);
 		$ndt	= date('Y-m-d');
-		$dt		= $this->rock->post('dt', $ndt);
-		$hor	= date('H:i:s');
-		if($dt != $ndt)$hor='';
+		$dt		= $this->post('dt', $ndt);
+		$hor	= '';
 		$rows	= $rate->result('task', $dt, 'and `status`=1', $hor);
 		echo json_encode(array(
 			'totalCount'=> count($rows),

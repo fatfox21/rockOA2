@@ -43,10 +43,37 @@ function getrand(){
 	var r = js.getrand();
 	return r;
 }
+function getparent(nu, act, pas1,pas2){
+	var o;
+	try{
+		if(pas1==undefined)pas1='';if(pas2==undefined)pas2='';
+		o = menuTabs.down('#'+nu+'');
+		if(o && act)o[act](pas1,pas2);
+	}catch(e){}
+	return o;
+}
+function gettabs(nu){
+	var num = 'tabs_'+nu+'';
+	return getcmp(num);
+}
 function winopt(cans){
 	var opt = {closeAction:'hide',width:400,maximizable:true,collapsible:true,modal:false,layout: 'fit'};
 	Ext.apply(opt,cans);
 	return opt;
+}
+function mopenview(nu,_id, gid, lx){
+	if(!lx)lx='view';
+	var sa2 = nu.split('@');
+	nu = sa2[0];
+	var can = {uid:adminid,mid:_id,jmbool:false};
+	if(nu)can.modenum=nu;
+	if(sa2[1])can.table=sa2[1];
+	var url = js.getajaxurl('$'+lx+'','flow','taskrun',can);
+	if(gid)url+='&gridid='+gid+'';
+	js.open(url, 800);
+}
+function mopenprint(nu,_id, gid){
+	mopenview(nu,_id,gid,'print');
 }
 var bitian	= '<font color=red>*</font>';
 var indexxu	= -1;
@@ -116,10 +143,14 @@ function addtabs(title,urlnr,num1,opts){
 				if(isNaN(len)){
 					can = {region:'center',id:'main_'+rand+'_0'};
 					Ext.apply(can,cas);
+					if(!can.itemId)can.itemId=parsent.num;
 					parsent.add(can);
 					rock[index]=parsent.down();
 				}else{
-					for(i=0;i<len;i++)if(!cas[i].id)cas[i].id='main_'+rand+'_'+i+'';
+					for(i=0;i<len;i++){
+						if(!cas[i].id)cas[i].id='main_'+rand+'_'+i+'';
+						if(!cas[i].itemId)cas[i].itemId=parsent.num+'_'+i+'';
+					}	
 					parsent.add(cas);
 					if(len==1){
 						rock[index]=getcmp(cas[0].id);
@@ -310,9 +341,7 @@ function createindex(){
 			id:'index_bottom',region:'south',xtype:'toolbar',
 			items:[{
 				icon:gicons('user'),text:'用户：'+adminuser+'',showSeparator:false
-			},'-','登录次数:'+adminloginci+'',{
-				text:'选择卡信息',hidden:admintype=='0',handler:function(){js.getarr(nowtab)}
-			},'->','-','基于<a href="http://www.rockoa.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
+			},'-','登录次数:'+adminloginci+'','->','-','基于<a href="http://www.rockoa.com" target="_blank" class="a">ROCKOA</a>版本：V'+VERSION+'','-',{
 				text:'重新加载',icon:gicons('arrow_refresh'),handler:benreload
 			},'-',{
 				text:'全屏',icon:gicons('arrow_out'),handler:fullscreen
@@ -429,20 +458,16 @@ function createindex(){
 		loadcitis++;
 		$.get(url, function(da){
 			var a = js.decode(da);
+			//if(a.msg)showpopup(a.msg);
 			if(a.str)showtixing(a.str);
 			$('#tixing_count').html('('+a.count+')');
 			loadtime = a.time;
 		});
 		setTimeout(gettixing, 60*1000*10);
 	}
-	var cans= winopt({title:'系统提醒',resizable:false,constrainHeader:true,html:'<div style="padding:5px 10px;line-height:20px" id="tixingwin_msgtishi">提醒</div>',autoScroll: true,opacity:0,maximizable:false,icon:gicons('bell'),collapsible:false,width:300,height:180,x:winWb()-305,y:winHb()-185,listeners:{
+	var cans= winopt({title:'系统提醒',resizable:false,constrainHeader:true,html:'<div style="padding:5px 10px;line-height:20px" id="tixingwin_msgtishi" onclick="_setNotification()">提醒</div>',autoScroll: true,opacity:0,maximizable:false,icon:gicons('bell'),collapsible:false,width:300,height:180,x:winWb()-305,y:winHb()-185,listeners:{
 		beforeclose:function(a){
-			a.animate({
-				duration: 500,
-				to:{
-					opacity:0
-				}
-			});
+			a.animate({duration: 500,to:{opacity:0}});
 			setTimeout(function(){a.hide()},500);
 			return false;
 		}
@@ -452,12 +477,7 @@ function createindex(){
 		tixingwin.show();
 		$('#tixingwin_msgtishi').html(str);
 		tixingwin.animate({
-			duration: 1000,
-			to: {
-				opacity:1
-			},from: {
-				opacity:0
-			}
+			duration: 1000,to:{opacity:1},from: {opacity:0}
 		});
 		return false;
 	}
@@ -467,3 +487,28 @@ function gototixingla(){
 	addtabs('提醒信息','person,todo','todo',{icon:gicons('bell')});
 	return false;
 };
+function _setNotification(){
+	return;
+	if(!('Notification' in window))return false;
+	if(Notification.permission === 'granted')return false;
+	if(Notification.permission !== 'denied'){
+		Notification.requestPermission(function (permission) {
+			if(!('permission' in Notification)) {
+				Notification.permission = permission;
+			}
+			if (permission === 'granted') {
+				//'开启桌面通知'
+			}
+		});
+	}
+}
+function showpopup(msg){
+	if(!('Notification' in window))return false;
+	var can	= {body:msg,icon:systemlogo,tag:'webkitMeteoric'};
+	var notification	= new Notification('OA系统通知',can);
+	notification.onclick = function(){
+		window.focus();
+		gototixingla();
+		this.close();
+	}
+}

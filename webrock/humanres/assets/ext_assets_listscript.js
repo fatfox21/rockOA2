@@ -55,7 +55,7 @@ var panelss = {
 	click:function(o,r){
 		btn(false);
 	},
-	itemId:'listm',
+	itemId:'assetslist',
 	dblclick:function(o,r){
 		var sid = r.get('id');
 		grids.searchgoto('and mid='+sid+'');
@@ -109,16 +109,13 @@ var panel = [panelss,{
 return {
 	panel:panel,
 	init:function(){
-		grid = objpanel.down('#listm');
+		grid = objpanel.down('#assetslist');
 		grids = objpanel.down('#lists');
 		form = objpanel.down('#listss');
 	},
 	tabson:{
 		show:function(){
-			if(grid.isreadload){
-				grid.storereload();
-				grid.isreadload=false;
-			}	
+			grid.isReload();
 		}
 	}
 };

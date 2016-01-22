@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript">
+js.path = '<?=PATH?>';
+PROJECT = '<?=P?>';
+</script>
+<style>
+button{padding:5px 0px}
+</style>
+</head>
+<body style="padding:5px">
+<div style="padding:10px 0px "><button onclick="window.close()" type="button">&nbsp;关闭&nbsp;</button></div>
+<div style="padding:5px;background:#f1f1f1;line-height:20px">
+	<div><font color=#888888>主题：</font><b><?=$da['rs']['title']?></b></div>
+	<div><font color=#888888>发件：</font><?=$da['rs']['recename']?></div>
+	<div><font color=#888888>收件：</font><?=$da['rs']['sendname']?></div>
+	<div><font color=#888888>时间：</font><?=$da['rs']['senddt']?></div>
+</div>
+
+<div style="padding:5px;" class="content"><?=$da['rs']['content']?></div>
+
+
+</body>
+</html>

@@ -16,18 +16,20 @@ var panel = {
 	},{
 		text:'频率',dataIndex:'rate',width:'10%',search:true,autowidth:true
 	},{
-		text:'启用',dataIndex:'status',width:60,renderer:renderbox,editor:{xtype:'combo',store:js.arraystr(),editable:false},search:true,atype:'select'
+		text:'启用',dataIndex:'state',width:60,renderer:renderbox,editor:{xtype:'combo',store:js.arraystr(),editable:false},search:true,atype:'select'
 	},{
 		text:'操作时间',dataIndex:'optdt',width:150,search:true
 	},{
 		text:'发起人',dataIndex:'optname',width:70,search:true
 	},{
-		text:'ID',dataIndex:'id',width:40
+		text:'说明',dataIndex:'explain',flex:1,align:'left'
+	},{
+		text:'ID',dataIndex:'id',width:50
 	}],
 	formwidth:350,
 	formparams:{
-		submitfields:'hyname,title,startdt,enddt,status,joinid,joinname,rate,optname',
-		params:{int_filestype:'status',otherfields:'optdt={now},type=1'},
+		submitfields:'hyname,title,startdt,enddt,state,joinid,joinname,rate,optname,explain',
+		params:{int_filestype:'state',otherfields:'optdt={now},optid={adminid},type=1,status=1'},
 		items:[{
 			fieldLabel:'id号',value:'0',name:'idPost',hidden:true
 		},{
@@ -45,9 +47,11 @@ var panel = {
 		},{
 			fieldLabel:'参会人员',nameidfields:'joinid_'+rand+'',name:'joinnamePost',xtype:'changedeptuser',changetitle:'选择参会人员',changetype:'deptusercheck'
 		},{
-			fieldLabel:'&nbsp;',name:'statusPost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:''
+			fieldLabel:'&nbsp;',name:'statePost',xtype:'checkboxfield',boxLabel:'启用',inputValue:'1',checked:true,labelSeparator:''
 		},{
 			fieldLabel:''+bitian+'发起人',name:'optnamePost',allowBlank: false,value:adminname
+		},{
+			fieldLabel:'说明',name:'explainPost',xtype:'textareafield'
 		}]
 		
 	}

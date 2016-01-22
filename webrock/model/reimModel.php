@@ -46,7 +46,7 @@ class reimClassModel extends Model
 				'type'	=> 'system',
 				'optdt'	=> $this->rock->now,
 				'zt'	=> 0,
-				'cont'	=> $this->rock->jm->encrypt($cont),
+				'cont'	=> $this->rock->jm->base64encode($cont),
 				'sendid'=> $sendid,
 				'receid'=> $gid,
 				'optid'	=> $sendid,
@@ -69,6 +69,8 @@ class reimClassModel extends Model
 				'type'	=> 'system',
 				'now'	=> $this->rock->now,
 				'messid'=> $messid,
+				'table'	=> $table,
+				'mid'	=> $mid,
 				'url'	=> $url
 			));
 		}

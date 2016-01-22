@@ -13,7 +13,7 @@ var panel = {
 	xtype:'rockgrid',tablename:'todo',keywhere:'and uid='+adminid+'',checkcolumns:true,
 	defaultorder:'`status`,id desc',searchtools:true,celleditbool:true,url:publicstore(mode,dir),
 	storeafteraction:'jisanstatela',
-	storeconfig:{groupField: 'temp_atype'},fields:['temp_atype','url'],
+	storeconfig:{groupField: 'temp_atype'},fields:['temp_atype','table','mid'],
 	features: [{ftype:'grouping',groupHeaderTpl: '日期: {name} ({rows.length}条)'}],
 	columns:[{
 		xtype: 'rownumberer',
@@ -27,9 +27,20 @@ var panel = {
 	},{
 		text:'状态',dataIndex:'status',width:80,renderer:huirendhi,search:true,atype:'select',editor:{xtype:'combo',store:[['0','未读'],['1','已读']],editable:false}
 	}],
+	_byidula:function(){
+		var sid = this.getSelectValue('id', true);
+		if(sid==''){
+			js('msg','没有选中行');
+			return;
+		}
+		var me = this;
+		$.post(js.getajaxurl('byidu','todo','person'),{sid:sid}, function(){
+			me.storereload();
+		});
+	},
 	tbar:['->',{
 		text:'选中标识已读',itemId:'biao',handler:function(){
-			this.up('rockgrid').changfiledval({fieldname:'status',value:1}, '标识', function(a){a.storereload()}, true);
+			this.up('rockgrid')._byidula();
 		}
 	},'-',{
 		text:'删除',icon:gicons('delete'),itemId:'del',handler:function(){
@@ -40,8 +51,9 @@ var panel = {
 		$('#tixing_count').html('('+this.getData('wdcount')+')');
 	},
 	dblclick:function(a, v){
-		var url = v.data.url;
-		if(!isempt(url))js.open(url, 800);
+		var a = v.data;
+		if(a.status==0)$.post(js.getajaxurl('byidu','todo','person'),{sid:a.id});
+		if(a.table)mopenview('@'+a.table,a.mid);
 	}
 };
 

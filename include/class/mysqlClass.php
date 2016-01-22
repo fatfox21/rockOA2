@@ -1,5 +1,4 @@
 <?php
-
 include_once('mysql.php');
 class mysqlClass extends mysql{
 	

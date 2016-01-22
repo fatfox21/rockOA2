@@ -117,7 +117,7 @@ var im = {
 		$('#pageshow').html(s);
 	},
 	showdata:function(a){
-		var i,len = a.length,cont,lex,nas,ids='0',fase;
+		var i,len = a.length,cont,lex,nas,ids='0',fase,url;
 		$('#listcontent').html('');
 		for(i= len-1; i>=0; i--){
 			lex = 'right';
@@ -129,9 +129,10 @@ var im = {
 				fase= a[i].sendface;
 			}
 			if(a[i].zt=='0')ids+=','+a[i].id;
-			cont = jm.uncrypt(a[i].cont);
-			if(!isempt(a[i].url)){
-				cont+='<br><a href="javascript:" onclick="return openurlla(\''+a[i].url+'\')">打开地址&gt;&gt;</a>';
+			cont = jm.base64decode(a[i].cont);
+			url 	= strformat.geturl(a[i]);
+			if(!isempt(url)){
+				cont+='<br><a href="javascript:" onclick="return openurlla(\''+url+'\')">打开地址&gt;&gt;</a>';
 			}
 			cont= strformat.showqp(lex,nas,a[i].optdt, cont,'', fase);
 			this.addcont(cont);

@@ -1,17 +1,11 @@
 var date = js.now(),grid,win,
-	atype = params.atype,keywhere;
-	
-keywhere 	= "op0on0lj0hgn0nj0nh0kp0hhi0pg0mo0li0hhp0nj0nh0ng0hhn0pg0mn0mm0hhi0po0hhg0no0ko0pp0hgl0hgk0hgm0po0lg0lj0hgm0op0oo0oh0hhh0nk0hih0hhp0hhg0nm0mn0mm0hgn0pn0oo0no0ko0pn0on0oh0hhl0nj0mn0pp0hhl0nk0hih0hgn0hhl0nj0mn0pp0hhl0on0lg0ng0hgn0po0on0hgo0hhn0pn0on0oi0hgg0nm0mn0pp0hhi0og0hgm0ml0lo06";
-if(atype == 1){//报告查看
-	keywhere = "uv0ut0rp0nmt0tp0tn0qv0nno0vm0su0ro0nnv0tp0tn0tm0nnt0vm0st0ss0nno0vu0nnm0tu0qu0vv0nmr0nmq0nms0vu0rm0rp0nms0uv0uu0un0nnn0tq0non0nnv0nnm0ts0st0ss0nmr0uv0ut0rt0nno0vm0st0nnv0nmp0tq0non0nnv0nnm0tr0up0nnv0nmp0tq0non0nom0vu0uv0ut0uo0nns0vt0ut0rp0nno0vm0tm0qu0nnr0tq0non0nmt0pp0tt0sr0ru0ru012";
-}
+	atype = params.atype;
 
 var spanel 	= {
 	xtype:'rockgrid',celleditbool:true,region:'north',url:publicstore(mode,dir),
 	storeafteraction:'getlistwock',pageSize:0,height:250,split:true,minHeight:250,
-	tablename:'work',searchtools:true,defaultorder:'optdt desc',
-	defaultwhere:"[A][K]dt[D][F]"+date+"[F]",id:'grid_'+rand+'',
-	keywhere:keywhere,bbarbool:false,searchtools:false,
+	tablename:'work',searchtools:true,defaultorder:'optdt desc',storebeforeaction:'workbeforeact',
+	defaultwhere:"[A][K]dt[D][F]"+date+"[F]",id:'grid_'+rand+'',paramsbase:{atype:atype},bbarbool:false,searchtools:false,
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40
@@ -34,9 +28,8 @@ var spanel 	= {
 	},{
 		text:'任务报告',dataIndex:'baoname',search:true,autowidth:true,renderer:function(v, m, b){
 			var s = '';
-			if(!isempt(v)&&!isempt(b.raw.bgtime)){
-				s = '每天'+b.raw.bgtime+'的报告给'+v+'';
-			}
+			if(!isempt(v))s='报告给'+v+'';
+			if(!isempt(b.raw.bgtime))s+= '<br>每天'+b.raw.bgtime+'';
 			return s;
 		}
 	},{

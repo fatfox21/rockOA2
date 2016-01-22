@@ -14,7 +14,7 @@ var panel = {
 	},{
 		text:'时间',dataIndex:'optdt',search:true,width:160,type:'date'
 	},{
-		text:'内容',dataIndex:'cont',flex:1,align:'left',renderer:function(v){return jm.uncrypt(v)}
+		text:'内容',dataIndex:'cont',flex:1,align:'left',renderer:function(v){return jm.base64decode(v)}
 	}]
 };
 

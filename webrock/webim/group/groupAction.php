@@ -4,6 +4,7 @@ class groupClassAction extends Action{
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
 		$db		= m('admin');
 		$aid	= (int)$this->get('aid');
 		$gid	= (int)$this->get('gid');
@@ -61,9 +62,9 @@ class groupClassAction extends Action{
 	{
 		$dbs	= m('im_mess');
 		$whes	= $this->rock->dbinstr('receuid', $uid);
-		$wdarr	= $dbs->getall("`receid`='$gid' and `type`='$type' and $whes and `id` in(select `mid` from `[Q]im_messzt` where `uid`='$uid') order by `optdt` desc ", 'optdt,zt,id,cont,sendid,url');
+		$wdarr	= $dbs->getall("`receid`='$gid' and `type`='$type' and $whes and `id` in(select `mid` from `[Q]im_messzt` where `uid`='$uid') order by `optdt` desc ", 'optdt,zt,id,cont,sendid,url,`table`,mid');
 		if($this->db->count==0){
-			$wdarr	= $dbs->getall("`receid`='$gid' and `type`='$type' and $whes order by `optdt` desc limit 3", 'optdt,zt,id,cont,sendid,url');
+			$wdarr	= $dbs->getall("`receid`='$gid' and `type`='$type' and $whes order by `optdt` desc limit 3", 'optdt,zt,id,cont,sendid,url,`table`,mid');
 			foreach($wdarr as $k=>$rs){
 				$wdarr[$k]['zt'] = 1;
 			}
@@ -113,6 +114,7 @@ class groupClassAction extends Action{
 	
 	public function systemAction()
 	{
+		$this->tpltype	= 'html';
 		$db		= m('admin');
 		$aid	= (int)$this->get('aid');
 		$gid	= (int)$this->get('gid');

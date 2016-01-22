@@ -6,8 +6,8 @@
 	* 开发者：雨中磐石工作室										*
 	* 邮  箱： qqqq2900@126.com										*
 	* 网  址： http://www.xh829.com/								*
-	* 说  明: 数据库核心类										*
-	* 备  注: 未经允许不得商业出售，代码欢迎参考纠正			*
+	* 说  明: 数据库核心类											*
+	* 备  注: 未经允许不得商业出售，代码欢迎参考纠正				*
 	*****************************************************************
 */ 
 abstract class mysql{
@@ -16,6 +16,7 @@ abstract class mysql{
 	public $iudcount	= 0;
 	public $iudarr		= array();
 	public $tran		= false;
+	public $rock;
 	
 	public  $nowsql;
 	public  $countsql	= 0;
@@ -28,16 +29,29 @@ abstract class mysql{
 	public  $nowerror	= false;
 	public  $basename;
 	
-	protected $db_host 	= DB_HOST;
-	protected $db_user	= DB_USER;
-	protected $db_pass	= DB_PASS;
-	protected $db_base	= DB_BASE;
+	protected $db_host;
+	protected $db_user;
+	protected $db_pass;
+	protected $db_base;
 	
-
+	protected $exparray	= array(
+		'eq'	=> "='?0'",		'neq'	=> "<>'?0'",	'eqi'	=> '=?0',	'neqi'	=> '<>?0', 	'lt'	=> "<'?0'", 	'elt'	=> "<='?0'",
+		'gt'	=> ">'?0'", 	'egt'	=> ">='?0'",	'lti'	=> '<?0',	'elti'	=> '<=?0',	'gti'	=> '>?0',		'egti'	=> '>=?0',
+		'like' => "LIKE '%?0%'",	'notlike' => "NOT LIKE '%?0%'",	'leftlike' => "LIKE '%?0'",	'rightlike' => "LIKE '?0%'",
+		'in' => "IN(?0)",			'notin' => "NOT IN(?0)",
+		'between' => "BETWEEN '?0' AND '?1'",	'notbetween' => "NOT BETWEEN '?0' AND '?1'",
+		'betweeni' => "BETWEEN ?0 AND ?1",	'notbetweeni' => "NOT BETWEEN ?0 AND ?1"
+	);
+	
 	public function __construct()
 	{
+		$this->rock			= $GLOBALS['rock'];
 		$this->errorbool	= false;
 		$this->errormsg		= '';
+		$this->db_host		= $this->rock->jm->uncrypt(DB_HOST);
+		$this->db_user		= $this->rock->jm->uncrypt(DB_USER);
+		$this->db_pass		= $this->rock->jm->uncrypt(DB_PASS);
+		$this->db_base		= $this->rock->jm->uncrypt(DB_BASE);
 	} 
 
 	public function __destruct()
@@ -84,6 +98,7 @@ abstract class mysql{
 	public function query($sql, $ebo=true)
 	{
 		if($this->conn == null)$this->connect();
+		if($this->conn == null)exit('mysql user or pass error!');
 		$sql	= trim($sql);
 		$sql	= str_replace(array('[Q]', '[date]', '[now]'), array($this->perfix, date('Y-m-d'), date('Y-m-d H:i:s')), $sql);
 		$this->countsql++;
@@ -94,14 +109,11 @@ abstract class mysql{
 		$this->nowerror	= false;
 		if(!$rsbool)$this->nowerror = true;
 		if(!$rsbool && DEBUG && $ebo){
-			$rock	= $GLOBALS['rock'];
-			$fdir	= ''.ROOT_PATH.'/log/'.date('Y-m').'';
+			$_dt 	= date('Y-m');
+			$fdir	= ''.ROOT_PATH.'/log/'.$_dt.'';
 			if(!file_exists($fdir))mkdir($fdir);
-			$fname	= ''.$fdir.'/mysqli'.date('YmdHis').'_'.rand(1000,9000).'.log';
-			$txt	= '[错误SQL]：'.$sql.'----------原因：'.$this->error().'';
-			$fc	= fopen($fname,'w');
-			fwrite($fc, $txt);
-			fclose($fc);
+			$txt	= '[错误SQL]：《'.$sql.'》----------原因：'.$this->error().'';
+			$this->rock->createtxt('log/'.$_dt.'/mysql'.date('YmdHis').'_'.rand(1000,9000).'.log', $txt);
 		}
 		return $rsbool;
 	}
@@ -111,16 +123,50 @@ abstract class mysql{
 		return $this->query($sql);
 	}
 	
-	public function getone($table,$where,$fields='*')
+	public function getLastSql()
 	{
-		$sql="select $fields from $table where $where limit 1";
-		$res=$this->query($sql);
-		if($res){
-			$row=$this->fetch_array($res);
-			return $row;
-		}else{
-			return false;
-		}
+		return $this->nowsql;
+	}
+	
+	public function getsql($arr=array())
+	{
+		$where 	= $table = $order = $limit = $group = '';
+		$fields	= '*';
+		if(isset($arr['table']))$table=$arr['table'];
+		if(isset($arr['where']))$where=$arr['where'];
+		if(isset($arr['order']))$order=$arr['order'];
+		if(isset($arr['limit']))$limit=$arr['limit'];
+		if(isset($arr['group']))$group=$arr['group'];
+		if(isset($arr['fields']))$fields=$arr['fields'];
+		$where	= $this->getwhere($where);
+		$table	= $this->gettable($table);
+		$sql	= "SELECT $fields FROM $table";
+		if($where!='')$sql.=" WHERE $where";
+		if($order!='')$sql.=" ORDER BY $order";
+		if($group!='')$sql.=" GROUP BY $group";
+		if($limit!='')$sql.=" LIMIT $limit";
+		return $sql;
+	}
+	
+	public function getone($table,$where,$fields='*',$order='')
+	{
+		$rows 	= $this->getrows($table,$where,$fields,$order,'1');
+		$row	= false;
+		if($this->count>0)$row=$rows[0];
+		return $row;
+	}
+	
+	public function getrows($table,$where,$fields='*',$order='', $limit='',$group='')
+	{
+		$sql	= $this->getsql(array(
+			'table'	=> $table,
+			'where'	=> $where,
+			'fields'=> $fields,
+			'order'	=> $order,
+			'limit'	=> $limit,
+			'group'	=> $group
+		));
+		return $this->getall($sql);
 	}
 	
 	public function getall($sql)
@@ -135,10 +181,101 @@ abstract class mysql{
 		}
 		return $arr;
 	}
-
-	public function getarr($table, $where, $fields='*', $kfied='id')
+	
+	/**
+		string table1 a left JOIN table2 b on b.uid=a.id
+		array(table=>$table,join=>'left')
+	*/
+	public function gettable($arr)
 	{
-		$sql = "select `$kfied`,$fields from $table where $where";
+		if(is_array($arr)){
+			$s = '';$oi=0;
+			foreach($arr as $k=>$v){
+				if($oi==0){
+					$s=''.$v.' a';
+				}else{
+					if($k=='join')$s.=' '.$v.' JOIN';
+					if($k=='table1')$s.=' '.$v.' b';
+					if($k=='where')$s.=' ON '.$v.'';
+					if($k=='where1')$s.=' AND '.$v.'';
+				}					
+				$oi++;
+			}
+			$arr = $s;
+		}
+		return $arr;
+	}
+	
+	/**
+		条件的
+		$arrs = array(
+			'id|eqi|a' => '0',
+			'name|like' => '我',
+			'id|notin' => '0,12',
+			'enddt|rightlike' => '2015-10',
+			'startdt|between' => '2015-10-01@@@2015-10-31',
+			'price|notbetweeni' => '1@@@10',
+			'sid > ?0 and <?1' => '0@@@2'
+		);
+	*/
+	public function getwhere($where='')
+	{
+		$len  = func_num_args();
+		$arr  = array();
+		$sfh1 = '';
+		for($i=0; $i<$len; $i++){
+			$sfh	= func_get_arg($i);
+			if($sfh!='AND' && $sfh!='OR' && $sfh!='and' && $sfh!='or'){
+				$arr[]  = $this->_getwhere($sfh);
+			}else{
+				$sfh1 = $sfh;
+			}				
+		}
+		$joins = ') AND (';
+		if($sfh1!='')$joins = ') '.$sfh1.' (';
+		$where = join($joins, $arr);
+		if($sfh1!='')$where = "($where)";
+		return $where;
+	}
+	private function _getwhere($where='')
+	{
+		if($where=='')return '';
+		if(is_numeric($where)){
+			$where = "`id`='$where'";
+		}else if(is_array($where)){
+			$sarr = array();
+			foreach($where as $fid=>$val){
+				$qz 	= '';
+				$farr 	= explode('|', $fid);
+				$fid  	= $farr[0];
+				$_fhs 	= "='?0'";
+				if(isset($farr[1])){
+					$_fh  = $farr[1];
+					if(isset($this->exparray[$_fh]))$_fhs=$this->exparray[$_fh];
+				}
+				if(isset($farr[2]))$qz=''.$farr[2].'.';
+				$vala = explode('@@@', $val);
+				$val1 = $vala[0];$val2='';
+				if(isset($vala[1]))$val2=$vala[1];
+				$_bo1 = $this->contain($fid,'?0');
+				if($_bo1)$_fhs = $fid;
+				$_fhs = str_replace(array('?0','?1'), array($val1,$val2), $_fhs);
+				$s = $_fhs;
+				if(!$_bo1)$s = ''.$qz.'`'.$fid.'` '.$_fhs.'';
+				$sarr[]=$s;
+			}
+			$where = join(' AND ', $sarr);
+		}
+		return $where;
+	}
+
+	public function getarr($table, $where='', $fields='*', $kfied='id')
+	{
+		$sql	= $this->getsql(array(
+			'table'	=> $table,
+			'where'	=> $where,
+			'fields'=> "`$kfied`,$fields"
+		));
 		$res = $this->query($sql);
 		$arr = array();
 		if($res){
@@ -155,8 +292,11 @@ abstract class mysql{
 	*/	
 	public function getkeyall($table,$fields,$where='')
 	{
-		$sql="select $fields from $table ";
-		if($where!='')$sql.=" where $where";
+		$sql	= $this->getsql(array(
+			'table'	=> $table,
+			'where'	=> $where,
+			'fields'=> $fields
+		));
 		$res=$this->query($sql);
 		$arr=array();
 		if($res){
@@ -173,8 +313,11 @@ abstract class mysql{
 	*/	
 	public function getjoinval($table,$fields,$where='',$join=',')
 	{
-		$sql="select $fields from $table ";
-		if($where!='')$sql.=" where $where";
+		$sql	= $this->getsql(array(
+			'table'	=> $table,
+			'where'	=> $where,
+			'fields'=> $fields
+		));
 		$res=$this->query($sql);
 		$arr=array();
 		if($res){
@@ -189,9 +332,14 @@ abstract class mysql{
 	/**
 		读取某行某字段的
 	*/	
-	public function getmou($table,$fields,$where)
+	public function getmou($table,$fields,$where,$order='')
 	{
-		$sql="select $fields from $table where $where";
+		$sql	= $this->getsql(array(
+			'table'	=> $table,
+			'where'	=> $where,
+			'fields'=> $fields,
+			'order'	=> $order
+		));
 		$res=$this->query($sql);
 		if($res){
 			$row = $this->fetch_array($res, 1);
@@ -259,12 +407,14 @@ abstract class mysql{
 
 	public function update($table,$content,$where)
 	{
+		$where = $this->getwhere($where);
 		$sql="update `$table` set $content where $where ";
 		return $this->tranbegin($sql);
 	}	
 
 	public function delete($table,$where)
 	{
+		$where = $this->getwhere($where);
 		$sql="delete from `$table` where $where ";
 		return $this->tranbegin($sql);
 	}
@@ -288,6 +438,7 @@ abstract class mysql{
 		if($addbool){
 			$sql="insert into `$table` set $cont";
 		}else{
+			$where = $this->getwhere($where);
 			$sql="update `$table` set $cont where $where";
 		}
 		return $this->tranbegin($sql);
@@ -329,7 +480,7 @@ abstract class mysql{
 	
 	public function gettablefields($table)
 	{
-		$sql	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types` from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='".DB_BASE."' order by `ORDINAL_POSITION`";
+		$sql	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types` from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='$this->db_base' order by `ORDINAL_POSITION`";
 		return $this->getall($sql);
 	}
 	
@@ -340,7 +491,7 @@ abstract class mysql{
 	{
 		$where 	= '';
 		if($fields!='')$where = "and `COLUMN_NAME`='$fields'";
-		$sql 	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types`,COLUMN_DEFAULT as 'defval' from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='".DB_BASE."' $where order by `ORDINAL_POSITION`";	
+		$sql 	= "select COLUMN_NAME as `name`,DATA_TYPE as `type`,COLUMN_COMMENT as `explain`,COLUMN_TYPE as `types`,COLUMN_DEFAULT as 'defval' from information_schema.COLUMNS where `TABLE_NAME`='$table' and `TABLE_SCHEMA` ='$this->db_base' $where order by `ORDINAL_POSITION`";	
 		$arr 	= $this->getall($sql);
 		$rows 	= array();
 		foreach($arr as $k=>$rs){
@@ -369,6 +520,16 @@ abstract class mysql{
 	{
 		$bool=false;
 		if( ($str==''||$str==NULL||empty($str)) && (!is_numeric($str)) )$bool=true;
+		return $bool;
+	}
+	
+	public function contain($str,$a)
+	{
+		$bool=false;
+		if(!$this->isempt($a) && !$this->isempt($str)){
+			$ad=strpos($str,$a);
+			if($ad>0||!is_bool($ad))$bool=true;
+		}
 		return $bool;
 	}
 	
@@ -402,23 +563,20 @@ abstract class mysql{
 	/**
 		流水编号
 	*/		
-	public function sericnum($num, $table,$fields='sericnum')
+	public function sericnum($num, $table,$fields='sericnum', $ws=4, $whe='')
 	{
 		$ymd 	= date('Ymd');
 		$ym 	= date('Ym');
 		$num	= str_replace('Ymd', $ymd, $num);
 		$num	= str_replace('Ym', $ym, $num);
-		$max	= (int)$this->getmou($table, "max(cast(replace(`$fields`,'$num','') as decimal(10)))","`$fields` like '".$num."%'");
+		$where 	= "`$fields` like '".$num."%' $whe";
+		$max	= (int)$this->getmou($table, "max(cast(replace(`$fields`,'$num','') as decimal(10)))", $where);
 		$max++;
-		if($max<10){
-			$num.='000'.$max.'';
-		}elseif($max<100){
-			$num.='00'.$max.'';	
-		}elseif($max<1000){
-			$num.='0'.$max.'';	
-		}else{
-			$num.=''.$max.'';
-		}
+		$wsnum	= ''.$max.'';
+		$len 	= strlen($wsnum);
+		$oix	= $ws - $len;
+		for($i=1;$i<=$oix;$i++)$wsnum='0'.$wsnum;
+		$num   .= $wsnum;
 		return $num;
 	}	
 	

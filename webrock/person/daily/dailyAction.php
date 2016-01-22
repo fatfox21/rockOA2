@@ -69,14 +69,25 @@ class dailyClassAction extends Action{
 	}
 	
 	
-	
+	/**
+		填写日报后
+	*/
 	public function dailyafter($table, $cans, $id)
 	{
-		if($this->post('huitypePost')=='super'){
+		if($this->post('huitypePost')=='super' && $cans['type']==0){
 			$rows 	 		= m('daily')->getone($id);
 			$rows['name'] 	= $rows['optname'];
 			$superid = m('admin')->getmou('superid', $rows['uid']);
 			m('email')->sendmail('dayreportemail', $superid, $rows);
 		}
+	}
+	public function dailybefore($table, $cans, $id)
+	{
+		$msg = '';
+		$dt  = $cans['dt'];
+		if($cans['type']==0){
+			if(m($table)->rows("`type`=0 and `uid`='".$cans['uid']."' and `dt`='$dt' and `id`<>$id")>0)$msg='['.$dt.']的日报已写过了';
+		}
+		return $msg;
 	}
 }

@@ -57,7 +57,7 @@ var panel=[{
 		xtype: 'rownumberer',
 		width: 40
 	},{
-		text:'名称',dataIndex:'name',autowidth:true,search:true
+		text:'名称',dataIndex:'name',autowidth:true,search:true,width:50
 	},{
 		text:'针对对象',dataIndex:'recename',autowidth:true,search:true
 	},{

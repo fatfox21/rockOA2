@@ -17,7 +17,7 @@ var panel= {
 	width:600,
 	xtype:'rockform',tablename:'daily',border:false,
 	submitfields:'content,dt,enddt,plan,type',labelWidth:100,
-	url:publicsave(mode,dir),aftersaveaction:'dailyafter',
+	url:publicsave(mode,dir),aftersaveaction:'dailyafter',beforesaveaction:'dailybefore',
 	params:{int_filestype:'uid',add_otherfields:'adddt={now}',otherfields:'optdt={now},optname={admin},uid={adminid},optid={adminid}'},
 	items:[{
 		fieldLabel:'id号',value:'0',name:'idPost',hidden:true
@@ -30,6 +30,7 @@ var panel= {
 			fieldLabel:'日报类型',xtype:'combo',name:'typePost',editable:false,store:js.arraystr('0|日报,1|周报,2|月报,3|年报'),value:'0',width:'50%',listeners:{
 				change:function(o){
 					form.getField('enddt').setVisible(o.value!='0');
+					form.getField('huitype').setVisible(o.value=='0');
 				}
 			}
 		},{
@@ -51,8 +52,8 @@ var panel= {
 		return '';
 	},
 	success:function(){
-		js.msg('success','出来成功');
-		if(params.index)rock[params.index].isreadload = true;
+		js.msg('success','处理成功');
+		getparent('dailylist','setReload', true);
 		closetabs(nowtab.num);
 	}
 };

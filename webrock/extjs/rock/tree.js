@@ -64,6 +64,7 @@ Ext.define('Ext.rock.tree',{
 			celleditbool:false,
 			savebool:false
 		});
+		me.tablename = jm.encrypt(me.tablename);
 		if(!this.store)this.store	= this.createstore();
 		me.plugins = [];
 		if(me.celleditbool){

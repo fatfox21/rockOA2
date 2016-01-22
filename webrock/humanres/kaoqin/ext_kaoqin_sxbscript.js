@@ -4,7 +4,7 @@ var panel={
 	tablename:'kq_set',searchtools:false,bbarbool:false,
 	tbar:[{
 		text:'刷新',icon:gicons('reload'),handler:function(){this.up('grid').storereload()}
-	},'-','设置时间请在考勤时间下设置'],
+	},'-','设置时间请在[考勤时间规则]下设置'],
 	columns:[{
 		xtype: 'rownumberer',
 		width: 40

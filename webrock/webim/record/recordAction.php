@@ -4,6 +4,7 @@ class recordClassAction extends Action{
 	
 	public function defaultAction()
 	{
+		$this->tpltype	= 'html';
 		$db		= m('admin');
 		$aid	= (int)$this->get('aid');
 		$ars	= $db->getone($aid, '`name`,`id`,`face`');

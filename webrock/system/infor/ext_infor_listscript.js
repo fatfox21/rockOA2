@@ -90,10 +90,7 @@ return {
 	},
 	tabson:{
 		show:function(){
-			if(rock[index][1].isreadload){
-				grid.storereload();
-				rock[index][1].isreadload=false;
-			}	
+			grid.isReload();
 		}
 	}	
 };

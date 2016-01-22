@@ -76,8 +76,7 @@ class upgradeClassAction extends upgrade{
 				}
 			}
 		}
-		
-		
+
 		echo json_encode(array(
 			'rows' => $rows,
 			'totalCount' => 10,
@@ -85,22 +84,21 @@ class upgradeClassAction extends upgrade{
 		));
 	}
 	
+	//测试
 	public function datassAjax()
 	{
 		$this->getfileinfo('http://127.0.0.1:90/rock/');
 	}
 	
-	public function getmysqlupgrade()
-	{
-		
-	}
+	
 	
 	public function getstrurl($host, $act)
 	{
-		$url = ''.$host.'?a='.$act.'&d=taskrun&m=upgrade&ajaxbool=true';
+		$url = ''.$host.'?a='.$act.'&d=taskrun&m=upgradeyc|upgrade&ajaxbool=true';
 		return $url;
 	}
 	
+	//
 	public function gethostversion($url)
 	{
 		$str = $this->getstrurl($url, 'getversion');
@@ -118,84 +116,17 @@ class upgradeClassAction extends upgrade{
 		);
 	}
 	
+	//返回数据库需要更新
 	private function getmysqlneir($url){
 		$data = $this->getmysqlnr(0);
 		$url  = $this->getstrurl($url, 'getmysqlupdate');
 		$str  = c('html')->httppost($url, $data);
 		return $str;
 	}
-	
-	//获取我的数据库
-	private function getmysqlnr($lx){
-		$tabarr = $this->db->getalltable();
-		$tabstr = '';
-		$len 	= strlen(PREFIX);
-		$data 	= array();
-		foreach($tabarr as $tab){
-			if(strpos($tab, PREFIX)===0){
-				$tabs = substr($tab, $len);
-				$tabstr.=','.$tabs;
-				if($lx == 0){
-					$farr = $this->db->getallfields($tab);
-					$data['f_'.$tabs] = join(',', $farr);
-				}
-			}
-		}
-		$tabstr = substr($tabstr, 1);
-		$data['all'] = $tabstr;
-		return $data;
-	}
-	
-	//远程用的修改版本的
-	public function getversionAjax()
-	{
-		$log = '更新说明了';
-		echo ''.VERSION.'|'.$log.'';
-	}
-	
-	//远程获取需要更新数据库
-	public function getmysqlupdateAjax()
-	{
-		$all 	= $this->post('all');
-		$alls 	= ','.$all.',';
-		$data 	= $this->getmysqlnr(1);
-		$tabs 	= explode(',', $data['all']);
-		$rows 	= array();
-		foreach($tabs as $tab){
-			$table = PREFIX.$tab;
-			if(!$this->contain($alls, ','.$tab.',')){//不存在就要创建
-				$str    = $this->db->showcreatetable($table);
-				$rows[] = $str.';';
-				$rows[] = 'alter table `'.$table.'` AUTO_INCREMENT=1;';
-			}else{
-				$oldfstr 	= $this->post('f_'.$tab.'');
-				$oldfstrs 	= ','.$oldfstr.',';
-				$farr 	 	= $this->db->getallfields($table);
-				foreach($farr as $fstr){
-					if(!$this->contain($oldfstrs, ','.$fstr.',')){//字段不存在
-						$colun  = $this->db->gettablecolumn($table, $fstr);
-						if(isset($colun[0])){
-							$strs   = $colun[0];
-							$rows[] = 'alter table `[Q]'.$tab.'` add '.$strs.';';
-						}
-					}
-				}
-			}
-		}
-		echo join('', $rows);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	/**
-		返回文件名和大小
+		返回文件需要更新
 	*/
 	private function getfileinfo($url)
 	{
@@ -215,69 +146,13 @@ class upgradeClassAction extends upgrade{
 		return $str;
 	}
 	
-	private function getFile($path='', $lave=0, $nsts='')
-	{
-		$paths	= ROOT_PATH.'/'.$path;
-		if(!is_dir($paths))return;
-		$d = opendir($paths);
-		$nostr = ','.$this->noupgradestr.',';
-		if($nsts!='')$nostr .= ''.$nsts.',';
-		while( false !== ($file = readdir($d))){
-			if($file != '.'  &&  $file!='..'){//遍历目录下文件
-				$file	= iconv('gb2312','utf-8',$file);
-				$pafile	= $paths.$file;
-				$pafies = $path.$file;
-				$bool 	= true;
-				if($this->contain($nostr, ','.$pafies.','))$bool = false;
-				if($lave==0){
-					if(!$this->contain(','.$this->hostupgradestr.',', ','.$pafies.','))$bool = false;
-				}
-				if($bool){
-					if(is_file($pafile)){
-						$size=filesize($pafile);//文件大小
-						$this->filearr[] = array(
-							'name' => $pafies,
-							'size' => $size
-						);
-					}else if(is_dir($pafile)){
-						$this->getFile($pafies.'/', $lave+1, $nsts);
-					}
-				}
-			}
-		}
-	}
+
+	
+	
 	
 	/**
-		远程系统上
+		开始升级啦
 	*/
-	public function getyuanfileAjax()
-	{
-		$notup	= $this->post('notup');
-		$this->filearr = array();
-		$this->getFile('', 0, $notup);
-		$fstr	= explode(',', $this->post('fstr'));
-		$fsize	= explode(',', $this->post('fsize'));
-		$len 	= count($fstr);
-		$arrs 	= array();
-		for($i=0; $i<$len; $i++){
-			$arrs[$fstr[$i]] = $fsize[$i];
-		}
-		$rows   = array();
-		foreach($this->filearr as $k=>$rs){
-			$na = $rs['name'];
-			if(isset($arrs[$na])){
-				if($arrs[$na] != $rs['size']){
-					$rows[] = 'update:'.$na.'';
-				}
-			}else{
-				$rows[] = 'create:'.$na.'';
-			}
-		}
-		echo join(',', $rows);
-	}
-	
-	
-	
 	public function uploadfilestAjax()
 	{
 		$step 	= (int)$this->post('step');
@@ -293,10 +168,12 @@ class upgradeClassAction extends upgrade{
 		echo $msg;
 	}
 	
+	//升级数据库
 	public function mysqlfilest($cont)
 	{
 		$cont = str_replace('`rock_', '`'.PREFIX.'', $cont);
-		$bo   = $this->db->query($cont);
+		//$bo   = $this->db->query($cont);
+		$bo   = false;
 		$msg  = 'success';
 		if(!$bo)$msg='exec sql fail';
 		return $msg;
@@ -334,15 +211,5 @@ class upgradeClassAction extends upgrade{
 		}
 		if($msg=='')$msg='success';
 		return $msg;
-	}
-	public function getuploadfilestAjax()
-	{
-		$filename = $this->post('filename');
-		$paths	= ROOT_PATH.'/'.$filename;
-		$str 	= '';
-		if(file_exists($paths)){
-			$str	= base64_encode(file_get_contents($paths));
-		}
-		echo $str;
 	}
 }

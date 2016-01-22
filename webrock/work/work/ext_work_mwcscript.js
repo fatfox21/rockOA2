@@ -35,9 +35,8 @@ var panel = {
 	},{
 		text:'任务报告',dataIndex:'baoname',search:true,autowidth:true,renderer:function(v, m, b){
 			var s = '';
-			if(!isempt(v)&&!isempt(b.raw.bgtime)){
-				s = '每天'+b.raw.bgtime+'的报告给'+v+'';
-			}
+			if(!isempt(v))s='报告给'+v+'';
+			if(!isempt(b.raw.bgtime))s+= '<br>每天'+b.raw.bgtime+'';
 			return s;
 		}
 	},{
@@ -76,7 +75,7 @@ var panel = {
 	},
 	_showwin:function(){
 		if(!win){
-			var cans = winopt({title:'任务报告',width:350,items:{
+			var cans = winopt({title:'任务报告',width:400,items:{
 				border:false,aftersaveaction:'workbgaftersave',
 				tablename:'workbg',url:publicsave(mode,dir),
 				xtype:'rockform',
@@ -104,11 +103,11 @@ var panel = {
 		var form = win.child('rockform');
 		form.reset();
 		form.setVal('mid', this.changedata.id);
-		uploadwindows.resetdata(true);
 	},
 	_xiang:function(){
-		var url = js.getajaxurl('$work','view','taskrun',{uid:adminid,id:this.changedata.id,jmbool:true});
-		js.open(url, 800);
+		mopenview('work',this.changedata.id);
+		//var url = js.getajaxurl('$work','view','taskrun',{uid:adminid,id:this.changedata.id,jmbool:true});
+		//js.open(url, 800);
 	}
 };
 

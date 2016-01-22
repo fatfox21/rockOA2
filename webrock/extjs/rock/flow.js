@@ -11,6 +11,7 @@ Ext.define('Ext.rock.flow', {
 		rand:'',
 		tablename:'',
 		flownum:'',
+		gridid:'',
 		checkcall:function(){},
 		opentype:0
 	},
@@ -30,8 +31,9 @@ Ext.define('Ext.rock.flow', {
 		if(this.opentype==1){
 			var btn = a.notbtnarr,dz;
 			for(dz in btn){
-				s1 += '<input value="'+btn[dz][0]+'" recezt="'+btn[dz][1]+'" nidzt="'+btn[dz][3]+'" temp="flowbtn_'+this.rand+'_'+fnum+''+a.id+'" receid="'+a.id+'" flownum="'+fnum+'" type="button">';
+				//s1 += '<input style="cursor:pointer" value="'+btn[dz][0]+'" recezt="'+btn[dz][1]+'" nidzt="'+btn[dz][3]+'" temp="flowbtn_'+this.rand+'_'+fnum+''+a.id+'" receid="'+a.id+'" flownum="'+fnum+'" type="button">';
 			}
+			s1= '<input value="去处理..." style="cursor:pointer" temp="flowbtn_'+this.rand+'_'+fnum+''+a.id+'" receid="'+a.id+'" flownum="'+fnum+'" type="button">';
 			s+='<br>'+s1;
 		}
 		return s;
@@ -65,20 +67,7 @@ Ext.define('Ext.rock.flow', {
 		var o	= $(o1);
 		var id	= o.attr('receid'), zt	= o.attr('recezt'), num = o.attr('flownum'), name= o.attr('quename'), nid = o.attr('nidzt'), actv= o.val();
 		if(isempt(name))name='';
-		var sm	= '';
-		var can = {id:id,zt:zt,sm:sm,flownum:num, name:name,actname:actv};
-		if(nid == '-1'){
-			Ext.MessageBox.prompt(actv, '请输入处理['+actv+']的原因:',function(a,b){
-				if(a=='ok' && b){
-					can.sm	= b;
-					o1.disabled = true;
-					me._checksubmit(can, o1);
-				}
-			},'',true,'');
-		}else{
-			o1.disabled = true;
-			this._checksubmit(can, o1);
-		}
+		mopenview(num,id,this.gridid);
 	},
 	_checksubmit:function(can, o1){
 		o1.value='处理中...';

@@ -17,14 +17,14 @@ class minute5ClassAction extends Action{
 	private function meettodo()
 	{
 		$db		= m('meet');
-		$rows 	= $db->getall("`status` in(0,1) and `type`=0");
+		$rows 	= $db->getall("`state` in(0,1) and `type`=0 and `status`=1");
 		$time	= time();
 		$todo	= m('todo');
 		$adm	= m('admin');
 		$zttz	= $this->option->getval('meettodo_zann');
 		$retz	= $this->option->getval('meettodo_reim');
 		foreach($rows as $k=>$rs){
-			$zt 	= $rs['status'];
+			$zt 	= $rs['state'];
 			$dts	= explode(' ', $rs['startdt']);
 			$sttime = strtotime($rs['startdt']);
 			$ettime = strtotime($rs['enddt']);
@@ -50,7 +50,7 @@ class minute5ClassAction extends Action{
 				}
 			}
 			if($nzt != -1){
-				$db->update("`status`='$nzt', `istz`='$istz'", $rs['id']);
+				$db->update("`state`='$nzt', `istz`='$istz'", $rs['id']);
 			}
 		}
 	}
@@ -77,14 +77,13 @@ class minute5ClassAction extends Action{
 			
 			if(!$this->isempt($rs['enddt']))$ettime = strtotime($rs['enddt']);
 			$jg 	= $sttime - $time;
-			$url 	= $reim->createurl('work', $rs['id']);
 			$distid	= $rs['distid'];
 			
 			if($jg <= 6*60 && $jg>=0 && $state =='待执行'){
 				$cont = '您有['.$rs['type'].'.'.$rs['title'].']工作任务待执行，任务将在['.$rs['startdt'].']开始，请及时处理!';
-				if($zttz=='是')$todo->addtz($distid, '工作任务', $cont, 'work', $rs['mid'], $url);
+				if($zttz=='是')$todo->addtz($distid, '工作任务', $cont, 'work', $rs['mid']);
 				if($retz=='是'){
-					$reim->sendsystem(0, $distid, '项目任务', $cont, 'work', $rs['id'], $url);
+					$reim->sendsystem(0, $distid, '项目任务', $cont, 'work', $rs['id']);
 				}	
 			}
 			
@@ -95,8 +94,8 @@ class minute5ClassAction extends Action{
 				
 				if($jg <= 6*60 && $jg>=0){
 					$cont = '['.$rs['title'].']请在'.$bgsj.'前填写任务报告给'.$rs['baoname'].'';
-					if($zttz=='是')$todo->addtz($distid, '任务报告', $cont, 'workbao', $rs['mid'], $url);
-					if($retz=='是')$reim->sendsystem(0, $distid, '项目任务', $cont, 'work',$rs['id'], $url);
+					if($zttz=='是')$todo->addtz($distid, '任务报告', $cont, 'work', $rs['mid']);
+					if($retz=='是')$reim->sendsystem(0, $distid, '项目任务', $cont, 'work',$rs['id']);
 				}
 			}
 		}

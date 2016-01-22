@@ -44,4 +44,10 @@ class guanClassAction extends Action
 		$arr['port'] 	= $this->option->getval('reimportsystem');
 		echo json_encode($arr);
 	}
+	
+	public function testsendAjax()
+	{
+		m('reim')->sendsystem($this->adminid, $this->adminid, 'OA通告', 'test send 时间:'.$this->rock->now.'', 'infor',10);
+		echo 'success';
+	}
 }

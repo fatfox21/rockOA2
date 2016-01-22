@@ -30,8 +30,12 @@ var panel = [{
 	url:publicstore(mode,dir),storeafteraction:'checkmychange',storebeforeaction:'checkmybefore',
 	fields:['uid','status','nstatus','optid'],
 	tbar:['->',{
+		text:'打印',icon:gicons('printer'),disabled:true,itemId:'print',handler:function(){
+			var a = this.up('grid')._openurl('print');
+		}
+	},'-',{
 		text:'新窗口打开',icon:gicons('application'),disabled:true,itemId:'new',handler:function(){
-			var a = this.up('grid')._openurl();
+			var a = this.up('grid')._openurl('view');
 		}
 	}],
 	_qiehuanzt:function(oi){
@@ -43,17 +47,17 @@ var panel = [{
 		//this.setparams({modeid:});
 		return '';
 	},
-	_openurl:function(){
+	_openurl:function(lx){
 		var a = this.changedata;
 		if(isempt(a.modenum)){
 			js.msg('msg','记录不存在了');
 			return;
 		}
-		var url = js.getajaxurl('$view','flow','taskrun',{uid:adminid,mid:a.mid,modenum:a.modenum,table:a.table,jmbool:true});
-		js.open(url, 800);
+		mopenview(a.modenum,a.mid,this.getId(),lx);
 	},
 	_btuons:function(bo, d){
 		this.down('#new').setDisabled(bo);
+		this.down('#print').setDisabled(bo);
 		this.down('#zj').setDisabled(true);
 		this.down('#cb').setDisabled(true);
 		this.down('#del').setDisabled(true);
@@ -67,7 +71,7 @@ var panel = [{
 		this._btuons(false, d.data);
 	},
 	dblclick:function(){
-		this._openurl();
+		this._openurl('view');
 	},
 	beforeload:function(){
 		this._btuons(true);

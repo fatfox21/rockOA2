@@ -83,7 +83,9 @@ Ext.define('Ext.rock.upload',{
 			}
 		});
 	},
-	
+	resetdata:function(){
+		
+	},
 	fields:function(cans){
 		var me	= this;
 		var can = js.apply({
@@ -93,7 +95,7 @@ Ext.define('Ext.rock.upload',{
 		this._fieldsstore[uipd]={data:[],oldvalue:'',noup:false};
 		var name 	= can.name,
 			val		= can.value;
-		var canss 	= js.apply(can, {name:can.name+'upload',xtype:'displayfield',value:'<div id="view_'+uipd+'" style="width:100%;height:'+can.heightsss+'px;overflow:auto;line-height:20px;padding:0px" class="x-form-text"></div><div style="padding:3px 0px"><a href="javascript:" onclick="return uploadwindows._upfields(this,\''+uipd+'\', \''+can.addText+'\', \''+can.uptype+'\')" id="add_'+uipd+'"><img src="'+gicons('add')+'" align="absmiddle">&nbsp;'+can.addText+'</a>&nbsp;<span id="count_'+uipd+'"></span></div>'});
+		var canss 	= js.apply(can, {name:can.name+'upload',xtype:'displayfield',value:'<div id="view_'+uipd+'" style="height:'+can.heightsss+'px;overflow:auto;line-height:20px;padding:0px" class="x-form-text"></div><div style="padding:3px 0px"><a href="javascript:" onclick="return uploadwindows._upfields(this,\''+uipd+'\', \''+can.addText+'\', \''+can.uptype+'\')" id="add_'+uipd+'"><img src="'+gicons('add')+'" align="absmiddle">&nbsp;'+can.addText+'</a>&nbsp;<span id="count_'+uipd+'"></span></div>'});
 		var scan 	= {
 			xtype: 'fieldcontainer',layout:'hbox',items:[canss,{
 				xtype:'hiddenfield',id:uipd,value:'',name:name,allowBlank:can.allowBlank,loadfile:function(tab,sid, noup){

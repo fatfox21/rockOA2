@@ -107,8 +107,8 @@ function setcoursela(){
 }
 function setinputla(){
 	var a 	= grid.changedata;
-	var url = js.getajaxurl('$view','input','flow',{setid:a.id});
-	js.open(url, 950,530);
+	var url = js.getajaxurl('$pageset',mode,dir,{setid:a.id});
+	js.open(url, 1000,530);
 }
 var panel = {
 	xtype:'rockgridform',tablename:'flow_set',formtitle:'工作流配置',searchtools:false,
@@ -125,7 +125,7 @@ var panel = {
 	},'-',{
 		text:'<font color=red>进程管理</font>',icon:gicons('sitemap'),id:'course_'+rand+'',handler:setcoursela,disabled:true
 	},'-',{
-		text:'<font color=blue>表单元素设置</font>',icon:gicons('application_form'),id:'inputla_'+rand+'',handler:setinputla,disabled:true
+		text:'显示页面设置',icon:gicons('application_form'),id:'inputla_'+rand+'',handler:setinputla,disabled:true
 	},'-',{
 		text:'重新匹配流程',handler:clickpipei
 	},{

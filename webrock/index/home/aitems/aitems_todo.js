@@ -7,7 +7,7 @@ var huirendhi =function(v,a,r){
 homeitems.todo = {
 	xtype:'rockgrid',title:'提醒信息',tablename:'todo',keywhere:'and uid='+adminid+'',pageSize:5,tools:tools,margin:margin,frame: true,padding:0,border:false,
 	bbarbool:false,defaultorder:'`status`,id desc',url:publicstore('todo','person'),closable:false,abcnum:'todo',abcurl:'person,todo',
-	storeafteraction:'jisanstatela',fields:['xuhao','optdt'],
+	storeafteraction:'jisanstatela',fields:['xuhao','optdt','status','table','mid'],
 	columns:[{
 		text:'',dataIndex:'xuhao',width: 35
 	},{
@@ -21,7 +21,8 @@ homeitems.todo = {
 		$('#tixing_count').html('('+this.getData('wdcount')+')');
 	},
 	dblclick:function(a, v){
-		var url = v.raw.url;
-		if(!isempt(url))js.open(url, 800);
+		var a = v.data;
+		if(a.status==0)$.post(js.getajaxurl('byidu','todo','person'),{sid:a.id});
+		if(a.table)mopenview('@'+a.table,a.mid);
 	}
 };

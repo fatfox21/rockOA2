@@ -139,6 +139,7 @@ class indexClassAction extends Action{
 	{
 		$this->smartydata['adminid'] = $this->adminid;
 		$this->smartydata['groupid'] = $this->get('gid');
+		$this->smartydata['changetype'] = $this->get('changetype');
 	}
 	public function loaddeptAjax()
 	{

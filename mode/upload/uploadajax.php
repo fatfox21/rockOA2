@@ -1,5 +1,6 @@
 <?php
 include_once('../../config/config.php');
+if($rock->adminid==0)exit('sorry not sign');
 $now		= $rock->now();
 $action		= $rock->get('action');
 if($action != 'xml' && $action != 'send')exit('Sorry!');
@@ -34,7 +35,7 @@ if($action == 'xml'){
 	$filesizecn	= $rock->post('filesizecn');
 	$newfile	= $rock->post('newfile');
 	$mkdir		= $rock->post('mkdir');
-	$savepath	= $rock->post('savepath');//另存路径
+	$savepath	= $rock->post('savepath');
 	$thumbnail	= $rock->post('thumbnail');
 }
 
@@ -58,7 +59,7 @@ if($sendci==$maxsend){
 	$boolc	= $rock->contain($imgext, '|'.$fileext.'|');
 	$ztfile	= $imgext.'doc|docx|xls|xlsx|ppt|pptx|pdf|swf|rar|zip|txt|gz|wav|mp3|wma|chm|';
 	$botxtl	= $rock->contain($ztfile,'|'.$fileext.'|');
-
+	$savepath = '';
 	$boolc1	= $rock->isempt($savepath);
 	if(!$boolc1 && $optid==0)$boolc1 = true;
 

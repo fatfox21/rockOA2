@@ -13,9 +13,9 @@ class projectClassModel extends Model
 			$reim	= m('reim');
 			$cont 	= ''.$this->adminname.'提交了['.$rs['title'].']的项目报告，状态['.$zt.'],进度['.$jd.'%]';
 			$url 	= $reim->createurl('project', $rs['id']);
-			
-			m('todo')->addtz($rs['fuzeid'], '项目报告', $cont, 'projectm', $rs['id'], $url);
-			$reim->sendsystem($this->adminid, $rs['fuzeid'], '项目任务', $cont, 'projectm', $rs['id'], $url);
+			$url	= '';
+			m('todo')->addtz($rs['fuzeid'], '项目报告', $cont, 'projectm', $rs['id']);
+			$reim->sendsystem($this->adminid, $rs['fuzeid'], '项目任务', $cont, 'projectm', $rs['id']);
 		}
 	}
 }

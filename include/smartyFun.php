@@ -5,8 +5,6 @@
 
 
 
-
-
 //smarty自定义插件，显示图片
 function smarty_function_showimg($img){
 	$path	= $img['path'];
@@ -27,4 +25,3 @@ function smarty_function_url($url){
 	$s	= isset($url['s']) ? $url['s'] : '';
 	echo $GLOBALS['rock']->rewrite($m,$a,$s);
 }
-

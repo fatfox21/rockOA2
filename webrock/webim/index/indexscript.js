@@ -108,7 +108,7 @@ function objecttostr(a){
 		s+=','+a1+':"'+v+'"';
 	}
 	if(s!='')s = s.substr(1);
-	s = jm.encrypt('{'+s+'}');
+	s = jm.base64encode('{'+s+'}');
 	return s;
 }
 function connectsend(msg){
@@ -131,7 +131,7 @@ function connectreceive(sendid, cont){
 	}else if(cont=='groupupdate'){
 		loadgroup();
 	}else{
-		var a = js.decode(jm.uncrypt(cont));
+		var a = js.decode(jm.base64decode(cont));
 		im.receivemess(sendid, a);
 	}
 }
@@ -147,7 +147,6 @@ function showapopup(msg, popid, url){
 		window.external.showapopup(msg, popid, url);
 		bo = true;
 	}catch(e){
-		js.getarr(e)
 	}
 	return bo;
 }
@@ -441,8 +440,8 @@ var im = {
 	receivemess:function(sendid, d){
 		var a 	= userarr[sendid];
 		var lx 	= d.type;
-		var ops = false,num;
-		
+		var ops = false,num,url=d.url;
+		if(!url&&d.table&&d.mid)url='?m=flow&a=view&d=taskrun&table='+d.table+'&mid='+d.mid+'&uid='+adminid+'';
 		//一对一
 		if(lx == 'user'){
 			num			= 'windowuser'+sendid+'';
@@ -453,7 +452,7 @@ var im = {
 			if(ops){
 				window.external.winfocus(num);
 			}else{
-				showapopup('人员['+a.name+']，发来一条信息', 'user_'+sendid+'');
+				showapopup('人员['+a.name+']，发来一条信息', 'user_'+sendid+'', url);
 				this.setwd('user', sendid, 1);
 			}
 		}
@@ -470,7 +469,7 @@ var im = {
 			if(ops){
 				window.external.winfocus(num);
 			}else{
-				showapopup('人员['+a.name+']，发来一条信息，来自['+d.gname+']', 'group_'+d.gid+'');
+				showapopup('人员['+a.name+']，发来一条信息，来自['+d.gname+']', 'group_'+d.gid+'', url);
 				this.setwd('group', d.gid, 1);
 			}
 		}
@@ -489,7 +488,7 @@ var im = {
 			}else{
 				var nr = d.cont;
 				nr = nr.replace(/\<br\>/gi, ';');
-				showapopup(''+nr+'[来自.'+d.gname+']', 'group_'+d.gid+'', d.url);
+				showapopup(''+nr+'[来自.'+d.gname+']', 'group_'+d.gid+'', url);
 				this.setwd('system', d.gid, 1);
 			}
 		}

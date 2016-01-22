@@ -18,4 +18,76 @@ class upgrade extends Action{
 		
 		$this->hostupgradestr 	= 'config,css,mode,webrock,js,mode,index.php,rock.php,include,rainrock.sql';
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public function getFile($path='', $lave=0, $nsts='')
+	{
+		$paths	= ROOT_PATH.'/'.$path;
+		if(!is_dir($paths))return;
+		$d = opendir($paths);
+		$nostr = ','.$this->noupgradestr.',';
+		if($nsts!='')$nostr .= ''.$nsts.',';
+		while( false !== ($file = readdir($d))){
+			if($file != '.'  &&  $file!='..'){//遍历目录下文件
+				$file	= iconv('gb2312','utf-8',$file);
+				$pafile	= $paths.$file;
+				$pafies = $path.$file;
+				$bool 	= true;
+				if($this->contain($nostr, ','.$pafies.','))$bool = false;
+				if($lave==0){
+					if(!$this->contain(','.$this->hostupgradestr.',', ','.$pafies.','))$bool = false;
+				}
+				if($bool){
+					if(is_file($pafile)){
+						$size=filesize($pafile);//文件大小
+						$this->filearr[] = array(
+							'name' => $pafies,
+							'size' => $size
+						);
+					}else if(is_dir($pafile)){
+						$this->getFile($pafies.'/', $lave+1, $nsts);
+					}
+				}
+			}
+		}
+	}
+	
+
+	
+	
+	public function getmysqlnr($lx){
+		$tabarr = $this->db->getalltable();
+		$tabstr = '';
+		$len 	= strlen(PREFIX);
+		$data 	= array();
+		foreach($tabarr as $tab){
+			if(strpos($tab, PREFIX)===0){
+				$tabs = substr($tab, $len);
+				$tabstr.=','.$tabs;
+				if($lx == 0){
+					$farr = $this->db->getallfields($tab);
+					$data['f_'.$tabs] = join(',', $farr);
+				}
+			}
+		}
+		$tabstr = substr($tabstr, 1);
+		$data['all'] = $tabstr;
+		return $data;
+	}
 }

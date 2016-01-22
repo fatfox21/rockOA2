@@ -53,4 +53,41 @@ class setClassAction extends Action
 			$this->db->query($sql);
 		}
 	}
+	
+	
+	public function pagesetAction()
+	{
+		$setid	= $this->get('setid');
+		$rs 	= m('flow_set')->getone("`id`='$setid'");
+		if(!$rs)exit('sorry!');
+		$this->smartydata['rs'] = $rs;
+		$this->title  = $rs['name'].'_页面设置';
+		
+		$table  = $rs['table'];
+		$farr	= c('edit')->getfield($table, 1);
+		$fleft	= array();
+		$fleft[]= array('base_name', '申请人');
+		$fleft[]= array('base_deptname', '申请部门');
+		$fleft[]= array('base_sericnum', '单号');
+		foreach($farr as $k=>$rs1){
+			$fleft[] = array($k, $rs1['name']);
+		}
+		$fleft[] = array('file_content', '相关文件');
+		$this->smartydata['fleft'] = $fleft;
+		$path 		= ''.ROOT_PATH.'/webrock/flow/applyview/page/page_'.$rs['num'].'.html';
+		$content 	= '';
+		if(file_exists($path)){
+			$content = file_get_contents($path);
+		}
+		$this->smartydata['content'] = $content;
+	}
+	
+	public function pagesaveAjax()
+	{
+		$content = $this->post('content');
+		$num 	 = $this->post('num');
+		$path 		= 'webrock/flow/applyview/page/page_'.$num.'.html';
+		$this->rock->createtxt($path, $content);
+		echo 'success';
+	}
 }

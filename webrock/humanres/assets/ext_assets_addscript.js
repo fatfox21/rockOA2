@@ -53,10 +53,8 @@ var panel= {
 		uploadwindows.fields({allowBlank:false})
 	],
 	success:function(){
-		if(params.gridid){
-			if(getcmp(params.gridid))getcmp(params.gridid).isreadload = true;
-			closetabs(nowtab.num);
-		}
+		getparent('assetslist','setReload', true);
+		closetabsnow();
 	}
 };
 

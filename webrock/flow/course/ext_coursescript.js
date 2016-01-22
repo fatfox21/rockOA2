@@ -72,7 +72,7 @@ function clickdel(){
 	if(!confirm('确定要删除此进程吗？'))return;
 	js.msg('wait','删除中...');
 	bool = true;
-	$.post(js.getajaxurl('publicdel','index'),{table:'flow_course',id:changedata.id}, function(){
+	$.post(js.getajaxurl('publicdel','index'),{table:jm.encrypt('flow_course'),id:changedata.id}, function(){
 		js.msg('success','删除成功');
 		bool=false;
 		c.reload(nowid);
@@ -153,8 +153,8 @@ var panel= [{
 	}]
 },{
 	width:250,maxWidth:400,minWidth:200,split:true,region:'east',title:'工作流进程',collapsible: true,xtype:'rockform',tablename:'flow_course',
-	submitfields:'name,num,checktype,atype,atypeid,atypename,pid,nid,checktype,checktypeid,checktypename,explain,sort',
-	params:{otherfields:'optdt={now},setid='+setid+'',int_filestype:'pid,nid,sort'},autoScroll:false,
+	submitfields:'name,num,checktype,atype,atypeid,atypename,pid,nid,checktype,checktypeid,checktypename,explain,sort,inputid',
+	params:{otherfields:'optdt={now},setid='+setid+'',int_filestype:'pid,nid,sort,inputid'},autoScroll:false,
 	url:publicsave('course','flow'),
 	destroypanel:[omenu],
 	items:[{
@@ -202,6 +202,8 @@ var panel= [{
 		fieldLabel:'下一进程',name:'nidPost',value:'0',editable:false,xtype:'combo',store:[['0','结束流程']]
 	},{
 		fieldLabel:'说明',name:'explainPost',xtype:'textareafield',height:80
+	},{
+		fieldLabel:'处理表单',name:'inputidPost',xtype:'rockcombo',valuefields:'id',url:js.getajaxurl('getflowinput',mode,dir),defaultstore:[['0','-选择表单-']],autoloadlist:true,value:'0'
 	},{
 		fieldLabel:'排序号',name:'sortPost',xtype:'numberfield',value:0,minValue:0
 	}],

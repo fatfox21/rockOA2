@@ -128,6 +128,7 @@ class homeClassAction extends Action
 		}
 		$this->smartydata['homeitems'] 	= $str;
 		$this->smartydata['homearr'] 	= json_encode($homearr);
+		$this->smartydata['randkey'] 	= $this->rock->jm->getkeyshow();
 	}
 	
 
@@ -136,22 +137,28 @@ class homeClassAction extends Action
 		$loadici	= (int)$this->get('loadici');
 		$loadtime	= (int)$this->get('loadtime');
 		$str		= '';
+		$str1		= '';
 		$db			= m('todo');
 		$count		= $db->rows("uid='$this->adminid' and `status`=0");
 		if($loadici == 0 && $count>0){
-			$str = '您有<font color=red>('.$count.')</font>条未读信息;';
+			$str = '您有<font color=red>('.$count.')</font>条未读信息<a onclick="return gototixingla()" href="javascript:">[查看]</a>;';
+			$str1= '您有'.$count.'条未读信息;';
 		}else{
 			$lnow   = date('Y-m-d H:i:s', $loadtime);
 			$storw	= $db->getall("uid='$this->adminid' and `status`=0 and `optdt`>='$lnow' order by `id`",'title,mess');
 			if($this->db->count > 0){
-				$str = '<div>您有<font color=red>('.$count.')</font>条未读信息;</div>';
+				$str1= '您有'.$count.'条未读信息;';
+				$str = '<div>您有<font color=red>('.$count.')</font>条未读信息<a onclick="return gototixingla()" href="javascript:">[查看]</a>;</div>';
 				foreach($storw as $k=>$rs){
-					$str.='<div style="padding:3px 0px">'.($k+1).'、【'.$rs['title'].'】'.$rs['mess'].'</div>';
+					$ss  	 = ''.($k+1).'、【'.$rs['title'].'】'.$rs['mess'].';';
+					$str	.= '<div style="padding:3px 0px">'.$ss.'</div>';
+					$str1	.= "\n".$ss."";
 				}
 			}
 		}
 		echo json_encode(array(
 			'str' 	=> $str,
+			'msg' 	=> $str1,
 			'count' => $count,
 			'time'   => time()
 		));

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
 <title>组织结构</title>
@@ -20,7 +20,9 @@
 js.path = '<?=$da['path']?>';
 var URL = '<?=URL?>';
 var adminid = '<?=$da['adminid']?>';
+var changetype = '<?=$da['changetype']?>';
 var groupnum= 'windowgroup<?=$da['groupid']?>';
+var groupidsss= '<?=$da['groupid']?>';
 </script>
 </head>
 <body style="overflow:hidden" scroll="no">
@@ -42,6 +44,8 @@ var groupnum= 'windowgroup<?=$da['groupid']?>';
 
 <div style="height:36px; background-color:#eeeeee">
 	<div align="right" style="padding:9px">
+		<font color=#888888>双击对应记录删除和添加</font>&nbsp; &nbsp;
+		<a onclick="return false" id="AltClose" href="javascript:">关闭</a>&nbsp;&nbsp;
 		<a class="webbtn" onclick="return false" id="AltC" href="javascript:">确定</a>
 	</div>
 </div>

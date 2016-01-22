@@ -7,8 +7,9 @@ var panel={
 			name:'ipPost',fieldLabel:'服务器IP'
 		},{
 			name:'portPost',fieldLabel:'端口号'
-		}]
-	}
+		}],
+		buttonsitems:[{text:'测试发送',handler:function(){testsend()}}]
+	}	
 }
 function ainit(){
 	var url = js.getajaxurl('getset',mode,dir);
@@ -19,6 +20,13 @@ function ainit(){
 		var a = js.decode(da);
 		form.setVal('ip', a.ip);
 		form.setVal('port', a.port);
+	});
+};
+function testsend(){
+	js.msg('wait','发送中...');
+	var url = js.getajaxurl('testsend',mode,dir);
+	$.get(url,function(da){
+		js.msg('success','发送完成');
 	});
 }
 return {

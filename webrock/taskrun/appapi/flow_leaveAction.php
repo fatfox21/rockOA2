@@ -6,12 +6,14 @@ class flow_leaveClassAction extends appapiAction{
 		$arr = array(
 			'kind' 	=> '请假',
 			'uid' 	=> $this->adminid,
+			'optid' => $this->adminid,
 			'qjkind' => $this->post('qjkind'),
 			'stime' => $this->post('stime'),
 			'etime' => $this->post('etime'),
 			'totals' => (int)$this->post('totals'),
 			'explain' => $this->post('explain'),
-			'optdt' => $this->now,
+			'optdt' 	=> $this->now,
+			'applydt' 	=> $this->date
 		);
 		m('kq_info')->insert($arr);
 		$id = $this->db->insert_id();

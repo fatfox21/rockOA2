@@ -1,6 +1,7 @@
 <?php
 ini_set("memory_limit", "60M"); //设置内存否则无法生成大图
 include_once('../../config/config.php');
+if($rock->adminid==0)exit('sorry not sign');
 $scr = c('image',true);	//引入image插件
 
 

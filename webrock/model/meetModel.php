@@ -12,7 +12,7 @@ class meetClassModel extends Model
 		$adb  	= m('admin');
 		foreach($narr as $k=>$rs){
 			if($adb->containjoin($rs['joinid'], $uid)){
-				$zt 	= $rs['status'];
+				$zt 	= $rs['state'];
 				$state 	= $hyarr[$zt];
 				$dt 	= ''.str_replace($dts.' ', '', $rs['startdt']).'至'.str_replace($dts.' ', '', $rs['enddt']).'';
 				$arr[]= array(

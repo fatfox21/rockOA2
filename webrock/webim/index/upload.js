@@ -209,6 +209,12 @@ var strformat = {
 		this.sendcodearr[key] = val;
 		return '[C]'+key+'[/C]'
 	},
+	geturl:function(d){
+		if(!d)d={url:''};
+		var url = d.url;
+		if(!url&&d.table&&d.mid)url='?m=flow&a=view&d=taskrun&table='+d.table+'&mid='+d.mid+'&uid='+adminid+'';
+		return url;
+	},
 	//格式化内容
 	strcont:function(nr){
 		//获取表情的转化
@@ -355,7 +361,7 @@ function send(reid, a){
 	if(s!=''){
 		s = s.substr(1);
 	}
-	s = jm.encrypt('{'+s+'}');
+	s = jm.base64encode('{'+s+'}');
 	addhistory(a);
 	return sendstr(reid, s);
 }
@@ -403,7 +409,7 @@ function connectreadfile(path){
 
 //接收到信息
 function connectreceive(str){
-	var s = jm.uncrypt(str);
+	var s = jm.base64decode(str);
 	var a = js.decode(s);
 	guser.receivemess(a);
 }

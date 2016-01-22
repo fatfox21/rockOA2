@@ -49,7 +49,7 @@ var guser = {
 				fase= wdarr[i].sendface;
 			}
 			if(wdarr[i].zt=='0')ids+=','+wdarr[i].id;
-			cont= strformat.showqp(lex,nas,wdarr[i].optdt, jm.uncrypt(wdarr[i].cont),'', fase);
+			cont= strformat.showqp(lex,nas,wdarr[i].optdt, jm.base64decode(wdarr[i].cont),'', fase);
 			this.addcont(cont);
 		}
 		if(ids != '0')this.setyd(ids);
@@ -79,7 +79,7 @@ var guser = {
 		nr		= nr.replace(/</gi,'&lt;').replace(/>/gi,'&gt;').replace(/\n/gi,'<br>');;
 		if(ssnr)nr=ssnr;
 		if(isempt(nr))return false;
-		var conss = jm.encrypt(nr);
+		var conss = jm.base64encode(nr);
 		if(conss.length>3990){
 			js.setmsg('发送内容太多了');
 			return;

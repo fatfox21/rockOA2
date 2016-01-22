@@ -61,10 +61,8 @@ var panel= {
 		getcmp('content_'+rand+'').submitValue();
 	},
 	success:function(){
-		if(params.index){
-			rock[params.index][1].isreadload = true;
-			closetabs('inforadd_'+mid+'');
-		}
+		getparent('inforlist_1','setReload', true);
+		closetabsnow();
 	}
 };
 

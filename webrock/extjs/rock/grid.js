@@ -37,6 +37,7 @@ Ext.define('Ext.rock.grid',{
 	},
 	storereload:function(){
 		if(this.loadbool)return;
+		this.setReload(false);
 		this.store.reload()
 	},
 	sortname:'',
@@ -70,6 +71,7 @@ Ext.define('Ext.rock.grid',{
 			savebool:false,
 			highsearchbool:false
 		});
+		me.tablename = jm.encrypt(me.tablename);
 		me.sqlwhere = me.defaultwhere;
 		if(me.firstsearchbool){
 			me.storeautoLoad = false;
@@ -84,7 +86,7 @@ Ext.define('Ext.rock.grid',{
 		};
 		if(me.checkcolumns)me.selModel = Ext.create('Ext.selection.CheckboxModel',{
 			mode:"MULTI"
-		});
+		});		
 		me.on({
 			itemclick:function(o,record,item,index ,e){
 				me.changedata = record.raw;

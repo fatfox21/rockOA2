@@ -1,3 +1,6 @@
+<?php
+$btianarr=array();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,40 +11,105 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="js/base64-min.js"></script>
 <script type="text/javascript">
 js.path	= '<?=PATH?>';
 PROJECT = '<?=P?>';
+var btianarr = {};
+function initbody(){
+	$('body').keydown(function(e){
+		var code	= e.keyCode;
+		if(code==27){
+			connectclose();
+			return false;
+		}
+	});
+	if(js.request('rocktoken'))$('#printdiv').hide();
+}
+
 function check(o1){var da = {sm:form('check_explain').value,id:'<?=$da['arr']['mid']?>',flownum:'<?=$da['arr']['flownum']?>',zt:_getaolvw('check_status'),cid:_getaolvw('check_name')};if(da.zt==''){js.setmsg('请选择处理动作');return;}if(da.zt=='2'&&isempt(da.sm)){js.setmsg('此动作必须填写说明');return;}
+	if(da.zt=='1'){for(var csa in btianarr){if(form(csa).value==''&&btianarr[csa]!=''){js.setmsg('【'+btianarr[csa]+'】不能为空');return;}}}
 	js.setmsg('处理中...');
 	o1.disabled = true;
+	for(var csa in btianarr)da[csa]=form(csa).value;
+	da.fileid = form('fileid').value;
 	var url = js.getajaxurl('check','flow','taskrun');
-	$.ajax({type:'post',url:url,data:da,success:function(das){if(das.indexOf('成功')>-1){js.setmsg(das,'green');}else{js.setmsg(das);o1.disabled = false;}},error:function(){js.setmsg('处理失败请重试');o1.disabled = false;}});
+	$.ajax({type:'post',url:url,data:da,success:function(das){backreturn();if(das.indexOf('成功')>-1){js.setmsg(das,'green');if(get('autocheckbox').checked)connectclose();}else{js.setmsg(das);o1.disabled = false;}},error:function(){js.setmsg('处理失败请重试');o1.disabled = false;}});
 }
 function _getaolvw(na){
 	var v = '',i,o=$("input[name='"+na+"']");
 	for(i=0;i<o.length;i++)if(o[i].checked)v=o[i].value;
 	return v;
 }
+var backnana;
+function getuserla(na){
+	backnana=na;
+	js.open(js.getajaxurl('$dept','index','webim',{changetype:'changeuser',callback:'backusercane'}),500,400);
+	return false;
+}
+function backusercane(na,naid){
+	form(backnana).value=na;
+	form(backnana+'_id').value=naid;
+}
+function connectclose(){
+	try{
+		window.external.formclose();
+	}catch(e){
+		window.close();
+	}	
+}
+function backreturn(){
+	try{
+	var sid = js.request('gridid'),nonum='';try{nonum=opener.nowtab.num}catch(e){};
+	if(sid){var o1 = opener.getcmp(sid);if(o1){o1.setReload(true);if(nonum==o1.itemId){o1.storereload();}}};
+	}catch(e){}
+}
+function openupload(){
+	js.upload('',{showid:'fileidview'});
+	return false;
+}
+function openprint(){
+	var as = js.request('rocktoken'),bs,url='';
+	if(as){
+		bs = jm.uncrypt(as);
+		bs = bs.replace('a=view','a=print');
+		bs = jm.encrypt(bs);
+		url = ''+js.path+'.php?rocktoken='+bs+'';
+	}else{
+		url = location.href;
+		url = url.replace('a=view','a=print');
+	}	
+	location.href = url;
+}
 </script>
 <style>
 .table{font-size:14px;}
+
+.tdcont{padding:0px 5%}
+.tdcont p{padding:3px 5px}
 .table .tdys1{padding:5px 5px;border:1px #888888 solid;text-align:right;width:100px}
 .table .tdys2{padding:5px 5px;border:1px #888888 solid;text-align:left}
 .tabled2 td{padding:8px;border:1px #dddddd solid;text-align:center}
 .tabled2 tr:hover,.tdcont tr:hover{background:#f1f1f1}
 .tabled2 td.pandys{padding:5px;text-align:center}
-.createtable{width:90%}
+.createtable{width:100%}
 </style>
 </head>
 <body style="padding:15px">
 <div align="center">
 
+<div id="printdiv" style="position:fixed;left:2px;top:2px" align="left">
+	<button class="webbtn" type="button" onclick="openprint()"><img src="images/print.png"> 进入打印页面</button>&nbsp; 
+	<button class="webbtn" type="button" onclick="connectclose()">关闭</button>
+</div>
 
-<div style="width:750px">		
-	<div class="tdcont">
+<div style="width:750px">
+	<div style="padding-bottom:15px;font-size:30px"><?=$da['title']?></div>
+	<div class="tdcont" align="left">
 		<?=$da['content']?>
 	</div>
-	<div align="left" style="padding-top:10px;padding-bottom:5px"><b>操作记录</b></div>
+	<?php if($da['arr']['isflow']==1){?>
+	<div align="left" style="padding-top:20px;padding-bottom:5px"><b>操作记录</b></div>
 	<div>
 		<table border="0"  class="tabled2" style="border-collapse:collapse;" width="100%" cellspacing="0" cellpadding="0">
 		<tr bgcolor="#D2E9FF">
@@ -49,29 +117,48 @@ function _getaolvw(na){
 			<td align="center">名称</td>
 			<td align="center">处理人</td>
 			<td align="center">状态</td>
-			<td align="center">时间</td>
+			
 			<td align="center">说明</td>
+			<td align="center">时间</td>
 		</tr>
-		<?php foreach($da['arr']['logarr'] as $k=>$rs){?>
+		<?php 
+		foreach($da['arr']['logarr'] as $k=>$rs){
+			$ss = '';
+			if($rs['filearr'])$ss='rowspan="2"';
+		?>
 		<tr >
-			<td class="pandys"><?=$k+1?></td>
+			<td class="pandys" <?=$ss?>><?=$k+1?></td>
 			<td class="pandys"><?=$rs['name']?></td>
 			<td class="pandys"><?=$rs['checkname']?></td>
 			<td class="pandys"><?php
 				echo '<font color="'.$rs['statuscolor'].'">'.$rs['statusname'].'</font>';
 			?></td>
-			<td class="pandys"><?=$rs['optdt']?></td>
 			<td class="pandys"><?=$rs['explain']?></td>
+			<td class="pandys"><?=$rs['optdt']?></td>
 		</tr>
+		<?php 
+		if($rs['filearr']){
+			$s = '<tr>';
+			$s .= '<td colspan="5"><div align="left" style="line-height:25px">';
+			$s .= '【相关文件】';
+			foreach($rs['filearr'] as $k1=>$rs1){
+				$s.='<br>'.($k1+1).'、<a href="javascript:" onclick="return js.downshow(\''.$rs1['id'].'\')" class="blue">'.$rs1['filename'].'</a> ('.$rs1['filesizecn'].')';
+			}
+			$s .= '</div></td>';
+			$s .= '</tr>';
+			echo $s;
+		}
+		?>
+		
 		<?php }?>
 		</table>
 	</div>
 	
-	<div align="center" style="padding-top:15px;padding-bottom:5px"><b>审核处理</b></div>
+	<div align="center" style="padding-top:20px;padding-bottom:5px"><b>审核处理</b></div>
 	<div align="center">
 		<form name="myform">
-		<table border="0" width="600" class="tabled2" style="border-collapse:collapse;" cellspacing="0" cellpadding="0">
-		<tr>
+		<table border="0" width="700" class="tabled2" style="border-collapse:collapse;" cellspacing="0" cellpadding="0">
+		<tr bgcolor="#D2E9FF">
 			<td width="130"><div align="right" style="color:#555555">状态:</div></td>
 			<td><div align="left"><?=$da['arr']['data']['checkstatustext']?></div></td>
 		</tr>
@@ -81,7 +168,7 @@ function _getaolvw(na){
 		</tr>
 		<?php if($da['arr']['ischeck']==1){?>
 		<tr>
-			<td width="100"><div align="right" style="color:#555555">处理人:</div></td>
+			<td><div align="right" style="color:#555555"><font color=red>*</font>处理人:</div></td>
 			<td><div align="left">
 			<?php 
 			foreach($da['urs'] as $k=>$us){
@@ -93,7 +180,7 @@ function _getaolvw(na){
 			</div></td>
 		</tr>
 		<tr>
-			<td ><div align="right" style="color:#555555">处理动作:</div></td>
+			<td ><div align="right" style="color:#555555"><font color=red>*</font>处理动作:</div></td>
 			<td><div align="left">
 			<?php 
 			foreach($da['arr']['actarr'] as $k=>$act){
@@ -102,22 +189,53 @@ function _getaolvw(na){
 			?>
 			</div></td>
 		</tr>
+		
+		<?php
+		
+		foreach($da['inputrs'] as $k=>$inp){?>
+		<tr>
+			<td ><div  align="right" style="color:#555555"><font color=red>*</font><?=$inp['label']?>:</div></td>
+			<td><div align="left">
+			<?php
+			$type = $inp['type'];
+			$innae= 'checkinput_'.$inp['name'].'';
+			$ss1  = '<input class="input"  style="width:95%;" type="text" name="'.$innae.'">';
+			$sss  = $ss1;
+			if($type=='changeuser'){
+				$sss = '<div style="float:left"><input class="input" placeholder="--请选择人员--" style="width:370px;" readonly type="text" name="'.$innae.'"><input name="'.$innae.'_id" type="hidden"></div>';
+				$sss .= '<div style="float:left;padding:10px"><a href="javascript:" onclick="return getuserla(\''.$innae.'\')" class="webbtn">请选择...</a></div>';
+
+			}
+			$btianarr[$innae]=$inp['label'];
+			$btianarr[$innae.'_id']='';
+			echo $sss;
+			?>
+			
+			</div></td>
+		</tr>
+		<?php }?>
 		<tr>
 			<td ><div  align="right" style="color:#555555">说明:</div></td>
-			<td><div align="left"><textarea class="textarea" name="check_explain" style="width:350px;height:80px"></textarea></div></td>
+			<td><div align="left"><textarea class="textarea" name="check_explain" style="width:95%;height:80px"></textarea></div></td>
+		</tr>
+		<tr>
+			<td ><div  align="right" style="color:#555555">相关附件:</div><input name="fileid" type="hidden" id="fileidview-inputEl"></td>
+			<td><div align="left"><div id="view_fileidview" style="width:97%;height:60px;border:1px #cccccc solid; background:white;overflow:auto"></div><div><a href="javascript:" class="blue" onclick="return openupload()"><u>＋添加附件</u></a></div></div></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><div align="left"><input onclick="check(this)" style="height:35px;cursor:pointer;padding:0px 10px" value="提交处理" type="button">&nbsp;<span id="msgview"></span></div></td>
+			<td><div align="left"><input onclick="check(this)" style="height:35px;cursor:pointer;padding:0px 10px" value="提交处理" type="button">&nbsp;<span id="msgview"></span>&nbsp; &nbsp; <label style="color:#888888"><input id="autocheckbox" checked type="checkbox">处理完自动关闭</label></div></td>
 		</tr>
 		<?php }?>
 		</table>
 		</form>
 	</div>
 	
-	
+	<?php }?>
 </div>	
 </div>
-
+<script>
+var btianarr=<?=json_encode($btianarr)?>;
+</script>
 </body>
 </html>

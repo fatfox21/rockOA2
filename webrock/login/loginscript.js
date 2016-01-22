@@ -6,7 +6,6 @@ function initbody(){
 		form('adminpass').focus();
 	}
 }
-
 function loginsubmit(){
 	if(js.bool)return false;
 	var user = form('adminuser').value;
@@ -23,7 +22,6 @@ function loginsubmit(){
 	}
 	js.setmsg('登录中...','blue');
 	form('button').disabled=true;
-	
 	var data	= js.getformdata();
 	var url		= js.getajaxurl('check','login');
 	data.jmpass	= 'false';
@@ -38,5 +36,5 @@ function loginsubmit(){
 			form('button').disabled=false;
 			js.bool	= false;
 		}
-	})
+	});
 }

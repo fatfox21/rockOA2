@@ -18,6 +18,7 @@ class flow_dailyClassAction extends appapiAction{
 		if($msg == ''){
 			$arr = array(
 				'uid' 	=> $this->adminid,
+				'optid' => $this->adminid,
 				'dt' 	=> $dt,
 				'content' => $this->post('content'),
 				'optdt' => $this->now,

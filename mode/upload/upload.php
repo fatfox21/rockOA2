@@ -1,5 +1,6 @@
 <?php 
 include_once('../../config/config.php');
+if($rock->adminid==0)exit('sorry not sign');
 $title		= urldecode($rock->get('title'));
 if($title=='')$title='文件上传';
 $callback	= $rock->get('callback');

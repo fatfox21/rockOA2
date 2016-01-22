@@ -59,4 +59,19 @@ class viewClassAction extends Action{
 		$this->smartydata['rsbg']	= $rsbg;
 	}
 	
+	
+	/**
+		内部邮件
+	*/
+	public function emailinAction()
+	{
+		$this->tpltype = 'html';
+		$id		= $this->jm->gettoken('id');
+		$uid	= $this->jm->gettoken('uid');
+		$rs 	= m('emailm')->getone($id);
+		m('emails')->update('zt=1', "`mid`='$id' and `zt`=0 and `uid`='$uid'");
+		$rs['senddt'] = c('date')->stringdt($rs['senddt'],'Y-m-d(星期w) H:i:s');
+		$this->title = $rs['title'].'-内部邮件';
+		$this->smartydata['rs'] = $rs;
+	}
 }

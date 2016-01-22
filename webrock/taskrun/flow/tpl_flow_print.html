@@ -1,0 +1,126 @@
+<?php
+$btianarr=array();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title><?=$da['title']?>-<?=TITLE?></title>
+<link rel="stylesheet" href="css/css.css" />
+<link rel="stylesheet" href="webrock/css/rockcss.css" />
+<link rel="shortcut icon" href="favicon.ico" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/html2canvas.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+<script type="text/javascript" src="js/base64-min.js"></script>
+<script type="text/javascript">
+js.path	= '<?=PATH?>';
+PROJECT = '<?=P?>';
+var btianarr = {};
+function initbody(){
+	$('body').keydown(function(e){
+		var code	= e.keyCode;
+		if(code==27){
+			connectclose();
+			return false;
+		}
+	});
+	if(!isIE){
+		$('#btncog').hide();
+		$('#btnyulan').hide();
+	}
+}
+function connectclose(){
+	try{
+		window.external.formclose();
+	}catch(e){
+		window.close();
+	}	
+}
+function saveimages(){
+	js.tanbody('imgs','右键图片另存为',600,400,{
+		html:'<div align="center"><img id="imgsrc" width="580" height="380"></div>'
+	});
+	html2canvas($('#contentview'),{
+		onrendered: function(canvas){
+			get('imgsrc').src = canvas.toDataURL();
+		}
+	}); 
+}
+function openprint(){
+	$('#divbtn').hide();//execwb(6,2)
+	try{
+		window.print();
+	}catch(e){
+		alert('好像有点问题?');
+	}	
+	$('#divbtn').show();
+	return false;
+}
+function opencog(){
+	try{
+		webPrint.execwb(8,1);
+	}catch(e){
+		alert('无法打开，请到[文件]→[页面设置]去设置');
+	}
+}
+function openyulan(){
+	try{
+		$('#divbtn').hide();
+		webPrint.execwb(7,1);
+	}catch(e){	}
+	$('#divbtn').show();
+}
+function printword(){
+	var as = js.request('rocktoken'),bs,url='';
+	if(as){
+		bs = jm.uncrypt(as);
+		bs = bs.replace('a=print','a=word');
+		bs = jm.encrypt(bs);
+		url = ''+js.path+'.php?rocktoken='+bs+'';
+	}else{
+		url = location.href;
+		url = url.replace('a=print','a=word');
+	}	
+	location.href = url;
+}
+</script>
+<style>
+.createtable{width:100%}
+.tdcont{text-align:left}
+.tdcont p{padding:0px 5px}
+</style>
+</head>
+<body style="padding:15px">
+<OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" style="display:none" height="0" name="webPrint" width="0"></OBJECT>
+<div id="divbtn" style="position:fixed;top:0px; background-color:#e1e1e1;padding:5px">
+	<div>
+		<button class="webbtn" type="button" onclick="openprint()"><img src="images/print.png" > 打印...</button>&nbsp; 
+		<span id="btncog"><button class="webbtn" type="button" onclick="opencog()">打印设置</button>&nbsp; </span>
+		<span id="btnyulan"><button class="webbtn" type="button" onclick="openyulan()">打印预览</button>&nbsp;  </span>
+		<button class="webbtn" type="button" onclick="printword()"><img src="mode/icons/page_word.png" > 导出Word</button>&nbsp; 
+		<span id="btnyulan"><button onclick="saveimages()" class="webbtn"><img src="mode/icons/picture.png" > 保存为图片</button>&nbsp; </span>
+		<button class="webbtn" type="button" onclick="connectclose()">关闭</button>&nbsp; 
+	</div>
+	<div style="margin-top:5px">
+		<span style="color:red">注：建议先打印设置，去掉页眉页脚</span>，不能打印？看一下<a href="http://www.xh829.com/help.html#print" target="_blank" class="blue"><u>[帮助文档]</u></a>
+	</div>
+</div>
+
+
+
+<div align="center">
+	<!--表格头部自己在着添加-->
+	
+	<!--END-->
+	<div style="width:700px" id="contentview">
+		<div style="padding-bottom:15px;font-size:30px"><?=$da['title']?></div>
+		<div  style="background-color:white" class="tdcont">
+			<?=$da['content']?>
+		</div>
+	</div>	
+	
+	
+</div>
+</body>
+</html>

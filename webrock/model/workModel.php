@@ -116,10 +116,10 @@ class workClassModel extends Model
 		if(!$this->isempt($rs['baoid'])){
 			$reim	= m('reim');
 			$cont 	= ''.$this->adminname.'提交了['.$rs['title'].']的任务报告，任务状态['.$zt.']';
-			$url 	= $reim->createurl('work', $rs['id']);
+			//$url 	= $reim->createurl('work', $rs['id']);
 			
-			m('todo')->addtz($rs['baoid'], '任务报告', $cont, 'work', $rs['id'], $url);
-			$reim->sendsystem($this->adminid, $rs['baoid'], '项目任务', $cont, 'work', $rs['id'], $url);
+			m('todo')->addtz($rs['baoid'], '任务报告', $cont, 'work', $rs['id']);
+			$reim->sendsystem($this->adminid, $rs['baoid'], '项目任务', $cont, 'work', $rs['id']);
 		}
 	}
 	

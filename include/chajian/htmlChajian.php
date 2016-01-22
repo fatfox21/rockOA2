@@ -32,19 +32,23 @@ class htmlChajian extends Chajian{
 	}
 	
 	
-	public function createtable($fields, $arr, $title='')
+	public function createtable($fields, $arr, $title='',$lx='')
 	{
-		$bordercolor = '#C9ECFF';
+		$bcolor = '#dddddd';
+		if($lx=='print'){
+			$bcolor = '#000000';
+			$title='';
+		}
 		$s 	= '<table border="0" class="createtable" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">';
 		if($title != ''){
-			$s .= '<tr><td colspan="3" align="center" style="border:1px '.$bordercolor.' solid;padding:10px;font-size:16px;background:#2CB2F9;color:white">'.$title.'</td></tr>';
+			$s .= '<tr><td colspan="2" align="center" style="border:1px '.$bcolor.' solid;padding:10px;font-size:16px;background:#D2E9FF;">'.$title.'</td></tr>';
 		}
 		foreach($fields as $fid=>$na){
 			$val = '';
 			$sty = 'padding:8px;';
 			if(isset($arr[$fid]))$val = $arr[$fid];
 			if(isset($arr[$fid.'_style']))$sty = $arr[$fid.'_style'];
-			$s .= '<tr><td align="right" width="120" style="border:1px '.$bordercolor.' solid;padding:5px 8px">'.$na.'</td><td  style="border:1px '.$bordercolor.' solid;'.$sty.'" align="left">'.$val.'</td></tr>';
+			$s .= '<tr><td align="right" width="120" style="border:1px '.$bcolor.' solid;padding:5px 8px">'.$na.'</td><td  style="border:1px '.$bcolor.' solid;'.$sty.'" align="left">'.$val.'</td></tr>';
 		}
 		$s .='</table>';
 		
@@ -57,7 +61,7 @@ class htmlChajian extends Chajian{
 		@param	string  $headstr 表格表头(如：lie1,列1,left@lie2,列2,center)
 		@return	string
 	*/
-	public function createrows($rows, $headstr='')
+	public function createrows($rows, $headstr='', $bor='#C9ECFF')
 	{
 		if($headstr == '')$headstr	= $this->request('header');
 		if($headstr	== '')return '';
@@ -69,8 +73,7 @@ class htmlChajian extends Chajian{
 			$head[]	= explode(',', $te_str);
 		}
 		$txt	 = '';	//DBE6E3
-		$style	 = "style='padding:5px;border:1px #C9ECFF solid'";
-		$cola	 = '#C9ECFF';
+		$style	 = "style='padding:5px;border:1px ".$bor." solid'";
 		$txt	.= '<table width="100%" class="createrows" border="0" cellspacing="0" cellpadding="0" align="center" style="border-collapse:collapse;" >';
 		$txt	.= '<tr>';
 		for($h=0; $h<$thead; $h++)$txt.= '<td '.$style.' bgcolor="#eeeeee" align="'.$head[$h][2].'"><b>'.$head[$h][1].'</b></td>';

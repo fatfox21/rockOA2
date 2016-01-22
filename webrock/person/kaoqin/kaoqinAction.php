@@ -107,13 +107,20 @@ class kaoqinClassAction extends Action{
 		echo json_encode($bacarr);
 	}
 	
+	/**
+		在线打卡IP设置的
+	*/
 	public function adddkjlAjax()
 	{
+		$dbs 	= m('kq_dkip');
+		$rows 	= $dbs->getall('1 order by `sort`');
+		$id 	= m('pipei')->getpipeimid($this->adminid, $rows, 'id');
+		$ipvalue= $dbs->getmou('ipvalue', "`id`='$id'");
+		if($this->isempt($ipvalue))$ipvalue='*.*';
+		$iparr	= explode(',', $ipvalue);
 		$ip = $this->ip;
 		$bo	= false;
-		$rows = $this->option->getmnum('kaoqinonlineip');
-		foreach($rows as $k=>$rs){
-			$ips = $rs['name'];
+		foreach($iparr as $ips){
 			if($this->contain($ips,'*')){
 				$ips = str_replace('*', '', $ips);
 				if($this->contain($ip, $ips)){
@@ -138,7 +145,7 @@ class kaoqinClassAction extends Action{
 			));
 			echo 'success';
 		}else{
-			echo '不能添加，请联系管理员';
+			echo '不能添加，请先设置打卡IP';
 		}
 	}
 }

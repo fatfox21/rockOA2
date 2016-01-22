@@ -6,11 +6,13 @@ class flow_jiabanClassAction extends appapiAction{
 		$arr = array(
 			'kind' 	=> '加班',
 			'uid' 	=> $this->adminid,
+			'optid' => $this->adminid,
 			'stime' => $this->post('stime'),
 			'etime' => $this->post('etime'),
-			'totals' => (int)$this->post('totals'),
-			'explain' => $this->post('explain'),
-			'optdt' => $this->now,
+			'totals' 	=> (int)$this->post('totals'),
+			'explain' 	=> $this->post('explain'),
+			'optdt' 	=> $this->now,
+			'applydt' 	=> $this->date
 		);
 		m('kq_info')->insert($arr);
 		$id = $this->db->insert_id();

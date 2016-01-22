@@ -14,33 +14,6 @@ class flowClassAction extends Action{
 		echo 'success';
 	}
 	
-	
-	/**
-		流程单据查看
-	*/
-	public function viewAction()
-	{
-		$this->tpltype = 'html';
-		$uid		= $this->jm->gettoken('uid');
-		$modenum	= $this->jm->gettoken('modenum');
-		$table		= $this->jm->gettoken('table');
-		$mid		= $this->jm->gettoken('mid');
-		if($modenum == '' || $mid=='')exit('sorry!');
-		
-		$flow		= f($modenum);
-		$flow->initrecord($mid);
-		if(!$flow->rs)exit('记录不存在');
-		
-		$this->title					= $flow->flowname;
-		$this->smartydata['content']	= $flow->contentview();
-		
-		//判断是不是我审核
-		$table 		= $flow->table;
-		$arr		= m('flowlog')->getdatalog($modenum, $table, $mid, $uid);
-		$this->smartydata['arr']	= $arr;
-		$this->smartydata['urs']	= m('admin')->getall("`id` in($uid) order by `sort`",'`id`,`name`,`ranking`');
-	}
-	
 	/**
 		提交审核
 	*/
@@ -56,5 +29,61 @@ class flowClassAction extends Action{
 		$flow->adminname 	= m('admin')->getmou('name',"`id`='$cid'");
 		$flow->initrecord($id);
 		echo $flow->check($zt, $sm, $cid);
+	}
+	
+	/**
+		流程单据查看
+	*/
+	public function viewAction()
+	{
+		$this->tpltype = 'html';
+		$uid		= $this->jm->gettoken('uid');
+		$modenum	= $this->jm->gettoken('modenum');
+		$table		= $this->jm->gettoken('table');
+		$mid		= $this->jm->gettoken('mid');
+		$dbs 		= m('flowlog');
+		$modenum	= $dbs->getmodenum($table, $mid, $modenum);
+		if($modenum == '' || $mid=='')exit('not found data');
+		
+		$flow		= f($modenum);
+		$flow->initrecord($mid);
+		if(!$flow->rs)exit('记录不存在');
+		
+		$this->title					= $flow->flowname;
+		$this->smartydata['content']	= $flow->contentview();
+		
+		//判断是不是我审核
+		$table 		= $flow->table;
+		$arr		= $dbs->getdatalog($modenum, $table, $mid, $uid);
+		$this->smartydata['arr']		= $arr;
+		$this->smartydata['urs']		= m('admin')->getall("`id` in($uid) order by `sort`",'`id`,`name`,`ranking`');
+		$this->smartydata['inputrs']	= m('flow_courseinput')->getall("`mid`='".$arr['inputid']."' and `mid`>0 order by `sort`");
+	}
+	
+	public function printAction()
+	{
+		$this->tpltype = 'html';
+		$uid		= $this->jm->gettoken('uid');
+		$modenum	= $this->jm->gettoken('modenum');
+		$table		= $this->jm->gettoken('table');
+		$mid		= $this->jm->gettoken('mid');
+		$dbs 		= m('flowlog');
+		$modenum	= $dbs->getmodenum($table, $mid, $modenum);
+		if($modenum == '' || $mid=='')exit('not found data');
+		
+		$flow		= f($modenum);
+		$flow->initrecord($mid);
+		if(!$flow->rs)exit('记录不存在');
+		
+		$this->title					= $flow->flowname;
+		$this->smartydata['content']	= $flow->contentview('print');
+	}
+	
+	public function wordAction()
+	{
+		$this->printAction();
+		$filename = $this->title.'.doc';
+		header('Content-type:application/msword');
+		header('Content-disposition:attachment;filename='.$filename.'');
 	}
 }

@@ -133,6 +133,12 @@ class applyClassAction extends Action
 				$carr[$rs['type']][] = $rs;
 			}
 			$mrss = array();
+			$mrss[] = array(
+				'name' => '所有模块',
+				'expanded' 	=> true,
+				'leaf'  => true,
+				'id'  => '0'
+			);
 			foreach($carr as $typ=>$msr){
 				$to = count($msr);
 				$mrss[] = array(

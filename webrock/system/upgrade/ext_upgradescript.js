@@ -75,6 +75,7 @@ var panel= [{
 	bbar:[{
 		text:'立马更新(请谨慎使用)',disabled:true,id:'btn4_'+rand+'',handler:function(){
 			if(step==0||step==1)return;
+			alert('为了您系统安全，请不要使用');return;
 			grid._uoplabo(true);
 			selarr = grid.getsel();
 			if(!selarr || selarr.length==0){

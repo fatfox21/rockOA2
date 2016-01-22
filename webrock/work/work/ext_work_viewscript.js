@@ -34,9 +34,8 @@ var panel = {
 	},{
 		text:'任务报告',dataIndex:'baoname',search:true,autowidth:true,renderer:function(v, m, b){
 			var s = '';
-			if(!isempt(v)&&!isempt(b.raw.bgtime)){
-				s = '每天'+b.raw.bgtime+'的报告给'+v+'';
-			}
+			if(!isempt(v))s='报告给'+v+'';
+			if(!isempt(b.raw.bgtime))s+= '<br>每天'+b.raw.bgtime+'';
 			return s;
 		}
 	},{

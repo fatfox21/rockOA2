@@ -10,9 +10,17 @@ class flowlogClassModel extends Model
 	{
 		$where		= "`table`='$table' and `mid`='$mid'";
 		$rs			= m($table)->getone($mid);
-		$urs	= $aurs	= $log	= $setrs = $logarr	= array();
-		$status 	= 0;
+		$urs		= $aurs	= $log	= $setrs = $logarr = $coursers	= array();
+		$status 	= $isflow = 1;
 		if($rs){
+			if(!isset($rs['uid']))$rs['uid']=0;
+			if(!isset($rs['isturn']))$rs['isturn']=0;
+			if(!isset($rs['nstatus']))$rs['nstatus']=0;
+			if(!isset($rs['status']))$rs['status']=0;
+			if(!isset($rs['nowcheckid'])){
+				$rs['nowcheckid']='';
+				$isflow=0;
+			}
 			$optid 	= (int)$rs['optid'];
 			if($optid==0)$optid=$rs['uid'];
 			$urs 	= m('admin')->getone($rs['uid'], 'name,deptname');
@@ -26,7 +34,11 @@ class flowlogClassModel extends Model
 			array('2','不通过', -1)
 		);
 		$flars 		= m('flow_rule')->getone($where);
+		$courseid	= 0; $inputid 	= -1;
 		if($flars && $status !=1){
+			$courseid	= $flars['nowcourseid'];
+			$coursers	= $this->db->getone('[Q]flow_course', "`id`='$courseid'", '`inputid`,`name`,`id`,`num`');
+			if($coursers)$inputid = $coursers['inputid'];
 			$fowsetr	= $this->db->getkeyall('[Q]flow_course','`id`,`name`',"`setid`='".$setrs['id']."'");
 			$nowuserid	= $flars['nowuserid'];
 			$userarr	= explode('|', $flars['alluser']);
@@ -45,7 +57,7 @@ class flowlogClassModel extends Model
 					'zt'	=> $zt
 				);
 			}
-			$_shcnarr	= m('flow_courseact')->getall("`cid`='".$flars['nowcourseid']."' order by `sort`");
+			$_shcnarr	= m('flow_courseact')->getall("`cid`='$courseid' order by `sort`");
 			if(is_array($_shcnarr)){
 				if(count($_shcnarr)>0)$actarr = array();
 				foreach($_shcnarr as $k=>$nrs){
@@ -79,6 +91,7 @@ class flowlogClassModel extends Model
 				}
 			}
 		}
+		$fdb 	= m('file');
 		foreach($logarr as $k=>$logs){
 			$s = '';$col=$logs['color'];
 			if($logs['status']==1){
@@ -90,8 +103,9 @@ class flowlogClassModel extends Model
 				$col='red';
 			}
 			if(!$this->isempt($logs['statusname']))$s = $logs['statusname'];
-			$logarr[$k]['statusname'] = $s;
-			$logarr[$k]['statuscolor'] = $col;
+			$logarr[$k]['statusname'] 	= $s;
+			$logarr[$k]['statuscolor'] 	= $col;
+			$logarr[$k]['filearr'] 		= $fdb->getfile('flow_log', $logs['id']);
 		}
 		$arr		= array(
 			'data'	=> $rs,
@@ -106,7 +120,10 @@ class flowlogClassModel extends Model
 			'actarr' => $actarr,
 			'flownum'=> $flownum,
 			'flowname'=> $setrs['name'],
-			'mid'	 => $mid
+			'mid'	 => $mid,
+			'coursers'	=> $coursers,
+			'courseid'	=> $courseid, 'inputid' => $inputid,
+			'isflow'	=> $isflow
 		);
 		return $arr;
 	}
@@ -127,7 +144,9 @@ class flowlogClassModel extends Model
 			}	
 			$s1='&nbsp;→&nbsp;';
 			if($i==0)$s1='';
-			$s .='<span style="'.$sty.'">'.$s1.''.($i+1).'. '.$logs['cname'].'('.$logs['name'].')</span>';
+			$s .= '<span style="'.$sty.'">'.$s1.''.($i+1).'. '.$logs['cname'].'';
+			if(!$this->isempt($logs['name']))$s.='('.$logs['name'].')';
+			$s .= '</span>';
 		}
 		return $s;
 	}
@@ -155,6 +174,22 @@ class flowlogClassModel extends Model
 			$ss = 'and ('.$ss.')';
 		}
 		return $ss;
+	}
+	
+	/**
+		根据表名和Id获取对应模块编号
+	*/
+	public function getmodenum($table='', $mid, $mode='')
+	{
+		if($mode!='')return $mode;
+		$where 	= array('table'=>$table,'mid'=>$mid);
+		$modeid = (int)m('flow_bill')->getmou('modeid', $where);
+		$dbss	= m('flow_set');
+		if($modeid>0){
+			$mode = $dbss->getmou('num', $modeid);
+		}
+		if($this->isempt($mode))$mode = $dbss->getmou('num', "`table`='$table'");
+		return $mode;
 	}
 	
 }

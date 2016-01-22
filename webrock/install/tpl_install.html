@@ -98,6 +98,12 @@ PROJECT			= '<?=$da['p']?>';
 					<td><input class="input" name="highpass" value="rock123456"> <font color=#888888>任何帐号登录密码</font></td>
 				</tr>
 				
+				<tr><td height="15"></td></tr>
+				<tr>
+					<td align="right"></td>
+					<td><label><input name="opendbq" type="checkbox">&nbsp;确认开启PHP短标签</label>，<a href="http://www.xh829.com/view_opentag.html" class="blue" target="_blank"><u>[如何开启?]</u></a></td>
+				</tr>
+				
 				<tr><td height="8"></td></tr>
 				
 				<tr><td  colspan="2" height="60" align="left" style="padding-left:80px"><a href="javascript:" onclick="backabc()" class="blue" ><u>&lt;&lt;返回</u></a>&nbsp; &nbsp; <a class="webbtn" style="padding:10px 20px;font-size:16px" onclick="submitla()" href="javascript:">完成提交</a>&nbsp;<span id="msgview"></span></td></tr>
@@ -108,7 +114,8 @@ PROJECT			= '<?=$da['p']?>';
 			
 			<div id="step3" style="display:none;padding:20px">
 				<div style="color:green;font-size:30px;padding:50px" align="center">安装完成</div>
-				<div align="center"><a href="?m=login"  class="blue"  ><u>前去登录页面</u></a>&nbsp; &nbsp;<font color=#888888>记得删除安装目录(webrock/install)哦</font></div>
+				<div style="padding:10px" align="center"><a href="?m=login" class="webbtn" >前去登录页面</a>&nbsp; &nbsp; 访问<a class="blue" href="http://www.rockoa.com/">ROCKOA官网</a></div>
+				<div style="padding:20px" align="center"><font color=#888888>记得删除安装目录(webrock/install)哦</font>，<a class="red" onclick="return delinstall()" href="javascript:">[马上删除]</a></div>
 			</div>
 		</div>
 	</div>

@@ -1,9 +1,5 @@
-var homearr = <?=$da['homearr']?>,margin=0,homeitems	= {};
-
-var guanlihome = function(){
-	addtabs('个人首页桌面项','@index,home,indextd,mid=-1','homeperson',{padding:0,icon:gicons('application_view_tile')});
-}
-
+var homearr = <?=$da['homearr']?>,margin=0,homeitems={};
+var guanlihome = function(){addtabs('个人首页桌面项','@index,home,indextd,mid=-1','homeperson',{padding:0,icon:gicons('application_view_tile')});};jm.setJmstr('<?=$da["randkey"]?>');
 var remenu  = Ext.widget({
 	xtype: 'menu',
 	items: [{
@@ -54,10 +50,9 @@ var panel={
 	layout:'absolute',autoScroll:true,border:false,
 	items:getpitmess()
 };
-
 reloaddaiban = function(){
 	if(getcmp('daishen_'+rand+''))getcmp('daishen_'+rand+'').storereload();
-}
+};
 return {
 	'panel':panel
 };
